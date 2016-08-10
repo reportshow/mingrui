@@ -3,7 +3,7 @@
 
  ?>
 <!-- iCheck -->
-  <link rel="stylesheet" href="plugins/iCheck/flat/blue.css.00000000">
+  <link rel="stylesheet" href="plugins/iCheck/flat/blue.css">
   <!-- Morris chart -->
   <link rel="stylesheet" href="plugins/morris/morris.css">
   <!-- jvectormap -->

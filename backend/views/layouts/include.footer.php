@@ -14,7 +14,7 @@
 <!-- Bootstrap 3.3.6 -->
 <!-- <script src="bootstrap/js/bootstrap.min.js"></script> -->
 <!-- Morris.js charts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="plugins/morris/raphael-min.js"></script>
 <script src="plugins/morris/morris.min.js"></script>
 <!-- Sparkline -->
 <script src="plugins/sparkline/jquery.sparkline.min.js"></script>
@@ -24,7 +24,7 @@
 <!-- jQuery Knob Chart -->
 <script src="plugins/knob/jquery.knob.js"></script>
 <!-- daterangepicker -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+<script src="plugins/daterangepicker/moment.min.js"></script>
 <script src="plugins/daterangepicker/daterangepicker.js"></script>
 <!-- datepicker -->
 <script src="plugins/datepicker/bootstrap-datepicker.js"></script>
