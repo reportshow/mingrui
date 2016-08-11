@@ -4,24 +4,7 @@ use dmstr\widgets\Alert;
 
 ?>
 <div class="content-wrapper">
-<!-- Content Wrapper. Contains page content -->
-   
-
-    <!-- Content Header (Page header) -->
     <section class="content-header">
-      <h1>
-        数据统计
-        <small>Control panel</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">数据统计</li>
-      </ol>
-    </section>
-
-
-
-    <section class="content-header" style='display:none'>
         <?php if (isset($this->blocks['content-header'])) { ?>
             <h1><?= $this->blocks['content-header'] ?></h1>
         <?php } else { ?>

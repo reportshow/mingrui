@@ -13,8 +13,7 @@ $menu[] = [
         [
             'label' => '报告检索',
             'icon'  => 'fa fa-calendar-plus-o',
-            'url'   => '#',
-            'items' => [],
+            'url'   =>   ['/rest-report/index'],
 
         ],
 
@@ -43,9 +42,7 @@ $menu[] = [
             'label' => '历史病人',
             'icon'  => 'fa  fa-history',
             'url'   => '#',
-            'items' => [
-
-            ],
+            'url'   => ['/restsample/index'],
         ],
     ],
 ];

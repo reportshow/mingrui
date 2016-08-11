@@ -1,5 +1,6 @@
 <?php
-$this->title = 'Wisdom Report Management System';
+$this->title = '控制面板';
+$this->params['breadcrumbs'][] = $this->title ;
 
 use backend\assets\AppAsset;  
 use backend\widgets\ChartLine;

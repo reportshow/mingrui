@@ -11,8 +11,7 @@ $this->title = 'Rest Samples';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="rest-sample-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
+ 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
@@ -24,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'sample_id',
+            //'sample_id',
             'name',
             //'type',
             //'ypkd_id',
