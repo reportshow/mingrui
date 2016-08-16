@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'attribute' => 'created',
             'value'     => function ($data) {
                 $date = new DateTime($data->created);
-                return $date->format('Y-m-d h:i');
+                return $date->format('Y-m-d');
 
             },
         ],
@@ -56,13 +56,42 @@ $this->params['breadcrumbs'][] = $this->title;
 
         'report_id',
 
-        'gene_template',
+        [
+            'label'     => '检查类型ok',
+            'attribute' => 'product_name',
+            'value'     => 'product.name',
+            'filter'    => Html::activeTextInput($searchModel, 'product_name', [
+                'class' => 'form-control',
+            ]),
+        ], //<=====加入这句
 
+        'gene_template',
+        [
+            'attribute' => 'testmethod',
+            'label'     => '检测方法',
+            'value'     => function ($model) {
+                if (strpos($model->report_id, 'NG') !== false) {
+                    return 'NGS';
+                } else {
+                    $template = $model->gene_template;
+                    $mm       = ['_MLPA', '_CNV', 'PolyQ'];
+                    foreach ($mm as $m) {
+                        if (strpos($template, $m) !== false) {
+                            return $m;
+                        }
+                    }
+                    return $template;
+                }
+
+            },
+        ],
         [
             'attribute' => 'tel1',
-            'label' => '联系方式',
+            'label'     => '联系方式',
             'value'     => function ($model) {
-                return $model->sample->tel1;
+                $tels = $model->sample->tel1;
+                $list = explode('、', $tels);
+                return str_replace(' ', '', $list[0]) . (count($list) > 1 ? '-等' : '');
             },
         ],
         //'status',

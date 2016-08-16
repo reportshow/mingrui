@@ -35,8 +35,15 @@ class RestReportController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel  = new RestReportSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel                          = new RestReportSearch();
+        $params                               = Yii::$app->request->queryParams;
+        //$params['RestReportSearch']['rest_report.status'] = 'finished';
+
+        $query = RestReport::find();
+        $query = $query->where(['<>', 'ptype', 'yidai'])
+            ->andWhere(['rest_report.status' => 'finished']);
+
+        $dataProvider = $searchModel->search($params, $query);
 
         return $this->render('index', [
             'searchModel'  => $searchModel,

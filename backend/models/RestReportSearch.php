@@ -11,6 +11,7 @@ use yii\data\ActiveDataProvider;
  */
 class RestReportSearch extends RestReport
 {
+    public $product_name;
     /**
      * @inheritdoc
      */
@@ -18,7 +19,7 @@ class RestReportSearch extends RestReport
     {
         return [
             [['id', 'assigner_id', 'product_id', 'complete', 'analysis_id', 'yidai_complete', 'jxyanzhen', 'star', 'abiexported', 'locked', 'express_sent', 'sale_marked', 'yidai_marked'], 'integer'],
-            [['report_id', 'created', 'updated', 'status', 'note', 'cnvsqlite', 'snpsqlite', 'cnvsave', 'snpsave', 'finish', 'xiafa', 'url', 'yidai_note', 'express', 'express_no', 'sample_id', 'pdf', 'conclusion', 'explain', 'mut_type', 'template', 'type', 'gene_template', 'ptype', 'csupload', 'family_id', 'date', 'abiresult', 'snpexplain', 'final_note', 'assigner_note', 'shenhe_date', 'time_stamp', 'yidaifinished_date', 'kyupload'], 'safe'],
+            [['report_id', 'product_name','created', 'updated', 'status', 'note', 'cnvsqlite', 'snpsqlite', 'cnvsave', 'snpsave', 'finish', 'xiafa', 'url', 'yidai_note', 'express', 'express_no', 'sample_id', 'pdf', 'conclusion', 'explain', 'mut_type', 'template', 'type', 'gene_template', 'ptype', 'csupload', 'family_id', 'date', 'abiresult', 'snpexplain', 'final_note', 'assigner_note', 'shenhe_date', 'time_stamp', 'yidaifinished_date', 'kyupload'], 'safe'],
         ];
     }
 
@@ -38,9 +39,12 @@ class RestReportSearch extends RestReport
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $query)
     {
-        $query = RestReport::find();
+        if (!$query) {
+            $query = RestReport::find();
+        }
+        $query = $query->joinWith(['product']);
 
         // add conditions that should always apply here
 
@@ -112,7 +116,8 @@ class RestReportSearch extends RestReport
             ->andFilterWhere(['like', 'final_note', $this->final_note])
             ->andFilterWhere(['like', 'assigner_note', $this->assigner_note])
             ->andFilterWhere(['like', 'time_stamp', $this->time_stamp])
-            ->andFilterWhere(['like', 'kyupload', $this->kyupload]);
+            ->andFilterWhere(['like', 'kyupload', $this->kyupload])
+            ->andFilterWhere(['like', 'rest_product.name', $this->product_name]); //<=====加入这句
 
         return $dataProvider;
     }

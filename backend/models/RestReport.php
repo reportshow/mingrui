@@ -104,8 +104,8 @@ class RestReport extends \yii\db\ActiveRecord
     {
         return [
             'id'                 => 'ID',
-            'report_id'          => 'Report ID',
-            'created'            => 'Created',
+            'report_id'          => '报告编号',
+            'created'            => '送检日期',
             'updated'            => 'Updated',
             'status'             => 'Status',
             'note'               => 'Note',
@@ -157,10 +157,12 @@ class RestReport extends \yii\db\ActiveRecord
     {
         return 'xx';
     }
+
+
     // /**
     //  * @return \yii\db\ActiveQuery
     //  */
-    // public function getRestProjects()
+    // public function getRestProject()
     // {
     //     return $this->hasMany(RestProject::className(), ['report_id' => 'id']);
     // }
@@ -173,13 +175,13 @@ class RestReport extends \yii\db\ActiveRecord
     //     return $this->hasOne(RestEmployee::className(), ['id' => 'assigner_id']);
     // }
 
-    // /**
-    //  * @return \yii\db\ActiveQuery
-    //  */
-    // public function getProduct()
-    // {
-    //     return $this->hasOne(RestProduct::className(), ['id' => 'product_id']);
-    // }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProduct()
+    {
+        return $this->hasOne(RestProduct::className(), ['id' => 'product_id']);
+    }
 
     // /**
     //  * @return \yii\db\ActiveQuery
@@ -187,7 +189,7 @@ class RestReport extends \yii\db\ActiveRecord
     public function getSample()
     {
         return $this->hasOne(RestSample::className(), ['sample_id' => 'sample_id']);
-    } 
+    }
     // /**
     //  * @return \yii\db\ActiveQuery
     //  */
