@@ -48,11 +48,13 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
 
         [
-            'attribute' => 'name',
-            'value'     => function ($model) {
-                return $model->sample->name;
-            },
-        ],
+            'label'     => '姓名',
+            'attribute' => 'username',
+            'value'     => 'sample.name',
+            'filter'    => Html::activeTextInput($searchModel, 'username', [
+                'class' => 'form-control',
+            ]),
+        ], //<=====加入这句,
 
         'report_id',
 
@@ -65,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ]),
         ], //<=====加入这句
 
-        'gene_template',
+       
         [
             'attribute' => 'testmethod',
             'label'     => '检测方法',
