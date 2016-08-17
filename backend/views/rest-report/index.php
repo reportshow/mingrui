@@ -67,33 +67,38 @@ $this->params['breadcrumbs'][] = $this->title;
             ]),
         ], //<=====加入这句
 
-       
         [
             'attribute' => 'testmethod',
-            'label'     => '检测方法',
+            'label'     => '方法',
             'value'     => function ($model) {
                 if (strpos($model->report_id, 'NG') !== false) {
                     return 'NGS';
                 } else {
-                    $template = $model->gene_template;
+                    $template = $model->product->name;
                     $mm       = ['_MLPA', '_CNV', 'PolyQ'];
                     foreach ($mm as $m) {
                         if (strpos($template, $m) !== false) {
-                            return $m;
+                            return substr($m, 1);
                         }
                     }
-                    return $template;
+                    return substr($template, 0, 5) . '...';
                 }
 
             },
         ],
+
         [
             'attribute' => 'tel1',
             'label'     => '联系方式',
             'value'     => function ($model) {
                 $tels = $model->sample->tel1;
-                $list = explode('、', $tels);
-                return str_replace(' ', '', $list[0]) . (count($list) > 1 ? '-等' : '');
+                //$list = explode('、', $tels);
+                //return str_replace(' ', '', $list[0]) . (count($list) > 1 ? '-等' : '');
+                $tels = str_replace(' ', '', $tels); $tels = str_replace('-', '', $tels);
+                if (strlen($tels) > 11) {
+                    $tels = substr($tels, 0, 11) . '...';
+                }
+                return $tels;
             },
         ],
         //'status',
@@ -115,7 +120,24 @@ $this->params['breadcrumbs'][] = $this->title;
         // 'express_no',
         // 'sample_id',
         // 'pdf',
-        'conclusion',
+        // 'conclusion',
+        ['label'        => '结论',
+            'attribute'     => 'conclusion',
+            'filter'        => ['阴性' => '阴性', '疑似阳性' => '疑似阳性', '阳性' => '阳性'],
+            'format'        => 'raw',
+            'value'         => function ($model) {
+                if ($model->conclusion == '阳性') {
+                    $class = 'bg-red-active color-palette';
+                } elseif ($model->conclusion == '疑似阳性') {
+                    $class = 'bg-yellow-active color-palette';
+                } else {
+                    $class = 'bg-green-active color-palette';
+                }
+                return "<span class='$class' style='padding:0px 5px'>" . $model->conclusion . '</span>';
+            },
+            //or 'filter' => Html::activeDropDownList($searchModel, 'sex',['1'=>'男','0'=>'女'], ['prompt'=>'全部'] )
+            'headerOptions' => ['width' => '100'],
+        ],
         // 'explain:ntext',
         // 'jxyanzhen',
         // 'mut_type',

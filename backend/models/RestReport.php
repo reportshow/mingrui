@@ -158,6 +158,25 @@ class RestReport extends \yii\db\ActiveRecord
         return 'xx';
     }
 
+    public function getCnsaveimg()
+    {
+        $json = json_decode($this->cnvsave);
+        // var_dump($json);exit;
+        return "<img src='/'>";
+    }
+    public function getExplain()
+    {
+        return json_decode($this->explain);
+    }
+    public function getExplainsummary()
+    {
+        $json= json_decode($this->explain);
+        if($json){
+            
+            return $json->summary;
+        }
+    }
+
 
     // /**
     //  * @return \yii\db\ActiveQuery
