@@ -104,6 +104,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
                 return $tels;
             },
+            'filter'    => Html::activeTextInput($searchModel, 'tel', [
+                'class' => 'form-control',
+            ]),
         ],
         //'status',
         // 'note:ntext',

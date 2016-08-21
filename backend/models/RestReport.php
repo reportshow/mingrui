@@ -107,8 +107,8 @@ class RestReport extends \yii\db\ActiveRecord
             'report_id'          => '报告编号',
             'created'            => '送检日期',
             'updated'            => 'Updated',
-            'status'             => 'Status',
-            'note'               => 'Note',
+            'status'             => '报告状态',
+            'note'               => '备注',
             'assigner_id'        => 'Assigner ID',
             'product_id'         => 'Product ID',
             'complete'           => 'Complete',
@@ -194,6 +194,7 @@ class RestReport extends \yii\db\ActiveRecord
         }
         return "<span class='$class' style='padding:0px 5px'>" . $conclusion . '</span>';
     }
+
 
     // /**
     //  * @return \yii\db\ActiveQuery

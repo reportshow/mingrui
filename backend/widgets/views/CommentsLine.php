@@ -9,17 +9,17 @@ if($model['position'] != 'right'){
 <div class="direct-chat-msg">
     <div class="direct-chat-info clearfix">
         <span class="direct-chat-name pull-left">
-            Alexander Pierce
+            <?=$model->creator->nickname?>
         </span>
         <span class="direct-chat-timestamp pull-right">
-            23 Jan 2:00 pm
+           <?=date('Y-m-d H:i:s',$model->createtime) ?>
         </span>
     </div>
     <!-- /.direct-chat-info -->
-    <img alt="Message User Image" class="direct-chat-img" src="../dist/img/user1-128x128.jpg">
+    <img alt="Message User Image" class="direct-chat-img" src="images/user1-128x128.jpg">
         <!-- /.direct-chat-img -->
         <div class="direct-chat-text">
-            Is this template really for free? That's unbelievable!
+            <?=$model->content?>
         </div>
         <!-- /.direct-chat-text -->
     </img>
@@ -34,17 +34,17 @@ if($model['position'] != 'right'){
 <div class="direct-chat-msg right">
     <div class="direct-chat-info clearfix">
         <span class="direct-chat-name pull-right">
-            Sarah Bullock
+            <?=$model->creator->nickname?>
         </span>
         <span class="direct-chat-timestamp pull-left">
-            23 Jan 2:05 pm
+             <?=date('Y-m-d H:i:s',$model->createtime) ?>
         </span>
     </div>
     <!-- /.direct-chat-info -->
-    <img alt="Message User Image" class="direct-chat-img" src="../dist/img/user3-128x128.jpg">
+    <img alt="Message User Image" class="direct-chat-img" src="images/user8-128x128.jpg">
         <!-- /.direct-chat-img -->
         <div class="direct-chat-text">
-            You better believe it!
+            <?=$model->content?>
         </div>
         <!-- /.direct-chat-text -->
     </img>

@@ -114,7 +114,7 @@ $this->params['breadcrumbs'][] = $this->title;
         
         //'snpexplain:ntext',
         //'abiexported',
-        'final_note:ntext',
+      //  'final_note:ntext',
       //  'assigner_note:ntext',
       //  'shenhe_date',
      //   'locked',
@@ -128,9 +128,14 @@ $this->params['breadcrumbs'][] = $this->title;
 ])?>
 
 </div>
+<?php
 
+ 
+
+?>
 <?=Comments::widget([
-  'comments'=>[
+  'comments'=>$comments,
+      /*[
        [
 		   'position'=>'',
 		   'name'=>'xxx',
@@ -145,6 +150,6 @@ $this->params['breadcrumbs'][] = $this->title;
 		   'avatar'=>'',
 		   'message'=>'You better believe it!',
 	   ],
-   ],
- 'other'=>'',
+   ],*/
+ 'id'=> $model->id,
 ])?>

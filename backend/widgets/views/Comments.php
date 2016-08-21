@@ -1,7 +1,12 @@
-<div class="box box-primary direct-chat direct-chat-primary">
+<?php
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+use backend\models\MingruiComments;
+
+?><div class="box box-primary direct-chat direct-chat-primary">
     <div class="box-header with-border">
         <h3 class="box-title">
-            意见与回复
+            意见与点评
         </h3>
         <div class="box-tools pull-right">
             <span class="badge bg-light-blue" data-toggle="tooltip" title="3 New Messages">
@@ -24,8 +29,8 @@
     <!-- /.box-header -->
     <div class="box-body">
         <!-- Conversations are loaded here -->
-        <div class="direct-chat-messages">
-            <?
+        <div class="direct-chat-messages" style='height:auto'>
+            <?php
 foreach ($model->comments as $comment) {
     if ($comment) {
         echo $this->render('CommentsLine', ['model' => $comment]);
@@ -65,10 +70,18 @@ foreach ($model->comments as $comment) {
         <!-- /.direct-chat-pane -->
     </div>
     <!-- /.box-body -->
-    <div class="box-footer">
-        <form action="#" method="post">
+
+    <div class="box-footer">    
+       <?php 
+       $form = ActiveForm::begin(['action' => ['rest-report/send-comment', 'id'=>$model->id],'method'=>'post',]); 
+
+       ?>
+           
+           <input type="hidden" name="MingruiComments[report_id]" value="<?=$model->id?>">
+
             <div class="input-group">
-                <input class="form-control" name="message" placeholder="Type Message ..." type="text">
+                <input class="form-control" name="MingruiComments[content]" 
+                        placeholder="Type Message ..." type="text">
                     <span class="input-group-btn">
                         <button class="btn btn-primary btn-flat" type="submit">
                             Send
@@ -76,7 +89,7 @@ foreach ($model->comments as $comment) {
                     </span>
                 </input>
             </div>
-        </form>
+        <?php ActiveForm::end(); ?>
     </div>
     <!-- /.box-footer-->
 </div>

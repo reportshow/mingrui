@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\MingruiComments;
 use backend\models\RestReport;
 use backend\models\RestReportSearch;
 use Yii;
@@ -35,12 +36,13 @@ class RestReportController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel                          = new RestReportSearch();
-        $params                               = Yii::$app->request->queryParams;
+        $searchModel = new RestReportSearch();
+        $params      = Yii::$app->request->queryParams;
         //$params['RestReportSearch']['rest_report.status'] = 'finished';
 
         $query = RestReport::find();
-        $query = $query->where(['<>', 'ptype', 'yidai'])
+        $query = $query
+            ->where(['<>', 'ptype', 'yidai'])
             ->andWhere(['rest_report.status' => 'finished']);
 
         $dataProvider = $searchModel->search($params, $query);
@@ -59,8 +61,27 @@ class RestReportController extends Controller
     public function actionView($id)
     {
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model'    => $this->findModel($id),
+            'comments' => $this->getComments($id),
         ]);
+    }
+
+/**
+ * Displays a single RestReport model.
+ * @param integer $id
+ * @return mixed
+ */
+    public function actionSendComment($id)
+    {
+        $model = new MingruiComments();
+        $model->load(Yii::$app->request->post());
+        $model->uid = Yii::$app->user->id;
+
+        if ($model->save()) {
+            return $this->redirect(['view', 'id' => $id]);
+        } else {
+            var_dump($model->errors);
+        }
     }
 
     /**
@@ -125,6 +146,20 @@ class RestReportController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function getComments($id)
+    {
+        $comments = MingruiComments::find()
+            ->where(['report_id' => $id])
+            ->joinWith(['creator'])
+            ->all();
+        /* foreach ($comments as $cmt ) {
+
+        }*/
+
+        return $comments;
+    }
+
+    // public function
     /**
      * Finds the RestReport model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
