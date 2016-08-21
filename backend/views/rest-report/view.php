@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
+use backend\widgets\Comments;
+
 /* @var $this yii\web\View */
 /* @var $model backend\models\RestReport */
 
@@ -25,37 +27,37 @@ $this->params['breadcrumbs'][] = $this->title;
 ])?>
 
 <?=Html::a('查看报告详情', ['show-report', 'id' => $model->id], [
-    'class' => 'btn btn-success',     
+    'class' => 'btn btn-success',
 ])?>
     </p>
 
     <?=DetailView::widget([
     'model'      => $model,
     'attributes' => [
-        'id',
+        //'id',
         'report_id',
         'created',
-        'updated',
+        //'updated',
         'status',
         'note:ntext',
-       // 'assigner_id',
+        // 'assigner_id',
         //'product_id',
         [
             'attribute' => 'product.name',
-            'label'     => '检查项目', 
+            'label'     => '检查项目',
             'value'     => $model->product->name,
         ],
 
         //'complete',
-        'cnvsqlite',
-        'snpsqlite',
-        'cnvsave:ntext',
-        [
+        //'cnvsqlite',
+        // 'snpsqlite',
+        //'cnvsave:ntext',
+/*        [
             'attribute' => 'cnvsave',
             'label'     => 'cnvsave',
             'format'    => 'raw',
             'value'     => $model->cnsaveimg,
-        ],
+        ],*/
         /*      array(
         'label' => 'xx',
         'format' => 'raw',
@@ -64,47 +66,85 @@ $this->params['breadcrumbs'][] = $this->title;
         return '/';
         },
         ),*/
-        'snpsave:ntext',
-        'finish',
-        'xiafa',
-        'analysis_id',
-        'yidai_complete',
+        // 'snpsave:ntext',
+        // 'finish',
+        //  'xiafa',
+        //  'analysis_id',
+        // 'yidai_complete',
         //'url:url',
         //'yidai_note:ntext',
-        'express',
-        'express_no',
-        'sample_id',
-        'pdf',
-        'conclusion',
-        'explain:ntext',
+       // 'express',
+       // 'express_no',
+        //'sample_id',
+        //   'pdf',
+
+        ['label'    => '结论',
+            'attribute' => 'conclusion',
+            'format'    => 'raw',
+            'value'     => $model->conclusiontag,
+
+        ],
+        //'explain:ntext',
         [
-            'label' => 'explain',
+            'label' => '注释',
             'value' => $model->explainsummary,
         ],
-        'jxyanzhen',
-        'mut_type',
-        'star',
-        'template',
-        'type',
-        'gene_template',
-        'ptype',
-        'csupload',
-        'family_id',
-        'date',
-        'abiresult:ntext',
-        'snpexplain:ntext',
-        'abiexported',
+       // 'jxyanzhen',
+      //  'mut_type',
+        //'star',
+       // 'template',
+       // 'type',
+       // 'gene_template',
+       // 'ptype',
+       // 'csupload',
+       // 'family_id',
+       // 'date',
+        //'abiresult:ntext',
+/*        ['label'    => '诊断',
+            'attribute' => 'abiresult',
+            'format'    => 'raw',
+            'value'     => function($model){
+                $json = json_decode($model->abiresult);
+                if($json){
+                    return "TODO";// $json->dignosis;
+                }
+            } ,
+
+        ],*/
+        
+        //'snpexplain:ntext',
+        //'abiexported',
         'final_note:ntext',
-        'assigner_note:ntext',
-        'shenhe_date',
-        'locked',
-        'express_sent',
-        'sale_marked',
-        'time_stamp:ntext',
-        'yidaifinished_date',
-        'kyupload',
-        'yidai_marked',
+      //  'assigner_note:ntext',
+      //  'shenhe_date',
+     //   'locked',
+      //  'express_sent',
+      //  'sale_marked',
+       // 'time_stamp:ntext',
+       // 'yidaifinished_date',
+      //  'kyupload',
+     //   'yidai_marked',
     ],
 ])?>
 
 </div>
+
+<?=Comments::widget([
+  'comments'=>[
+       [
+		   'position'=>'',
+		   'name'=>'xxx',
+		   'time'=>'23 Jan 2:00 pm',
+		   'avatar'=>'',
+		   'message'=>'Is this template really for free? That s unbelievable!',
+	   ],
+	   [
+		   'position'=>'right',
+		   'name'=>'hello',
+		   'time'=>'23 Jan 2:05 pm',
+		   'avatar'=>'',
+		   'message'=>'You better believe it!',
+	   ],
+   ],
+ 'other'=>'',
+])?>

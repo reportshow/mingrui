@@ -170,13 +170,30 @@ class RestReport extends \yii\db\ActiveRecord
     }
     public function getExplainsummary()
     {
-        $json= json_decode($this->explain);
-        if($json){
-            
-            return $json->summary;
+        $json = json_decode($this->explain);
+        if ($json) {
+            if (property_exists($json, 'summary')) {
+                return $json->summary;
+            }
+
         }
     }
 
+    public function getConclusiontag()
+    {
+        $conclusion = $this->conclusion;
+        if ($conclusion == '阳性') {
+            $class = 'bg-red-active color-palette';
+        } elseif ($conclusion == '疑似阳性') {
+            $class = 'bg-yellow-active color-palette';
+        } elseif ($conclusion == '阴性') {
+            $class = 'bg-green-active color-palette';
+        } else {
+            $class      = 'bg-gray-active color-palette';
+            $conclusion = '...';
+        }
+        return "<span class='$class' style='padding:0px 5px'>" . $conclusion . '</span>';
+    }
 
     // /**
     //  * @return \yii\db\ActiveQuery

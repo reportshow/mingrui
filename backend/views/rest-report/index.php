@@ -21,6 +21,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <?=GridView::widget([
     'dataProvider' => $dataProvider,
     'filterModel'  => $searchModel,
+    'rowOptions'   => function ($model) {
+        $url = Yii::$app->urlManager->createUrl(['rest-report/view', 'id' => $model->id]);
+        return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
+    },
     'columns'      => [
         //['class' => 'yii\grid\SerialColumn'],
 
@@ -125,16 +129,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'attribute'     => 'conclusion',
             'filter'        => ['阴性' => '阴性', '疑似阳性' => '疑似阳性', '阳性' => '阳性'],
             'format'        => 'raw',
-            'value'         => function ($model) {
-                if ($model->conclusion == '阳性') {
-                    $class = 'bg-red-active color-palette';
-                } elseif ($model->conclusion == '疑似阳性') {
-                    $class = 'bg-yellow-active color-palette';
-                } else {
-                    $class = 'bg-green-active color-palette';
-                }
-                return "<span class='$class' style='padding:0px 5px'>" . $model->conclusion . '</span>';
-            },
+            'value'         => 'conclusiontag',
             //or 'filter' => Html::activeDropDownList($searchModel, 'sex',['1'=>'男','0'=>'女'], ['prompt'=>'全部'] )
             'headerOptions' => ['width' => '100'],
         ],

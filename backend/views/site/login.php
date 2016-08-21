@@ -19,10 +19,12 @@ $fieldOptions2 = [
 ];
 ?>
 
-<div class="login-box">
-    <div class="login-logo">
-        <a href="#"><b>Admin</b>LTE</a>
-    </div>
+<div class="login-logo" style='margin-top:5%'>
+        <a href="#"><b>Wisdom</b> Report Management System  </a>
+</div>
+
+<div class="login-box" style='margin-top:0%'>
+    
     <!-- /.login-logo -->
     <div class="login-box-body">
         <p class="login-box-msg">Sign in to start your session</p>
@@ -53,7 +55,7 @@ $fieldOptions2 = [
 
         <?php ActiveForm::end(); ?>
 
-        <div class="social-auth-links text-center">
+        <div class="social-auth-links text-center" style='display: none'>
             <p>- OR -</p>
             <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in
                 using Facebook</a>
