@@ -17,37 +17,39 @@ $fieldOptions2 = [
     'options' => ['class' => 'form-group has-feedback'],
     'inputTemplate' => "{input}<span class='glyphicon glyphicon-lock form-control-feedback'></span>"
 ];
+
+//echo Yii::$app->getSecurity()->generatePasswordHash('mingrui');
 ?>
 
-<div class="login-logo" style='margin-top:5%'>
+<div class="login-logo" style='margin-top:7%'>
         <a href="#"><b>Wisdom</b> Report Management System  </a>
 </div>
 
 <div class="login-box" style='margin-top:0%'>
     
     <!-- /.login-logo -->
-    <div class="login-box-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+    <div class="login-box-body" style='border-radius: 5px'>
+        <p class="login-box-msg">登录进入</p>
 
         <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
 
         <?= $form
             ->field($model, 'username', $fieldOptions1)
             ->label(false)
-            ->textInput(['placeholder' => $model->getAttributeLabel('username')]) ?>
+            ->textInput(['placeholder' => $model->getAttributeLabel('用户名')]) ?>
 
         <?= $form
             ->field($model, 'password', $fieldOptions2)
             ->label(false)
-            ->passwordInput(['placeholder' => $model->getAttributeLabel('password')]) ?>
+            ->passwordInput(['placeholder' => $model->getAttributeLabel('密码')]) ?>
 
         <div class="row">
             <div class="col-xs-8">
-                <?= $form->field($model, 'rememberMe')->checkbox() ?>
+                <?= $form->field($model, 'rememberMe')->checkbox(['label'=>'记住密码']) ?>
             </div>
             <!-- /.col -->
             <div class="col-xs-4">
-                <?= Html::submitButton('Sign in', ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
+                <?= Html::submitButton('登录', ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
             </div>
             <!-- /.col -->
         </div>
@@ -64,8 +66,8 @@ $fieldOptions2 = [
         </div>
         <!-- /.social-auth-links -->
 
-        <a href="#">I forgot my password</a><br>
-        <a href="register.html" class="text-center">Register a new membership</a>
+       <a href="register.html" class="text-center" style="float:right">注册</a> <a href="#">忘记密码</a> 
+        
 
     </div>
     <!-- /.login-box-body -->

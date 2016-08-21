@@ -44,7 +44,7 @@ use dmstr\widgets\Alert;
         <b>Version</b> 1.0
     </div>
     <strong>Copyright &copy; 2014-2016 
-    <a href="http://almsaeedstudio.com">Wisdom Report Management System</a>.</strong> All rights
+    <a href="#">Wisdom Report Management System</a>.</strong> All rights
     reserved.
 </footer>
 

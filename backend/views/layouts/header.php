@@ -41,7 +41,7 @@ use yii\helpers\Html;
                                             Support Team
                                             <small><i class="fa fa-clock-o"></i> 5 mins</small>
                                         </h4>
-                                        <p>Why not buy a new awesome theme?</p>
+                                        <p>Why not buy a new wisdom report?</p>
                                     </a>
                                 </li>
                                 <!-- end message -->
@@ -55,7 +55,7 @@ use yii\helpers\Html;
                                             AdminLTE Design Team
                                             <small><i class="fa fa-clock-o"></i> 2 hours</small>
                                         </h4>
-                                        <p>Why not buy a new awesome theme?</p>
+                                        <p>Why not buy a new wisdom report?</p>
                                     </a>
                                 </li>
                                 <li>
@@ -68,7 +68,7 @@ use yii\helpers\Html;
                                             Developers
                                             <small><i class="fa fa-clock-o"></i> Today</small>
                                         </h4>
-                                        <p>Why not buy a new awesome theme?</p>
+                                        <p>Why not buy a new wisdom report?</p>
                                     </a>
                                 </li>
                                 <li>
@@ -81,7 +81,7 @@ use yii\helpers\Html;
                                             Sales Department
                                             <small><i class="fa fa-clock-o"></i> Yesterday</small>
                                         </h4>
-                                        <p>Why not buy a new awesome theme?</p>
+                                        <p>Why not buy a new wisdom report?</p>
                                     </a>
                                 </li>
                                 <li>
@@ -94,7 +94,7 @@ use yii\helpers\Html;
                                             Reviewers
                                             <small><i class="fa fa-clock-o"></i> 2 days</small>
                                         </h4>
-                                        <p>Why not buy a new awesome theme?</p>
+                                        <p>Why not buy a new wisdom report?</p>
                                     </a>
                                 </li>
                             </ul>
@@ -174,7 +174,7 @@ use yii\helpers\Html;
                                 <li><!-- Task item -->
                                     <a href="#">
                                         <h3>
-                                            Create a nice theme
+                                            Create a nice report
                                             <small class="pull-right">40%</small>
                                         </h3>
                                         <div class="progress xs">
