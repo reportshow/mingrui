@@ -17,18 +17,41 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <p>
-        <?=Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary'])?>
-        <?=Html::a('Delete', ['delete', 'id' => $model->id], [
+
+<div style='float:right'>
+<?=Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary'])?>
+
+<?=Html::a('Delete', ['delete', 'id' => $model->id], [
     'class' => 'btn btn-danger',
     'data'  => [
         'confirm' => 'Are you sure you want to delete this item?',
         'method'  => 'post',
     ],
 ])?>
+  </div>
+ 
 
 <?=Html::a('查看报告详情', ['show-report', 'id' => $model->id], [
     'class' => 'btn btn-success',
 ])?>
+
+<?=Html::a('报告归类', ['rest-report/attachment', 'id' => $model->id], [
+    'class' => 'btn btn-primary',
+])?>
+
+<?=Html::a('数据分析', ['rest-report/attachment', 'id' => $model->id], [
+    'class' => 'btn btn-info',
+])?>
+
+<?=Html::a('完善资料', ['rest-report/attachment', 'id' => $model->id], [
+    'class' => 'btn btn-warning',
+])?>
+
+
+
+
+
+
     </p>
 
     <?=DetailView::widget([

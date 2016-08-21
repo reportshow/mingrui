@@ -84,7 +84,7 @@ foreach ($model->comments as $comment) {
                         placeholder="Type Message ..." type="text">
                     <span class="input-group-btn">
                         <button class="btn btn-primary btn-flat" type="submit">
-                            Send
+                            评论
                         </button>
                     </span>
                 </input>

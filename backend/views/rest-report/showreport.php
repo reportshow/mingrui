@@ -13,9 +13,14 @@ $this->params['breadcrumbs'][] = $this->title;
 AppAsset::register($this); 
 //$this->registerJsFile('@web/js/pdfobject.min.js',['position' => POS_HEAD,'depends'=>['backend\assets\AppAsset']]);  
 //$this->registerCssFile('@web/css/ionicons.min.css',['depends'=>['backend\assets\AppAsset']]); 
+if($model->pdf){
+	$pdfurl = str_replace('/primerbean/media/', 'user/', $model->pdf);
+    $pdfurl = Yii::$app->params['erp_url'] . $pdfurl;
+}else{
+	echo "<h1>抱歉，没有报告数据！</h1>";
+	return;
+}
 
-$pdfurl = str_replace('/primerbean/media/', 'user/', $model->pdf);
-$pdfurl = Yii::$app->params['erp_url'] . $pdfurl;
 ?>
 <div class="rest-report-view">
 <?=Html::jsFile('@web/js/pdfobject.min.js')?>
