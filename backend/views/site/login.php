@@ -20,7 +20,12 @@ $fieldOptions2 = [
 
 //echo Yii::$app->getSecurity()->generatePasswordHash('mingrui');
 ?>
-
+    <style>
+     .login-page{background: #444}
+     .login-logo a{
+        color:#fff;
+        }
+    </style> 
 <div class="login-logo" style='margin-top:7%'>
         <a href="#"><b>Wisdom</b> Report Management System  </a>
 </div>
