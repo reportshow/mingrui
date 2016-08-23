@@ -9,7 +9,7 @@ use backend\widgets\Comments;
 /* @var $model backend\models\RestReport */
 
 $this->title                   = '报告:' . $model->sample->name;
-$this->params['breadcrumbs'][] = ['label' => 'Rest Reports', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '报告列表', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="rest-report-view">
@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
     'class' => 'btn btn-info',
 ])?>
 
-<?=Html::a('完善资料', ['rest-report/attachment', 'id' => $model->id], [
+<?=Html::a('完善资料', ['mingrui-attachment/', 'id' => $model->id], [
     'class' => 'btn btn-warning',
 ])?>
 

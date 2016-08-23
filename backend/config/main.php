@@ -25,7 +25,7 @@ return [
 
     ],
     'aliases'             => [
-        '@mdm/admin' => '@vendor/mdmsoft/yii2-admin',
+        '@mdm/admin' => '@vendor/mdmsoft/yii2-admin',         
     ],
     'as access'           => [
         'class'        => 'mdm\admin\components\AccessControl',

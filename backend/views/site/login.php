@@ -25,10 +25,10 @@ $fieldOptions2 = [
         <a href="#"><b>Wisdom</b> Report Management System  </a>
 </div>
 
-<div class="login-box" style='margin-top:0%'>
+<div class="login-box " style='margin-top:0%;'>
     
     <!-- /.login-logo -->
-    <div class="login-box-body" style='border-radius: 5px'>
+    <div class="login-box-body" style='border-radius: 5px; border-top: 4px solid #00c0ef;box-shadow: 2px 2px 5px;'>
         <p class="login-box-msg">登录进入</p>
 
         <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
@@ -49,7 +49,7 @@ $fieldOptions2 = [
             </div>
             <!-- /.col -->
             <div class="col-xs-4">
-                <?= Html::submitButton('登录', ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
+                <?= Html::submitButton(' 登 录 ', ['class' => 'btn btn-info btn-block btn-flat', 'name' => 'login-button']) ?>
             </div>
             <!-- /.col -->
         </div>
