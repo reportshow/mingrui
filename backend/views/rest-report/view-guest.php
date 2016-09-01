@@ -50,11 +50,12 @@ $this->params['breadcrumbs'][] = $this->title;
               <!-- /.widget-user-image -->
               <h3 class="widget-user-username"><?=$model->sample->name?></h3>
               <h5 class="widget-user-desc">检测者
-              （<?= $model->sample->sex =='male' ? '男': '女' ?> /<?=$model->sample->age?>）</h5>
+              （<?= $model->sample->sex =='male' ? '男': '女' ?>，<?=$model->sample->age?>）</h5>
             </div>
             <div class="box-footer no-padding">
               <ul class="nav nav-stacked">
                 <li><a href="#">日期：<?=$model->created?></a></li>
+                <li><a href="#">主诉：<?=$model->sample->symptom?></a></li>
                 <li><a href="#">项目：<?=$model->product->name?></a></li>
                 <li><a href="#">结论：<?=$model->conclusiontag?>  </a></li>
                 <li><a href="#">注释：<?=$model->explainsummary?>
