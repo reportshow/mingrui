@@ -25,7 +25,8 @@ return [
 
     ],
     'aliases'             => [
-        '@mdm/admin' => '@vendor/mdmsoft/yii2-admin',         
+        '@mdm/admin' => '@vendor/mdmsoft/yii2-admin', 
+        '@dosamigos/datepicker'=>'@vendor/2amigos/yii2-date-picker-widget/src/DatePicker',      
     ],
     'as access'           => [
         'class'        => 'mdm\admin\components\AccessControl',

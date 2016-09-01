@@ -60,7 +60,17 @@ class RestReportController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        $viewname = 'view';
+
+        if (Yii::$app->user->can('doctor')) {
+            $viewname = 'view-guest';
+        } else if (Yii::$app->user->can('guest')) {
+            $viewname = 'view-guest';
+        }
+
+        $viewname = 'view-guest'; //test
+
+        return $this->render($viewname, [
             'model'    => $this->findModel($id),
             'comments' => $this->getComments($id),
         ]);
