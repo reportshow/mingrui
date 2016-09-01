@@ -26,7 +26,10 @@ if($model->pdf){
 <?=Html::jsFile('@web/js/pdfobject.min.js')?>
 
 <div id="example1"></div> 
-<script>PDFObject.embed("<?=$pdfurl ?>", "#example1");</script>
+<script>
+/*PDFObject.embed("<?=$pdfurl ?>", "#example1");*/
+PDFObject.embed("upload/NG16010024.pdf", "#example1");
+</script>
 <style>
 .pdfobject-container { height: 600px;}
 .pdfobject { border: 1px solid #666; }
