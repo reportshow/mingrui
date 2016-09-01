@@ -15,13 +15,14 @@ use kartik\file\FileInput;
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data','class'=>'upload']]); ?>
 
    <?= $form->field($model, 'report_id')->hiddenInput(['value'=> $_GET['id']  ])->label(false);?>    
-   <?=  $form->field($model, 'image')->widget(FileInput::classname(), [    
-            'options' => ['multiple' => false, 'accept' => 'image/*'],
+   <?=  $form->field($model, 'image[]')->widget(FileInput::classname(), [    
+            'options' => ['multiple' => true, 'accept' => 'image/*'],
             'pluginOptions' => [
                 'showUpload' => false,
             ]
         ])->label('选择报告图片'); 
     ?>
+    
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?> 

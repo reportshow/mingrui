@@ -2,17 +2,17 @@
 
 namespace backend\controllers;
 
-use backend\models\RestSample;
-use backend\models\RestSampleSearch;
 use Yii;
-use yii\filters\VerbFilter;
+use backend\models\RestClient;
+use backend\models\RestClientSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
 
 /**
- * RestSampleController implements the CRUD actions for RestSample model.
+ * RestClientController implements the CRUD actions for RestClient model.
  */
-class RestsampleController extends Controller
+class RestClientController extends Controller
 {
     /**
      * @inheritdoc
@@ -21,7 +21,7 @@ class RestsampleController extends Controller
     {
         return [
             'verbs' => [
-                'class'   => VerbFilter::className(),
+                'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -30,33 +30,23 @@ class RestsampleController extends Controller
     }
 
     /**
-     * Lists all RestSample models.
+     * Lists all RestClient models.
      * @return mixed
      */
-    public function actionIndex($old = '')
+    public function actionIndex()
     {
-        $searchModel = new RestSampleSearch();
-        $params      = Yii::$app->request->queryParams;
-
-        $query = RestSampleSearch::find();
-        if ($old == 'yes') {
-            $time = getdate();
-            $t    = ($time['year'] - 1) . '-' . $time['mon'] . '-1';
-             
-            $query = $query->where(['<', 'created', $t]);
-        }
-
-        $dataProvider = $searchModel->search($params, $query);
+        $searchModel = new RestClientSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel'  => $searchModel,
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single RestSample model.
-     * @param string $id
+     * Displays a single RestClient model.
+     * @param integer $id
      * @return mixed
      */
     public function actionView($id)
@@ -67,16 +57,16 @@ class RestsampleController extends Controller
     }
 
     /**
-     * Creates a new RestSample model.
+     * Creates a new RestClient model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new RestSample();
+        $model = new RestClient();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->sample_id]);
+            return $this->redirect(['view', 'id'           => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -85,9 +75,9 @@ class RestsampleController extends Controller
     }
 
     /**
-     * Updates an existing RestSample model.
+     * Updates an existing RestClient model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
+     * @param integer $id
      * @return mixed
      */
     public function actionUpdate($id)
@@ -95,7 +85,7 @@ class RestsampleController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->sample_id]);
+            return $this->redirect(['view', 'id'           => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -104,9 +94,9 @@ class RestsampleController extends Controller
     }
 
     /**
-     * Deletes an existing RestSample model.
+     * Deletes an existing RestClient model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
+     * @param integer $id
      * @return mixed
      */
     public function actionDelete($id)
@@ -117,15 +107,15 @@ class RestsampleController extends Controller
     }
 
     /**
-     * Finds the RestSample model based on its primary key value.
+     * Finds the RestClient model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return RestSample the loaded model
+     * @param integer $id
+     * @return RestClient the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = RestSample::findOne($id)) !== null) {
+        if (($model = RestClient::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

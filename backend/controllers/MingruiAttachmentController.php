@@ -9,6 +9,7 @@ use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
+
 /**
  * MingruiAttachmentController implements the CRUD actions for MingruiAttachment model.
  */
@@ -63,13 +64,27 @@ class MingruiAttachmentController extends Controller
      */
     public function actionCreate()
     {
-        $model   = new MingruiAttachment();
+        $model = new MingruiAttachment();
         //$imageup = UploadedFile::getInstances($model, 'image');
 
         if ($model->load(Yii::$app->request->post())) {
-            $imageup = UploadedFile::getInstances($model, 'image');            
-            $imageup[0]->saveAs('d:/1.png'); exit;
+            $model->image      = 'tosave';
+            $model->createtime = time();
+            if (!$model->save()) {
+                var_export($model->errors);exit;
+            }
+            $id          = $model->id;
+            $imageupList = UploadedFile::getInstances($model, 'image');
+
+            $imglist = [];
+            foreach ($imageupList as $index => $image) {
+                $imgpath   = "upload/{$id}-{$index}.png";
+                $imglist[] = $imgpath;
+                $image->saveAs($imgpath);
+            }
+            $model->image = join(';', $imglist);
             $model->save();
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [

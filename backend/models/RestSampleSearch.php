@@ -2,10 +2,9 @@
 
 namespace backend\models;
 
-use Yii;
+use backend\models\RestSample;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\RestSample;
 
 /**
  * RestSampleSearch represents the model behind the search form about `backend\models\RestSample`.
@@ -39,9 +38,11 @@ class RestSampleSearch extends RestSample
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $query='')
     {
-        $query = RestSample::find();
+        if (!$query) {
+            $query = RestSample::find();
+        }
 
         // add conditions that should always apply here
 
@@ -59,17 +60,17 @@ class RestSampleSearch extends RestSample
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'date' => $this->date, 
-            'has_project' => $this->has_project, 
-            'has_symptom' => $this->has_symptom, 
-            'xianzhengzhe' => $this->xianzhengzhe, 
-            'doctor_id' => $this->doctor_id, 
-            'sales_id' => $this->sales_id, 
-            'created' => $this->created, 
-            'xiedai' => $this->xiedai, 
-            'updated' => $this->updated, 
-            'shouyang_date' => $this->shouyang_date, 
-            'shouyanged' => $this->shouyanged, 
+            'date'          => $this->date,
+            'has_project'   => $this->has_project,
+            'has_symptom'   => $this->has_symptom,
+            'xianzhengzhe'  => $this->xianzhengzhe,
+            'doctor_id'     => $this->doctor_id,
+            'sales_id'      => $this->sales_id,
+            'created'       => $this->created,
+            'xiedai'        => $this->xiedai,
+            'updated'       => $this->updated,
+            'shouyang_date' => $this->shouyang_date,
+            'shouyanged'    => $this->shouyanged,
         ]);
 
         $query->andFilterWhere(['like', 'sample_id', $this->sample_id])

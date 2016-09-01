@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\RestSample */
+/* @var $model backend\models\MingruiVideo */
 
-$this->title = '创建报告样本记录';
-$this->params['breadcrumbs'][] = ['label' => '患者资料', 'url' => ['index']];
+$this->title = '上传视频';
+$this->params['breadcrumbs'][] = ['label' => '视频分享', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="rest-sample-create">
+<div class="mingrui-video-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

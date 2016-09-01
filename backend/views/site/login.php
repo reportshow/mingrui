@@ -18,10 +18,10 @@ $fieldOptions2 = [
     'inputTemplate' => "{input}<span class='glyphicon glyphicon-lock form-control-feedback'></span>"
 ];
 
-//echo Yii::$app->getSecurity()->generatePasswordHash('mingrui');
+ echo Yii::$app->getSecurity()->generatePasswordHash('123456');
 ?>
     <style>
-     .login-page{background: #444}
+     .login-page{background: #222}
      .login-logo a{
         color:#fff;
         }

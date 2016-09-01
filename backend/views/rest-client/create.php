@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\RestSample */
+/* @var $model backend\models\RestClient */
 
-$this->title = '创建报告样本记录';
-$this->params['breadcrumbs'][] = ['label' => '患者资料', 'url' => ['index']];
+$this->title = '新建医生资料';
+$this->params['breadcrumbs'][] = ['label' => '医生', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="rest-sample-create">
+<div class="rest-client-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

@@ -1,21 +1,21 @@
 <?php
 
+use backend\models\RestReport;
 use yii\grid\GridView;
 use yii\helpers\Html;
-use backend\models\RestReport;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\MingruiAttachmentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
- 
+
 $id = $_GET['id'];
-
+global $sick;
 $report = RestReport::findOne($id);
-$sick = $report->sample->name;
+$sick   = $report->sample->name;
 
-$this->title = '附加报告列表';
+$this->title                   = '附加报告列表';
 $this->params['breadcrumbs'][] = ['label' => '报告列表', 'url' => ['rest-report/index']];
-$this->params['breadcrumbs'][] = ['label' => "[{$sick}]报告", 'url' => ['rest-report/view','id'=>$id]]; 
+$this->params['breadcrumbs'][] = ['label' => "[{$sick}]报告", 'url' => ['rest-report/view', 'id' => $id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mingrui-attachment-index">
@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?=Html::a('新增报告', ['create', 'id' => $_GET['id']], ['class' => 'btn btn-success'])?>
+        <?=Html::a('新增 附加报告', ['create', 'id' => $_GET['id']], ['class' => 'btn btn-success'])?>
     </p>
     <?=GridView::widget([
     'dataProvider' => $dataProvider,
@@ -34,12 +34,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
         [
             'value'         => 'id',
-            'label'=>'ID',
-            'attribute'=>'id',
+            'label'         => 'ID',
+            'attribute'     => 'id',
             'headerOptions' => ['width' => '60'],
         ],
 
-        //'report_id',
+        [
+            'attribute' => 'report_id',
+            'format'    => 'raw',
+            'label'     => '患者',
+            'value'     => function ($model) {
+                global $sick;return $sick;
+            },
+            'headerOptions' => ['width' => '100'],
+        ],
         //'image',
         'title',
         'description',

@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "mingrui_attachment".
@@ -36,19 +37,28 @@ class MingruiAttachment extends \yii\db\ActiveRecord
             [['description'], 'string', 'max' => 1024],
         ];
     }
-
+    public function behaviors()
+    {
+        return [
+            [
+                'class'              => TimestampBehavior::className(),
+                'createdAtAttribute' => 'createtime',
+                'updatedAtAttribute' => false,
+            ],
+        ];
+    }
     /**
      * @inheritdoc
      */
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'report_id' => '报告id',
-            'image' => '自增图片地址',
-            'title' => '标题',
+            'id'          => 'ID',
+            'report_id'   => '原报告id',
+            'image'       => '报告图片',
+            'title'       => '标题',
             'description' => '描述',
-            'createtime' => '时间',
+            'createtime'  => '时间',
         ];
     }
 }
