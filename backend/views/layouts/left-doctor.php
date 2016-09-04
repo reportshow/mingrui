@@ -46,16 +46,16 @@ $menu[] = [
         ],
     ],
 ];
-/*
+
 $menu[] = [
     'label' => '资料共享',
     'icon'  => 'fa fa-file-video-o',
     'url'   => '#',
     'items' => [
         [
-            'label' => '共享视频',
+            'label' => '视频资料',
             'icon'  => 'fa  fa-video-camera',
-            'url'   => '#',
+            'url'   => ['/mingrui-video/index'],
             'items' => [
 
             ],
@@ -69,7 +69,7 @@ $menu[] = [
             ],
         ],
     ],
-];*/
+];
 
 $menu[] = ['label' => '互动平台',
     'icon'             => 'fa fa-comments-o',

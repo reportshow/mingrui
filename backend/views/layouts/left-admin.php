@@ -55,10 +55,9 @@ $menu[] = [
         [
             'label' => '共享视频',
             'icon'  => 'fa  fa-video-camera',
-            'url'   => ['/mingrui-video'],
-            'items' => [
-
-            ],
+            'url'   => [Yii::$app->params['videoserver'] . "/videos"],
+            'template'=> '<a href="' . Yii::$app->params['videoserver'] . "/videos" .'">{icon}{label}</a>',
+            'items' => [],
         ],
         [
             'label' => '共享案例',

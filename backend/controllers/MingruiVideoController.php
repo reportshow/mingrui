@@ -37,10 +37,13 @@ class MingruiVideoController extends Controller
     {
         $searchModel = new MingruiVideoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $videoModel = new MingruiVideo();
+        $videos = $videoModel->videos();
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'videos'      => $videos,
         ]);
     }
 

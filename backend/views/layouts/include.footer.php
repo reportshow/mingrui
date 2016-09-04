@@ -2,15 +2,10 @@
  
  ?>
 
-
 <!-- jQuery 2.2.3 -->
 <!-- <script src="plugins/jQuery/jquery-2.2.3.min.js"></script> -->
 <!-- jQuery UI 1.11.4 -->
 <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button);
-</script>
 <!-- Bootstrap 3.3.6 -->
 <!-- <script src="bootstrap/js/bootstrap.min.js"></script> -->
 <!-- Morris.js charts -->
@@ -40,3 +35,19 @@
 <script src="<?=$directoryAsset?>/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?=$directoryAsset?>/js/demo.js"></script>
+<!-- Video Player -->
+<script src="/player/video.js"></script>
+<script src="/player/videojs-ie8.min.js"></script>
+<script src="/player/hls.js"></script>
+<script src="/player/videojs-hlsjs.js"></script>
+
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button);
+</script>
+<script>
+  var players = document.getElementsByClassName('video-js');
+  for(var i=0; i<players.length; i++){
+       videojs(players[i]);
+  }
+</script>

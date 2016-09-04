@@ -49,4 +49,10 @@ class MingruiVideo extends \yii\db\ActiveRecord
             'createtime' => '发布时间',
         ];
     }
+
+    public function videos()
+    {
+         $response = file_get_contents(Yii::$app->params['videoserver'] . "/API/videos");
+         return json_decode($response);
+    }
 }

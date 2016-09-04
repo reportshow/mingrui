@@ -10,27 +10,29 @@ use yii\grid\GridView;
 $this->title = '视频分享';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="mingrui-video-index">
+<?php $count = 0; foreach($videos as $video) { ?>
+<?php if(($count%2)==0) { ?>
+<div class="row">
+<?php } ?>
+  <div class="col-md-6">
+    <div class="box box-widget">
+      <div class="box-header with-border bg-light-blue">
+	<?php echo $video->title ?>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body bg-black">
+	<video  class="video-js vjs-default-skin" height="180" width="300" controls>
+	  <source src="<?php echo $video->video_url . '/index.m3u8' ?>" type="application/vnd.apple.mpegurl">
+	</video>
+        <p><?php echo $video->description ?></p>
+      </div>
+      <!-- /.box-body -->
+    </div>
+  </div>
+  <!-- /.col -->
 
- 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a('上传视频', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'title',
-            'description:ntext',
-            'youku_url:url',
-            'createtime',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+<?php if(($count%2)==1) { ?>              
 </div>
+<!-- /.row -->
+<?php } ?>
+<?php $count++; }?>
