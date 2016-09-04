@@ -8,7 +8,7 @@ use yii\helpers\Html;
     'class' => 'btn btn-success  btn-social  ',
 ])?>
 
-<?=Html::a('<i class="fa fa-file-image-o"></i>上传图片', ['/mingrui-attachment' ], [
+<?=Html::a('<i class="fa fa-file-image-o"></i>上传图片', ['/mingrui-mypic/' ], [
     'class' => 'btn btn-primary  btn-social ',
 ])?>
 

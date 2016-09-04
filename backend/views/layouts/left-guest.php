@@ -21,7 +21,7 @@ $menu[] = [
         [
             'label' => '上传图片',
             'icon'  => 'fa fa-file-image-o',
-            'url'   => ['/rest-report/index'],
+            'url'   => ['/mingrui-mypic/index'],
         ],
         [
             'label' => '病例/记事',
