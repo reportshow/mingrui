@@ -27,8 +27,8 @@ if($model->pdf){
 
 <div id="example1"></div> 
 <script>
-/*PDFObject.embed("<?=$pdfurl ?>", "#example1");*/
-PDFObject.embed("upload/NG16010024.pdf", "#example1");
+PDFObject.embed("<?=$pdfurl ?>", "#example1");
+/*PDFObject.embed("upload/NG16010024.pdf", "#example1");*/
 </script>
 <style>
 .pdfobject-container { height: 600px;}
