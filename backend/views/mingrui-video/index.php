@@ -11,16 +11,16 @@ $this->title = '视频分享';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php $count = 0; foreach($videos as $video) { ?>
-<?php if($count % 2 == 0) {?>
+<?php if(($count%2)==0) { ?>
 <div class="row">
-<?php } ?>  
+<?php } ?>
   <div class="col-md-6">
     <div class="box box-widget">
-      <div class="box-header with-border">
+      <div class="box-header with-border bg-light-blue">
 	<?php echo $video->title ?>
       </div>
       <!-- /.box-header -->
-      <div class="box-body text-center">
+      <div class="box-body bg-black">
 	<video  class="video-js vjs-default-skin" height="180" width="300" controls>
 	  <source src="<?php echo $video->video_url . '/index.m3u8' ?>" type="application/vnd.apple.mpegurl">
 	</video>
@@ -30,8 +30,9 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
   </div>
   <!-- /.col -->
-<?php if($count % 2 == 0) {?>
+
+<?php if(($count%2)==1) { ?>              
 </div>
-<?php } ?>  
 <!-- /.row -->
+<?php } ?>
 <?php $count++; }?>
