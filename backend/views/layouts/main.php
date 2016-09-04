@@ -39,6 +39,7 @@ if (Yii::$app->controller->action->id === 'login') {
 
         $this->head();
         require_once('include.php');
+        require_once('includejs.php');
          ?>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
