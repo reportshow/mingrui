@@ -1,3 +1,6 @@
+<style type="text/css">
+    .sidebar-menu ul.treeview-menu{display: block !important;}
+</style>
 <?php
 
 $menu = [
@@ -12,38 +15,51 @@ $menu[] = [
     'items' => [
         [
             'label' => '我的报告',
-            'icon'  => 'fa fa-calendar-plus-o',
-            'url'   =>   ['/rest-report/index'],
-
+            'icon'  => 'fa fa-github',
+            'url'   => ['/rest-report/view', 'id'=>3965],
+        ],
+        [
+            'label' => '上传图片',
+            'icon'  => 'fa fa-file-image-o',
+            'url'   => ['/rest-report/index'],
+        ],
+        [
+            'label' => '病例/记事',
+            'icon'  => 'fa fa-calendar',
+            'url'   => ['/rest-report/index'],
+        ],
+        [
+            'label' => '检测流程',
+            'icon'  => 'fa fa-stack-overflow',
+            'url'   => ['/'],
         ],
 
-         
     ],
 ];
- 
+
 /*
 $menu[] = [
-    'label' => '资料共享',
-    'icon'  => 'fa fa-file-video-o',
-    'url'   => '#',
-    'items' => [
-        [
-            'label' => '共享视频',
-            'icon'  => 'fa  fa-video-camera',
-            'url'   => '#',
-            'items' => [
+'label' => '资料共享',
+'icon'  => 'fa fa-file-video-o',
+'url'   => '#',
+'items' => [
+[
+'label' => '共享视频',
+'icon'  => 'fa  fa-video-camera',
+'url'   => '#',
+'items' => [
 
-            ],
-        ],
-        [
-            'label' => '共享案例',
-            'icon'  => 'fa fa-file-powerpoint-o',
-            'url'   => '#',
-            'items' => [
+],
+],
+[
+'label' => '共享案例',
+'icon'  => 'fa fa-file-powerpoint-o',
+'url'   => '#',
+'items' => [
 
-            ],
-        ],
-    ],
+],
+],
+],
 ];*/
 
 $menu[] = ['label' => '互动平台',
@@ -68,6 +84,8 @@ $menu[] = ['label' => '互动平台',
 
     ],
 ];
- 
 
 return $menu;
+
+?>
+

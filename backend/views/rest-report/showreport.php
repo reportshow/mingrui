@@ -15,7 +15,7 @@ AppAsset::register($this);
 //$this->registerCssFile('@web/css/ionicons.min.css',['depends'=>['backend\assets\AppAsset']]); 
 if($model->pdf){
 	$pdfurl = str_replace('/primerbean/media/', 'user/', $model->pdf);
-    $pdfurl = Yii::$app->params['erp_url'] . $pdfurl;
+    $pdfurl = Yii::$app->params['erp_url'] . $pdfurl ;
 }else{
 	echo "<h1>抱歉，没有报告数据！</h1>";
 	return;
@@ -27,7 +27,11 @@ if($model->pdf){
 
 <div id="example1"></div> 
 <script>
-PDFObject.embed("<?=$pdfurl ?>", "#example1");
+var options = {
+   fallbackLink: "<p>This is a <a href='[url]'>fallback link</a></p>"
+};
+
+PDFObject.embed("<?=$pdfurl ?>", "#example1", options);
 /*PDFObject.embed("upload/NG16010024.pdf", "#example1");*/
 </script>
 <style>
