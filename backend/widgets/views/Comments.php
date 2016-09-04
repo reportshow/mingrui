@@ -29,7 +29,7 @@ use backend\models\MingruiComments;
     <!-- /.box-header -->
     <div class="box-body">
         <!-- Conversations are loaded here -->
-        <div class="direct-chat-messages" style='height:auto'>
+        <div class="direct-chat-messages" style='height:330px'>
             <?php
 foreach ($model->comments as $comment) {
     if ($comment) {

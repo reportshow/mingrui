@@ -178,7 +178,17 @@ class RestReport extends \yii\db\ActiveRecord
 
         }
     }
+    public function getPdfurl()
+    {
+        if ($this->pdf) {
+            $pdfurl = str_replace('/primerbean/media/', 'user/', $this->pdf);
+            $pdfurl = Yii::$app->params['erp_url'] . $pdfurl;
+            return $pdfurl;
+        } else {
 
+            return;
+        }
+    }
     public function getConclusiontag()
     {
         $conclusion = $this->conclusion;
@@ -194,7 +204,6 @@ class RestReport extends \yii\db\ActiveRecord
         }
         return "<span class='$class' style='padding:0px 5px'>" . $conclusion . '</span>';
     }
-
 
     // /**
     //  * @return \yii\db\ActiveQuery

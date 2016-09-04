@@ -62,13 +62,11 @@ class RestReportController extends Controller
     {
         $viewname = 'view';
 
-        if (Yii::$app->user->can('doctor')) {
+        if (Yii::$app->user->can('guest')) {
             $viewname = 'view-guest';
-        } else if (Yii::$app->user->can('guest')) {
-            $viewname = 'view-guest';
+        } else {
+            $viewname = 'view';
         }
-
-        $viewname = 'view-guest'; //test
 
         return $this->render($viewname, [
             'model'    => $this->findModel($id),
