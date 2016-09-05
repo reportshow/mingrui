@@ -70,6 +70,8 @@ for(var i=0; i<players.length; i++){
     });
 }
 
-window.onresize = resizePlayers;
+window.onresize = function(){
+    resizePlayers;
+};
 
 </script>

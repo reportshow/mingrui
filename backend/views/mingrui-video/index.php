@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 <?php $count = 0; foreach($videos as $video) { ?>
-<?php if(($count%2)==0) { ?>
+<?php if(($count%3)==0) { ?>
 <div class="row">
 <?php } ?>
   <div class="col-md-4">
@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
   </div>
   <!-- /.col -->
 
-<?php if(($count%2)==1) { ?>              
+<?php if(($count%3)==2) { ?>              
 </div>
 <!-- /.row -->
 <?php } ?>
