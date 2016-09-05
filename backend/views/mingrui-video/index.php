@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
       </div>
       <!-- /.box-header -->
       <div class="box-body bg-black">
-	<video  class="video-js vjs-default-skin center" height="180" width="300" center controls>
+	<video  class="video-js vjs-default-skin vjs-big-play-centered center" controls>
 	  <source src="<?php echo $video->video_url . '/index.m3u8' ?>" type="application/vnd.apple.mpegurl">
 	</video>
       </div>
