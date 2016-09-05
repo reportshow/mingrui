@@ -10,28 +10,39 @@ use yii\grid\GridView;
 $this->title = '视频分享';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<style>
+  .center {
+  margin-left: auto;
+  margin-right: auto;
+  display: block
+  }
+</style>
+
+
 <?php $count = 0; foreach($videos as $video) { ?>
-<?php if(($count%2)==0) { ?>
+<?php if(($count%3)==0) { ?>
 <div class="row">
 <?php } ?>
-  <div class="col-md-6">
+  <div class="col-md-3">
     <div class="box box-widget">
       <div class="box-header with-border bg-light-blue">
 	<?php echo $video->title ?>
       </div>
       <!-- /.box-header -->
       <div class="box-body bg-black">
-	<video  class="video-js vjs-default-skin" height="180" width="300" controls>
+	<video  class="video-js vjs-default-skin center" height="180" width="300" center controls>
 	  <source src="<?php echo $video->video_url . '/index.m3u8' ?>" type="application/vnd.apple.mpegurl">
 	</video>
-        <p><?php echo $video->description ?></p>
       </div>
       <!-- /.box-body -->
+      <div class="box-header bg-black text-center">
+	<p><?php echo $video->description ?></p>
+      </div>
     </div>
   </div>
   <!-- /.col -->
 
-<?php if(($count%2)==1) { ?>              
+<?php if(($count%3)==2) { ?>              
 </div>
 <!-- /.row -->
 <?php } ?>
