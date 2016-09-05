@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     'class' => 'btn btn-primary',
 ])?>
 
-<?=Html::a('数据分析', ['rest-report/attachment', 'id' => $model->id], [
+<?=Html::a('数据分析', ['rest-report/analyze', 'id' => $model->id], [
     'class' => 'btn btn-info',
 ])?>
 

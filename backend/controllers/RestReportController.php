@@ -105,7 +105,18 @@ class RestReportController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
-
+    
+    /**
+     * Displays a single RestReport model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionAnalyze($id)
+    {
+        return $this->render('analyze', [
+            'model' => $this->findModel($id),
+        ]);
+    }
     /**
      * Creates a new RestReport model.
      * If creation is successful, the browser will be redirected to the 'view' page.

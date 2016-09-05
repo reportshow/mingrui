@@ -36,10 +36,10 @@
 <!-- AdminLTE for demo purposes -->
 <script src="<?=$directoryAsset?>/js/demo.js"></script>
 <!-- Video Player -->
-<script src="/player/video.js"></script>
-<script src="/player/videojs-ie8.min.js"></script>
-<script src="/player/hls.js"></script>
-<script src="/player/videojs-hlsjs.js"></script>
+<script src="player/video.js"></script>
+<script src="player/videojs-ie8.min.js"></script>
+<script src="player/hls.js"></script>
+<script src="player/videojs-hlsjs.js"></script>
 
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
