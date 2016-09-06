@@ -26,7 +26,7 @@ $menu[] = [
         [
             'label' => '病例/记事',
             'icon'  => 'fa fa-calendar',
-            'url'   => ['/rest-report/index'],
+            'url'   => ['/mingrui-note/index'],
         ],
         [
             'label' => '检测流程',
