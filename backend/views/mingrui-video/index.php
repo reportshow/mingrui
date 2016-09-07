@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
       </div>
       <!-- /.box-header -->
       <div class="box-body bg-black">
-	<video  class="video-js vjs-default-skin vjs-big-play-centered center" controls>
+	<video  class="video-js vjs-default-skin vjs-big-play-centered center" poster="<?php echo $video->thumb_picture_url?>" preload controls>
 	  <source src="<?php echo $video->video_url . '/index.m3u8' ?>" type="application/vnd.apple.mpegurl">
 	</video>
       </div>
