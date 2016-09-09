@@ -29,7 +29,7 @@ $menu[] = [
 ];
 
 $menu[] = [
-    'label' => '我的病人',
+    'label' => '患者管理',
     'icon'  => 'fa fa-users',
     'url'   => '#',
     'items' => [
@@ -48,7 +48,7 @@ $menu[] = [
 ];
 
 $menu[] = [
-    'label' => '资料共享',
+    'label' => '共享资料管理',
     'icon'  => 'fa fa-file-video-o',
     'url'   => '#',
     'items' => [

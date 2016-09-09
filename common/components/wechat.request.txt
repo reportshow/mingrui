@@ -1,0 +1,19 @@
+<xml>
+<URL>
+    <![CDATA[http://ding.scicompound.com/mingrui/report/backend/web/?r=wechat/talk]]>
+</URL>
+<ToUserName>
+    <![CDATA[gh_776b8dd2561c]]>
+</ToUserName>
+<FromUserName>
+    <![CDATA[o_UNeuLKALkWnWdHdg3XXEODyl2w]]>
+</FromUserName>
+<CreateTime>1473345216</CreateTime>
+<MsgType>
+    <![CDATA[text]]>
+</MsgType>
+<Content>
+    <![CDATA[SSSS]]>
+</Content>
+<MsgId>122</MsgId>
+</xml>
