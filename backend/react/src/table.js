@@ -43,7 +43,7 @@ export default class TableExampleComplex extends React.Component {
 	    deselectOnClickaway: true,
 	    showCheckboxes: false,
 	    adjustForCheckboxes: false,
-	    height: '300px',
+	    height: '500px',
 	};	
     }
 
@@ -98,7 +98,7 @@ export default class TableExampleComplex extends React.Component {
 	 >
 	<TableRow>
 	  <TableHeaderColumn colSpan="6" tooltip="诊断过滤工具" style={{textAlign: 'center'}}>
-	    Super Header
+	    诊断过滤工具
 	  </TableHeaderColumn>
 	</TableRow>
 	<TableRow>
