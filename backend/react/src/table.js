@@ -7,6 +7,8 @@ import {deepOrange500} from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
+import ReactTooltip from 'react-tooltip';
+
 const muiTheme = getMuiTheme({
     palette: {
 	accent1Color: deepOrange500,
@@ -81,9 +83,10 @@ export default class TableExampleComplex extends React.Component {
     };
 
     render() {
-	return (
+return (
 <MuiThemeProvider muiTheme={muiTheme}>
   <div>
+    <ReactTooltip type="info" effect="float"/>
     <Table
        height={this.state.height}
        fixedHeader={this.state.fixedHeader}
@@ -123,12 +126,12 @@ export default class TableExampleComplex extends React.Component {
 	 >
 	{this.state.queryResult.map( (row, index) => (
 	<TableRow key={index} selected={row.selected}>
-	  <TableRowColumn>{row[0]}</TableRowColumn>
-	  <TableRowColumn>{row[1]}</TableRowColumn>
-	  <TableRowColumn>{row[5]}</TableRowColumn>
-	  <TableRowColumn>{row[6][0]}</TableRowColumn>
-	  <TableRowColumn>{row[6][1]}</TableRowColumn>
-	  <TableRowColumn>{row[6][2]}</TableRowColumn>
+	  <TableRowColumn data-tip={row[0]}>{row[0]}</TableRowColumn>
+	  <TableRowColumn data-tip={row[1]}>{row[1]}</TableRowColumn>
+	  <TableRowColumn data-tip={row[5]}>{row[5]}</TableRowColumn>
+	  <TableRowColumn data-tip={row[6][0]}>{row[6][0]}</TableRowColumn>
+	  <TableRowColumn data-tip={row[6][1]}>{row[6][1]}</TableRowColumn>
+	  <TableRowColumn data-tip={row[6][2]}>{row[6][2]}</TableRowColumn>
 	</TableRow>
 	))}
       </TableBody>
