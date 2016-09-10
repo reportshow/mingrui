@@ -17,18 +17,27 @@ class WechatController extends Controller
     public $xml;
     public $reply;
     public $wechat;
+
     public function init()
+    {
+        session_start();
+    }
+    public function wechatInit()
     {
         parent::init();
         $this->wechat = Yii::$app->wechat;
-        $this->xml    = $this->wechat->parseRequestData();
+
+        $this->xml = $this->wechat->parseRequestData();
         if ($this->xml) {
             $this->reply = new WechatMessage($this->xml);
         }
 
     }
+
+   
     public function actionTalk()
     {
+        $this->wechatInit();
         /*if ($wechat->checkSignature()) {
         echo $_GET["echostr"];
         }*/
@@ -62,10 +71,6 @@ class WechatController extends Controller
     {
 
     }
-    public function actionLogin()
-    {
-        return WechatUser::actionLogin($this);
-       
-    }
+    
 
 }
