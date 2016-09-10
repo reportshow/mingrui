@@ -29,7 +29,7 @@ return [
         '@dosamigos/datepicker'=>'@vendor/2amigos/yii2-date-picker-widget/src/DatePicker',      
     ],
     'as access'           => [
-        'class'        => 'mdm\admin\classes\AccessControl',
+        'class'        => 'mdm\admin\components\AccessControl',
         'allowActions' => [
             'site/*', //允许访问的节点， ！！没有加入的就默认不被访问
             //'admin/*',//允许所有人访问admin节点及其子节点

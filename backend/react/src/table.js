@@ -3,6 +3,18 @@ import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow,
 import TextField from 'material-ui/TextField';
 import Toggle from 'material-ui/Toggle';
 
+import {deepOrange500} from 'material-ui/styles/colors';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
+import ReactTooltip from 'react-tooltip';
+
+const muiTheme = getMuiTheme({
+    palette: {
+	accent1Color: deepOrange500,
+    },
+});
+
 const styles = {
     propContainer: {
 	width: 200,
@@ -14,189 +26,118 @@ const styles = {
     },
 };
 
-const tableData = [
-    {
-	name: 'John Smith',
-        status: 'Employed',
-	selected: true,
-    },
-    {
-	name: 'Randal White',
-	status: 'Unemployed',
-    },
-    {
-	name: 'Stephanie Sanders',
-	status: 'Employed',
-	selected: true,
-    },
-    {
-	name: 'Steve Brown',
-	status: 'Employed',
-    },
-    {
-	name: 'Joyce Whitten',
-	status: 'Employed',
-    },
-    {
-	name: 'Samuel Roberts',
-	status: 'Employed',
-    },
-    {
-	name: 'Adam Moore',
-	status: 'Employed',
-    },
-];
-
 export default class TableExampleComplex extends React.Component {
-
+    
     constructor(props) {
 	super(props);
-
 	this.state = {
-            fixedHeader: true,
+	    ge: '',
+	    po: '',
+	    ty: '',
+	    queryResult: tableData,
+	    fixedHeader: true,
 	    fixedFooter: true,
-	    stripedRows: false,
-	    showRowHover: false,
-	    selectable: true,
+	    stripedRows: true,
+	    showRowHover: true,
+	    selectable: false,
 	    multiSelectable: false,
 	    enableSelectAll: false,
 	    deselectOnClickaway: true,
-	    showCheckboxes: true,
-	    height: '300px',
-	};
+	    showCheckboxes: false,
+	    adjustForCheckboxes: false,
+	    height: '500px',
+	};	
     }
 
-    // handleToggle = (event, toggled) => {
-    // 	this.setState({
-    //         [event.target.name]: toggled,
-    // 	});
-    // };
+    handleChange = (event) => {
+	var queryResult = [];
+	var ge= this.state.ge;
+	var po= this.state.po;
+	var ty= this.state.ty;
+	
+	if(event.target.name == 'ge') {
+	    this.setState({ge:  event.target.value});
+	    ge = event.target.value;
+	}
 
-    // handleChange = (event) => {
-    // 	this.setState({height: event.target.value});
-    // };
+	if(event.target.name == 'po') {
+	    this.setState({po:  event.target.value});
+	    po = event.target.value;
+	}
+	
+	if(event.target.name == 'ty') {
+	    this.setState({ty:  event.target.value});
+	    ty = event.target.value;
+	}
+
+	tableData.forEach(function(record){
+	    if(record[0].toLowerCase().indexOf(ge)!=-1 &&
+	       record[1].toLowerCase().indexOf(po)!=-1 &&
+	       record[5].toLowerCase().indexOf(ty)!=-1
+	      )
+		queryResult.push(record);
+	});
+
+
+	this.setState({queryResult: queryResult})
+    };
 
     render() {
-	return (
-		<div>
-	        <Table
-	    height={this.state.height}
-	    fixedHeader={this.state.fixedHeader}
-	    fixedFooter={this.state.fixedFooter}
-	    selectable={this.state.selectable}
-	    multiSelectable={this.state.multiSelectable}
-		>
-		<TableHeader
-	    displaySelectAll={this.state.showCheckboxes}
-	    adjustForCheckbox={this.state.showCheckboxes}
-	    enableSelectAll={this.state.enableSelectAll}
-		>
-		<TableRow>
-		<TableHeaderColumn colSpan="3" tooltip="Super Header" style={{textAlign: 'center'}}>
-		Super Header
-	    </TableHeaderColumn>
-		</TableRow>
-		<TableRow>
-		<TableHeaderColumn tooltip="The ID">ID</TableHeaderColumn>
-		<TableHeaderColumn tooltip="The Name">Name</TableHeaderColumn>
-		<TableHeaderColumn tooltip="The Status">Status</TableHeaderColumn>
-		</TableRow>
-		</TableHeader>
-		<TableBody
-	    displayRowCheckbox={this.state.showCheckboxes}
-	    deselectOnClickaway={this.state.deselectOnClickaway}
-	    showRowHover={this.state.showRowHover}
-	    stripedRows={this.state.stripedRows}
-		>
-		{tableData.map( (row, index) => (
-			<TableRow key={index} selected={row.selected}>
-			<TableRowColumn>{index}</TableRowColumn>
-			<TableRowColumn>{row.name}</TableRowColumn>
-			<TableRowColumn>{row.status}</TableRowColumn>
-			</TableRow>
-		))}
-	    </TableBody>
-		<TableFooter
-	    adjustForCheckbox={this.state.showCheckboxes}
-		>
-		<TableRow>
-		<TableRowColumn>ID</TableRowColumn>
-		<TableRowColumn>Name</TableRowColumn>
-		<TableRowColumn>Status</TableRowColumn>
-		</TableRow>
-		<TableRow>
-		<TableRowColumn colSpan="3" style={{textAlign: 'center'}}>
-		Super Footer
-	    </TableRowColumn>
-		</TableRow>
-		</TableFooter>
-		</Table>
-
-		<div style={styles.propContainer}>
-	        <h3>Table Properties</h3>
-		<TextField
-	    floatingLabelText="Table Body Height"
-	    defaultValue={this.state.height}
-	    onChange={this.handleChange}
-		/>
-		<Toggle
-	    name="fixedHeader"
-	    label="Fixed Header"
-	    onToggle={this.handleToggle}
-	    defaultToggled={this.state.fixedHeader}
-		/>
-		<Toggle
-	    name="fixedFooter"
-	    label="Fixed Footer"
-	    onToggle={this.handleToggle}
-	    defaultToggled={this.state.fixedFooter}
-		/>
-		<Toggle
-	    name="selectable"
-	    label="Selectable"
-	    onToggle={this.handleToggle}
-	    defaultToggled={this.state.selectable}
-		/>
-		<Toggle
-	    name="multiSelectable"
-	    label="Multi-Selectable"
-	    onToggle={this.handleToggle}
-	    defaultToggled={this.state.multiSelectable}
-		/>
-		<Toggle
-	    name="enableSelectAll"
-	    label="Enable Select All"
-	    onToggle={this.handleToggle}
-	    defaultToggled={this.state.enableSelectAll}
-		/>
-		<h3 style={styles.propToggleHeader}>TableBody Properties</h3>
-		<Toggle
-	    name="deselectOnClickaway"
-	    label="Deselect On Clickaway"
-	    onToggle={this.handleToggle}
-	    defaultToggled={this.state.deselectOnClickaway}
-		/>
-		<Toggle
-	    name="stripedRows"
-	    label="Stripe Rows"
-	    onToggle={this.handleToggle}
-	    defaultToggled={this.state.stripedRows}
-		/>
-		<Toggle
-	    name="showRowHover"
-	    label="Show Row Hover"
-	    onToggle={this.handleToggle}
-	    defaultToggled={this.state.showRowHover}
-		/>
-		<h3 style={styles.propToggleHeader}>Multiple Properties</h3>
-		<Toggle
-	    name="showCheckboxes"
-	    label="Show Checkboxes"
-	    onToggle={this.handleToggle}
-	    defaultToggled={this.state.showCheckboxes}
-		/>
-		</div>
-		</div>
+return (
+<MuiThemeProvider muiTheme={muiTheme}>
+  <div>
+    <ReactTooltip type="info" effect="float"/>
+    <Table
+       height={this.state.height}
+       fixedHeader={this.state.fixedHeader}
+       fixedFooter={this.state.fixedFooter}
+       selectable={this.state.selectable}
+       multiSelectable={this.state.multiSelectable}
+       >
+      <TableHeader
+	 displaySelectAll={this.state.showCheckboxes}
+	 adjustForCheckbox={this.state.adjustForCheckboxes}
+	 enableSelectAll={this.state.enableSelectAll}
+	 >
+	<TableRow>
+	  <TableHeaderColumn colSpan="6" tooltip="诊断过滤工具" style={{textAlign: 'center'}}>
+	    诊断过滤工具
+	  </TableHeaderColumn>
+	</TableRow>
+	<TableRow>
+	  <TableHeaderColumn ><TextField name='ge' floatingLabelText="基因" defaultValue={this.state.ge} fullWidth={true} onChange={this.handleChange}/></TableHeaderColumn>
+		<TableHeaderColumn ><TextField name='po' floatingLabelText="突变位置" defaultValue={this.state.po} fullWidth={true} onChange={this.handleChange}/></TableHeaderColumn>
+		<TableHeaderColumn ><TextField name='ty' floatingLabelText="突变类型" defaultValue={this.state.ty} fullWidth={true} onChange={this.handleChange}/></TableHeaderColumn>
+	</TableRow>
+	<TableRow>
+	  <TableHeaderColumn tooltip="基因">基因</TableHeaderColumn>
+	  <TableHeaderColumn tooltip="突变位置">突变位置</TableHeaderColumn>
+	  <TableHeaderColumn tooltip="突变类型">突变类型</TableHeaderColumn>
+	  <TableHeaderColumn tooltip="千人基因组">千人基因组</TableHeaderColumn>
+	  <TableHeaderColumn tooltip="欧洲6500">欧洲6500</TableHeaderColumn>
+	  <TableHeaderColumn tooltip="inhouse">inhouse</TableHeaderColumn>
+	</TableRow>
+      </TableHeader>
+      <TableBody
+	 displayRowCheckbox={this.state.showCheckboxes}
+	 deselectOnClickaway={this.state.deselectOnClickaway}
+	 showRowHover={this.state.showRowHover}
+	 stripedRows={this.state.stripedRows}
+	 >
+	{this.state.queryResult.map( (row, index) => (
+	<TableRow key={index} selected={row.selected}>
+	  <TableRowColumn data-tip={row[0]}>{row[0]}</TableRowColumn>
+	  <TableRowColumn data-tip={row[1]}>{row[1]}</TableRowColumn>
+	  <TableRowColumn data-tip={row[5]}>{row[5]}</TableRowColumn>
+	  <TableRowColumn data-tip={row[6][0]}>{row[6][0]}</TableRowColumn>
+	  <TableRowColumn data-tip={row[6][1]}>{row[6][1]}</TableRowColumn>
+	  <TableRowColumn data-tip={row[6][2]}>{row[6][2]}</TableRowColumn>
+	</TableRow>
+	))}
+      </TableBody>
+    </Table>
+  </div>
+</MuiThemeProvider>
 	);
     }
 }

@@ -19,11 +19,15 @@ AppAsset::register($this);
 $sqliteUrl = str_replace('/primerbean/media/', 'user/', $model->snpsqlite);
 $sqliteUrl = Yii::$app->params['erp_url'] . $sqliteUrl ;
  
- $data = file_get_contents($sqliteUrl);
-
- $obj = json_decode($data);
-
- var_export($obj);
-
+$data = file_get_contents($sqliteUrl);
+$data = json_decode($data);
+//$data = array('apple', 'orange', 'banana', 'strawberry');
+$data = json_encode($data);
 ?>
- 
+
+<div id="app"></div>
+<script>
+    var tableData = <?php echo $data ?>;
+</script>
+<script src="report/app.js">
+</script>
