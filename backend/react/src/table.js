@@ -135,20 +135,6 @@ return (
 	</TableRow>
 	))}
       </TableBody>
-      <TableFooter
-	 adjustForCheckbox={this.state.adjustForCheckboxes}
-	 >
-	<TableRow>
-	  <TableRowColumn>ID</TableRowColumn>
-	  <TableRowColumn>Name</TableRowColumn>
-	  <TableRowColumn>Status</TableRowColumn>
-	</TableRow>
-	<TableRow>
-	  <TableRowColumn colSpan="6" style={{textAlign: 'center'}}>
-	    Super Footer
-	  </TableRowColumn>
-	</TableRow>
-      </TableFooter>
     </Table>
   </div>
 </MuiThemeProvider>
