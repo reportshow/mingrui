@@ -118,6 +118,15 @@ class RestReportController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
+
+    public function actionStats($id)
+    {
+        return $this->render('stats', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    
     /**
      * Creates a new RestReport model.
      * If creation is successful, the browser will be redirected to the 'view' page.

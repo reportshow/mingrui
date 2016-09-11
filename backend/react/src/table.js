@@ -78,8 +78,11 @@ export default class TableExampleComplex extends React.Component {
 		queryResult.push(record);
 	});
 
+	this.setState({queryResult: queryResult});
+    };
 
-	this.setState({queryResult: queryResult})
+    handleRowHover = (row) => {
+	ReactTooltip.rebuild();
     };
 
     render() {
@@ -93,6 +96,7 @@ return (
        fixedFooter={this.state.fixedFooter}
        selectable={this.state.selectable}
        multiSelectable={this.state.multiSelectable}
+       onRowHover = {this.handleRowHover}
        >
       <TableHeader
 	 displaySelectAll={this.state.showCheckboxes}

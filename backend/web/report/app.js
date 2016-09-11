@@ -21905,6 +21905,10 @@
 										_this.setState({ queryResult: queryResult });
 							};
 
+							_this.handleRowHover = function (row) {
+										_reactTooltip2.default.rebuild();
+							};
+
 							_this.state = {
 										ge: '',
 										po: '',
@@ -21942,7 +21946,8 @@
 																						fixedHeader: this.state.fixedHeader,
 																						fixedFooter: this.state.fixedFooter,
 																						selectable: this.state.selectable,
-																						multiSelectable: this.state.multiSelectable
+																						multiSelectable: this.state.multiSelectable,
+																						onRowHover: this.handleRowHover
 																			},
 																			_react2.default.createElement(
 																						_Table.TableHeader,
