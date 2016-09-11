@@ -1,32 +1,65 @@
 <?php
 namespace common\models;
 
+use common\models\User;
 use Yii;
+use yii\base\Model;
 
-class WechatUser
+class WechatUser extends Model
 {
-    /**
-     * 认证的回调
-     * @param  [type] $ctrl [description]
-     * @return [type]       [description]
-     */
+    public $mobile;
+    public $smscode;
+    public $openid;
+
+    public function rules()
+    {
+        return [
+            [['mobile', 'smscode', 'openid'], 'safe'],
+        ];
+    }
+    public function bindMobile()
+    {
+        // 1.检查sms
+        // TODO
+        //2. 保存手机号
+        if (!$this->openid) {
+            $this->openid = $_SESSION['openid'];
+        }
+        if (!$this->openid) {
+            return;
+        }
+        $user = User::find()->where(['wx_openid' => $this->openid])->one();
+        if ($user) {
+            $user->username = $this->mobile;
+            $user->status   = 10;
+
+            $user->updated_at = time();
+            if (!$user->save()) {
+                var_export($user->errors);
+                exit;
+            }
+            return true;
+        } else {
+            exit('没有该用户openid=' . $this->openid);
+        }
+
+    }
+    public function setMobile($mobile)
+    {
+        $this->mobile = $mobile;
+    }
+    public function getMobile()
+    {
+        return $this->mobile;
+    }
+
     public static function actionLogin($ctrl)
     {
-        $rlt = self::userInfo();
-        if ($rlt == 'ok') {
-            echo "已经登记过";
-        } else if ($rlt && !empty($rlt['openid'])) {
-            return $ctrl->render('askmobile');
 
-        } else if ($rlt == 'askmobile') {
-
-            return $ctrl->render('askmobile');
-        } else {
-
-        }
     }
     public static function userInfo()
     {
+
         //获得openid  accessToken
         $oauth = Yii::$app->wechat->getOauth2AccessToken($_GET['code']);
 
@@ -40,14 +73,15 @@ class WechatUser
                 $_SESSION['openid'] = $oauth['openid'];
                 return $wechatinfo;
             } else {
-
+                return 'get wechat info fail';
             }
         } else {
             $_SESSION['openid'] = $oauth['openid'];
-            if ($user->status == 0) { //登记过，但是么没绑定手机
+            if ($user->status == 0) {
+                //登记过，但是么没绑定手机
                 return 'askmobile';
             }
-            return 'ok';
+            return $user;
         }
 
     }
@@ -63,7 +97,7 @@ class WechatUser
         }
 
         //去微信认证
-        $redirectUrl = Yii::$app->urlManager->createAbsoluteUrl(['wechat/login']);
+        $redirectUrl = Yii::$app->urlManager->createAbsoluteUrl(['wechat-oauth/login']);
         $toUrl       = Yii::$app->wechat->getOauth2AuthorizeUrl($redirectUrl, 'LOGIN', 'snsapi_userinfo');
         header("Location: $toUrl");
         exit;
@@ -91,4 +125,3 @@ class WechatUser
         return true;
     }
 }
- 
