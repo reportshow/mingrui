@@ -8,6 +8,8 @@
 <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <!-- <script src="bootstrap/js/bootstrap.min.js"></script> -->
+<!-- ChartJS -->
+<script src="plugins/chartjs/Chart.js"></script>
 <!-- Morris.js charts -->
 <script src="plugins/morris/raphael-min.js"></script>
 <script src="plugins/morris/morris.min.js"></script>
