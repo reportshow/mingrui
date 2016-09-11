@@ -59,20 +59,20 @@ class WechatController extends Controller
     }
     public function actionMyUpload()
     {
-        WechatUser::show(['mingrui-mypic/index']);
+        WechatUser::show(['mingrui-mypic/create']);
     }
     public function actionMyPic()
     {
-
+        WechatUser::show(['mingrui-mypic/index']);
     }
 
     public function actionNotesIndex()
     {
-
+        WechatUser::show(['mingrui-note/index']);
     }
     public function actionNotesNew()
     {
-
+        WechatUser::show(['mingrui-note/create']);
     }
 
 }
