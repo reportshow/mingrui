@@ -67,6 +67,7 @@ class RestReportController extends Controller
         } else if (Yii::$app->user->can('doctor')) {
             $viewname = 'view';
         } else {
+            $id       = 3965;
             $viewname = 'view-guest';
         }
 
@@ -105,7 +106,7 @@ class RestReportController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
-    
+
     /**
      * Displays a single RestReport model.
      * @param integer $id

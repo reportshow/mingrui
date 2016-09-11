@@ -5,7 +5,7 @@ use yii\helpers\Html;
 <div class='row' style="padding:8px">
 	<div class='col-xs-8 col-md-8'> 
 
-		<?=Html::a('<i class="fa fa-github"></i>查看报告', ['/rest-report/view', 'id'=>3965], [
+		<?=Html::a('<i class="fa fa-github"></i>查看报告', ['/rest-report/view', 'id'=>1], [
 		    'class' => 'btn btn-success  btn-social  ',
 		])?>
 

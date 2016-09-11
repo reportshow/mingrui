@@ -17,11 +17,15 @@ class WechatController extends Controller
     public $xml;
     public $reply;
     public $wechat;
+    /*public function beforeAction(){
+
+    }*/
 
     public function init()
     {
         session_start();
     }
+
     public function wechatInit()
     {
         parent::init();
@@ -34,7 +38,6 @@ class WechatController extends Controller
 
     }
 
-   
     public function actionTalk()
     {
         $this->wechatInit();
@@ -52,11 +55,11 @@ class WechatController extends Controller
 
     public function actionMyReport()
     {
-        WechatUser::oauth();
+        WechatUser::show(['rest-report/view', 'id' => 1]);
     }
     public function actionMyUpload()
     {
-
+        WechatUser::show(['mingrui-mypic/index']);
     }
     public function actionMyPic()
     {
@@ -71,6 +74,5 @@ class WechatController extends Controller
     {
 
     }
-    
 
 }

@@ -24,7 +24,7 @@ class WechatOauthController extends Controller
 
     public function actionTest()
     {
-        return self::askMobile($this);
+        return self::askMobile();
         // return $this->render('askmobile');
     }
     /**
@@ -35,13 +35,26 @@ class WechatOauthController extends Controller
     {
         $model = new WechatUser();
 
-        if ($model->load(Yii::$app->request->post()) && $model->bindMobile()) {
-            exit('okkkkkk');
+        if ($model->load(Yii::$app->request->post()) && $user = $model->bindMobile()) {
+            //权限获取完毕
+            
+            self::entery($user);
+
         } else {
             var_export($model->errors);
-            return self::askMobile($this);
+            return self::askMobile();
         }
 
+    }
+    /**
+     * [entery description]
+     * @return [type] [description]
+     */
+    public static function entery($user)
+    {
+        Yii::$app->user->login($user, 0);
+        header('Location: ' . $_SESSION['entery_url']);
+        exit();
     }
 
     /**
@@ -51,31 +64,29 @@ class WechatOauthController extends Controller
      */
     public function actionLogin()
     {
+        $user = WechatUser::wechatUserInfo();
+        if ($user) {
+            if ($user->status == 0) {
+                return self::askMobile();
 
-        $rlt = self::userInfo();
-        if ($rlt && !empty($rlt['wx_openid'])) {
-            //数据库记录
-            echo "之前登记过";
-        } else if ($rlt && !empty($rlt['openid'])) {
-            //wechat返回
-            self::askMobile();
-
-        } else if ($rlt == 'askmobile') {
-            self::askMobile();
+            } else {
+                //权限获取完毕
+                self::entery($user);
+            }
         } else {
-
+            exit('WechatUser::userInfo fail');
         }
 
     }
 
-    public static function askMobile($ctrl)
+    public function askMobile()
     {
         $model = new WechatUser();
 
         $bindMobileUrl = Yii::$app->urlManager->createUrl(['/wechat-oauth/bind-mobile']);
-        $content       = $ctrl->render('/wechat/bind-mobile', ['model' => $model, 'bindMobileUrl' => $bindMobileUrl]);
+        $content       = $this->render('/wechat/bind-mobile', ['model' => $model, 'bindMobileUrl' => $bindMobileUrl]);
 
-        return $ctrl->render(
+        return $this->render(
             '/layouts/main-login',
             ['content' => $content]
         );
