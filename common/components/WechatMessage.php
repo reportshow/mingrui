@@ -39,10 +39,12 @@ class WechatMessage extends Component
 
         $itemstr = '';
         foreach ($data as $item) {
+            $tpl = self::ARTICLE_ITEM;
             foreach ($item as $key => $val) {
                 $key = '{@' . strtoupper($key) . '}';
-                $itemstr .= str_replace($key, $val, self::ARTICLE_ITEM);
+                $tpl = str_replace($key, $val, $tpl);
             }
+            $itemstr .= $tpl;
         }
         $replace = [
             '{@OPEN_ID}'   => $this->openid,
@@ -126,6 +128,6 @@ ARTICLE;
 <Description><![CDATA[{@DESCRIPTION}]]></Description>
 <PicUrl><![CDATA[{@PICURL}]]></PicUrl>
 <Url><![CDATA[{@URL}]]></Url>
-</item>";
+</item>
 ITEM;
 }

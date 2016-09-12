@@ -5,12 +5,11 @@ use common\components\WechatMessage;
 use common\models\WechatUser;
 use Yii;
 use yii\web\Controller;
-use backend\models\WechatEvent;
-use backend\models\WechatSickEvent;
+
 /**
  * Site controller
  */
-class WechatController extends Controller
+class WechatDoctorController extends Controller
 {
     public $layout               = false;
     public $enableCsrfValidation = false;
@@ -25,8 +24,13 @@ class WechatController extends Controller
     public function init()
     {
         session_start();
+        $_GET['role'] = 'doctor';
+        WechatUser::switchWechat();
     }
-
+    public function actionTest()
+    {
+        echo Yii::$app->urlManager->createAbsoluteUrl(['xx/yyy', 'role' => $_GET['role']]);
+    }
     public function wechatInit()
     {
         //parent::init();
@@ -45,13 +49,9 @@ class WechatController extends Controller
         /*if ($wechat->checkSignature()) {
         echo $_GET["echostr"];
         }*/
-        //$this->xml['Content']
-        //echo $this->reply->text(  json_encode($this->xml));
 
-        if (1 || $this->xml['MsgType'] == "event") {
-           $ev = new WechatSickEvent($this->xml);
-           echo $ev->response();
-        }
+        echo $this->reply->text($this->xml['Content'] . '=222');
+
         exit;
         //send message
         //$rlt =  $wechat->sendText($xml['FromUserName'], 'xxxx');
@@ -60,7 +60,7 @@ class WechatController extends Controller
 
     public function actionMyReport()
     {
-        WechatUser::show(['rest-report/view', 'id' => 1]);
+        WechatUser::show(['rest-report/view', 'id' => 1, 'role' => 'doctor']);
     }
     public function actionMyUpload()
     {
@@ -82,6 +82,6 @@ class WechatController extends Controller
     public function actionMenuinit()
     {
 
-        return Yii::$app->wechat->createMenu(Yii::$app->params['wechat_sick']['menu']);
+        return Yii::$app->wechat->createMenu(Yii::$app->params['wechat_doctor']);
     }
 }
