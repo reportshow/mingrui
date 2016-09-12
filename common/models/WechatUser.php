@@ -6,9 +6,8 @@ use backend\models\RestSample;
 use common\models\User;
 use Yii;
 use yii\base\Model;
-use yii\web\IdentityInterface;
 
-class WechatUser extends Model  
+class WechatUser extends Model
 {
     public $mobile;
     public $smscode;
@@ -139,7 +138,7 @@ class WechatUser extends Model
      */
     public static function show($url)
     {
-        $_SESSION['entery_url'] = Yii::$app->urlManager->createAbsoluteUrl($url);
+        $_SESSION['entery_url'] = self::createUrl($url);
         $user                   = self::oauth();
     }
     /**
@@ -156,7 +155,7 @@ class WechatUser extends Model
         }*/
 
         //去微信认证
-        $redirectUrl = Yii::$app->urlManager->createAbsoluteUrl(['wechat-oauth/login']);
+        $redirectUrl = self::createUrl(['wechat-oauth/login']);
         $toUrl       = Yii::$app->wechat->getOauth2AuthorizeUrl($redirectUrl, 'LOGIN', 'snsapi_userinfo');
         header("Location: $toUrl");
         exit;
@@ -183,5 +182,31 @@ class WechatUser extends Model
         }
         return $user;
     }
- 
+
+    public static function createUrl($url)
+    {
+        if (!empty($_GET['role'])) {
+            $url['role'] = $_GET['role'];
+        }
+
+        return Yii::$app->urlManager->createAbsoluteUrl($url);
+    }
+
+    public static function switchWechat($switch = false)
+    {
+        if (!empty($_GET['role']) && $_GET['role'] == 'doctor') {
+            $config = Yii::$app->params['wechat_doctor']['config'];
+            var_dump(Yii::$app->wechat);
+
+            Yii::$app->set('wechat', Yii::createObject([
+                'class'     => 'callmez\wechat\sdk\Wechat',
+                'appId'     => $config['appId'],
+                'appSecret' => $config['appSecret'],
+                'token'     => $config['token'],
+            ]));
+            var_dump(Yii::$app->wechat);
+        }
+
+    }
+
 }

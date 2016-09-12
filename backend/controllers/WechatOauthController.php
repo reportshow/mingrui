@@ -20,6 +20,10 @@ class WechatOauthController extends Controller
     public function init()
     {
         session_start();
+        if (!empty($_GET['role']) && $_GET['role'] == 'doctor') {
+            WechatUser::switchWechat();
+        }
+
     }
 
     public function actionTest()
@@ -37,7 +41,7 @@ class WechatOauthController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $user = $model->bindMobile()) {
             //权限获取完毕
-            
+
             self::entery($user);
 
         } else {
@@ -83,7 +87,7 @@ class WechatOauthController extends Controller
     {
         $model = new WechatUser();
 
-        $bindMobileUrl = Yii::$app->urlManager->createUrl(['/wechat-oauth/bind-mobile']);
+        $bindMobileUrl = WechatUser::createUrl(['/wechat-oauth/bind-mobile']);
         $content       = $this->render('/wechat/bind-mobile', ['model' => $model, 'bindMobileUrl' => $bindMobileUrl]);
 
         return $this->render(

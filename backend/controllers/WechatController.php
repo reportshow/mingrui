@@ -23,12 +23,12 @@ class WechatController extends Controller
 
     public function init()
     {
-        session_start();
+        session_start();        
     }
 
     public function wechatInit()
     {
-        parent::init();
+        //parent::init();
         $this->wechat = Yii::$app->wechat;
 
         $this->xml = $this->wechat->parseRequestData();
@@ -74,5 +74,9 @@ class WechatController extends Controller
     {
         WechatUser::show(['mingrui-note/create']);
     }
-
+    public function actionMenuinit()
+    {
+        
+      return  Yii::$app->wechat->createMenu(Yii::$app->params['wechat_sick']['menu']);
+    }
 }
