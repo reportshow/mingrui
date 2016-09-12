@@ -9,7 +9,7 @@ use backend\widgets\TimeLine;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = '记事本';
-$this->params['breadcrumbs'][] = $this->title;
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mingrui-notes-index">
      <p style="text-align: right;padding-right:26px; ">

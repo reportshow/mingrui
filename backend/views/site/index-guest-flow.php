@@ -1,6 +1,6 @@
 <?php
 $this->title = '';
-$this->params['breadcrumbs'][] = '' ;
+$this->params['breadcrumbs']  = '' ;
  
 
 ?><div class="box box-solid">
