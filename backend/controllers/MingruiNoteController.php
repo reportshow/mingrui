@@ -2,13 +2,13 @@
 
 namespace backend\controllers;
 
-use Yii;
 use backend\models\MingruiNotes;
 use backend\models\MingruiNoteSearch;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-
+use backend\models\SaveImage;
 /**
  * MingruiNoteController implements the CRUD actions for MingruiNotes model.
  */
@@ -21,7 +21,7 @@ class MingruiNoteController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class'   => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -35,11 +35,11 @@ class MingruiNoteController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new MingruiNoteSearch();
+        $searchModel  = new MingruiNoteSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -65,8 +65,14 @@ class MingruiNoteController extends Controller
     {
         $model = new MingruiNotes();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id'           => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->image = 'tosave';
+            if (!$model->save()) {
+                var_export($model->errors);exit;
+            } 
+            SaveImage::save($model, 'image');
+
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -85,7 +91,7 @@ class MingruiNoteController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id'           => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,

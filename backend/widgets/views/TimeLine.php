@@ -15,9 +15,7 @@
 
 <?php
 
-$TIME_HTML =
-
-$date = 0;
+$TIME_HTML =$date = 0;
 foreach ($models as $key => $model) {
 
     $date1 = date('Y-m-d', strtotime($model->createtime));

@@ -29,8 +29,8 @@ class MingruiMypic extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'title', 'createtime'], 'required'],
-            [['id', 'createtime'], 'integer'],
+            [[  'title', 'createtime'], 'required'],
+            [[  'createtime'], 'integer'],
             [['description', 'images'], 'string'],
             [['title'], 'string', 'max' => 1024],
         ];

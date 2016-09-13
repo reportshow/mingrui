@@ -2,12 +2,13 @@
 
 namespace backend\controllers;
 
-use Yii;
 use backend\models\MingruiMypic;
 use backend\models\MingruiMypicSearch;
+use backend\models\SaveImage;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * MingruiMypicController implements the CRUD actions for MingruiMypic model.
@@ -21,7 +22,7 @@ class MingruiMypicController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class'   => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -35,11 +36,11 @@ class MingruiMypicController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new MingruiMypicSearch();
+        $searchModel  = new MingruiMypicSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -65,8 +66,16 @@ class MingruiMypicController extends Controller
     {
         $model = new MingruiMypic();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id'           => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->createtime = time();
+            $model->images     = 'tosave';
+            if (!$model->save()) {
+                var_export($model->errors);exit;
+            }
+            SaveImage::save($model, 'images');
+
+            return $this->redirect(['view', 'id' => $model->id]);
+
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -84,8 +93,19 @@ class MingruiMypicController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id'           => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->createtime = time();
+            if ($model->save()) {
+                SaveImage::save($model, 'images');
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                var_export($model->errors);exit;
+
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
+
         } else {
             return $this->render('update', [
                 'model' => $model,
