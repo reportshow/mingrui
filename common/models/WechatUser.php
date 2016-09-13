@@ -196,7 +196,7 @@ class WechatUser extends Model
     {
         if (!empty($_GET['role']) && $_GET['role'] == 'doctor') {
             $config = Yii::$app->params['wechat_doctor']['config'];
-            var_dump(Yii::$app->wechat);
+            //var_dump(Yii::$app->wechat);
 
             Yii::$app->set('wechat', Yii::createObject([
                 'class'     => 'callmez\wechat\sdk\Wechat',
@@ -204,7 +204,7 @@ class WechatUser extends Model
                 'appSecret' => $config['appSecret'],
                 'token'     => $config['token'],
             ]));
-            var_dump(Yii::$app->wechat);
+            //var_dump(Yii::$app->wechat);
         }
 
     }

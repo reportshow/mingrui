@@ -5,7 +5,8 @@ use common\components\WechatMessage;
 use common\models\WechatUser;
 use Yii;
 use yii\web\Controller;
-
+use backend\models\WechatEvent;
+use backend\models\WechatDoctorEvent;
 /**
  * Site controller
  */
@@ -49,39 +50,35 @@ class WechatDoctorController extends Controller
         /*if ($wechat->checkSignature()) {
         echo $_GET["echostr"];
         }*/
+        //$this->xml['Content']
+        //echo $this->reply->text(  json_encode($this->xml));
 
-        echo $this->reply->text($this->xml['Content'] . '=222');
-
+        if (1 || $this->xml['MsgType'] == "event") {
+           $ev = new WechatDoctorEvent($this->xml);
+           echo $ev->response();
+        }
         exit;
         //send message
         //$rlt =  $wechat->sendText($xml['FromUserName'], 'xxxx');
         //if($rlt){}
     }
 
-    public function actionMyReport()
+    public function actionReport()
     {
         WechatUser::show(['rest-report/view', 'id' => 1, 'role' => 'doctor']);
     }
-    public function actionMyUpload()
+    public function actionSearch()
     {
         WechatUser::show(['mingrui-mypic/create']);
     }
-    public function actionMyPic()
+    public function actionSicklist()
     {
-        WechatUser::show(['mingrui-mypic/index']);
+        WechatUser::show(['restsample/index']);
     }
-
-    public function actionNotesIndex()
-    {
-        WechatUser::show(['mingrui-note/index']);
-    }
-    public function actionNotesNew()
-    {
-        WechatUser::show(['mingrui-note/create']);
-    }
+ 
     public function actionMenuinit()
     {
 
-        return Yii::$app->wechat->createMenu(Yii::$app->params['wechat_doctor']);
+        return Yii::$app->wechat->createMenu(Yii::$app->params['wechat_doctor']['menu']);
     }
 }
