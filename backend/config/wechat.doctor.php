@@ -2,9 +2,9 @@
 
 $wechat           = [];
 $wechat['config'] = [
-    'appId'     => 'wx2e2b79657aeebc95',
-    'appSecret' => 'dd00404e0d0e4edbb9ed88d068855941',
-    'token'     => 'sanrenxiyi',
+    'appId'     => 'wx41bc5a22461bb6ce',
+    'appSecret' => '77a4a5504dcf7799ce9c57841ac1e72e',
+    'token'     => 'doctor',
 ];
 $wechat['menu'] =  [
     [

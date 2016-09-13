@@ -1,12 +1,12 @@
 <?php
 namespace backend\controllers;
 
+use backend\models\WechatDoctorEvent;
 use common\components\WechatMessage;
 use common\models\WechatUser;
 use Yii;
 use yii\web\Controller;
-use backend\models\WechatEvent;
-use backend\models\WechatDoctorEvent;
+
 /**
  * Site controller
  */
@@ -54,8 +54,8 @@ class WechatDoctorController extends Controller
         //echo $this->reply->text(  json_encode($this->xml));
 
         if (1 || $this->xml['MsgType'] == "event") {
-           $ev = new WechatDoctorEvent($this->xml);
-           echo $ev->response();
+            $ev = new WechatDoctorEvent($this->xml);
+            echo $ev->response();
         }
         exit;
         //send message
@@ -65,17 +65,17 @@ class WechatDoctorController extends Controller
 
     public function actionReport()
     {
-        WechatUser::show(['rest-report/view', 'id' => 1, 'role' => 'doctor']);
+        WechatUser::show(['rest-report/index', 'role' => 'doctor']);
     }
     public function actionSearch()
     {
-        WechatUser::show(['mingrui-mypic/create']);
+        WechatUser::show(['rest-report/search', 'role' => 'doctor']);
     }
     public function actionSicklist()
     {
-        WechatUser::show(['restsample/index']);
+        WechatUser::show(['restsample/index', 'role' => 'doctor']);
     }
- 
+
     public function actionMenuinit()
     {
 

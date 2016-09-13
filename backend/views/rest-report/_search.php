@@ -25,11 +25,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'status') ?>
 
-    <?php // echo $form->field($model, 'note') ?>
+    <?php   echo $form->field($model, 'note') ?>
 
     <?php // echo $form->field($model, 'assigner_id') ?>
 
-    <?php // echo $form->field($model, 'product_id') ?>
+    <?php   echo $form->field($model, 'product_id') ?>
 
     <?php // echo $form->field($model, 'complete') ?>
 
@@ -63,7 +63,7 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'conclusion') ?>
 
-    <?php // echo $form->field($model, 'explain') ?>
+    <?php  echo $form->field($model, 'explain') ?>
 
     <?php // echo $form->field($model, 'jxyanzhen') ?>
 
@@ -91,7 +91,7 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'abiexported') ?>
 
-    <?php // echo $form->field($model, 'final_note') ?>
+    <?php   echo $form->field($model, 'final_note') ?>
 
     <?php // echo $form->field($model, 'assigner_note') ?>
 

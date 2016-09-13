@@ -155,8 +155,10 @@ class WechatUser extends Model
         }*/
 
         //去微信认证
-        $redirectUrl = self::createUrl(['wechat-oauth/login']);
-        $toUrl       = Yii::$app->wechat->getOauth2AuthorizeUrl($redirectUrl, 'LOGIN', 'snsapi_userinfo');
+        $redirectUrl  = self::createUrl(['wechat-oauth/login']);
+        //$$redirectUrl = str_replace('%2F', '/', $redirectUrl);
+        $toUrl        = Yii::$app->wechat->getOauth2AuthorizeUrl($redirectUrl, 'LOGIN', 'snsapi_userinfo');
+        //exit($toUrl);
         header("Location: $toUrl");
         exit;
 

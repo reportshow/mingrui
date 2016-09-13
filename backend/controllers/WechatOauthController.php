@@ -45,7 +45,7 @@ class WechatOauthController extends Controller
             self::entery($user);
 
         } else {
-            var_export($model->errors);
+            //var_export($model->errors);
             return self::askMobile();
         }
 
@@ -67,7 +67,7 @@ class WechatOauthController extends Controller
      * @return [type]       [description]
      */
     public function actionLogin()
-    {
+    { 
         $user = WechatUser::wechatUserInfo();
         if ($user) {
             if ($user->status == 0) {

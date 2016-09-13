@@ -30,6 +30,23 @@ class RestReportController extends Controller
         ];
     }
 
+    public function actionSearch(){
+        $searchModel = new RestReportSearch();
+        $params      = Yii::$app->request->queryParams;
+        //$params['RestReportSearch']['rest_report.status'] = 'finished';
+
+        $query = RestReport::find();
+        $query = $query
+            ->where(['<>', 'ptype', 'yidai'])
+            ->andWhere(['rest_report.status' => 'finished']);
+
+        $dataProvider = $searchModel->search($params, $query);
+
+        return $this->render('search', [
+            'searchModel'  => $searchModel, 
+        ]);
+    }
+
     /**
      * Lists all RestReport models.
      * @return mixed
