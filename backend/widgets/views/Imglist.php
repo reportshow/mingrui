@@ -3,11 +3,11 @@
 
 foreach ($models as $key => $model) {
     # code...
+    $imglist = !empty($model->images) ? $model->images : $model->image;
+    $images  = explode(';', $imglist);
+    $time    = date('Y-m-d H:i', $model->createtime)
 
-    $images = explode(';', $model->images);
-    $time = date('Y-m-d H:i',$model->createtime)
-
-?>
+    ?>
 <!-- timeline item -->
             <li>
               <i class="fa fa-image bg-purple"></i>
@@ -18,13 +18,13 @@ foreach ($models as $key => $model) {
                 <h3 class="timeline-header"> <?=$model->title?>  ...</h3>
 
                 <div class="timeline-body">
-                <?php 
-                foreach ($images as $key => $image) {
-                    # code...
+                <?php
+foreach ($images as $key => $image) {
+        # code...
 
-                    echo "<img src='{$image}'   class='margin' style='cursor:pointer;width:120px'>";
+        echo "<img src='{$image}'   class='margin' style='cursor:pointer;width:120px'>";
 
-                }?>
+    }?>
                 </div>
                 <div class="timeline-footer">
                    <?=$model->description?>
@@ -35,30 +35,29 @@ foreach ($models as $key => $model) {
 <?php
 } //
 
-
 ?>
 </ul>
 <style type="text/css">
   .previewbg{
     background: rgba(0,0,0,0.5);
-   display: none;  
+   display: none;
     top:0px;left:0px;width: 100%;height: 100%;
     z-index: 11111;
     position: fixed;
-   
+
  }
-  .previewbox{     position: absolute;   -webkit-transition:all 1s; 
+  .previewbox{     position: absolute;   -webkit-transition:all 1s;
    -webkit-transform:scale(0);    width: 100%;
     height: 100%;
   }
   .previewbox img{width: 100%; top: 50%;      position: absolute;  transform: translateY(-50%);}
-  .zoomIn .previewbox{ 
+  .zoomIn .previewbox{
     -webkit-transform:scale(1);
   }
- .zoomOut .previewbox{ 
+ .zoomOut .previewbox{
     -webkit-transform:scale(0);
   }
-</style> 
+</style>
 <div class='previewbg'>
     <div class=previewbox>
         <img src='images/1.png'>
@@ -71,8 +70,8 @@ foreach ($models as $key => $model) {
           $('.previewbg .previewbox img').attr('src',imgurl);
          $('.previewbg').removeClass('zoomOut').addClass('zoomIn');
     });
-    $('.previewbg').click(function(){ 
+    $('.previewbg').click(function(){
          $('.previewbg').removeClass('zoomIn').addClass('zoomOut');
          $('.previewbg').fadeOut();
     });
-</script> 
+</script>

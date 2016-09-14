@@ -3,7 +3,7 @@
 use backend\models\RestReport;
 use yii\grid\GridView;
 use yii\helpers\Html;
-
+use backend\widgets\Imglist;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\MingruiAttachmentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -26,34 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?=Html::a('新增 附加报告', ['create', 'id' => $_GET['id']], ['class' => 'btn btn-success'])?>
     </p>
-    <?=GridView::widget([
-    'dataProvider' => $dataProvider,
-    'filterModel'  => $searchModel,
-    'columns'      => [
-        /*['class' => 'yii\grid\SerialColumn'],*/
-
-        [
-            'value'         => 'id',
-            'label'         => 'ID',
-            'attribute'     => 'id',
-            'headerOptions' => ['width' => '60'],
-        ],
-
-        [
-            'attribute' => 'report_id',
-            'format'    => 'raw',
-            'label'     => '患者',
-            'value'     => function ($model) {
-                global $sick;return $sick;
-            },
-            'headerOptions' => ['width' => '100'],
-        ],
-        //'image',
-        'title',
-        'description',
-        // 'createtime',
-
-        ['class' => 'yii\grid\ActionColumn'],
-    ],
-]);?>
+   <?= Imglist::widget([
+        'dataProvider' => $dataProvider, 
+    ]); ?>
 </div>
