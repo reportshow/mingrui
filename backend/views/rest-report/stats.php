@@ -78,12 +78,16 @@ AppAsset::register($this);
 
 <div class="box box-success">
     <div class="box-body">
+<?php if(strcmp($data, '[]')) {?>
     <p>基因:<?php echo $gene; ?></p>
     <br/>
     <p style="text-align:center;">外显子分布及病人突变外显子</p>
     <div class="chart">
     <canvas id="genearea" width="800" height="600"></canvas>
     </div>
+<?php } else { ?>
+          <p style="text-align:center;">没有检测到异常基因!</p>         
+<?php } ?>
   </div>
   <!-- /.box-body -->
 </div>
