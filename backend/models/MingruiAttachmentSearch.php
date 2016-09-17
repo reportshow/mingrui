@@ -39,10 +39,11 @@ class MingruiAttachmentSearch extends MingruiAttachment
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $query)
     {
-        $query = MingruiAttachment::find();
-
+       if (!$query) {
+            $query = MingruiAttachment::find();
+        }
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([

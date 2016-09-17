@@ -33,9 +33,13 @@ use yii\helpers\Html;
          </li>
 
         <li style="padding:10px 0px 10px 16px;"> 
-           附加报告: <span class="badge bg-red"  >1</span>
-           <span class="badge bg-green"  >2</span>
-           <span class="badge bg-aqua"  >3</span>
+           附加报告: 
+           <?php 
+           if(!empty($model->attachments))
+           foreach ($model->attachments as $key => $value) {
+             echo "<span class='badge bg-aqua'  >$key</span>";
+           } 
+           ?>
 
            <?=Html::a('管理', ['mingrui-attachment/', 'id' => $model->id], [
               'class' => 'pull-right badge bg-aqua',  

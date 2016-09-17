@@ -4,7 +4,7 @@
 foreach ($models as $key => $model) {
 	//var_export($model);exit;
 
-    if (!property_exists ($model,'images')) {
+    if (property_exists ($model,'images')) {
         $imglist = $model->images;
     } else {
         $imglist = $model->image;
