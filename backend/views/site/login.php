@@ -10,7 +10,7 @@ $this->title = 'Sign In';
 
 $fieldOptions1 = [
     'options' => ['class' => 'form-group has-feedback'],
-    'inputTemplate' => "{input}<span class='glyphicon glyphicon-envelope form-control-feedback'></span>"
+    'inputTemplate' => "{input}<span class='fa fa-user form-control-feedback'></span>"
 ];
 
 $fieldOptions2 = [
@@ -32,8 +32,8 @@ $fieldOptions2 = [
        background: none;
        min-width: 400px;
       }
-      .nav-tabs-custom{
-        padding:0px 10px 10px 20px ; 
+      .tab-content{
+        
       }
     </style> 
 <div class="login-logo" style='margin-top:7%'>
@@ -51,7 +51,7 @@ $fieldOptions2 = [
                 <li><a data-toggle="tab" href="#tab_2-2"><i class="fa fa-qrcode"></i> 二维码</a></li> 
                 <li class="pull-left header"> 登录</li>
             </ul>
-            <div class="tab-content">
+            <div class="tab-content" style="padding: 20px;">
                 <div class="tab-pane active" id="tab_1-1">
                     <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
 
@@ -80,7 +80,10 @@ $fieldOptions2 = [
                 </div>
                 <!-- /.tab-pane -->
                 <div class="tab-pane" id="tab_2-2">
-                   <img src="<?=$model->guestQrcodeUrl() ?>">
+                <center>
+                    <img src="<?=$model->guestQrcodeUrl() ?>" style="width:200px"><br>微信扫一扫
+                </center>
+                   
                 </div>
                 <!-- /.tab-pane -->
             </div>

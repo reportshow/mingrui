@@ -74,10 +74,13 @@ class LoginForm extends Model
                 ],
             ],
         ];
-        $ticket = Yii::$app->wechat->createQrCode($param);
-        if ($ticket) {
-            return Yii::$app->wechat->getQrCodeUrl($ticket['ticket']);
-        }
+        try {
+            define('CURL_SSLVERSION_TLSv1',1);
+            $ticket = Yii::$app->wechat->createQrCode($param);
+            if ($ticket) {
+                return Yii::$app->wechat->getQrCodeUrl($ticket['ticket']);
+            }
+        } catch (Exception  $e) {}
 
     }
     /**
