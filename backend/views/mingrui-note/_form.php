@@ -57,9 +57,9 @@ use kartik\file\FileInput;
     $('#typetabs button').click(function(){
         var datatype = $(this).attr('datatype');
         $('.inputdata').hide();
-        $('.inputdata').removeClass('active');
+        $('#typetabs button').removeClass('active');
         $('.inputdata.'+datatype).show();
-        $('.inputdata').addClass('active');
+        $('button[datatype='+datatype+']').addClass('active');
         $('#type').val(datatype);
     });
 </script>
