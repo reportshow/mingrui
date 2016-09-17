@@ -53,12 +53,10 @@ $menu[] = [
     'url'   => '#',
     'items' => [
         [
-            'label' => '视频资料',
+            'label' => '共享视频',
             'icon'  => 'fa  fa-video-camera',
-            'url'   => ['/mingrui-video/index'],
-            'items' => [
-
-            ],
+            'url'   => ["/video2"], 
+            'items' => [],
         ],
         [
             'label' => '共享案例',

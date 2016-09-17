@@ -52,11 +52,11 @@ $menu[] = [
     'icon'  => 'fa fa-file-video-o',
     'url'   => '#',
     'items' => [
+         
         [
             'label' => '共享视频',
             'icon'  => 'fa  fa-video-camera',
-            'url'   => [Yii::$app->params['videoserver'] . "/videos"],
-            'template'=> '<a href="' . Yii::$app->params['videoserver'] . "/videos" .'">{icon}{label}</a>',
+            'url'   => ["/video2"], 
             'items' => [],
         ],
         [
