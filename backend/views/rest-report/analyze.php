@@ -14,9 +14,8 @@ AppAsset::register($this);
 
 $sqliteUrl = str_replace('/primerbean/media/', 'user/', $model->snpsqlite);
 $sqliteUrl = Yii::$app->params['erp_url'] . $sqliteUrl ;
- 
 $data = file_get_contents($sqliteUrl);
-$data = json_decode($data);
+$data = json_decode($data, true);
 $data = json_encode($data);
 ?>
 
