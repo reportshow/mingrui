@@ -9,6 +9,8 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use backend\models\Geneareas;
+use backend\models\Genetypes;
 
 /**
  * RestReportController implements the CRUD actions for RestReport model.
@@ -123,26 +125,6 @@ class RestReportController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
-
-    /**
-     * Displays a single RestReport model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionAnalyze($id)
-    {
-        return $this->render('analyze', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    public function actionStats($id)
-    {
-        return $this->render('stats', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
     
     /**
      * Creates a new RestReport model.
@@ -205,6 +187,106 @@ class RestReportController extends Controller
         }*/
 
         return $comments;
+    }
+
+    public function actionAnalyze($id)
+    {
+        return $this->render('analyze', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    public function actionStats($id)
+    {
+         //1. find user's bad gene
+         $userdata = $this->findModel($id);
+         $cnv_array = json_decode($userdata->cnvsave, true);
+         $user_cnv_gene = '';
+         $user_cnv_areas =[];
+         foreach($cnv_array as $key => $data){
+              $user_cnv_gene = $data[2];
+              $user_cnv_areas = $data[4];
+         }
+
+         //2. find all areas of this gene
+         $final_areas = [];
+         if(!empty($user_cnv_gene)) {
+              $areas = Geneareas::find()->where(['geneareas.gene' => trim($user_cnv_gene)])->all();
+
+              foreach($areas as $area)
+              {
+                   $final_areas[] = ['start'=>$area->startcoord,
+                                     'end'=>$area->endcoord,
+                                     'count' => $area->count,
+                                     'bad' => false
+                        ];
+              }
+              
+              foreach($user_cnv_areas as $user_cnv_area) {
+                   $final_areas[$user_cnv_area-1]['bad'] = true;
+              }
+         }
+
+        return $this->render('stats', [
+                                  'gene' => $user_cnv_gene,
+                                  'data'  => json_encode($final_areas),
+                                  'model' => $this->findModel($id),
+        ]);
+    }
+
+    //import gene areas data to DB
+    public function actionImportgeneareas()
+    {
+         /* $handle=fopen("geneareas.csv","r"); */
+         /* while($data=fgetcsv($handle,0,",")){ */
+         /*      $gene = $data[0]; */
+         /*      $count = $data[1]; */
+         /*      $starts = explode(',', $data[2]); */
+         /*      $ends = explode(',', $data[3]); */
+         /*      for($i=0;$i<$count;$i++){ */
+         /*           $area = new Geneareas; */
+         /*           $area->gene = $gene; */
+         /*           $area->startcoord = $starts[$i]; */
+         /*           $area->endcoord = $ends[$i]; */
+         /*           $area->save(); */
+         /*      } */
+         /* } */
+         echo "OK";
+    }
+
+    //import gene types data to DB
+    public function actionImportgenetypes()
+    {
+         /* $handle=fopen("genetypes.csv","r"); */
+         /* while($data=fgetcsv($handle,0,",")){ */
+         /*      $type = new Genetypes; */
+         /*      $type->startCoord = $data[0]; */
+         /*      $type->endCoord = $data[1]; */
+         /*      $type->gene = $data[2]; */
+         /*      $type->tag = $data[3]; */
+         /*      $type->descr = $data[4]; */
+         /*      $type->hgvs = $data[5]; */
+         /*      $type->vartype = $data[6]; */
+         /*      $type->save(); */
+         /* } */
+         echo "OK";
+    }
+
+    //calculate the report count of each gene area
+    public function actionGenecal()
+    {
+         /* $types = Genetypes::find()->all(); */
+         /* foreach($types as $type) { */
+         /*      echo $type->gene; */
+         /*      $areas = Geneareas::find()->where(['geneareas.gene' => trim($type->gene)])->all(); */
+         /*      foreach($areas as $area){ */
+         /*           if($type->startCoord >= $area->startcoord and $type->startCoord <= $area->endcoord){ */
+         /*                $area->count = $area->count + 1; */
+         /*                $area->save(); */
+         /*           } */
+         /*      } */
+         /* } */
+         echo "OK";
     }
 
     // public function
