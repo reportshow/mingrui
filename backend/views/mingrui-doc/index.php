@@ -16,9 +16,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('新建案例', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?= GridView::widget([
+    <?  
+/*    GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'rowOptions'   => function ($model) {
+            $url = Yii::$app->urlManager->createUrl(['mingrui-doc/view', 'id' => $model->id]);
+            return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
+        },
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -30,5 +35,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
-    ]); ?>
+    ]); */
+
+foreach ($dataProvider->getModels() as $key => $model) {
+     echo  $this->render('view-item', [
+        'model' => $model,
+    ]); 
+ } 
+    ?>
 </div>

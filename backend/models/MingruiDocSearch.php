@@ -39,9 +39,11 @@ class MingruiDocSearch extends MingruiDoc
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $query)
     {
-        $query = MingruiDoc::find();
+        if (!$query) {
+            $query = MingruiDoc::find();
+        }
 
         // add conditions that should always apply here
 

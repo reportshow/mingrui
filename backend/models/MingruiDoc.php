@@ -3,7 +3,8 @@
 namespace backend\models;
 
 use Yii;
-
+use common\models\User;
+use yii\behaviors\TimestampBehavior;
 /**
  * This is the model class for table "mingrui_doc".
  *
@@ -22,20 +23,33 @@ class MingruiDoc extends \yii\db\ActiveRecord
     {
         return 'mingrui_doc';
     }
-
+  public function behaviors()
+    {
+        return [
+            [
+                'class'              => TimestampBehavior::className(),
+                'createdAtAttribute' => 'createtime',
+                'updatedAtAttribute' => false,
+                //'value'              => new Expression('NOW()'),
+            ],
+        ];
+    }
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['title', 'createtime'], 'required'],
+            [['title','uid' ], 'required'],
             [['description'], 'string'],
             [['createtime'], 'integer'],
             [['title', 'doc'], 'string', 'max' => 1024],
         ];
     }
-
+    public function getCreator()
+    {
+        return $this->hasOne(User::className(), ['id' => 'uid']);
+    }
     /**
      * @inheritdoc
      */
@@ -44,7 +58,7 @@ class MingruiDoc extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'title' => '标题',
-            'description' => '描述',
+            'description' => '内容',
             'doc' => '文档',
             'createtime' => 'Createtime',
         ];
