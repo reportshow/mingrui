@@ -19,6 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
       <?=Html::a('Create Rest Reports', ['create'], ['class' => 'btn btn-success'])?>
   </p> -->
     <?=GridView::widget([
+    'emptyCell'=>'搜索',
     'dataProvider' => $dataProvider,
     'filterModel'  => $searchModel,
     'rowOptions'   => function ($model) {

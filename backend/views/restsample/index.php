@@ -20,6 +20,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'rowOptions'   => function ($model) {
+            $url = Yii::$app->urlManager->createUrl(['restsample/view', 'id' => $model->sample_id]);
+            return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
+        },
+        'emptyCell'=>'搜索',
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 

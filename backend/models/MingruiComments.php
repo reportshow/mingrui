@@ -58,8 +58,15 @@ class MingruiComments extends \yii\db\ActiveRecord
     }
     public function getPosition()
     {
-        if ($this->to_uid) {
-            return 'right';
+        // var_export(  Yii::$app->authManager->checkAccess($this->creator->id,'admin'));
+         //  var_export(  Yii::$app->authManager->getRoles(  $this->creator->id) );
+      
+       // exit ("/////");
+
+        if ( Yii::$app->authManager->checkAccess($this->creator->id,'admin')) {
+             return 'right'; 
+        }else{
+          return 'left';
         }
     }
 

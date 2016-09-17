@@ -2,12 +2,12 @@
 
 namespace backend\controllers;
 
-use Yii;
 use backend\models\MingruiDoc;
 use backend\models\MingruiDocSearch;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * MingruiDocController implements the CRUD actions for MingruiDoc model.
@@ -21,7 +21,7 @@ class MingruiDocController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class'   => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -35,11 +35,17 @@ class MingruiDocController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new MingruiDocSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel  = new MingruiDocSearch();
+        $params      = Yii::$app->request->queryParams; 
+
+        $query = MingruiDoc::find();
+        $query = $query
+            ->orderBy('id DESC') ;
+
+        $dataProvider = $searchModel->search($params, $query);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -65,8 +71,14 @@ class MingruiDocController extends Controller
     {
         $model = new MingruiDoc();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id'           => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->uid = Yii::$app->user->id;
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                var_export($model->errors);
+            }
+
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -84,8 +96,12 @@ class MingruiDocController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id'           => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {            
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                var_export($model->errors);
+            }
         } else {
             return $this->render('update', [
                 'model' => $model,

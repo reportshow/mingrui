@@ -2,10 +2,16 @@
 <?php
 
 foreach ($models as $key => $model) {
-    # code...
-    $imglist = !empty($model->images) ? $model->images : $model->image;
-    $images  = explode(';', $imglist);
-    $time    = date('Y-m-d H:i', $model->createtime)
+	//var_export($model);exit;
+
+    if (!property_exists ($model,'images')) {
+        $imglist = $model->images;
+    } else {
+        $imglist = $model->image;
+    }
+
+    $images = explode(';', $imglist);
+    $time   = date('Y-m-d H:i', $model->createtime)
 
     ?>
 <!-- timeline item -->
@@ -20,7 +26,7 @@ foreach ($models as $key => $model) {
                 <div class="timeline-body">
                 <?php
 foreach ($images as $key => $image) {
-        # code...
+        if(!($image=trim($image))) continue;
 
         echo "<img src='{$image}'   class='margin' style='cursor:pointer;width:120px'>";
 

@@ -15,12 +15,13 @@ use yii\widgets\ActiveForm;
 
     <?=$form->field($model, 'title')->textInput(['maxlength' => true])?>
 
-    <?=$form->field($model, 'description')->textarea(['rows' => 6])?>
+    <?//=$form->field($model, 'description')->textarea(['rows' => 6])
+    ?>
 
     <?=$form->field($model, 'doc')->textInput(['maxlength' => true])?>
  
 
-    <?=CKeditor::widget(['name' => 'MingruiDoc[editor1]','title'=>'内容']);?>
+    <?=CKeditor::widget(['name' => 'MingruiDoc[description]','title'=>'内容']);?>
 
     <div class="form-group">
         <?=Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'])?>
