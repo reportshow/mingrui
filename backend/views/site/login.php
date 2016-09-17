@@ -25,6 +25,16 @@ $fieldOptions2 = [
      .login-logo a{
         color:#fff;
         }
+      .login-box-body{
+       /*  border-radius: 5px; 
+       border-top: 4px solid #00c0ef;
+       box-shadow: 2px 2px 5px; */
+       background: none;
+       min-width: 400px;
+      }
+      .nav-tabs-custom{
+        padding:0px 10px 10px 20px ; 
+      }
     </style> 
 <div class="login-logo" style='margin-top:7%'>
         <a href="#"><b>Wisdom</b> Report Management System  </a>
@@ -33,46 +43,52 @@ $fieldOptions2 = [
 <div class="login-box " style='margin-top:0%;'>
     
     <!-- /.login-logo -->
-    <div class="login-box-body" style='border-radius: 5px; border-top: 4px solid #00c0ef;box-shadow: 2px 2px 5px;'>
-        <p class="login-box-msg">登录进入</p>
+    <div class="login-box-body"  >
 
-        <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
+         <div class="nav-tabs-custom tab-info" style='margin-bottom: 0px; '>
+            <ul class="nav nav-tabs pull-right">
+                <li class="active"><a data-toggle="tab" href="#tab_1-1">帐号</a></li>
+                <li><a data-toggle="tab" href="#tab_2-2"><i class="fa fa-qrcode"></i> 二维码</a></li> 
+                <li class="pull-left header"> 登录</li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab_1-1">
+                    <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
 
-        <?= $form
-            ->field($model, 'username', $fieldOptions1)
-            ->label(false)
-            ->textInput(['placeholder' => $model->getAttributeLabel('用户名')]) ?>
+                    <?= $form
+                        ->field($model, 'username', $fieldOptions1)
+                        ->label(false)
+                        ->textInput(['placeholder' => $model->getAttributeLabel('用户名')]) ?>
 
-        <?= $form
-            ->field($model, 'password', $fieldOptions2)
-            ->label(false)
-            ->passwordInput(['placeholder' => $model->getAttributeLabel('密码')]) ?>
+                    <?= $form
+                        ->field($model, 'password', $fieldOptions2)
+                        ->label(false)
+                        ->passwordInput(['placeholder' => $model->getAttributeLabel('密码')]) ?>
 
-        <div class="row">
-            <div class="col-xs-8">
-                <?= $form->field($model, 'rememberMe')->checkbox(['label'=>'记住密码']) ?>
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <?= $form->field($model, 'rememberMe')->checkbox(['label'=>'记住密码']) ?>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-xs-4">
+                            <?= Html::submitButton(' 登 录 ', ['class' => 'btn btn-info btn-block btn-flat', 'name' => 'login-button']) ?>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+
+                    <?php ActiveForm::end(); ?> 
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="tab_2-2">
+                   <img src="<?=$model->guestQrcodeUrl() ?>">
+                </div>
+                <!-- /.tab-pane -->
             </div>
-            <!-- /.col -->
-            <div class="col-xs-4">
-                <?= Html::submitButton(' 登 录 ', ['class' => 'btn btn-info btn-block btn-flat', 'name' => 'login-button']) ?>
-            </div>
-            <!-- /.col -->
+            <!-- /.tab-content -->
         </div>
-
-
-        <?php ActiveForm::end(); ?>
-
-        <div class="social-auth-links text-center" style='display: none'>
-            <p>- OR -</p>
-            <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in
-                using Facebook</a>
-            <a href="#" class="btn btn-block btn-social btn-google-plus btn-flat"><i class="fa fa-google-plus"></i> Sign
-                in using Google+</a>
-        </div>
-        <!-- /.social-auth-links -->
-
-       <a href="register.html" class="text-center" style="float:right">注册</a> <a href="#">忘记密码</a> 
-        
+        <!-- nav-tabs-custom -->
+ 
+ 
 
     </div>
     <!-- /.login-box-body -->

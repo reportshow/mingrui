@@ -15,7 +15,6 @@ class LoginForm extends Model
 
     private $_user;
 
-
     /**
      * @inheritdoc
      */
@@ -62,6 +61,25 @@ class LoginForm extends Model
         }
     }
 
+    public function guestQrcodeUrl()
+    {
+        $param = [
+            'action_name' => 'QR_SCENE',
+            'action_info' => [
+                'scene' => [
+                    // 场景值ID，临时二维码时为32位非0整型，永久二维码时最大值为100000（目前参数只支持1--100000）
+                    'scene_id'  => rand(),
+                    // 场景值ID（字符串形式的ID），字符串类型，长度限制为1到64，仅永久二维码支持此字段
+                    'scene_str' => '',
+                ],
+            ],
+        ];
+        $ticket = Yii::$app->wechat->createQrCode($param);
+        if ($ticket) {
+            return Yii::$app->wechat->getQrCodeUrl($ticket['ticket']);
+        }
+
+    }
     /**
      * Finds user by [[username]]
      *
