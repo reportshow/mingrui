@@ -477,7 +477,7 @@ export default class TableExampleComplex extends React.Component {
 	  //疾病信息
 	  <TableRowColumn data-tip={row[22]}>{row[22]}</TableRowColumn>
 
-	  <TableRowColumn data-tip={row[23]}>{row[15].NG16070056[1]}</TableRowColumn>//HET
+	  <TableRowColumn data-tip={row[15].NG16070056[1].concat('<br>',row[23])}>{row[15].NG16070056[1]}</TableRowColumn>//HET
 	</TableRow>
 	))}
       </TableBody>
