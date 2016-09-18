@@ -353,9 +353,8 @@ export default class TableExampleComplex extends React.Component {
 	</TableRow>
 	<TableRow>
 	  <TableHeaderColumn colSpan="4"><TextField name='gene' floatingLabelText="基因" defaultValue={this.state.gene_value} fullWidth={true} onChange={this.handle_gene_Change}/></TableHeaderColumn>
-	  <TableHeaderColumn>突变类型</TableHeaderColumn>
 	  <TableHeaderColumn colSpan="2">
-	    <MultiSelect fullWidth={true} value={this.state.tblx_values} onChange={this.handle_tblx_Change}>
+	    <MultiSelect fullWidth={true} value={this.state.tblx_values} floatingLabelText="突变类型" onChange={this.handle_tblx_Change}>
 	      <ListItem primaryText={"frameshift"} value="frameshift" />
 	      <ListItem primaryText={"nonframeshift"} value="nonframeshift" />
 	      <ListItem primaryText={"nonsynonymous"} value="nonsynonymous" />
@@ -368,9 +367,8 @@ export default class TableExampleComplex extends React.Component {
 	  </TableHeaderColumn>
 	</TableRow>
 	<TableRow>
-	  <TableHeaderColumn>突变比例</TableHeaderColumn>
 	  <TableHeaderColumn colSpan="2">
-		<MultiSelect fullWidth={true} value={this.state.tbbl_values} onChange={this.handle_tbbl_Change}>
+		<MultiSelect fullWidth={true} value={this.state.tbbl_values} floatingLabelText="突变比例" onChange={this.handle_tbbl_Change}>
 	      <ListItem primaryText={"0.9-1"} value="0.9-1" />
 	      <ListItem primaryText={"0.75-0.9"} value="0.75-0.9" />
 	      <ListItem primaryText={"0.65-0.75"} value="0.65-0.75" />
@@ -379,9 +377,8 @@ export default class TableExampleComplex extends React.Component {
 	      <ListItem primaryText={"0-0.2"} value="0-0.2" />
 	    </MultiSelect>
 	  </TableHeaderColumn>
-	  <TableHeaderColumn>遗传方式</TableHeaderColumn>
 	  <TableHeaderColumn colSpan="2">
-	    <MultiSelect fullWidth={true} value={this.state.ycfs_values} onChange={this.handle_ycfs_Change}>
+	    <MultiSelect fullWidth={true} value={this.state.ycfs_values} floatingLabelText="遗传方式" onChange={this.handle_ycfs_Change}>
 	      <ListItem primaryText={"AR"} value="AR" />
 	      <ListItem primaryText={"AD"} value="AD" />
 	      <ListItem primaryText={"XR"} value="XR" />
@@ -391,9 +388,8 @@ export default class TableExampleComplex extends React.Component {
 	  </TableHeaderColumn>
 	</TableRow>
 	<TableRow>
-	  <TableHeaderColumn>测序深度</TableHeaderColumn>
 	  <TableHeaderColumn colSpan="2">
-	    <MultiSelect fullWidth={true} value={this.state.cxsd_values} onChange={this.handle_cxsd_Change}>
+	    <MultiSelect fullWidth={true} value={this.state.cxsd_values} floatingLabelText="测序深度" onChange={this.handle_cxsd_Change}>
 	      <ListItem primaryText={"0-10"} value="0-10" />
 	      <ListItem primaryText={"10-25"} value="10-25" />
 	      <ListItem primaryText={"25-50"} value="25-50" />
@@ -401,9 +397,8 @@ export default class TableExampleComplex extends React.Component {
 	      <ListItem primaryText={"100+"} value="100+" />
 	    </MultiSelect>
 	  </TableHeaderColumn>
-	  <TableHeaderColumn>DM/其它(？)</TableHeaderColumn>
 	  <TableHeaderColumn colSpan="2">
-	    <MultiSelect fullWidth={true} value={this.state.dm_values} onChange={this.handle_dm_Change}>
+	    <MultiSelect fullWidth={true} value={this.state.dm_values} floatingLabelText="DM/其它(？)" onChange={this.handle_dm_Change}>
 	      <ListItem primaryText={"DM"} value="DM" />
 	      <ListItem primaryText={"DM?"} value="DM?" />
 	      <ListItem primaryText={"其它"} value="other" />

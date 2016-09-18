@@ -22191,15 +22191,10 @@
 																									),
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
-																												null,
-																												'突变类型'
-																									),
-																									_react2.default.createElement(
-																												_Table.TableHeaderColumn,
 																												{ colSpan: '2' },
 																												_react2.default.createElement(
 																															_multiselect2.default,
-																															{ fullWidth: true, value: this.state.tblx_values, onChange: this.handle_tblx_Change },
+																															{ fullWidth: true, value: this.state.tblx_values, floatingLabelText: '突变类型', onChange: this.handle_tblx_Change },
 																															_react2.default.createElement(_List2.default, { primaryText: "frameshift", value: 'frameshift' }),
 																															_react2.default.createElement(_List2.default, { primaryText: "nonframeshift", value: 'nonframeshift' }),
 																															_react2.default.createElement(_List2.default, { primaryText: "nonsynonymous", value: 'nonsynonymous' }),
@@ -22216,15 +22211,10 @@
 																									null,
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
-																												null,
-																												'突变比例'
-																									),
-																									_react2.default.createElement(
-																												_Table.TableHeaderColumn,
 																												{ colSpan: '2' },
 																												_react2.default.createElement(
 																															_multiselect2.default,
-																															{ fullWidth: true, value: this.state.tbbl_values, onChange: this.handle_tbbl_Change },
+																															{ fullWidth: true, value: this.state.tbbl_values, floatingLabelText: '突变比例', onChange: this.handle_tbbl_Change },
 																															_react2.default.createElement(_List2.default, { primaryText: "0.9-1", value: '0.9-1' }),
 																															_react2.default.createElement(_List2.default, { primaryText: "0.75-0.9", value: '0.75-0.9' }),
 																															_react2.default.createElement(_List2.default, { primaryText: "0.65-0.75", value: '0.65-0.75' }),
@@ -22235,15 +22225,10 @@
 																									),
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
-																												null,
-																												'遗传方式'
-																									),
-																									_react2.default.createElement(
-																												_Table.TableHeaderColumn,
 																												{ colSpan: '2' },
 																												_react2.default.createElement(
 																															_multiselect2.default,
-																															{ fullWidth: true, value: this.state.ycfs_values, onChange: this.handle_ycfs_Change },
+																															{ fullWidth: true, value: this.state.ycfs_values, floatingLabelText: '遗传方式', onChange: this.handle_ycfs_Change },
 																															_react2.default.createElement(_List2.default, { primaryText: "AR", value: 'AR' }),
 																															_react2.default.createElement(_List2.default, { primaryText: "AD", value: 'AD' }),
 																															_react2.default.createElement(_List2.default, { primaryText: "XR", value: 'XR' }),
@@ -22257,15 +22242,10 @@
 																									null,
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
-																												null,
-																												'测序深度'
-																									),
-																									_react2.default.createElement(
-																												_Table.TableHeaderColumn,
 																												{ colSpan: '2' },
 																												_react2.default.createElement(
 																															_multiselect2.default,
-																															{ fullWidth: true, value: this.state.cxsd_values, onChange: this.handle_cxsd_Change },
+																															{ fullWidth: true, value: this.state.cxsd_values, floatingLabelText: '测序深度', onChange: this.handle_cxsd_Change },
 																															_react2.default.createElement(_List2.default, { primaryText: "0-10", value: '0-10' }),
 																															_react2.default.createElement(_List2.default, { primaryText: "10-25", value: '10-25' }),
 																															_react2.default.createElement(_List2.default, { primaryText: "25-50", value: '25-50' }),
@@ -22275,15 +22255,10 @@
 																									),
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
-																												null,
-																												'DM/其它(？)'
-																									),
-																									_react2.default.createElement(
-																												_Table.TableHeaderColumn,
 																												{ colSpan: '2' },
 																												_react2.default.createElement(
 																															_multiselect2.default,
-																															{ fullWidth: true, value: this.state.dm_values, onChange: this.handle_dm_Change },
+																															{ fullWidth: true, value: this.state.dm_values, floatingLabelText: 'DM/其它(？)', onChange: this.handle_dm_Change },
 																															_react2.default.createElement(_List2.default, { primaryText: "DM", value: 'DM' }),
 																															_react2.default.createElement(_List2.default, { primaryText: "DM?", value: 'DM?' }),
 																															_react2.default.createElement(_List2.default, { primaryText: "其它", value: 'other' })
@@ -43109,20 +43084,7 @@
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Material UI multi select
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                *
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Use with: 
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * <MultiSelect fullWidth={true} value={this.state.values} onChange={(e,v) => this.setState({values: v})}>
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                *         <ListItem primaryText={"Option 1"} value={1} />
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                *         <ListItem primaryText={"Option 2"} value={2} />
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                *         <ListItem primaryText={"Option 3"} value={3} />
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                *         <ListItem primaryText={"Option 4"} value={4} />
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * </MultiSelect>
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * 
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * this.state.values is an array of the values which are currently selected.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                **/
-
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var MultiSelect = function (_SelectField) {
 		_inherits(MultiSelect, _SelectField);
@@ -43163,32 +43125,57 @@
 
 				var other = _objectWithoutProperties(_props, ['autoWidth', 'children', 'style', 'labelStyle', 'iconStyle', 'underlineDisabledStyle', 'underlineFocusStyle', 'underlineStyle', 'errorStyle', 'selectFieldRoot', 'disabled', 'floatingLabelText', 'floatingLabelStyle', 'hintStyle', 'hintText', 'fullWidth', 'errorText', 'onFocus', 'onBlur', 'onChange', 'value']);
 
+				var labels = [];
+				for (var i in children) {
+					if (value.indexOf(children[i].props.value) >= 0) {
+						labels.push(children[i].props.primaryText);
+					}
+				}
+
+				if (labels.length === 0) {
+					labels.push("None");
+				}
+
 				return _react2.default.createElement(
-					_DropDownMenu2.default,
-					_extends({
-						autoWidth: autoWidth
-					}, other),
-					children.map(function (item, i) {
-						return _react2.default.createElement(_Checkbox2.default, {
-							key: i,
-							label: item.props.primaryText,
-							checked: value.indexOf(item.props.value) >= 0,
-							onCheck: function onCheck(e, v) {
-								var index = value.indexOf(item.props.value);
-								if (v === true) {
-									if (index < 0) {
-										value.push(item.props.value);
-										if (_this2.props.onChange) _this2.props.onChange(e, value);
-									}
-								} else {
-									if (index >= 0) {
-										value.splice(index, 1);
-										if (_this2.props.onChange) _this2.props.onChange(e, value);
+					'div',
+					{ style: { width: "100%" } },
+					_react2.default.createElement(
+						'div',
+						{ style: { position: "absolute", bottom: 12, left: 0, width: "100%", overflow: "hidden" } },
+						floatingLabelText
+					),
+					_react2.default.createElement(
+						_DropDownMenu2.default,
+						_extends({
+							disabled: disabled,
+							style: { width: "100%" },
+							labelStyle: labelStyle,
+							iconStyle: iconStyle,
+							autoWidth: autoWidth,
+							value: ''
+						}, other),
+						children.map(function (item, i) {
+							return _react2.default.createElement(_Checkbox2.default, {
+								key: i,
+								label: item.props.primaryText,
+								checked: value.indexOf(item.props.value) >= 0,
+								onCheck: function onCheck(e, v) {
+									var index = value.indexOf(item.props.value);
+									if (v === true) {
+										if (index < 0) {
+											value.push(item.props.value);
+											if (_this2.props.onChange) _this2.props.onChange(e, value);
+										}
+									} else {
+										if (index >= 0) {
+											value.splice(index, 1);
+											if (_this2.props.onChange) _this2.props.onChange(e, value);
+										}
 									}
 								}
-							}
-						});
-					})
+							});
+						})
+					)
 				);
 			}
 		}]);
