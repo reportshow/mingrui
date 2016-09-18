@@ -61,7 +61,7 @@ $menu[] = [
         [
             'label' => '共享案例',
             'icon'  => 'fa fa-file-powerpoint-o',
-            'url'   => '#',
+            'url'   => ['/mingrui-doc/index'], 
             'items' => [
 
             ],
@@ -81,7 +81,7 @@ $menu[] = ['label' => '互动平台',
         [
             'label' => '在线留言',
             'icon'  => 'fa fa-pie-chart',
-            'url'   => ['/datas/foundation'],
+            'url'   => ['/guestbook/view',  'id'=>'gb'.Yii::$app->user->id],
         ],
         [
             'label' => '联系方式',

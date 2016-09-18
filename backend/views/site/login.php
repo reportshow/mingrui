@@ -51,7 +51,7 @@ $fieldOptions2 = [
                 <li><a data-toggle="tab" href="#tab_2-2"><i class="fa fa-qrcode"></i> 二维码</a></li> 
                 <li class="pull-left header"> 登录</li>
             </ul>
-            <div class="tab-content" style="padding: 20px;">
+            <div class="tab-content" style="padding:30px;">
                 <div class="tab-pane active" id="tab_1-1">
                     <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
 

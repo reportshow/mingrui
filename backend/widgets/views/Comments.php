@@ -73,7 +73,7 @@ foreach ($model->comments as $comment) {
 
     <div class="box-footer">    
        <?php 
-       $form = ActiveForm::begin(['action' => ['rest-report/send-comment', 'id'=>$model->id],'method'=>'post',]); 
+       $form = ActiveForm::begin(['action' => $model->formaction ,'method'=>'post',]); 
 
        ?>
            
@@ -84,7 +84,7 @@ foreach ($model->comments as $comment) {
                         placeholder="Type Message ..." type="text">
                     <span class="input-group-btn">
                         <button class="btn btn-primary btn-flat" type="submit">
-                            评论
+                            留言
                         </button>
                     </span>
                 </input>

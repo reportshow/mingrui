@@ -32,8 +32,8 @@ class MingruiComments extends \yii\db\ActiveRecord
     {
         return [
             [['uid', 'report_id', 'content'], 'required'],
-            [['uid', 'to_uid', 'report_id'], 'integer'],
-            [['createtime'], 'safe'],
+            [['uid', 'to_uid'], 'integer'],
+            [['createtime', 'report_id'], 'safe'],
             [['content'], 'string', 'max' => 1024],
         ];
     }
@@ -79,7 +79,7 @@ class MingruiComments extends \yii\db\ActiveRecord
             'id'         => 'ID',
             'uid'        => 'Uid',
             'to_uid'     => 'To Uid',
-            'report_id'  => 'Report xd',
+            'report_id'  => 'Report id',
             'content'    => 'Content',
             'createtime' => 'Createtime',
         ];
