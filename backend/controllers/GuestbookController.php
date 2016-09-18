@@ -55,14 +55,11 @@ class GuestbookController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new RestReportSearch();
+        $searchModel = new RestClientSearch();
         $params      = Yii::$app->request->queryParams;
         //$params['RestReportSearch']['rest_report.status'] = 'finished';
 
-        $query = RestReport::find();
-        $query = $query
-            ->where(['<>', 'ptype', 'yidai'])
-            ->andWhere(['rest_report.status' => 'finished']);
+        $query = RestClient::find(); 
 
         $dataProvider = $searchModel->search($params, $query);
 
