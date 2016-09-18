@@ -69,17 +69,17 @@ $menu[] = ['label' => '互动平台',
         [
             'label' => '常见QA',
             'icon'  => 'fa fa-pie-chart',
-            'url'   => ['/normaldata/company'],
+            'url'   => ['/mingrui-qa'],
         ],
         [
             'label' => '在线留言',
             'icon'  => 'fa fa-pie-chart',
-            'url'   => ['/datas/foundation'],
+            'url'   => ['/guestbook/view',  'id'=>'gb'.Yii::$app->user->id],
         ],
         [
             'label' => '联系方式',
             'icon'  => 'fa fa-pie-chart',
-            'url'   => ['/normaldata/industry'],
+            'url'   => ['#'],
         ],
 
     ],

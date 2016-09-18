@@ -101,4 +101,12 @@ class RestClient extends \yii\db\ActiveRecord
     {
         return $this->hasMany(RestSample::className(), ['doctor_id' => 'id']);
     }
+
+    public function commentCount(){
+        $gb_id = 'gb'.$this->id;
+       return MingruiComments::find()->where(['report_id'=>$gb_id])->count();
+    }
+    public function comments(){
+
+    }
 }
