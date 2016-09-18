@@ -21909,6 +21909,7 @@
 
 							_this.filter_gene = function (data, value) {
 										var keywords = _this.state.gene_value.split(/\s+/);
+										console.log(keywords);
 										for (var i in keywords) {
 													if (data[0].toLowerCase().indexOf(keywords[i].toLowerCase()) != -1) {
 
@@ -22419,7 +22420,7 @@
 																												),
 																												_react2.default.createElement(
 																															_Table.TableRowColumn,
-																															{ 'data-tip': row[23] },
+																															{ 'data-tip': row[15].NG16070056[1].concat('<br>', row[23]) },
 																															row[15].NG16070056[1]
 																												),
 																												'//HET'
