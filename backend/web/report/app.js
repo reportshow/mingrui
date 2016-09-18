@@ -21909,6 +21909,7 @@
 
 							_this.filter_gene = function (data, value) {
 										var keywords = _this.state.gene_value.split(/\s+/);
+										console.log(keywords);
 										for (var i in keywords) {
 													if (data[0].toLowerCase().indexOf(keywords[i].toLowerCase()) != -1) {
 
@@ -22183,7 +22184,7 @@
 																						),
 																						_react2.default.createElement(
 																									_Table.TableRow,
-																									null,
+																									{ displayBorder: false },
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
 																												{ colSpan: '4' },
@@ -22191,15 +22192,10 @@
 																									),
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
-																												null,
-																												'突变类型'
-																									),
-																									_react2.default.createElement(
-																												_Table.TableHeaderColumn,
-																												{ colSpan: '2' },
+																												{ colSpan: '2', style: { textAlign: 'center' } },
 																												_react2.default.createElement(
 																															_multiselect2.default,
-																															{ fullWidth: true, value: this.state.tblx_values, onChange: this.handle_tblx_Change },
+																															{ fullWidth: true, value: this.state.tblx_values, floatingLabelText: '突变类型', onChange: this.handle_tblx_Change },
 																															_react2.default.createElement(_List2.default, { primaryText: "frameshift", value: 'frameshift' }),
 																															_react2.default.createElement(_List2.default, { primaryText: "nonframeshift", value: 'nonframeshift' }),
 																															_react2.default.createElement(_List2.default, { primaryText: "nonsynonymous", value: 'nonsynonymous' }),
@@ -22213,18 +22209,26 @@
 																						),
 																						_react2.default.createElement(
 																									_Table.TableRow,
-																									null,
+																									{ displayBorder: false },
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
-																												null,
-																												'突变比例'
+																												{ colSpan: '2', style: { textAlign: 'center' } },
+																												_react2.default.createElement(
+																															_multiselect2.default,
+																															{ fullWidth: true, value: this.state.cxsd_values, floatingLabelText: '测序深度', onChange: this.handle_cxsd_Change },
+																															_react2.default.createElement(_List2.default, { primaryText: "0-10", value: '0-10' }),
+																															_react2.default.createElement(_List2.default, { primaryText: "10-25", value: '10-25' }),
+																															_react2.default.createElement(_List2.default, { primaryText: "25-50", value: '25-50' }),
+																															_react2.default.createElement(_List2.default, { primaryText: "50-100", value: '50-100' }),
+																															_react2.default.createElement(_List2.default, { primaryText: "100+", value: '100+' })
+																												)
 																									),
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
-																												{ colSpan: '2' },
+																												{ colSpan: '2', style: { textAlign: 'center' } },
 																												_react2.default.createElement(
 																															_multiselect2.default,
-																															{ fullWidth: true, value: this.state.tbbl_values, onChange: this.handle_tbbl_Change },
+																															{ fullWidth: true, value: this.state.tbbl_values, floatingLabelText: '突变比例', onChange: this.handle_tbbl_Change },
 																															_react2.default.createElement(_List2.default, { primaryText: "0.9-1", value: '0.9-1' }),
 																															_react2.default.createElement(_List2.default, { primaryText: "0.75-0.9", value: '0.75-0.9' }),
 																															_react2.default.createElement(_List2.default, { primaryText: "0.65-0.75", value: '0.65-0.75' }),
@@ -22235,15 +22239,10 @@
 																									),
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
-																												null,
-																												'遗传方式'
-																									),
-																									_react2.default.createElement(
-																												_Table.TableHeaderColumn,
-																												{ colSpan: '2' },
+																												{ colSpan: '2', style: { textAlign: 'center' } },
 																												_react2.default.createElement(
 																															_multiselect2.default,
-																															{ fullWidth: true, value: this.state.ycfs_values, onChange: this.handle_ycfs_Change },
+																															{ fullWidth: true, value: this.state.ycfs_values, floatingLabelText: '遗传方式', onChange: this.handle_ycfs_Change },
 																															_react2.default.createElement(_List2.default, { primaryText: "AR", value: 'AR' }),
 																															_react2.default.createElement(_List2.default, { primaryText: "AD", value: 'AD' }),
 																															_react2.default.createElement(_List2.default, { primaryText: "XR", value: 'XR' }),
@@ -22254,62 +22253,21 @@
 																						),
 																						_react2.default.createElement(
 																									_Table.TableRow,
-																									null,
+																									{ displayBorder: false },
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
-																												null,
-																												'测序深度'
-																									),
-																									_react2.default.createElement(
-																												_Table.TableHeaderColumn,
-																												{ colSpan: '2' },
+																												{ colSpan: '2', style: { textAlign: 'center' } },
 																												_react2.default.createElement(
 																															_multiselect2.default,
-																															{ fullWidth: true, value: this.state.cxsd_values, onChange: this.handle_cxsd_Change },
-																															_react2.default.createElement(_List2.default, { primaryText: "0-10", value: '0-10' }),
-																															_react2.default.createElement(_List2.default, { primaryText: "10-25", value: '10-25' }),
-																															_react2.default.createElement(_List2.default, { primaryText: "25-50", value: '25-50' }),
-																															_react2.default.createElement(_List2.default, { primaryText: "50-100", value: '50-100' }),
-																															_react2.default.createElement(_List2.default, { primaryText: "100+", value: '100+' })
-																												)
-																									),
-																									_react2.default.createElement(
-																												_Table.TableHeaderColumn,
-																												null,
-																												'DM/其它(？)'
-																									),
-																									_react2.default.createElement(
-																												_Table.TableHeaderColumn,
-																												{ colSpan: '2' },
-																												_react2.default.createElement(
-																															_multiselect2.default,
-																															{ fullWidth: true, value: this.state.dm_values, onChange: this.handle_dm_Change },
+																															{ fullWidth: true, value: this.state.dm_values, floatingLabelText: 'DM/其它(？)', onChange: this.handle_dm_Change },
 																															_react2.default.createElement(_List2.default, { primaryText: "DM", value: 'DM' }),
 																															_react2.default.createElement(_List2.default, { primaryText: "DM?", value: 'DM?' }),
 																															_react2.default.createElement(_List2.default, { primaryText: "其它", value: 'other' })
 																												)
-																									)
-																						),
-																						_react2.default.createElement(
-																									_Table.TableRow,
-																									null,
-																									_react2.default.createElement(
-																												_Table.TableHeaderColumn,
-																												null,
-																												_react2.default.createElement(
-																															_SelectField2.default,
-																															{
-																																		fullWidth: true,
-																																		value: this.state.rqpl_value,
-																																		onChange: this.handle_rqpl_Change,
-																																		floatingLabelText: '人群频率(？)'
-																															},
-																															this.rqpl_items
-																												)
 																									),
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
-																												null,
+																												{ colSpan: '2' },
 																												_react2.default.createElement(
 																															_SelectField2.default,
 																															{
@@ -22323,7 +22281,7 @@
 																									),
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
-																												null,
+																												{ colSpan: '2' },
 																												_react2.default.createElement(
 																															_SelectField2.default,
 																															{
@@ -22334,10 +22292,14 @@
 																															},
 																															this.rqpl_items
 																												)
-																									),
+																									)
+																						),
+																						_react2.default.createElement(
+																									_Table.TableRow,
+																									null,
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
-																												null,
+																												{ colSpan: '2' },
 																												_react2.default.createElement(
 																															_SelectField2.default,
 																															{
@@ -22351,7 +22313,21 @@
 																									),
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
-																												null,
+																												{ colSpan: '2' },
+																												_react2.default.createElement(
+																															_SelectField2.default,
+																															{
+																																		fullWidth: true,
+																																		value: this.state.rqpl_value,
+																																		onChange: this.handle_rqpl_Change,
+																																		floatingLabelText: '人群频率(？)'
+																															},
+																															this.rqpl_items
+																												)
+																									),
+																									_react2.default.createElement(
+																												_Table.TableHeaderColumn,
+																												{ colSpan: '3', style: { textAlign: 'right' } },
 																												_react2.default.createElement(_RaisedButton2.default, { label: '过滤', primary: true, onClick: this.filter })
 																									)
 																						),
@@ -22380,8 +22356,8 @@
 																									),
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
-																												{ tooltip: 'HGDM信息?' },
-																												'HGDM'
+																												{ tooltip: 'HGMD信息?' },
+																												'HGMD'
 																									),
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
@@ -22444,7 +22420,7 @@
 																												),
 																												_react2.default.createElement(
 																															_Table.TableRowColumn,
-																															{ 'data-tip': row[23] },
+																															{ 'data-tip': row[15].NG16070056[1].concat('<br>', row[23]) },
 																															row[15].NG16070056[1]
 																												),
 																												'//HET'
@@ -38709,7 +38685,7 @@
 	      ariaProps: (0, _aria.parseAria)(props) // aria- and role attributes
 	    };
 
-	    _this.bind(['showTooltip', 'updateTooltip', 'hideTooltip', 'globalRebuild', 'globalShow', 'globalHide', 'onWindowResize']);
+	    _this.bind(['showTooltip', 'updateTooltip', 'hideTooltip', 'globalRebuild', 'globalShow', 'onWindowResize']);
 
 	    _this.mount = true;
 	    _this.delayShowLoop = null;
@@ -38737,7 +38713,7 @@
 	    value: function componentDidMount() {
 	      this.setStyleHeader(); // Set the style to the <link>
 	      this.bindListener(); // Bind listener for tooltip
-	      this.bindWindowEvents(this.props.resizeHide); // Bind global event for static method
+	      this.bindWindowEvents(); // Bind global event for static method
 	    }
 	  }, {
 	    key: 'componentWillReceiveProps',
@@ -38910,15 +38886,6 @@
 
 	      // If it is focus event or called by ReactTooltip.show, switch to `solid` effect
 	      var switchToSolid = e instanceof window.FocusEvent || isGlobalCall;
-
-	      // if it need to skip adding hide listener to scroll
-	      var scrollHide = true;
-	      if (e.currentTarget.getAttribute('data-scroll-hide')) {
-	        scrollHide = e.currentTarget.getAttribute('data-scroll-hide') === 'true';
-	      } else if (this.props.scrollHide != null) {
-	        scrollHide = this.props.scrollHide;
-	      }
-
 	      this.setState({
 	        placeholder: placeholder,
 	        place: e.currentTarget.getAttribute('data-place') || this.props.place || 'top',
@@ -38932,7 +38899,7 @@
 	        extraClass: e.currentTarget.getAttribute('data-class') || this.props.class || '',
 	        countTransform: e.currentTarget.getAttribute('data-count-transform') ? e.currentTarget.getAttribute('data-count-transform') === 'true' : this.props.countTransform != null ? this.props.countTransform : true
 	      }, function () {
-	        if (scrollHide) _this5.addScrollListener(e);
+	        _this5.addScrollListener(e);
 	        _this5.updateTooltip(e);
 
 	        if (getContent && Array.isArray(getContent)) {
@@ -38999,20 +38966,14 @@
 
 	  }, {
 	    key: 'hideTooltip',
-	    value: function hideTooltip(e, hasTarget) {
+	    value: function hideTooltip() {
 	      var _this7 = this;
 
-	      if (!this.mount) return;
-	      if (hasTarget) {
-	        // Don't trigger other elements belongs to other ReactTooltip
-	        var targetArray = this.getTargetArray(this.props.id);
-	        var isMyElement = targetArray.some(function (ele) {
-	          return ele === e.currentTarget;
-	        });
-	        if (!isMyElement || !this.state.show) return;
-	      }
 	      var delayHide = this.state.delayHide;
 	      var afterHide = this.props.afterHide;
+
+
+	      if (!this.mount) return;
 
 	      var resetState = function resetState() {
 	        var isVisible = _this7.state.show;
@@ -39157,11 +39118,7 @@
 	  countTransform: _react.PropTypes.bool,
 	  afterShow: _react.PropTypes.func,
 	  afterHide: _react.PropTypes.func,
-	  disable: _react.PropTypes.bool,
-	  scrollHide: _react.PropTypes.bool,
-	  resizeHide: _react.PropTypes.bool
-	}, _class2.defaultProps = {
-	  resizeHide: true
+	  disable: _react.PropTypes.bool
 	}, _temp)) || _class) || _class) || _class) || _class;
 
 	/* export default not fit for standalone, it will exports {default:...} */
@@ -39238,8 +39195,8 @@
 	   * Hide all tooltip
 	   * @trigger ReactTooltip.hide()
 	   */
-	  target.hide = function (target) {
-	    dispatchGlobalEvent(_constant2.default.GLOBAL.HIDE, { target: target });
+	  target.hide = function () {
+	    dispatchGlobalEvent(_constant2.default.GLOBAL.HIDE);
 	  };
 
 	  /**
@@ -39271,13 +39228,6 @@
 	      // only `float` type cares e.clientX e.clientY
 	      var e = { currentTarget: event.detail.target };
 	      this.showTooltip(e, true);
-	    }
-	  };
-
-	  target.prototype.globalHide = function (event) {
-	    if (this.mount) {
-	      var hasTarget = event && event.detail && event.detail.target && true || false;
-	      this.hideTooltip({ currentTarget: hasTarget && event.detail.target }, hasTarget);
 	    }
 	  };
 	};
@@ -39334,10 +39284,10 @@
 	});
 
 	exports.default = function (target) {
-	  target.prototype.bindWindowEvents = function (resizeHide) {
+	  target.prototype.bindWindowEvents = function () {
 	    // ReactTooltip.hide
-	    window.removeEventListener(_constant2.default.GLOBAL.HIDE, this.globalHide);
-	    window.addEventListener(_constant2.default.GLOBAL.HIDE, this.globalHide, false);
+	    window.removeEventListener(_constant2.default.GLOBAL.HIDE, this.hideTooltip);
+	    window.addEventListener(_constant2.default.GLOBAL.HIDE, this.hideTooltip, false);
 
 	    // ReactTooltip.rebuild
 	    window.removeEventListener(_constant2.default.GLOBAL.REBUILD, this.globalRebuild);
@@ -39348,14 +39298,12 @@
 	    window.addEventListener(_constant2.default.GLOBAL.SHOW, this.globalShow, false);
 
 	    // Resize
-	    if (resizeHide) {
-	      window.removeEventListener('resize', this.onWindowResize);
-	      window.addEventListener('resize', this.onWindowResize, false);
-	    }
+	    window.removeEventListener('resize', this.onWindowResize);
+	    window.addEventListener('resize', this.onWindowResize, false);
 	  };
 
 	  target.prototype.unbindWindowEvents = function () {
-	    window.removeEventListener(_constant2.default.GLOBAL.HIDE, this.globalHide);
+	    window.removeEventListener(_constant2.default.GLOBAL.HIDE, this.hideTooltip);
 	    window.removeEventListener(_constant2.default.GLOBAL.REBUILD, this.globalRebuild);
 	    window.removeEventListener(_constant2.default.GLOBAL.SHOW, this.globalShow);
 	    window.removeEventListener('resize', this.onWindowResize);
@@ -43109,20 +43057,7 @@
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Material UI multi select
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                *
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Use with: 
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * <MultiSelect fullWidth={true} value={this.state.values} onChange={(e,v) => this.setState({values: v})}>
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                *         <ListItem primaryText={"Option 1"} value={1} />
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                *         <ListItem primaryText={"Option 2"} value={2} />
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                *         <ListItem primaryText={"Option 3"} value={3} />
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                *         <ListItem primaryText={"Option 4"} value={4} />
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * </MultiSelect>
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * 
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * this.state.values is an array of the values which are currently selected.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                **/
-
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var MultiSelect = function (_SelectField) {
 		_inherits(MultiSelect, _SelectField);
@@ -43163,32 +43098,57 @@
 
 				var other = _objectWithoutProperties(_props, ['autoWidth', 'children', 'style', 'labelStyle', 'iconStyle', 'underlineDisabledStyle', 'underlineFocusStyle', 'underlineStyle', 'errorStyle', 'selectFieldRoot', 'disabled', 'floatingLabelText', 'floatingLabelStyle', 'hintStyle', 'hintText', 'fullWidth', 'errorText', 'onFocus', 'onBlur', 'onChange', 'value']);
 
+				var labels = [];
+				for (var i in children) {
+					if (value.indexOf(children[i].props.value) >= 0) {
+						labels.push(children[i].props.primaryText);
+					}
+				}
+
+				if (labels.length === 0) {
+					labels.push("None");
+				}
+
 				return _react2.default.createElement(
-					_DropDownMenu2.default,
-					_extends({
-						autoWidth: autoWidth
-					}, other),
-					children.map(function (item, i) {
-						return _react2.default.createElement(_Checkbox2.default, {
-							key: i,
-							label: item.props.primaryText,
-							checked: value.indexOf(item.props.value) >= 0,
-							onCheck: function onCheck(e, v) {
-								var index = value.indexOf(item.props.value);
-								if (v === true) {
-									if (index < 0) {
-										value.push(item.props.value);
-										if (_this2.props.onChange) _this2.props.onChange(e, value);
-									}
-								} else {
-									if (index >= 0) {
-										value.splice(index, 1);
-										if (_this2.props.onChange) _this2.props.onChange(e, value);
+					'div',
+					{ style: { width: "100%" } },
+					_react2.default.createElement(
+						'div',
+						{ style: { position: "absolute", bottom: 12, left: 0, width: "100%", overflow: "hidden" } },
+						floatingLabelText
+					),
+					_react2.default.createElement(
+						_DropDownMenu2.default,
+						_extends({
+							disabled: disabled,
+							style: { width: "100%" },
+							labelStyle: labelStyle,
+							iconStyle: iconStyle,
+							autoWidth: autoWidth,
+							value: ''
+						}, other),
+						children.map(function (item, i) {
+							return _react2.default.createElement(_Checkbox2.default, {
+								key: i,
+								label: item.props.primaryText,
+								checked: value.indexOf(item.props.value) >= 0,
+								onCheck: function onCheck(e, v) {
+									var index = value.indexOf(item.props.value);
+									if (v === true) {
+										if (index < 0) {
+											value.push(item.props.value);
+											if (_this2.props.onChange) _this2.props.onChange(e, value);
+										}
+									} else {
+										if (index >= 0) {
+											value.splice(index, 1);
+											if (_this2.props.onChange) _this2.props.onChange(e, value);
+										}
 									}
 								}
-							}
-						});
-					})
+							});
+						})
+					)
 				);
 			}
 		}]);

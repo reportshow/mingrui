@@ -1,16 +1,3 @@
-/**
- * Material UI multi select
- *
- * Use with: 
- * <MultiSelect fullWidth={true} value={this.state.values} onChange={(e,v) => this.setState({values: v})}>
- *         <ListItem primaryText={"Option 1"} value={1} />
- *         <ListItem primaryText={"Option 2"} value={2} />
- *         <ListItem primaryText={"Option 3"} value={3} />
- *         <ListItem primaryText={"Option 4"} value={4} />
- * </MultiSelect>
- * 
- * this.state.values is an array of the values which are currently selected.
- **/
 import React from 'react';
 import SelectField from 'material-ui/SelectField';
 import TextField from 'material-ui/TextField';
@@ -41,42 +28,66 @@ class MultiSelect extends SelectField {
 	    onBlur,
 	    onChange,
 	    value,
-	    ...other
+		...other
 	} = this.props;
+
+	let labels = [];
+	for(let i in children) {
+	    if(value.indexOf(children[i].props.value) >= 0) {
+		labels.push(children[i].props.primaryText);
+	    }
+	}
+
+	if(labels.length === 0) {
+	    labels.push("None");
+	}
 
 	return (
 
-  <DropDownMenu
-     autoWidth={autoWidth}
-     {...other}
-     >
-    
-    {children.map((item, i) => (
-    <Checkbox
-       key={i}
-       label = {item.props.primaryText}
-       checked={value.indexOf(item.props.value) >= 0}
-	onCheck={(e,v) => {
-	    const index = value.indexOf(item.props.value);
-	    if(v === true) {
-		if(index < 0) {
-		    value.push(item.props.value);
-		    if(this.props.onChange) this.props.onChange(e, value);
-		}
-	    } else {
-		if(index >= 0) {
-		    value.splice(index, 1);
-		    if(this.props.onChange) this.props.onChange(e, value);
-		}
-	    }
-	}}
-	    />
-    ))
-    }	    
-  </DropDownMenu>
+		<div style={{width: "100%"}}>
+		<div style={{position:"absolute", bottom: 12, left:0, width: "100%", overflow:"hidden" }}>{floatingLabelText}</div>
+		<DropDownMenu
+		   disabled={disabled}
+		   style={{width:"100%"}}
+		   labelStyle={labelStyle}
+		   iconStyle={iconStyle}
+		   autoWidth={autoWidth}
+		   value=""
+		   {...other}
+		   >
+		  {
+		      children.map((item, i) => {
+			  return (
+				  <Checkbox
+				     key={i}
+				     label = {item.props.primaryText}
+				     checked={value.indexOf(item.props.value) >= 0}
+				    onCheck={(e,v) => {
+				    const index = value.indexOf(item.props.value);
+					if(v === true) {
+					    if(index < 0) {
+						value.push(item.props.value);
+						if(this.props.onChange) this.props.onChange(e, value);
+					    }
+					} else {
+					    if(index >= 0) {
+						value.splice(index, 1);
+						if(this.props.onChange) this.props.onChange(e, value);
+					    }
+					}
+				    }
+					    }
+				  />
+			  );
+
+
+		      }
+				  )
+		  }
+		</DropDownMenu>
+		</div>
 	);
     }
 }
 
 export default MultiSelect;
-

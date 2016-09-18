@@ -100,7 +100,6 @@ export default class TableExampleComplex extends React.Component {
 	var keywords = this.state.gene_value.split(/\s+/);
 	for(var i in keywords){
 	    if(data[0].toLowerCase().indexOf(keywords[i].toLowerCase()) != -1){
-		
 		return true
 	    }
 	}
@@ -351,11 +350,10 @@ export default class TableExampleComplex extends React.Component {
 	    诊断过滤工具
 	  </TableHeaderColumn>
 	</TableRow>
-	<TableRow>
+	<TableRow displayBorder={false}>
 	  <TableHeaderColumn colSpan="4"><TextField name='gene' floatingLabelText="基因" defaultValue={this.state.gene_value} fullWidth={true} onChange={this.handle_gene_Change}/></TableHeaderColumn>
-	  <TableHeaderColumn>突变类型</TableHeaderColumn>
-	  <TableHeaderColumn colSpan="2">
-	    <MultiSelect fullWidth={true} value={this.state.tblx_values} onChange={this.handle_tblx_Change}>
+	    <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
+	    <MultiSelect fullWidth={true} value={this.state.tblx_values} floatingLabelText="突变类型" onChange={this.handle_tblx_Change}>
 	      <ListItem primaryText={"frameshift"} value="frameshift" />
 	      <ListItem primaryText={"nonframeshift"} value="nonframeshift" />
 	      <ListItem primaryText={"nonsynonymous"} value="nonsynonymous" />
@@ -367,10 +365,18 @@ export default class TableExampleComplex extends React.Component {
 	    </MultiSelect>
 	  </TableHeaderColumn>
 	</TableRow>
-	<TableRow>
-	  <TableHeaderColumn>突变比例</TableHeaderColumn>
-	  <TableHeaderColumn colSpan="2">
-		<MultiSelect fullWidth={true} value={this.state.tbbl_values} onChange={this.handle_tbbl_Change}>
+	<TableRow displayBorder={false}>
+	  <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
+	    <MultiSelect fullWidth={true} value={this.state.cxsd_values} floatingLabelText="测序深度" onChange={this.handle_cxsd_Change}>
+	      <ListItem primaryText={"0-10"} value="0-10" />
+	      <ListItem primaryText={"10-25"} value="10-25" />
+	      <ListItem primaryText={"25-50"} value="25-50" />
+	      <ListItem primaryText={"50-100"} value="50-100" />
+	      <ListItem primaryText={"100+"} value="100+" />
+	    </MultiSelect>
+	  </TableHeaderColumn>
+	  <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
+		<MultiSelect fullWidth={true} value={this.state.tbbl_values} floatingLabelText="突变比例" onChange={this.handle_tbbl_Change}>
 	      <ListItem primaryText={"0.9-1"} value="0.9-1" />
 	      <ListItem primaryText={"0.75-0.9"} value="0.75-0.9" />
 	      <ListItem primaryText={"0.65-0.75"} value="0.65-0.75" />
@@ -379,9 +385,8 @@ export default class TableExampleComplex extends React.Component {
 	      <ListItem primaryText={"0-0.2"} value="0-0.2" />
 	    </MultiSelect>
 	  </TableHeaderColumn>
-	  <TableHeaderColumn>遗传方式</TableHeaderColumn>
-	  <TableHeaderColumn colSpan="2">
-	    <MultiSelect fullWidth={true} value={this.state.ycfs_values} onChange={this.handle_ycfs_Change}>
+	  <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
+	    <MultiSelect fullWidth={true} value={this.state.ycfs_values} floatingLabelText="遗传方式" onChange={this.handle_ycfs_Change}>
 	      <ListItem primaryText={"AR"} value="AR" />
 	      <ListItem primaryText={"AD"} value="AD" />
 	      <ListItem primaryText={"XR"} value="XR" />
@@ -390,38 +395,15 @@ export default class TableExampleComplex extends React.Component {
 	    </MultiSelect>
 	  </TableHeaderColumn>
 	</TableRow>
-	<TableRow>
-	  <TableHeaderColumn>测序深度</TableHeaderColumn>
-	  <TableHeaderColumn colSpan="2">
-	    <MultiSelect fullWidth={true} value={this.state.cxsd_values} onChange={this.handle_cxsd_Change}>
-	      <ListItem primaryText={"0-10"} value="0-10" />
-	      <ListItem primaryText={"10-25"} value="10-25" />
-	      <ListItem primaryText={"25-50"} value="25-50" />
-	      <ListItem primaryText={"50-100"} value="50-100" />
-	      <ListItem primaryText={"100+"} value="100+" />
-	    </MultiSelect>
-	  </TableHeaderColumn>
-	  <TableHeaderColumn>DM/其它(？)</TableHeaderColumn>
-	  <TableHeaderColumn colSpan="2">
-	    <MultiSelect fullWidth={true} value={this.state.dm_values} onChange={this.handle_dm_Change}>
+	<TableRow displayBorder={false}>
+	  <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
+	    <MultiSelect fullWidth={true} value={this.state.dm_values} floatingLabelText="DM/其它(？)" onChange={this.handle_dm_Change}>
 	      <ListItem primaryText={"DM"} value="DM" />
 	      <ListItem primaryText={"DM?"} value="DM?" />
 	      <ListItem primaryText={"其它"} value="other" />
 	    </MultiSelect>
-	  </TableHeaderColumn>	  
-	</TableRow>
-	<TableRow>
-	  <TableHeaderColumn>
-	    <SelectField
-	       fullWidth={true}
-	       value={this.state.rqpl_value}
-	       onChange={this.handle_rqpl_Change}
-	      floatingLabelText="人群频率(？)"
-	      >
-	      {this.rqpl_items}
-	    </SelectField>
 	  </TableHeaderColumn>
-	  <TableHeaderColumn>
+	  <TableHeaderColumn colSpan="2">
 	    <SelectField
 	       fullWidth={true}
 	       value={this.state.qrjyz_value}
@@ -431,7 +413,7 @@ export default class TableExampleComplex extends React.Component {
 	      {this.rqpl_items}
 	    </SelectField>
 	  </TableHeaderColumn>
-	  <TableHeaderColumn>
+	  <TableHeaderColumn  colSpan="2">
 	    <SelectField
 	       fullWidth={true}
 	       value={this.state.oz6500_value}
@@ -441,7 +423,9 @@ export default class TableExampleComplex extends React.Component {
 	      {this.rqpl_items}
 	    </SelectField>
 	  </TableHeaderColumn>
-	  <TableHeaderColumn>
+	</TableRow>
+	<TableRow>
+	  <TableHeaderColumn colSpan="2">
 	    <SelectField
 	       fullWidth={true}
 	       value={this.state.inhouse_value}
@@ -451,7 +435,17 @@ export default class TableExampleComplex extends React.Component {
 	      {this.rqpl_items}
 	    </SelectField>
 	  </TableHeaderColumn>
-	  <TableHeaderColumn>
+	  <TableHeaderColumn colSpan="2">
+	    <SelectField
+	       fullWidth={true}
+	       value={this.state.rqpl_value}
+	       onChange={this.handle_rqpl_Change}
+	      floatingLabelText="人群频率(？)"
+	      >
+	      {this.rqpl_items}
+	    </SelectField>
+	  </TableHeaderColumn>
+	  <TableHeaderColumn  colSpan="3" style={{textAlign:'right'}}>
 	    <RaisedButton label="过滤" primary={true} onClick={this.filter}/>
 	  </TableHeaderColumn>
 	</TableRow>
@@ -460,7 +454,7 @@ export default class TableExampleComplex extends React.Component {
 	  <TableHeaderColumn tooltip="大小">大小</TableHeaderColumn>
 	  <TableHeaderColumn tooltip="突变信息">突变信息</TableHeaderColumn>
 	  <TableHeaderColumn tooltip="突变类型">突变类型</TableHeaderColumn>
-	  <TableHeaderColumn tooltip="HGDM信息?">HGDM</TableHeaderColumn>
+	  <TableHeaderColumn tooltip="HGMD信息?">HGMD</TableHeaderColumn>
 	  <TableHeaderColumn tooltip="基因疾病信息">基因疾病信息</TableHeaderColumn>
 	  <TableHeaderColumn tooltip="HET信息">HET</TableHeaderColumn>
 	</TableRow>
@@ -482,7 +476,7 @@ export default class TableExampleComplex extends React.Component {
 	  //疾病信息
 	  <TableRowColumn data-tip={row[22]}>{row[22]}</TableRowColumn>
 
-	  <TableRowColumn data-tip={row[23]}>{row[15].NG16070056[1]}</TableRowColumn>//HET
+	  <TableRowColumn data-tip={row[15].NG16070056[1].concat('<br>',row[23])}>{row[15].NG16070056[1]}</TableRowColumn>//HET
 	</TableRow>
 	))}
       </TableBody>
