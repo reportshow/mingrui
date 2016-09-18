@@ -15,7 +15,7 @@ use backend\models\Genetypes;
 /**
  * RestReportController implements the CRUD actions for RestReport model.
  */
-class RestReportController extends Controller
+class GuestbookController extends Controller
 {
     /**
      * @inheritdoc
@@ -81,17 +81,17 @@ class RestReportController extends Controller
     {
         $viewname = 'view';
 
-        if (Yii::$app->user->can('admin')) {
+       /* if (Yii::$app->user->can('admin')) {
             $viewname = 'view';
         } else if (Yii::$app->user->can('doctor')) {
             $viewname = 'view';
         } else {
             $id       = 3965;
             $viewname = 'view-guest';
-        }
+        }*/
 
         return $this->render($viewname, [
-            'model'    => $this->findModel($id),
+            'id'    => $id ,
             'comments' => $this->getComments($id),
         ]);
     }
@@ -108,11 +108,7 @@ class RestReportController extends Controller
         $model->uid = Yii::$app->user->id;
 
         if ($model->save()) {
-            //return $this->redirect(['view', 'id' => $id]);
-            $url = \Yii::$app->request->headers['Referer'];
-            header("Location: $url");
-            echo "<script>location.href='$url';</script>";
-            exit;
+            return $this->redirect(['view', 'id' => $id]);
         } else {
             var_dump($model->errors);
         }
