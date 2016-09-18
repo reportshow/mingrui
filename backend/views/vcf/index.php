@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             }],
              ['attribute'=>'','format'=>'raw','options'   => ['width' => '60px;'],
               'value'=>function($model){
-                return Html::a('下载VCF', ['vcf/download','id'=>$model], ['class' => 'btn btn-info']);
+                return Html::a('下载VCF', ['vcf/download','id'=>$model->id], ['class' => 'btn btn-info']);
             }],
            
 

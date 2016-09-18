@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'notes',
             ['attribute'=>'vcf', 'format'=>'raw',
-             'value'=>    Html::a('下载VCF', ['vcf/download','id'=>$model], ['class' => 'btn btn-info'])],
+             'value'=>    Html::a('下载VCF', ['vcf/download','id'=>$model->id], ['class' => 'btn btn-info'])],
             ['attribute'=>'上传者', 'value'=>$model->creator->nickname],
         ],
     ]) ?>

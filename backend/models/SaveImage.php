@@ -15,21 +15,26 @@ use yii\web\UploadedFile;
  */
 class SaveImage
 {
+    public static function folder($classname)
+    {
+        $classname = substr($classname, strrpos($classname, '\\') + 1);
+        $dir       = "upload/{$classname}/";
+        if (!is_dir($dir)) {
+            mkdir($dir);
+        }
+        return $dir;
+    }
     public static function save($model, $field)
     {
         $imageupList = UploadedFile::getInstances($model, $field);
         $id          = $model->id;
-        $classname   = $model->className();
-        $classname = substr($classname , strrpos($classname ,'\\')+1);
-        $dir         = "upload/{$classname}/";
-        if (!is_dir($dir)) {
-            mkdir($dir);
-        }
+        $dir         = self::folder($model->className());
+
         $imglist = [];
 
         foreach ($imageupList as $index => $image) {
-
-            $imgpath   = "{$dir}/{$id}-{$index}.png";
+            $pathinfo  = pathinfo($image->name);
+            $imgpath   = "{$dir}/{$id}-{$index}." . $pathinfo["extension"];
             $imglist[] = $imgpath;
             $image->saveAs($imgpath);
         }
