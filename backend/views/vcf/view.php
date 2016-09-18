@@ -29,7 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'notes',
-            'vcf',
+            ['attribute'=>'vcf', 'format'=>'raw',
+             'value'=>    Html::a('下载VCF', ['vcf/download','id'=>$model], ['class' => 'btn btn-info'])],
             ['attribute'=>'上传者', 'value'=>$model->creator->nickname],
         ],
     ]) ?>
