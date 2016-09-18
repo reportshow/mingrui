@@ -20,7 +20,7 @@ $menu[] = [
         [
             'label' => '外链数据',
             'icon'  => 'fa fa-puzzle-piece',
-            'url'   => 'vcf/',
+            'url'   => ['vcf/'],
             'items' => [
 
             ],
