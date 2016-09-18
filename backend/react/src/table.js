@@ -7,7 +7,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import ListItem from 'material-ui/List';
 import ReactTooltip from 'react-tooltip';
-import Toolbarfilter from './toolbar';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import Checkbox from 'material-ui/Checkbox';
@@ -84,17 +83,17 @@ export default class TableExampleComplex extends React.Component {
 		"DM?",
 		"other",
 	    ],
-	    rqpl_value:"%1",
-	    qrjyz_value:"%1",
-	    oz6500_value:"%1",
-	    inhouse_value:"%1",
+	    rqpl_value:"1%",
+	    qrjyz_value:"1%",
+	    oz6500_value:"1%",
+	    inhouse_value:"1%",
 	};	
     }
 
 
     rqpl_items = [
-	    <MenuItem key={1} value={"%1"} primaryText="%1" />,
-	    <MenuItem key={2} value={"%2"} primaryText="2%" />,
+	    <MenuItem key={1} value={"1%"} primaryText="1%" />,
+	    <MenuItem key={2} value={"2%"} primaryText="2%" />,
     ];
 
     filter_gene = (data, value) => {
@@ -132,14 +131,53 @@ export default class TableExampleComplex extends React.Component {
     }
 
     filter_tbbl = (data, value) => {
-	return true;
+	var minmax = [];
+ 	var data_tbbl = parseFloat(data[15].NG16070056[1].match(/.*\((.*)\).*/)[1]);
+	for(var i in this.state.tbbl_values) {
+	    var ret = this.state.tbbl_values[i].match(/(.*)-(.*)/);
+	    minmax.push([parseFloat(ret[1]), parseFloat(ret[2])]);
+	}
+
+	for(var i in minmax) {
+	    if(data_tbbl >= minmax[i][0] && data_tbbl <= minmax[i][1]) {
+		return true;
+	    }
+	}
+	
+	return false;
     }  
 
     filter_cxsd = (data, value) => {
-	return true;
+	var minmax = [];
+ 	var data_cxsd = data[15].NG16070056[1].match(/(.*)\/(.*)\(.*\)/);
+	var het = parseInt(data_cxsd[1]) + parseInt(data_cxsd[2]);
+	for(var i in this.state.cxsd_values) {
+	    var ret = this.state.cxsd_values[i].match(/(.*)-(.*)/);
+	    if(ret == null) {
+		minmax.push([100, 20000]);
+	    }
+	    else {
+		minmax.push([parseInt(ret[1]), parseInt(ret[2])]);
+	    }
+	}
+
+	for(var i in minmax) {
+	    if(het >= minmax[i][0] && het <= minmax[i][1]) {
+		return true;
+	    }
+	}
+	
+	return false;
     }  
 
     filter_dm = (data, value) => {
+	//TODO:: dm has no data in the report
+	// for(var i in this.state.dm_values){
+	//     if(data[?].toLowerCase() === this.state.dm_values[i].toLowerCase()){	
+	// 	return true
+	//     }
+	// }
+	// return false;
 	return true;
     }  
 
@@ -148,15 +186,45 @@ export default class TableExampleComplex extends React.Component {
     }  
 
     filter_qrjyz = (data, value) => {
-	return true;
+	var data_qrjyz = parseFloat(data[6][0]);
+	var qrjyz_value = parseFloat(this.state.qrjyz_value);
+	if(!isNaN(data_qrjyz) && !isNaN(qrjyz_value)) {
+	    if(data_qrjyz <= qrjyz_value/100) {
+		return true;
+	    }
+	}
+	else {
+	    return true;
+	}
+	return false;
     }
 
     filter_oz6500 = (data, value) => {
-	return true;
+	var data_oz6500 = parseFloat(data[6][1]);
+	var oz6500_value = parseFloat(this.state.oz6500_value);
+	if(!isNaN(data_oz6500) && !isNaN(oz6500_value)) {
+	    if(data_oz6500 <= oz6500_value/100) {
+		return true;
+	    }
+	}
+	else {
+	    return true;
+	}
+	return false;
     }  
 
     filter_inhouse = (data, value) => {
-	return true;
+	var data_inhouse = parseFloat(data[6][3]);
+	var inhouse_value = parseFloat(this.state.inhouse_value);
+	if(!isNaN(data_inhouse) && !isNaN(inhouse_value)) {
+	    if(data_inhouse <= inhouse_value/100) {
+		return true;
+	    }
+	}
+	else {
+	    return true;
+	}
+	return false;
     }
 
     filters = [
@@ -333,7 +401,7 @@ export default class TableExampleComplex extends React.Component {
 	      <ListItem primaryText={"100+"} value="100+" />
 	    </MultiSelect>
 	  </TableHeaderColumn>
-	  <TableHeaderColumn>DM/其它</TableHeaderColumn>
+	  <TableHeaderColumn>DM/其它(？)</TableHeaderColumn>
 	  <TableHeaderColumn colSpan="2">
 	    <MultiSelect fullWidth={true} value={this.state.dm_values} onChange={this.handle_dm_Change}>
 	      <ListItem primaryText={"DM"} value="DM" />
@@ -348,7 +416,7 @@ export default class TableExampleComplex extends React.Component {
 	       fullWidth={true}
 	       value={this.state.rqpl_value}
 	       onChange={this.handle_rqpl_Change}
-	      floatingLabelText="人群频率"
+	      floatingLabelText="人群频率(？)"
 	      >
 	      {this.rqpl_items}
 	    </SelectField>
@@ -358,7 +426,7 @@ export default class TableExampleComplex extends React.Component {
 	       fullWidth={true}
 	       value={this.state.qrjyz_value}
 	       onChange={this.handle_qrjyz_Change}
-	      floatingLabelText="千人基因组"
+	      floatingLabelText="千人基因组携带率低于(？)"
 	      >
 	      {this.rqpl_items}
 	    </SelectField>
@@ -368,7 +436,7 @@ export default class TableExampleComplex extends React.Component {
 	       fullWidth={true}
 	       value={this.state.oz6500_value}
 	       onChange={this.handle_oz6500_Change}
-	      floatingLabelText="欧洲6500"
+	      floatingLabelText="欧洲6500低于(？)"
 	      >
 	      {this.rqpl_items}
 	    </SelectField>
@@ -378,7 +446,7 @@ export default class TableExampleComplex extends React.Component {
 	       fullWidth={true}
 	       value={this.state.inhouse_value}
 	       onChange={this.handle_inhouse_Change}
-	      floatingLabelText="inhouse"
+	      floatingLabelText="inhouse低于(？)"
 	      >
 	      {this.rqpl_items}
 	    </SelectField>
@@ -392,7 +460,7 @@ export default class TableExampleComplex extends React.Component {
 	  <TableHeaderColumn tooltip="大小">大小</TableHeaderColumn>
 	  <TableHeaderColumn tooltip="突变信息">突变信息</TableHeaderColumn>
 	  <TableHeaderColumn tooltip="突变类型">突变类型</TableHeaderColumn>
-	  <TableHeaderColumn tooltip="HGDM信息">HGDM</TableHeaderColumn>
+	  <TableHeaderColumn tooltip="HGDM信息?">HGDM</TableHeaderColumn>
 	  <TableHeaderColumn tooltip="基因疾病信息">基因疾病信息</TableHeaderColumn>
 	  <TableHeaderColumn tooltip="HET信息">HET</TableHeaderColumn>
 	</TableRow>
