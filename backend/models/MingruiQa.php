@@ -53,7 +53,7 @@ class MingruiQa extends \yii\db\ActiveRecord
             'id' => 'ID',
             'question' => '提问',
             'answer' => '回答',
-            'createtime' => 'Createtime',
+            'createtime' => '时间',
         ];
     }
 }
