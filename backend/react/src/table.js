@@ -455,7 +455,7 @@ export default class TableExampleComplex extends React.Component {
 	  <TableHeaderColumn tooltip="大小">大小</TableHeaderColumn>
 	  <TableHeaderColumn tooltip="突变信息">突变信息</TableHeaderColumn>
 	  <TableHeaderColumn tooltip="突变类型">突变类型</TableHeaderColumn>
-	  <TableHeaderColumn tooltip="HGDM信息?">HGDM</TableHeaderColumn>
+	  <TableHeaderColumn tooltip="HGMD信息?">HGMD</TableHeaderColumn>
 	  <TableHeaderColumn tooltip="基因疾病信息">基因疾病信息</TableHeaderColumn>
 	  <TableHeaderColumn tooltip="HET信息">HET</TableHeaderColumn>
 	</TableRow>
