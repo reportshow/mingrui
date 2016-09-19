@@ -2,11 +2,11 @@
 
 $wechat           = [];
 $wechat['config'] = [
-    'appId'     => 'wx123567b0f784b9b9',
-    'appSecret' => 'fb1e2313a4cc17e1b149d6a2b3234eb6',
-    'token'     => 'sanrenxiyi',
+    'appId'     => 'wx370db2383bd1ffaf',
+    'appSecret' => '9cb5d237cc1edc2429aeb8fb9b0fef0e',
+    'token'     => 'guest_jingzhun6688',
 ];
-$wechat['menu'] =  [
+$wechat['menu'] = [
     [
         "name"       => "我的报告",
         "sub_button" => [

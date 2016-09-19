@@ -1,8 +1,8 @@
 <?php
 namespace backend\models;
 
-use yii\web\Controller;
 use common\components\WechatMessage;
+use yii\web\Controller;
 
 /**
  * Site controller
@@ -20,22 +20,41 @@ class WechatEvent
     }
 
     public function response()
-    {    
-        //var_export($this->xml);
-        if (trim($this->xml['Event']) == 'CLICK') {
-         return   $this->clickevents();
-        };
+    {
+        $Event = strtoupper(trim($this->xml['Event']));
+
+        switch ($Event) {
+            case 'CLICK':
+                return $this->event_click();
+                break;
+            case 'SCAN':
+                return $this->event_scan();
+                break;
+
+            default:
+                # code...
+                break;
+        }
 
     }
-    public function clickevents()
-    { 
-        $event = strtolower(trim($this->xml['EventKey']));
-        
-        $event = str_replace('-', '_', $event); 
-        if (method_exists($this, $event)) {           
-            return $this->$event();
+    public function event_click()
+    {
+        $eventname = strtolower(trim($this->xml['EventKey']));
+
+        $eventname = str_replace('-', '_', $eventname);
+
+        if (method_exists($this, $eventname)) {
+            return $this->$eventname();
         } else {
             return $this->reply->text('function not exists');
+        }
+    }
+    public function event_scan()
+    {
+
+        if (method_exists($this, 'scan')) {
+            $scene_id = strtolower(trim($this->xml['EventKey']));
+            return $this->$scan($scene_id);
         }
     }
 }

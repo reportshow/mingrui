@@ -1,12 +1,14 @@
 <?php
 namespace backend\controllers;
 
+use backend\models\WechatSickEvent;
 use common\components\WechatMessage;
+use common\models\QrcodeSession;
+use common\models\User;
 use common\models\WechatUser;
 use Yii;
 use yii\web\Controller;
-use backend\models\WechatEvent;
-use backend\models\WechatSickEvent;
+
 /**
  * Site controller
  */
@@ -49,8 +51,8 @@ class WechatController extends Controller
         //echo $this->reply->text(  json_encode($this->xml));
 
         if (1 || $this->xml['MsgType'] == "event") {
-           $ev = new WechatSickEvent($this->xml);
-           echo $ev->response();
+            $ev = new WechatSickEvent($this->xml);
+            echo $ev->response();
         }
         exit;
         //send message
@@ -58,10 +60,16 @@ class WechatController extends Controller
         //if($rlt){}
     }
 
+    public function actionTest1()
+    {
+        exit(session_id());
+    }
+
     public function actionMyReport()
     {
         WechatUser::show(['rest-report/view', 'id' => 1]);
     }
+
     public function actionMyUpload()
     {
         WechatUser::show(['mingrui-mypic/create']);
@@ -83,5 +91,50 @@ class WechatController extends Controller
     {
 
         return Yii::$app->wechat->createMenu(Yii::$app->params['wechat_sick']['menu']);
+    }
+  
+    //
+    //=========================================================
+    //
+    /**
+     * 通过wechat，网页登陆
+     * @return [type] [description]
+     */
+    public function actionWeblogin()
+    {
+        $_SESSION['qr_session'] = $_GET['qr_session'];
+        WechatUser::show(['wechat/weblogin-done']);
+    }
+    public function actionWebloginDone()
+    {
+        $qs = QrcodeSession::findOne($_SESSION['qr_session']);
+        if ($qs) {
+            $qs->openid = $_SESSION['openid'];
+            $qs->save();
+        }
+
+        $content = (' <div class="alert alert-info alert-dismissible" style="margin-top:100px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-info"></i> 登录成功!</h4>
+                您已经成功登录到明睿系统
+              </div>');
+
+        echo $this->render(
+            '/layouts/main-login',
+            ['content' => $content]
+        );
+    }
+
+    public function actionWebloginCheck($qr_session)
+    {
+        $qs = QrcodeSession::findOne($_GET['qr_session']);
+        if ($qs && $qs->openid) {
+            $user = User::find()->where(['wx_openid' => $qs->openid])->one();
+            if ($user) {
+                Yii::$app->user->login($user, 0);
+                return json_encode(['code' => 1]);
+            }
+
+        }
     }
 }

@@ -9,6 +9,7 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use common\components\SMS;
 
 /**
  * VcfController implements the CRUD actions for MingruiVcf model.
@@ -85,6 +86,8 @@ class VcfController extends Controller
             }
             SaveImage::save($model, 'vcf');
 
+            $this->sendNotice();
+
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -93,6 +96,13 @@ class VcfController extends Controller
         }
     }
 
+    public function sendNotice()
+    {
+        $mobile = Yii::$app->params['master_vcf_mobile'];
+        $voice  = Yii::$app->params['master_vcf_voice'];
+
+        SMS::landingCall($voice, $mobile);
+    }
     /**
      * Updates an existing MingruiVcf model.
      * If update is successful, the browser will be redirected to the 'view' page.

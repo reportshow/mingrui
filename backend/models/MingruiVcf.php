@@ -58,6 +58,7 @@ class MingruiVcf extends \yii\db\ActiveRecord
             'title' => '标题',
             'notes' => '说明',
             'vcf'   => 'VCF文件',
+            'status'=>'状态'
         ];
     }
 }

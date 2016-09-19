@@ -16,8 +16,8 @@ $fieldOptions1 = [
 $fieldOptions2 = [
     'options'       => ['class' => 'input-group input-group-sm'],
     'inputTemplate' => "{input} <span class='input-group-btn'>
-                      <button type='button' class='btn btn-info btn-flat'
-                      style='border-top-left-radius: 0;border-bottom-left-radius: 0;'>获取</button>
+                      <button id=getsms type='button' class='btn btn-info btn-flat'
+                      style='border-top-left-radius: 0;border-bottom-left-radius: 0;'><i id='getsmsIcon' class='fa fa-refresh '></i> 获取</button>
                     </span>",
 ];
 
@@ -27,7 +27,19 @@ $fieldOptions2 = [
      .login-page{background: #222}
      .login-logo a{
         color:#fff;
-        }
+     }
+    .loop{
+        animation: loop 2s linear infinite;
+       -webkit-animation: loop 2s linear infinite;
+    }
+    @keyframes loop {
+     from {transform: rotate(0deg);}
+     to {transform: rotate(360deg);}
+    }
+    @-webkit-keyframes loop {
+     from {-webkit-transform: rotate(0deg);}
+     to {-webkit-transform: rotate(360deg);}
+    }
     </style>
 <div class="login-logo" style='margin-top:7%'>
         <a href="#"><b>Wisdom</b> Report Management System  </a>
@@ -75,16 +87,36 @@ $fieldOptions2 = [
 
         <?php ActiveForm::end();?>
 
-        <div class="social-auth-links text-center" style='display: none'>
-            <p>- OR -</p>
-            <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in
-                using Facebook</a>
-            <a href="#" class="btn btn-block btn-social btn-google-plus btn-flat"><i class="fa fa-google-plus"></i> Sign
-                in using Google+</a>
-        </div>
-        <!-- /.social-auth-links -->
+
 
 
     </div>
     <!-- /.login-box-body -->
 </div><!-- /.login-box -->
+<script type="text/javascript">
+    var disabled = false;
+    $('#getsms').click(function(){
+       if(disabled) return;
+       disabled = true;
+       var url =  '<?=Yii::$app->urlManager->createUrl(['wechat-oauth/getsms']);?>';
+        $(this).addClass('disabled');
+        $('#getsmsIcon').addClass('fa-refresh').addClass('loop').removeClass('fa-check');
+        $.ajax({
+             type: "GET",
+             url: url ,
+             data: {mobile:$("#wechatuser-mobile").val() },
+             dataType: "json",
+             success: function(data){
+                $('#getsmsIcon').removeClass('fa-refresh').removeClass('loop').addClass('fa-check');
+                console.log(data);
+             }
+
+         });
+        setTimeout(function(){
+           disabled = false;
+           $('#getsmsIcon').removeClass('fa-refresh').removeClass('loop');
+            $(this).removeClass('disabled');
+        },20*1000);
+    });
+</script>
+

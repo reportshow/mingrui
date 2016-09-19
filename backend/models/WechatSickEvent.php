@@ -31,4 +31,8 @@ class WechatSickEvent extends WechatEvent
         ];
         return $this->reply->article($article);
     }
+
+    public function scan($scene_id){
+
+    }
 }

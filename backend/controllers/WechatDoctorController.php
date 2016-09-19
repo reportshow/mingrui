@@ -62,6 +62,28 @@ class WechatDoctorController extends Controller
         //$rlt =  $wechat->sendText($xml['FromUserName'], 'xxxx');
         //if($rlt){}
     }
+/**
+ * 通过wechat，网页登陆
+ * @return [type] [description]
+ */
+    public function actionWeblogin()
+    {
+        WechatUser::show(['wechat-doctor/weblogin-done', 'id' => 1]);
+    }
+    public function actionWebloginDone()
+    {
+
+        $content = (' <div class="alert alert-info alert-dismissible" style="margin-top:100px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-info"></i> 登录成功!</h4>
+                您已经成功登录到明睿系统
+              </div>');
+
+        echo $this->render(
+            '/layouts/main-login',
+            ['content' => $content]
+        );
+    }
 
     public function actionReport()
     {
@@ -80,5 +102,50 @@ class WechatDoctorController extends Controller
     {
 
         return Yii::$app->wechat->createMenu(Yii::$app->params['wechat_doctor']['menu']);
+    }
+
+    //
+    //=======================================================================================================
+    //
+    /**
+     * 通过wechat，网页登陆
+     * @return [type] [description]
+     */
+    public function actionWeblogin()
+    {
+        $_SESSION['qr_session'] = $_GET['qr_session'];
+        WechatUser::show(['wechat-doctor/weblogin-done']);
+    }
+    public function actionWebloginDone()
+    {
+        $qs = QrcodeSession::findOne($_SESSION['qr_session']);
+        if ($qs) {
+            $qs->openid = $_SESSION['openid'];
+            $qs->save();
+        }
+
+        $content = (' <div class="alert alert-info alert-dismissible" style="margin-top:100px">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-info"></i> 登录成功!</h4>
+                您已经成功登录到明睿系统
+              </div>');
+
+        echo $this->render(
+            '/layouts/main-login',
+            ['content' => $content]
+        );
+    }
+
+    public function actionWebloginCheck($qr_session)
+    {
+        $qs = QrcodeSession::findOne($_GET['qr_session']);
+        if ($qs && $qs->openid) {
+            $user = User::find()->where(['wx_openid' => $qs->openid])->one();
+            if ($user) {
+                Yii::$app->user->login($user, 0);
+                return json_encode(['code' => 1]);
+            }
+
+        }
     }
 }

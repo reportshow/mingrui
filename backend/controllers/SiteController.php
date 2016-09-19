@@ -80,4 +80,8 @@ class SiteController extends Controller
 
         return $this->goHome();
     }
+
+    public function actionWeblogin(){
+        echo "OK";
+    }
 }

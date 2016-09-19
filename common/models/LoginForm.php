@@ -14,7 +14,10 @@ class LoginForm extends Model
     public $rememberMe = true;
 
     private $_user;
-
+    public function init()
+    {
+        $this->qrSession = new QrcodeSession();
+    }
     /**
      * @inheritdoc
      */
@@ -61,28 +64,24 @@ class LoginForm extends Model
         }
     }
 
-    public function guestQrcodeUrl()
+    public $qrSession;
+    public function QrLoginUrl($role)
     {
-        $param = [
-            'action_name' => 'QR_SCENE',
-            'action_info' => [
-                'scene' => [
-                    // 场景值ID，临时二维码时为32位非0整型，永久二维码时最大值为100000（目前参数只支持1--100000）
-                    'scene_id'  => rand(),
-                    // 场景值ID（字符串形式的ID），字符串类型，长度限制为1到64，仅永久二维码支持此字段
-                    'scene_str' => '',
-                ],
-            ],
-        ];
-        try {
-            define('CURL_SSLVERSION_TLSv1',1);
-            $ticket = Yii::$app->wechat->createQrCode($param);
-            if ($ticket) {
-                return Yii::$app->wechat->getQrCodeUrl($ticket['ticket']);
-            }
-        } catch (Exception  $e) {}
+        $urlp = $role == 'doctor' ? ['wechat-doctor/weblogin'] : ['wechat/weblogin'];
+        if (!$this->qrSession) {
+            $this->qrSession = new QrcodeSession();
+        }
+
+        return $this->qrSession->delegation($urlp);
+    }
+    public function QrLoginCheckUrl($role)
+    {
+        $urlp               = $role == 'doctor' ? ['wechat-doctor/weblogin-check'] : ['wechat/weblogin-check'];
+        $urlp['qr_session'] = $this->qrSession->session;
+        return Yii::$app->urlManager->createAbsoluteUrl($urlp);
 
     }
+
     /**
      * Finds user by [[username]]
      *

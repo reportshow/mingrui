@@ -21,8 +21,7 @@ class WechatUser extends Model
     }
     public function bindMobile()
     {
-        // 1.检查sms
-        // TODO
+
         //2. 保存手机号
         if (!$this->openid) {
             $this->openid = $_SESSION['openid'];
@@ -59,6 +58,9 @@ class WechatUser extends Model
      */
     public function bindMingruiUser($model, $mobile)
     {
+
+        $mobile = $this->switchTestMobile($mobile);
+
         //设置医生或用户的id
 
         $user = RestClient::find()->where(['tel' => $mobile])->one();
@@ -66,6 +68,7 @@ class WechatUser extends Model
             $role_text = 'doctor';
             $userid    = $user->id;
         } else {
+            //SELECT * FROM `rest_sample` where REPLACE(tel1,' ','') like '%15942175885%' ;
             $user = RestSample::find()->where(['like', 'tel1', $mobile])->one();
             if ($user) {
                 $role_text = 'sick';
@@ -89,6 +92,16 @@ class WechatUser extends Model
             return false;
             exit(10);
         }
+    }
+
+    public function switchTestMobile($mobile)
+    {
+        if (!empty(Yii::$app->params['mobile_aliases'])) {
+            if (array_key_exists($mobile, Yii::$app->params['mobile_aliases'])) {
+                $mobile = Yii::$app->params['mobile_aliases'][$mobile];
+            }
+        }
+        return $mobile;
     }
     public function setMobile($mobile)
     {
@@ -155,9 +168,9 @@ class WechatUser extends Model
         }*/
 
         //去微信认证
-        $redirectUrl  = self::createUrl(['wechat-oauth/login']);
+        $redirectUrl = self::createUrl(['wechat-oauth/login']);
         //$$redirectUrl = str_replace('%2F', '/', $redirectUrl);
-        $toUrl        = Yii::$app->wechat->getOauth2AuthorizeUrl($redirectUrl, 'LOGIN', 'snsapi_userinfo');
+        $toUrl = Yii::$app->wechat->getOauth2AuthorizeUrl($redirectUrl, 'LOGIN', 'snsapi_userinfo');
         //exit($toUrl);
         header("Location: $toUrl");
         exit;
@@ -211,4 +224,26 @@ class WechatUser extends Model
 
     }
 
+    public function wechatQrcodeUrl()
+    {
+        $param = [
+            'action_name' => 'QR_SCENE',
+            'action_info' => [
+                'scene' => [
+                    // 场景值ID，临时二维码时为32位非0整型，永久二维码时最大值为100000（目前参数只支持1--100000）
+                    'scene_id'  => rand(),
+                    // 场景值ID（字符串形式的ID），字符串类型，长度限制为1到64，仅永久二维码支持此字段
+                    'scene_str' => '',
+                ],
+            ],
+        ];
+        try {
+            define('CURL_SSLVERSION_TLSv1', 1);
+            $ticket = Yii::$app->wechat->createQrCode($param);
+            if ($ticket) {
+                return Yii::$app->wechat->getQrCodeUrl($ticket['ticket']);
+            }
+        } catch (Exception $e) {}
+
+    }
 }
