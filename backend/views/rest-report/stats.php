@@ -12,6 +12,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
 AppAsset::register($this);
 ?>
+<style>
+  table {
+  border-collapse: collapse;
+  width: 100%;
+  }
+
+  th, td {
+  text-align: left;
+  padding: 8px;
+  }
+
+  tr:nth-child(even){background-color: #f2f2f2}
+</style>
+
+
 <script>
   var data = <?php echo $data ?>;
 </script>
@@ -24,8 +39,24 @@ AppAsset::register($this);
     <br/>
     <p style="text-align:center;">外显子分布及病人突变外显子</p>
     <div class="chart">
-    <canvas id="genearea" width="800" height="600"></canvas>
+      <div id="coords" style="text-align:center;display:none"></div>
+      <canvas id="genearea" width="800"></canvas>
     </div>
+    <div class="box-body">
+      <table id="table" class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>序号</th>
+            <th>起始位置</th>
+            <th>终止位置</th>
+            <th>是否异常</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+    <!-- /.box-body -->			       
 <?php } else { ?>
           <p style="text-align:center;">没有检测到异常基因!</p>         
 <?php } ?>
@@ -34,14 +65,13 @@ AppAsset::register($this);
 </div>
 <!-- /.box -->
 
-
-
 <script>
-var startX = 100;
+var startX = 50;
 var startY = 10;
 var height = 40;
 var width  = 600
 var context = null;
+var coords_div = document.getElementById('coords');
 var graphCanvas = document.getElementById('genearea');
 // Ensure that the element is available within the DOM
 if (graphCanvas && graphCanvas.getContext) {
@@ -66,8 +96,18 @@ for(var i=0; i< data_length; i++) {
     area[1] = width / (max-min)*(data[i].end-data[i].start);//width
     area[2] = data[i].count;// text for count
     area[4] = data[i].start.toString().concat('--', data[i].end.toString());//text for coordination
-    area[5] = (i+1)*10;//height offset
+    area[5] = i;//index
     areas[i] = area;
+    var row = "<tr><td>" + (i+1) + "</td><td>" +
+	data[i] .start + "</td><td>"+ data[i].end +"</td>";
+    if(data[i].bad){
+	row = row + "<td>是</td>";
+    }
+    else {
+	row = row + "<td>否</td>";
+    }
+    row = row + "</tr>";
+    $('#table').find('tbody').append(row);		
 }
 
 countmax = areas[0][2];
@@ -115,7 +155,7 @@ function drawLine(contextO, startx, starty, endx, endy, strokeStyle) {
 }
 
 // drawRectangle - draws a rectangle on a canvas context using the dimensions specified
-function drawArea(contextO, start, width, count, text, heightoff, fillstyle) {
+function drawArea(contextO, start, width, count, text,index,fillstyle) {
     context.lineWidth = "0.0";
     contextO.beginPath();
     contextO.rect(start, startY, width, height);
@@ -131,15 +171,8 @@ function drawArea(contextO, start, width, count, text, heightoff, fillstyle) {
     var textWidth = metrics.width;
     context.fillText(count, start+width/2, startY+(height+10)/2);
     context.font = '10pt Calibri';
-    context.textAlign = "left";
+    context.textAlign = "center";
     context.fillStyle = "#000";
-    var metrics = context.measureText(text);
-    var textWidth = metrics.width;
-    context.save();
-    context.translate(start+width/2, startY+height+20);
-    context.rotate(-Math.PI / 4);
-    context.textAlign = 'right';
-    context.fillText(text, 0, 0);
-    context.restore();
+    context.fillText(index+1, start+width/2, startY+height+20+i%4*12);
 }
 </script>
