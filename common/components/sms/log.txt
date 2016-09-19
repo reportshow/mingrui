@@ -1,0 +1,8 @@
+request body = <TemplateSMS>
+                    <to>13910136035</to> 
+                    <appId>8aaf0708573c3ddd0157408262f00336</appId>
+                    <templateId>1</templateId>
+                    <datas><data>xxx</data><data>yyy</data></datas>
+                  </TemplateSMS>
+request url = https://app.cloopen.com:8883/2013-12-26/Accounts/8aaf0708573c3ddd0157408261dc0330/SMS/TemplateSMS?sig=CDA116AA7023FF937293D7FBC3CB7B7F
+response body = <?xml version="1.0" encoding="UTF-8" standalone="yes"?><Response><statusCode>172001</statusCode><statusMsg>网络错误</statusMsg></Response>
