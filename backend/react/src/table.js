@@ -97,7 +97,7 @@ export default class TableExampleComplex extends React.Component {
     ];
 
     filter_gene = (data, value) => {
-	var keywords = this.state.gene_value.split(/\s+/);
+	var keywords = this.state.gene_value.trim().split(/\s+/);
 	for(var i in keywords){
 	    if(data[0].toLowerCase().indexOf(keywords[i].toLowerCase()) != -1){
 		return true
@@ -131,7 +131,7 @@ export default class TableExampleComplex extends React.Component {
 
     filter_tbbl = (data, value) => {
 	var minmax = [];
- 	var data_tbbl = parseFloat(data[15].NG16070056[1].match(/.*\((.*)\).*/)[1]);
+ 	var data_tbbl = parseFloat(data[25].match(/.*\((.*)\).*/)[1]);
 	for(var i in this.state.tbbl_values) {
 	    var ret = this.state.tbbl_values[i].match(/(.*)-(.*)/);
 	    minmax.push([parseFloat(ret[1]), parseFloat(ret[2])]);
@@ -148,7 +148,7 @@ export default class TableExampleComplex extends React.Component {
 
     filter_cxsd = (data, value) => {
 	var minmax = [];
- 	var data_cxsd = data[15].NG16070056[1].match(/(.*)\/(.*)\(.*\)/);
+ 	var data_cxsd = data[25].match(/(.*)\/(.*)\(.*\)/);
 	var het = parseInt(data_cxsd[1]) + parseInt(data_cxsd[2]);
 	for(var i in this.state.cxsd_values) {
 	    var ret = this.state.cxsd_values[i].match(/(.*)-(.*)/);
@@ -325,8 +325,15 @@ export default class TableExampleComplex extends React.Component {
 	    var str = '';
 	    str = tableData[key][1].replace(/\s/g, '<br/>');
 	    tableData[key].push(str);
+	    
+	    //HET
+	    for (var prop in tableData[key][15]) {
+		if (tableData[key][15].hasOwnProperty(prop)) {
+		    tableData[key].push(tableData[key][15][prop][1]);
+		}
+	    }
 	}
-	
+
 	return (
 <MuiThemeProvider muiTheme={muiTheme}>
   <div>
@@ -476,7 +483,7 @@ export default class TableExampleComplex extends React.Component {
 	  //疾病信息
 	  <TableRowColumn data-tip={row[22]}>{row[22]}</TableRowColumn>
 
-	  <TableRowColumn data-tip={row[15].NG16070056[1].concat('<br>',row[23])}>{row[15].NG16070056[1]}</TableRowColumn>//HET
+		<TableRowColumn data-tip={row[25].concat('<br>',row[23])}>{row[25]}</TableRowColumn>//HET
 	</TableRow>
 	))}
       </TableBody>
