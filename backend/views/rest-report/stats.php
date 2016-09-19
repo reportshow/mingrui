@@ -173,6 +173,6 @@ function drawArea(contextO, start, width, count, text,index,fillstyle) {
     context.font = '10pt Calibri';
     context.textAlign = "center";
     context.fillStyle = "#000";
-    context.fillText(index+1, start+width/2, startY+height+20+i%4*12);
+    context.fillText(index+1, start+width/2, startY+height+31+i%4*12);
 }
 </script>
