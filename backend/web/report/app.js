@@ -21908,7 +21908,7 @@
 							_this.rqpl_items = [_react2.default.createElement(_MenuItem2.default, { key: 1, value: "1%", primaryText: '1%' }), _react2.default.createElement(_MenuItem2.default, { key: 2, value: "2%", primaryText: '2%' })];
 
 							_this.filter_gene = function (data, value) {
-										var keywords = _this.state.gene_value.split(/\s+/);
+										var keywords = _this.state.gene_value.trim().split(/\s+/);
 										for (var i in keywords) {
 													if (data[0].toLowerCase().indexOf(keywords[i].toLowerCase()) != -1) {
 																return true;

@@ -97,7 +97,7 @@ export default class TableExampleComplex extends React.Component {
     ];
 
     filter_gene = (data, value) => {
-	var keywords = this.state.gene_value.split(/\s+/);
+	var keywords = this.state.gene_value.trim().split(/\s+/);
 	for(var i in keywords){
 	    if(data[0].toLowerCase().indexOf(keywords[i].toLowerCase()) != -1){
 		return true
