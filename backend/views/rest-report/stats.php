@@ -99,9 +99,9 @@ for(var i=0; i<areas.length; i++) {
 
 //Draw line for bad area
 for(var i=0; i< data_length; i++) {
-    if(data[i].bad){
-	drawLine(context, areas[i][0]+areas[i][1]/2, startY-20, areas[i][0]+areas[i][1]/2, startY+height+20, '#ff0000');
-    }
+     if(data[i].bad){
+          drawLine(context, areas[i][0]+areas[i][1]/2, startY-20, areas[i][0]+areas[i][1]/2, startY+height+20, '#ff0000');
+     }
 }
 
 // drawLine - draws a line on a canvas context from the start point to the end point
