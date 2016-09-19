@@ -21942,7 +21942,7 @@
 
 							_this.filter_tbbl = function (data, value) {
 										var minmax = [];
-										var data_tbbl = parseFloat(data[15].NG16070056[1].match(/.*\((.*)\).*/)[1]);
+										var data_tbbl = parseFloat(data[25].match(/.*\((.*)\).*/)[1]);
 										for (var i in _this.state.tbbl_values) {
 													var ret = _this.state.tbbl_values[i].match(/(.*)-(.*)/);
 													minmax.push([parseFloat(ret[1]), parseFloat(ret[2])]);
@@ -21959,7 +21959,7 @@
 
 							_this.filter_cxsd = function (data, value) {
 										var minmax = [];
-										var data_cxsd = data[15].NG16070056[1].match(/(.*)\/(.*)\(.*\)/);
+										var data_cxsd = data[25].match(/(.*)\/(.*)\(.*\)/);
 										var het = parseInt(data_cxsd[1]) + parseInt(data_cxsd[2]);
 										for (var i in _this.state.cxsd_values) {
 													var ret = _this.state.cxsd_values[i].match(/(.*)-(.*)/);
