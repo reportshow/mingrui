@@ -325,8 +325,15 @@ export default class TableExampleComplex extends React.Component {
 	    var str = '';
 	    str = tableData[key][1].replace(/\s/g, '<br/>');
 	    tableData[key].push(str);
+	    
+	    //HET
+	    for (var prop in tableData[key][15]) {
+		if (tableData[key][15].hasOwnProperty(prop)) {
+		    tableData[key].push(tableData[key][15][prop][1]);
+		}
+	    }
 	}
-	
+
 	return (
 <MuiThemeProvider muiTheme={muiTheme}>
   <div>
@@ -476,7 +483,7 @@ export default class TableExampleComplex extends React.Component {
 	  //疾病信息
 	  <TableRowColumn data-tip={row[22]}>{row[22]}</TableRowColumn>
 
-	  <TableRowColumn data-tip={row[15].NG16070056[1].concat('<br>',row[23])}>{row[15].NG16070056[1]}</TableRowColumn>//HET
+		<TableRowColumn data-tip={row[25].concat('<br>',row[23])}>{row[25]}</TableRowColumn>//HET
 	</TableRow>
 	))}
       </TableBody>
