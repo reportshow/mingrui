@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('新建案例', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?  
+    <?php
 /*    GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
