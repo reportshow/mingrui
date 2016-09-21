@@ -13,8 +13,8 @@ global $sick;
 $report = RestReport::findOne($id);
 $sick   = $report->sample->name;
 
-$this->title                   = '附加报告列表';
-$this->params['breadcrumbs'][] = ['label' => '报告列表', 'url' => ['rest-report/index']];
+$this->title                   = '完善资料';
+$this->params['breadcrumbs'][] = ['label' => '完善资料', 'url' => ['rest-report/index']];
 $this->params['breadcrumbs'][] = ['label' => "[{$sick}]报告", 'url' => ['rest-report/view', 'id' => $id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?=Html::a('新增 附加报告', ['create', 'id' => $_GET['id']], ['class' => 'btn btn-success'])?>
+        <?=Html::a('新增 资料', ['create', 'id' => $_GET['id']], ['class' => 'btn btn-success'])?>
     </p>
    <?= Imglist::widget([
         'dataProvider' => $dataProvider, 

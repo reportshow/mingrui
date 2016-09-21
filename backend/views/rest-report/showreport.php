@@ -1,13 +1,18 @@
 <?php
 use backend\assets\AppAsset;
 use yii\helpers\Html;
+use backend\models\RestReport;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\RestReport */
+$id = $_GET['id'];
+global $sick;
+$report = RestReport::findOne($id);
+$sick   = $report->sample->name;
 
 $this->title                   = '报告:' . $model->sample->name;
-$this->params['breadcrumbs'][] = ['label' => 'Rest Reports', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => 'Report', 'url' => ['view', 'id'=>$model->id]];
+$this->params['breadcrumbs'][] = ['label' => '报告列表', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $sick, 'url' => ['view', 'id'=>$model->id]];
 $this->params['breadcrumbs'][] = $this->title;
 
 AppAsset::register($this); 

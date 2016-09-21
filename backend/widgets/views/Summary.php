@@ -33,7 +33,7 @@ use yii\helpers\Html;
          </li>
 
         <li style="padding:10px 0px 10px 16px;"> 
-           附加报告: 
+           完善资料: 
            <?php 
            if(!empty($model->attachments))
            foreach ($model->attachments as $key => $value) {
