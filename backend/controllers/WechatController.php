@@ -62,12 +62,14 @@ class WechatController extends Controller
 
     public function actionTest1()
     {
-        exit(session_id());
+        $user =   User::findOne(6);
+
+        echo    property_exists ($user,'avatar')?'true':'false';
     }
 
     public function actionMyReport()
     {
-        WechatUser::show(['rest-report/view', 'id' => 1]);
+        WechatUser::show(['rest-report/myreport' ]);
     }
 
     public function actionMyUpload()

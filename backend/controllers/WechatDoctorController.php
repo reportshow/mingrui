@@ -4,6 +4,8 @@ namespace backend\controllers;
 use backend\models\WechatDoctorEvent;
 use common\components\WechatMessage;
 use common\models\WechatUser;
+use common\models\QrcodeSession;
+use common\models\User;
 use Yii;
 use yii\web\Controller;
 
@@ -62,28 +64,7 @@ class WechatDoctorController extends Controller
         //$rlt =  $wechat->sendText($xml['FromUserName'], 'xxxx');
         //if($rlt){}
     }
-/**
- * 通过wechat，网页登陆
- * @return [type] [description]
- */
-    public function actionWeblogin()
-    {
-        WechatUser::show(['wechat-doctor/weblogin-done', 'id' => 1]);
-    }
-    public function actionWebloginDone()
-    {
-
-        $content = (' <div class="alert alert-info alert-dismissible" style="margin-top:100px">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-info"></i> 登录成功!</h4>
-                您已经成功登录到明睿系统
-              </div>');
-
-        echo $this->render(
-            '/layouts/main-login',
-            ['content' => $content]
-        );
-    }
+ 
 
     public function actionReport()
     {

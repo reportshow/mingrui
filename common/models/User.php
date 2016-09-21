@@ -59,9 +59,10 @@ class User extends ActiveRecord implements IdentityInterface
             [['username', 'access_token', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['wx_openid', 'avatar'], 'string', 'max' => 512],
             [['nickname'], 'string', 'max' => 128],
-            [['auth_key'], 'string', 'max' => 32],
+            [['auth_key'], 'string', 'max' => 32], 
         ];
     }
+
 
     /**
      * @inheritdoc
@@ -194,4 +195,6 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+   
 }
