@@ -48,8 +48,8 @@ $fieldOptions2 = [
          <div class="nav-tabs-custom tab-info" style='margin-bottom: 0px; '>
             <ul class="nav nav-tabs pull-right">
                 <li ck-data='account'><a data-toggle="tab" href="#tab_1-1">帐号</a></li>
-                <li class="active" ck-data='sick'><a data-toggle="tab" href="#tab_2-2"><i class="fa fa-qrcode"></i> 患者</a></li>
-                <li ck-data='doctor'><a data-toggle="tab" href="#tab_2-3"><i class="fa fa-qrcode"></i> 医生</a></li>
+                <li class="active" ck-data='sick'><a data-toggle="tab" href="#tab_2-2"><i class="fa fa-qrcode"></i> 二维码</a></li>
+                <li ck-data='doctor' style='display: none'><a data-toggle="tab" href="#tab_2-3"><i class="fa fa-qrcode"></i> 医生</a></li>
                 <li class="pull-left header"> 登录</li>
             </ul>
             <div class="tab-content" style="padding:30px;">

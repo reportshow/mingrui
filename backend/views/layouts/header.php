@@ -107,13 +107,13 @@ use yii\helpers\Html;
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="<?= Yii::$app->user->identity->avatar ?>" class="user-image" alt="User Imagexx"/>
+                        <img src="<?= Yii::$app->user->identity->avatar ?>" class="user-image"  onerror="this.src='images/user2.png';"  alt="User Imagexx"/>
                         <span class="hidden-xs"><?= Yii::$app->user->identity->nickname; ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="<?= Yii::$app->user->identity->avatar ?>" class="img-circle"
+                            <img src="<?= Yii::$app->user->identity->avatar ?>" onerror="this.src='images/user2.png';"  class="img-circle"
                                  alt="User Image"/>
 
                             <p>

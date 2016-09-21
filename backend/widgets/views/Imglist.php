@@ -4,9 +4,10 @@
 foreach ($models as $key => $model) {
 	//var_export($model);exit;
 
-    if (property_exists ($model,'images')) {
+    $imglist='';
+    if (!empty ($model->images)) {
         $imglist = $model->images;
-    } else {
+    } else if (!empty ($model->image))  {
         $imglist = $model->image;
     }
 

@@ -6,7 +6,8 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="<?= Yii::$app->user->identity->avatar ?>" class="img-circle" alt="User Image"/>
+                <img src="<?= Yii::$app->user->identity->avatar ?>" class="img-circle" 
+                onerror="this.src='images/user2.png';" alt="User Image"/>
             </div>
             <div class="pull-left info">
                 <p><?=$user->nickname;?></p>
