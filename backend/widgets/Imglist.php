@@ -20,7 +20,7 @@ class Imglist extends Widget
                 $imglist = $model->image;
             }
 
-            $item['images'] = self::filesShow(explode(';', $imglist));
+            $item['images'] = self::filesShow(json_decode($imglist));
             $item['time']   = date('Y-m-d H:i', $model->createtime);
             $item           = json_decode(json_encode($item));
             // var_dump($item);exit;
@@ -35,12 +35,15 @@ class Imglist extends Widget
     public static function filesShow($images)
     {
         $elementList = [];
-        foreach ($images as $key => $image) {
-            if (!($image = trim($image))) {
+        if(is_array($images) && count($images)>0)
+        foreach ($images as $key => $imageObj) {
+            $filepath = $imageObj->path;
+            $filename = $imageObj->name;
+            if (!($filepath = trim($filepath))) {
                 continue;
             }
 
-            $pathinfo = pathinfo($image);
+            $pathinfo = pathinfo($filename);
 
             if (empty($pathinfo["extension"])) {
                 $ext = 'NULL';
@@ -50,25 +53,26 @@ class Imglist extends Widget
 
             $fileExts = [
                 'zip'  => 'zip', 'rar'  => 'rar',
-                'wav'  => 'wav','mp3'  => 'mp3',
+                'wav'  => 'wav', 'mp3'  => 'mp3',
                 'xls'  => 'xls',
                 'xlsx' => 'xls',
-                'mp4'  => 'mp4','wmv'  => 'wmv',
+                'mp4'  => 'mp4', 'wmv'  => 'wmv',
                 'null' => 'file',
                 'pdf'  => 'pdf',
-                'ppt'  => 'ppt', 'pptx' => 'ppt','pub'  => 'pub',
+                'ppt'  => 'ppt', 'pptx' => 'ppt', 'pub' => 'pub',
                 'wma'  => 'sound',
                 'txt'  => 'txt',
                 'doc'  => 'doc',
                 'docx' => 'doc',
             ];
             if (strpos('==png,jpg,jpeg,bmp,gif,', $ext) > 0) {
-                $elementList[] = ['type' => 'image', 'url' => $image];
+                $elementList[] = ['type' => 'image', 'url' => $filepath];
 
             } else if (array_key_exists($ext, $fileExts)) {
-                $icon          = 'images/icon/' . $fileExts[$ext] . '.png';  ;
-                $elementList[] = ['type' => 'file', 'icon'     => $icon,
-                    'url'                    => $image, 'filename' => $pathinfo["basename"]];
+                $icon          = 'images/icon/' . $fileExts[$ext] . '.png';
+                $elementList[] = [
+                    'type' => 'file', 'icon'        => $icon,
+                    'url'  => $filepath, 'filename' => $filename];
 
             }
 

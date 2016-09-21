@@ -33,8 +33,9 @@ class MingruiAttachment extends \yii\db\ActiveRecord
         return [
             [['report_id', 'createtime'], 'required'],
             [['report_id', 'createtime'], 'integer'],
-            [['image', 'title'], 'string', 'max' => 256],
+            [[ 'title'], 'string', 'max' => 256],
             [['description'], 'string', 'max' => 1024],
+            [['image'], 'string' ],
         ];
     }
     public function behaviors()

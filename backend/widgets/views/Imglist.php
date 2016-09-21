@@ -33,7 +33,7 @@ foreach ($model->images as $k => $val) {
             $url      = $val->url;
             $filename = $val->filename;
             echo " <a class='file' >
-            <img src='$icon'> <br><span>文件: $filename</span>
+            <img src='$icon'> <br><span>$filename</span>
               </a>";
         }
 
