@@ -71,7 +71,7 @@ class WechatUser extends Model
             //SELECT * FROM `rest_sample` where REPLACE(tel1,' ','') like '%15942175885%' ;
             $user = RestSample::find()->where(['like', 'tel1', $mobile])->one();
             if ($user) {
-                $role_text = 'sick';
+                $role_text = 'guest';
                 $userid    = $user->sample_id;
             }
 
@@ -81,6 +81,11 @@ class WechatUser extends Model
             $model->role_text   = $role_text;
             $model->role_tab_id = $userid;
             $model->save();
+
+            //为用户指定角色
+            $role = $role_text;
+            Yii::$app->authManager->assign($role, $model->id);;
+
             return true;
         } else {
 
@@ -209,6 +214,9 @@ class WechatUser extends Model
 
     public static function switchWechat($switch = false)
     {
+        return;
+        //不再切换帐号了
+        //
         if (!empty($_GET['role']) && $_GET['role'] == 'doctor') {
             $config = Yii::$app->params['wechat_doctor']['config'];
             //var_dump(Yii::$app->wechat);

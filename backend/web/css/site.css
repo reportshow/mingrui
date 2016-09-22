@@ -3,7 +3,9 @@ body {
     height: 100%;
     font-family: 'microsoft Yahei' !important;
 }
-
+.main-header .logo span{
+        font-family: "Helvetica Neue",Helvetica,Arial,'microsoft Yahei' ;
+}
 .wrap {
     min-height: 100%;
     height: auto;

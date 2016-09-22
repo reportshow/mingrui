@@ -7,7 +7,7 @@ $params = array_merge(
 );
 
 return [
-    'name'                => 'Wisdom Report Management system',
+    'name'                => '明睿单病云管家',
     'id'                  => 'app-backend',
     'basePath'            => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',

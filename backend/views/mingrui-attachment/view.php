@@ -28,7 +28,7 @@ $sick   = $report->sample->name;
 ])?>
     </p>
 
-    <?
+    <?php
 $imgurls  = explode(';', $model->image);
 $imagebox = '';
 foreach ($imgurls as $key => $url) {

@@ -35,10 +35,10 @@ class SaveImage
         foreach ($imageupList as $index => $image) {
             $pathinfo  = pathinfo($image->name);
             $imgpath   = "{$dir}/{$id}-{$index}." . $pathinfo["extension"];
-            $imglist[] = $imgpath;
+            $imglist[] = ['path' => $imgpath, 'name' => $image->name];
             $image->saveAs($imgpath);
         }
-        $model->$field = join(';', $imglist);
+        $model->$field = json_encode($imglist);
         $model->save();
     }
 

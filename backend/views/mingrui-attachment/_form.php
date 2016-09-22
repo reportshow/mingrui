@@ -16,11 +16,11 @@ use kartik\file\FileInput;
 
    <?= $form->field($model, 'report_id')->hiddenInput(['value'=> $_GET['id']  ])->label(false);?>    
    <?=  $form->field($model, 'image[]')->widget(FileInput::classname(), [    
-            'options' => ['multiple' => true, 'accept' => 'image/*'],
+            'options' => ['multiple' => true, 'accept' => '*/*'],
             'pluginOptions' => [
                 'showUpload' => false,
             ]
-        ])->label('选择报告图片'); 
+        ])->label('选择资料文件(多选)'); 
     ?>
     
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>

@@ -31,10 +31,11 @@ class MingruiAttachment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['report_id', 'image', 'createtime'], 'required'],
+            [['report_id', 'createtime'], 'required'],
             [['report_id', 'createtime'], 'integer'],
-            [['image', 'title'], 'string', 'max' => 256],
+            [[ 'title'], 'string', 'max' => 256],
             [['description'], 'string', 'max' => 1024],
+            [['image'], 'string' ],
         ];
     }
     public function behaviors()

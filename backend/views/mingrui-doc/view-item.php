@@ -4,7 +4,7 @@
         <div class="box box-widget">
             <div class="box-header with-border">
                 <div class="user-block">
-                    <img alt="User Image" class="img-circle" src="<?=$model->creator->avatar ?>" />
+                    <img alt="User Image" class="img-circle" src="<?=$model->creator->avatar ?>" onerror="this.src='images/user2.png';"  />
                         <span class="username">
                             <a href="#">
                                 <?=$model->creator->nickname ?>

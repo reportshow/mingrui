@@ -84,7 +84,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 
-    <?
+    <?php
 
 //     DetailView::widget([
 //     'model'      => $model,

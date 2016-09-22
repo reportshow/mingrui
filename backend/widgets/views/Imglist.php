@@ -1,17 +1,16 @@
+<style type="text/css">
+  .file{margin:15px;vertical-align: middle; padding:  10px; display: inline-block;  text-align: center;  box-shadow: 1px 1px 1px 2px rgba(206, 206, 206, 0.77);}
+  .file img{height: 120px; width: 120px;  margin-bottom:15px;}
+  .file{ border-top-left-radius:4px;border-top-right-radius:4px;}
+  .file:hover{  cursor:pointer;}
+  .file span{    display: block;    background: #6B6B6B;    color: #fff;}
+
+</style>
 <ul class="timeline" style="margin-left: 10px;">
 <?php
 
 foreach ($models as $key => $model) {
-	//var_export($model);exit;
-
-    if (property_exists ($model,'images')) {
-        $imglist = $model->images;
-    } else {
-        $imglist = $model->image;
-    }
-
-    $images = explode(';', $imglist);
-    $time   = date('Y-m-d H:i', $model->createtime)
+    //var_export($model);exit;
 
     ?>
 <!-- timeline item -->
@@ -19,18 +18,28 @@ foreach ($models as $key => $model) {
               <i class="fa fa-image bg-purple"></i>
 
               <div class="timeline-item">
-                <span class="time"><i class="fa fa-clock-o"></i> <?=$time?></span>
+                <span class="time"><i class="fa fa-clock-o"></i> <?=$model->time?></span>
 
                 <h3 class="timeline-header"> <?=$model->title?>  ...</h3>
 
                 <div class="timeline-body">
-                <?php
-foreach ($images as $key => $image) {
-        if(!($image=trim($image))) continue;
+   <?php
+foreach ($model->images as $k => $val) {
+        if ($val->type == 'image') {
+            $url = $val->url;
+            echo "<img src='{$url}'   class='margin' style='cursor:pointer;width:120px'>";
+        } else if ($val->type == 'file') {
+            $icon     = $val->icon;
+            $url      = $val->url;
+            $filename = $val->filename;
+            echo " <a class='file' >
+            <img src='$icon'> <br><span>$filename</span>
+              </a>";
+        }
 
-        echo "<img src='{$image}'   class='margin' style='cursor:pointer;width:120px'>";
+    }
 
-    }?>
+    ?>
                 </div>
                 <div class="timeline-footer">
                    <?=$model->description?>
