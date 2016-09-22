@@ -31,7 +31,7 @@ use yii\helpers\Html;
             'class' => 'pull-right badge bg-green', 'style' => "padding:8px",
           ])?>
          </li>
-        <li><a href="#">此基因相关的疾病：<br/><?= "$diseases"?>
+        <li><a href="#">相关疾病：<?= $diseases?></a></li>
         <li style="padding:10px 0px 10px 16px;"> 
            完善资料: 
            <?php 

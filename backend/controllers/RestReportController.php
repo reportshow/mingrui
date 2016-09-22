@@ -2,16 +2,16 @@
 
 namespace backend\controllers;
 
+use backend\models\Geneareas;
+use backend\models\GeneDiseases;
 use backend\models\MingruiComments;
 use backend\models\RestReport;
 use backend\models\RestReportSearch;
+use backend\models\RestSample;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use backend\models\Geneareas;
-use backend\models\Genetypes;
-use backend\models\GeneDiseases;
 
 /**
  * RestReportController implements the CRUD actions for RestReport model.
@@ -33,7 +33,8 @@ class RestReportController extends Controller
         ];
     }
 
-    public function actionSearch(){
+    public function actionSearch()
+    {
         $searchModel = new RestReportSearch();
         $params      = Yii::$app->request->queryParams;
         //$params['RestReportSearch']['rest_report.status'] = 'finished';
@@ -46,7 +47,7 @@ class RestReportController extends Controller
         $dataProvider = $searchModel->search($params, $query);
 
         return $this->render('search', [
-            'searchModel'  => $searchModel, 
+            'searchModel' => $searchModel,
         ]);
     }
 
@@ -73,21 +74,26 @@ class RestReportController extends Controller
         ]);
     }
 
-     public function actionMyreport()
+    public function actionMyreport()
     {
-        $mobile = Yii::$app->user->mobile;
-        $rp     = RestReport::find()->where(['like', "REPLACE(tel1,' ','')", $mobile])->one();
-        if (!$rp) {
-            return '没找到报告';
+        //var_export(Yii::$app->user);exit;
+        $mobile = Yii::$app->user->Identity->username;
+        $query  = RestSample::find()->where(['like', "REPLACE(tel1,' ','')", $mobile]);
+        $smp    = $query->one();
+        if (!$smp) {
+            return '没找到报告' . $query->createCommand()->getRawSql();
+        }
+        $reports = $smp->restReports; //多个报告
+        if (is_array($reports) && count($reports) > 0) {
+            $rpt = $reports[0];
+            return $this->render('view-guest', [
+                'model'    => $rpt,
+                'comments' => $this->getComments($rpt->id),
+            ]);
         }
 
-        return $this->render('view-guest', [
-            'model'    => $rp,
-            'comments' => $this->getComments($rp->id),
-        ]);
-
     }
-    
+
     /**
      * Displays a single RestReport model.
      * @param integer $id
@@ -108,31 +114,28 @@ class RestReportController extends Controller
 
         $userdata = $this->findModel($id);
 
-        $cnv_array = json_decode($userdata->cnvsave, true);
+        $cnv_array     = json_decode($userdata->cnvsave, true);
         $user_cnv_gene = '';
-        foreach($cnv_array as $key => $data){
-             $user_cnv_gene = $data[2];
+        foreach ($cnv_array as $key => $data) {
+            $user_cnv_gene = $data[2];
         }
-
 
         $str_diseases = "";
-        $diseases = GeneDiseases::find()->where(['gene' => $user_cnv_gene])->one();
-        if($diseases)
-        {
-             $temp = $diseases->diseases;
-             $array_diseases = explode('|', $temp);
-             foreach($array_diseases as $disease) {
-                  $str_diseases .= $disease . '<br>';
-             }
-        }
-        else{
-             $str_diseases = "";
+        $diseases     = GeneDiseases::find()->where(['gene' => $user_cnv_gene])->one();
+        if ($diseases) {
+            $temp           = $diseases->diseases;
+            $array_diseases = explode('|', $temp);
+            foreach ($array_diseases as $disease) {
+                $str_diseases .= $disease . '<br>';
+            }
+        } else {
+            $str_diseases = "";
         }
 
         return $this->render($viewname, [
             'model'    => $userdata,
             'comments' => $this->getComments($id),
-            'diseases' => $str_diseases
+            'diseases' => $str_diseases,
         ]);
     }
 
@@ -169,7 +172,7 @@ class RestReportController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
-    
+
     /**
      * Creates a new RestReport model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -242,40 +245,39 @@ class RestReportController extends Controller
 
     public function actionStats($id)
     {
-         //1. find user's bad gene
-         $userdata = $this->findModel($id);
-         $cnv_array = json_decode($userdata->cnvsave, true);
-         $user_cnv_gene = '';
-         $user_cnv_areas =[];
-         foreach($cnv_array as $key => $data){
-              $user_cnv_gene = $data[2];
-              $user_cnv_areas = $data[4];
-         }
+        //1. find user's bad gene
+        $userdata       = $this->findModel($id);
+        $cnv_array      = json_decode($userdata->cnvsave, true);
+        $user_cnv_gene  = '';
+        $user_cnv_areas = [];
+        foreach ($cnv_array as $key => $data) {
+            $user_cnv_gene  = $data[2];
+            $user_cnv_areas = $data[4];
+        }
 
-         //2. find all areas of this gene
-         $final_areas = [];
-         if(!empty($user_cnv_gene)) {
-              $areas = Geneareas::find()->where(['geneareas.gene' => trim($user_cnv_gene)])->all();
+        //2. find all areas of this gene
+        $final_areas = [];
+        if (!empty($user_cnv_gene)) {
+            $areas = Geneareas::find()->where(['geneareas.gene' => trim($user_cnv_gene)])->all();
 
-              foreach($areas as $area)
-              {
-                   $final_areas[] = ['start'=>$area->startcoord,
-                                     'end'=>$area->endcoord,
-                                     'count' => $area->report_count,
-                                     'bad' => false
-                        ];
-              }
-              
-              foreach($user_cnv_areas as $user_cnv_area) {
-                   $final_areas[$user_cnv_area-1]['bad'] = true;
-              }
-         }
+            foreach ($areas as $area) {
+                $final_areas[] = ['start' => $area->startcoord,
+                    'end'                     => $area->endcoord,
+                    'count'                   => $area->report_count,
+                    'bad'                     => false,
+                ];
+            }
+
+            foreach ($user_cnv_areas as $user_cnv_area) {
+                $final_areas[$user_cnv_area - 1]['bad'] = true;
+            }
+        }
 
         return $this->render('stats', [
-                                  'gene' => $user_cnv_gene,
-                                  'summary' => $userdata->explainsummary,
-                                  'data'  => json_encode($final_areas),
-                                  'model' => $this->findModel($id),
+            'gene'    => $user_cnv_gene,
+            'summary' => $userdata->explainsummary,
+            'data'    => json_encode($final_areas),
+            'model'   => $this->findModel($id),
         ]);
     }
 

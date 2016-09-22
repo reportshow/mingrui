@@ -31,9 +31,10 @@ class WechatUser extends Model
         }
         $user = User::find()->where(['wx_openid' => $this->openid])->one();
         if ($user) {
-
-            if ($this->bindMingruiUser($user, $this->mobile)) {
-                $user->username = $this->mobile;
+            //$mobile = $this->mobile ;
+            $mobile = $this->switchTestMobile($this->mobile);
+            if ($this->bindMingruiUser($user, $mobile)) {
+                $user->username = $mobile;
                 $user->status   = 10;
 
                 $user->updated_at = time();
@@ -58,9 +59,6 @@ class WechatUser extends Model
      */
     public function bindMingruiUser($model, $mobile)
     {
-
-        $mobile = $this->switchTestMobile($mobile);
-
         //设置医生或用户的id
 
         $user = RestClient::find()->where(['tel' => $mobile])->one();
@@ -83,8 +81,10 @@ class WechatUser extends Model
             $model->save();
 
             //为用户指定角色
-            $role = $role_text;
-            Yii::$app->authManager->assign($role, $model->id);;
+            $auth       = Yii::$app->authManager;
+            $role       = (object) null;
+            $role->name = $role_text;
+            $auth->assign($role, $model->id);
 
             return true;
         } else {

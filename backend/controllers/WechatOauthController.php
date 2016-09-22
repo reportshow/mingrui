@@ -47,6 +47,9 @@ class WechatOauthController extends Controller
      */
     public function actionBindMobile()
     {
+        if(empty($_SESSION['check_sms'])){
+            exit('请获取短信验证码');
+        }
         if ($_SESSION['check_sms'] != Yii::$app->request->post('smscode')) {
             echo "<h1>短信验证码错误</h1>";
             //return;

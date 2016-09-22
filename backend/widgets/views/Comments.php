@@ -93,3 +93,4 @@ foreach ($model->comments as $comment) {
     </div>
     <!-- /.box-footer-->
 </div>
+

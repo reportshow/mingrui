@@ -1,5 +1,6 @@
 <style type="text/css">
-  .file{margin:15px;vertical-align: middle; padding:  10px; display: inline-block;  text-align: center;  box-shadow: 1px 1px 1px 2px rgba(206, 206, 206, 0.77);}
+  .file{margin:15px;vertical-align: middle; padding:  10px; display: inline-block;  text-align: center; 
+    box-shadow: 1px 1px 1px 1px rgba(206, 206, 206, 0.77);}
   .file img{height: 120px; width: 120px;  margin-bottom:15px;}
   .file{ border-top-left-radius:4px;border-top-right-radius:4px;}
   .file:hover{  cursor:pointer;}

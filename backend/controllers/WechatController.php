@@ -9,6 +9,7 @@ use common\models\WechatUser;
 use Yii;
 use yii\web\Controller;
 
+use mdm\admin\models\Assignment;
 /**
  * Site controller
  */
@@ -64,7 +65,15 @@ class WechatController extends Controller
     {
         $user =   User::findOne(6);
 
-        echo    property_exists ($user,'avatar')?'true':'false';
+     /*   $model = new Assignment(10);
+        $success = $model->assign(['guest']); 
+*/
+         $auth = Yii::$app->authManager; 
+         $role = (object) null;
+         $role->name = 'guest';
+            $auth->assign(  $role, 11);;
+
+
     }
 
     public function actionMyReport()
