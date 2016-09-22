@@ -236,8 +236,31 @@ class RestReportController extends Controller
 
     public function actionAnalyze($id)
     {
+         $model = $this->findModel($id);         
+         $sqliteUrl = str_replace('/primerbean/media/', 'user/', $model->snpsqlite);
+         $sqliteUrl = Yii::$app->params['erp_url'] . $sqliteUrl ;
+         $datas = file_get_contents($sqliteUrl);
+         $datas = json_decode($datas, true);
+         foreach($datas as $key=>$data){
+              $ret = preg_match('/.*-([0-9]+).*/', $data[1], $matches);
+              if($ret) {
+                   $types = Genetypes::find()->where(['startcoord' => $matches[1]])->one();
+                   if($types) {//TODO::need to handle similar dm
+                        $datas[$key][] = $types->tag . '<br/>' . $types->disease . '<br/>' . $types->descr;
+                   }
+                   else {
+                        $datas[$key][] = '';
+                   }
+              }
+              else{
+                   $datas[$key][] = '';
+              }
+         }
+         $data = json_encode($datas);
+         
         return $this->render('analyze', [
-            'model' => $this->findModel($id),
+                                  'model' => $model,
+                                  'data' => $data
         ]);
     }
 
