@@ -41,8 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="row">
         <div class="col-md-4">
           <?php
-            echo Summary::widget(['model'=>$model]); 
-
+            echo Summary::widget(['model'=>$model, 'diseases'=>$diseases ]); 
           ?>
         </div>
         <!-- /.col -->

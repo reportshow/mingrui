@@ -11,6 +11,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use backend\models\Geneareas;
 use backend\models\Genetypes;
+use backend\models\GeneDiseases;
 
 /**
  * RestReportController implements the CRUD actions for RestReport model.
@@ -90,9 +91,33 @@ class RestReportController extends Controller
             $viewname = 'view-guest';
         }
 
+        $userdata = $this->findModel($id);
+
+        $cnv_array = json_decode($userdata->cnvsave, true);
+        $user_cnv_gene = '';
+        foreach($cnv_array as $key => $data){
+             $user_cnv_gene = $data[2];
+        }
+
+
+        $str_diseases = "";
+        $diseases = GeneDiseases::find()->where(['gene' => $user_cnv_gene])->one();
+        if($diseases)
+        {
+             $temp = $diseases->diseases;
+             $array_diseases = explode('|', $temp);
+             foreach($array_diseases as $disease) {
+                  $str_diseases .= $disease . '<br>';
+             }
+        }
+        else{
+             $str_diseases = "";
+        }
+
         return $this->render($viewname, [
-            'model'    => $this->findModel($id),
+            'model'    => $userdata,
             'comments' => $this->getComments($id),
+            'diseases' => $str_diseases
         ]);
     }
 
@@ -221,7 +246,7 @@ class RestReportController extends Controller
               {
                    $final_areas[] = ['start'=>$area->startcoord,
                                      'end'=>$area->endcoord,
-                                     'count' => $area->count,
+                                     'count' => $area->report_count,
                                      'bad' => false
                         ];
               }
@@ -233,65 +258,79 @@ class RestReportController extends Controller
 
         return $this->render('stats', [
                                   'gene' => $user_cnv_gene,
+                                  'summary' => $userdata->explainsummary,
                                   'data'  => json_encode($final_areas),
                                   'model' => $this->findModel($id),
         ]);
     }
 
-    //import gene areas data to DB
-    public function actionImportgeneareas()
-    {
-         /* $handle=fopen("geneareas.csv","r"); */
-         /* while($data=fgetcsv($handle,0,",")){ */
-         /*      $gene = $data[0]; */
-         /*      $count = $data[1]; */
-         /*      $starts = explode(',', $data[2]); */
-         /*      $ends = explode(',', $data[3]); */
-         /*      for($i=0;$i<$count;$i++){ */
-         /*           $area = new Geneareas; */
-         /*           $area->gene = $gene; */
-         /*           $area->startcoord = $starts[$i]; */
-         /*           $area->endcoord = $ends[$i]; */
-         /*           $area->save(); */
-         /*      } */
-         /* } */
-         echo "OK";
-    }
+    /* //import gene areas data to DB */
+    /* public function actionImportgeneareas() */
+    /* { */
+    /*      $handle=fopen("geneareas.csv","r"); */
+    /*      while($data=fgetcsv($handle,0,",")){ */
+    /*           $gene = $data[0]; */
+    /*           $count = $data[1]; */
+    /*           $starts = explode(',', $data[2]); */
+    /*           $ends = explode(',', $data[3]); */
+    /*           for($i=0;$i<$count;$i++){ */
+    /*                $area = new Geneareas; */
+    /*                $area->gene = $gene; */
+    /*                $area->startcoord = $starts[$i]; */
+    /*                $area->endcoord = $ends[$i]; */
+    /*                $area->save(); */
+    /*           } */
+    /*      } */
+    /*      echo "OK"; */
+    /* } */
 
-    //import gene types data to DB
-    public function actionImportgenetypes()
-    {
-         /* $handle=fopen("genetypes.csv","r"); */
-         /* while($data=fgetcsv($handle,0,",")){ */
-         /*      $type = new Genetypes; */
-         /*      $type->startCoord = $data[0]; */
-         /*      $type->endCoord = $data[1]; */
-         /*      $type->gene = $data[2]; */
-         /*      $type->tag = $data[3]; */
-         /*      $type->descr = $data[4]; */
-         /*      $type->hgvs = $data[5]; */
-         /*      $type->vartype = $data[6]; */
-         /*      $type->save(); */
-         /* } */
-         echo "OK";
-    }
+    /* //import gene types data to DB */
+    /* public function actionImportgenetypes() */
+    /* {  */
+    /*      $handle=fopen("genetypes.csv","r"); */
+    /*      while($data=fgetcsv($handle,0,",")){ */
+    /*           $type = new Genetypes; */
+    /*           $type->startcoord = $data[0]; */
+    /*           $type->endcoord = $data[1]; */
+    /*           $type->gene = $data[2]; */
+    /*           $type->tag = $data[3]; */
+    /*           $type->descr = $data[4]; */
+    /*           $type->hgvs = $data[5]; */
+    /*           $type->disease = $data[6]; */
+    /*           $type->save(); */
+    /*      } */
+    /*      echo "OK"; */
+    /* } */
 
-    //calculate the report count of each gene area
-    public function actionGenecal()
-    {
-         /* $types = Genetypes::find()->all(); */
-         /* foreach($types as $type) { */
-         /*      echo $type->gene; */
-         /*      $areas = Geneareas::find()->where(['geneareas.gene' => trim($type->gene)])->all(); */
-         /*      foreach($areas as $area){ */
-         /*           if($type->startCoord >= $area->startcoord and $type->startCoord <= $area->endcoord){ */
-         /*                $area->count = $area->count + 1; */
-         /*                $area->save(); */
-         /*           } */
-         /*      } */
-         /* } */
-         echo "OK";
-    }
+    /* //calculate the report count of each gene area */
+    /* public function actionGenecal() */
+    /* { */
+    /*      $types = Genetypes::find()->all(); */
+    /*      foreach($types as $type) { */
+    /*           echo $type->gene; */
+    /*           $areas = Geneareas::find()->where(['geneareas.gene' => trim($type->gene)])->all(); */
+    /*           foreach($areas as $area){ */
+    /*                if($type->startcoord >= $area->startcoord and $type->startcoord <= $area->endcoord){ */
+    /*                     $area->report_count = $area->report_count + 1; */
+    /*                     $area->save(); */
+    /*                } */
+    /*           } */
+    /*      } */
+    /*      echo "OK"; */
+    /* } */
+
+    /* //import gene types data to DB */
+    /* public function actionImportgenediseases() */
+    /* { */
+    /*      $handle=fopen("gene_disease.csv","r"); */
+    /*      while($data=fgetcsv($handle,0,",")){ */
+    /*           $gd = new GeneDiseases; */
+    /*           $gd->gene = $data[0]; */
+    /*           $gd->diseases = $data[1]; */
+    /*           $gd->save(); */
+    /*      } */
+    /*      echo "OK"; */
+    /* } */
 
     // public function
     /**

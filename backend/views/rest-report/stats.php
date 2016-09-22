@@ -36,6 +36,7 @@ AppAsset::register($this);
     <div class="box-body">
 <?php if(strcmp($data, '[]')) {?>
     <p>基因:<?php echo $gene; ?></p>
+    <p>注释:<?php echo $summary; ?></p>
     <br/>
     <p style="text-align:center;">外显子分布及病人突变外显子</p>
     <div class="chart">
@@ -98,7 +99,7 @@ for(var i=0; i< data_length; i++) {
     area[4] = data[i].start.toString().concat('--', data[i].end.toString());//text for coordination
     area[5] = i;//index
     areas[i] = area;
-    var row = "<tr><td>" + (i+1) + "</td><td>" +
+    var row = "<tr><td>" + 'E' + (i+1) + "</td><td>" +
 	data[i] .start + "</td><td>"+ data[i].end +"</td>";
     if(data[i].bad){
 	row = row + "<td>是</td>";
@@ -173,6 +174,6 @@ function drawArea(contextO, start, width, count, text,index,fillstyle) {
     context.font = '10pt Calibri';
     context.textAlign = "center";
     context.fillStyle = "#000";
-    context.fillText(index+1, start+width/2, startY+height+31+i%4*12);
+    context.fillText('E' + (index+1), start+width/2, startY+height+31+i%4*12);
 }
 </script>

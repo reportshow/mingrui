@@ -8,13 +8,13 @@ use Yii;
  * This is the model class for table "genetypes".
  *
  * @property integer $id
- * @property string $startCoord
- * @property string $endCoord
+ * @property integer $startcoord
+ * @property integer $endcoord
  * @property string $gene
  * @property string $tag
  * @property string $descr
  * @property string $hgvs
- * @property string $vartype
+ * @property string $disease
  */
 class Genetypes extends \yii\db\ActiveRecord
 {
@@ -32,10 +32,9 @@ class Genetypes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['startCoord', 'endCoord', 'vartype'], 'string', 'max' => 10],
-            [['gene'], 'string', 'max' => 20],
-            [['tag'], 'string', 'max' => 30],
-            [['descr', 'hgvs'], 'string', 'max' => 127],
+            [['startcoord', 'endcoord'], 'integer'],
+            [['gene', 'tag'], 'string', 'max' => 36],
+            [['descr', 'hgvs', 'disease'], 'string', 'max' => 255],
         ];
     }
 
@@ -46,13 +45,13 @@ class Genetypes extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'startCoord' => 'Start Coord',
-            'endCoord' => 'End Coord',
+            'startcoord' => 'Startcoord',
+            'endcoord' => 'Endcoord',
             'gene' => 'Gene',
             'tag' => 'Tag',
             'descr' => 'Descr',
             'hgvs' => 'Hgvs',
-            'vartype' => 'Vartype',
+            'disease' => 'Disease',
         ];
     }
 }

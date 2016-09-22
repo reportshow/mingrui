@@ -11,6 +11,7 @@ use Yii;
  * @property integer $startcoord
  * @property integer $endcoord
  * @property string $gene
+ * @property integer $report_count
  */
 class Geneareas extends \yii\db\ActiveRecord
 {
@@ -28,7 +29,7 @@ class Geneareas extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['startcoord', 'endcoord'], 'integer'],
+            [['startcoord', 'endcoord', 'report_count'], 'integer'],
             [['gene'], 'string', 'max' => 20],
         ];
     }
@@ -43,6 +44,7 @@ class Geneareas extends \yii\db\ActiveRecord
             'startcoord' => 'Startcoord',
             'endcoord' => 'Endcoord',
             'gene' => 'Gene',
+            'report_count' => 'Report Count',
         ];
     }
 }
