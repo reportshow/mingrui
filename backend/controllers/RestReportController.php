@@ -243,7 +243,6 @@ class RestReportController extends Controller
 
     public function actionStats($id)
     {
-<<<<<<< HEAD
          //1. find user's bad gene
          $userdata = $this->findModel($id);
          $cnv_array = json_decode($userdata->cnvsave, true);
@@ -348,41 +347,6 @@ class RestReportController extends Controller
     /*      } */
     /*      echo "OK"; */
     /* } */
-=======
-        //1. find user's bad gene
-        $userdata       = $this->findModel($id);
-        $cnv_array      = json_decode($userdata->cnvsave, true);
-        $user_cnv_gene  = '';
-        $user_cnv_areas = [];
-        foreach ($cnv_array as $key => $data) {
-            $user_cnv_gene  = $data[2];
-            $user_cnv_areas = $data[4];
-        }
-
-        //2. find all areas of this gene
-        $final_areas = [];
-        if (!empty($user_cnv_gene)) {
-            $areas = Geneareas::find()->where(['geneareas.gene' => trim($user_cnv_gene)])->all();
-
-            foreach ($areas as $area) {
-                $final_areas[] = ['start' => $area->startcoord,
-                    'end'                     => $area->endcoord,
-                    'count'                   => $area->count,
-                    'bad'                     => false,
-                ];
-            }
-
-            foreach ($user_cnv_areas as $user_cnv_area) {
-                $final_areas[$user_cnv_area - 1]['bad'] = true;
-            }
-        }
-
-        return $this->render('stats', [
-            'gene'  => $user_cnv_gene,
-            'data'  => json_encode($final_areas),
-            'model' => $this->findModel($id),
-        ]);
-    }
 
     //import gene areas data to DB
     public function actionImportgeneareas()
@@ -438,7 +402,7 @@ class RestReportController extends Controller
         /* } */
         echo "OK";
     }
->>>>>>> f2bc34ea15793547f33a7398c5bf032ad837f970
+
 
     // public function
     /**
