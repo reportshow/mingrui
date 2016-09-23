@@ -34,13 +34,14 @@ class MingruiAttachmentController extends Controller
      * Lists all MingruiAttachment models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($reportid)
     {
         $searchModel = new MingruiAttachmentSearch();
         $params      = Yii::$app->request->queryParams;
 
         $query = MingruiAttachment::find();
         $query = $query
+            ->where(['report_id' => $reportid])
             ->orderBy('id DESC');
         $dataProvider = $searchModel->search($params, $query);
 
@@ -80,7 +81,7 @@ class MingruiAttachmentController extends Controller
             }
             SaveImage::save($model, 'image');
 
-            return $this->redirect(['index']);
+            return $this->redirect(['index','reportid'=>$model->report_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
