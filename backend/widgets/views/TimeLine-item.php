@@ -1,4 +1,14 @@
 <?php
+
+use backend\widgets\Imglist;
+use backend\widgets\Attachments;
+
+
+echo Attachments::begin( );
+
+
+
+
 $type=$model->type;
 if($type=='text'){?>
     <!-- timeline item -->
@@ -53,7 +63,9 @@ if($type=='text'){?>
 <?php 
 }else if($type=='image'){
 
- 
+/* Imglist::widget([
+        'dataProvider' => $model, 
+ ]);*/
 ?>
 <!-- timeline item -->
             <li>
@@ -65,12 +77,17 @@ if($type=='text'){?>
                 <h3 class="timeline-header"> <?=$model->title?>  ...</h3>
 
                 <div class="timeline-body">
-                <?php foreach ($model->images as $key => $image) {
+
+                <?= Attachments::widget(['model'=>$model]);   ?>
+
+                <?php 
+                /*foreach ($model->images as $key => $image) {
                     # code...
                 
                    echo "<img src='{$image}'  width=120 class='margin'>";
                
-                } ?>
+                } */
+                ?>
                 </div>
               </div>
             </li>
