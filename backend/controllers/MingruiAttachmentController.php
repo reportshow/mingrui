@@ -4,11 +4,12 @@ namespace backend\controllers;
 
 use backend\models\MingruiAttachment;
 use backend\models\MingruiAttachmentSearch;
+use backend\models\SaveImage;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use backend\models\SaveImage;
+
 /**
  * MingruiAttachmentController implements the CRUD actions for MingruiAttachment model.
  */
@@ -35,12 +36,12 @@ class MingruiAttachmentController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel  = new MingruiAttachmentSearch();
-        $params      = Yii::$app->request->queryParams; 
+        $searchModel = new MingruiAttachmentSearch();
+        $params      = Yii::$app->request->queryParams;
 
         $query = MingruiAttachment::find();
         $query = $query
-            ->orderBy('id DESC') ;
+            ->orderBy('id DESC');
         $dataProvider = $searchModel->search($params, $query);
 
         return $this->render('index', [
@@ -79,7 +80,7 @@ class MingruiAttachmentController extends Controller
             }
             SaveImage::save($model, 'image');
 
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,

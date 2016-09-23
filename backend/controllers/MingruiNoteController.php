@@ -4,11 +4,12 @@ namespace backend\controllers;
 
 use backend\models\MingruiNotes;
 use backend\models\MingruiNoteSearch;
+use backend\models\SaveImage;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use backend\models\SaveImage;
+
 /**
  * MingruiNoteController implements the CRUD actions for MingruiNotes model.
  */
@@ -35,11 +36,11 @@ class MingruiNoteController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel  = new MingruiNoteSearch();
-                $param = Yii::$app->request->queryParams;
-        $query = MingruiNotes::find();
-        $query = $query
-            ->where(['uid'=>Yii::$app->user->id])
+        $searchModel = new MingruiNoteSearch();
+        $param       = Yii::$app->request->queryParams;
+        $query       = MingruiNotes::find();
+        $query       = $query
+            ->where(['uid' => Yii::$app->user->id])
             ->orderBy('id DESC');
 
         $dataProvider = $searchModel->search($param, $query);
@@ -73,13 +74,13 @@ class MingruiNoteController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->image = 'tosave';
-            $model->uid = Yii::$app->user->id;
+            $model->uid   = Yii::$app->user->id;
             if (!$model->save()) {
                 var_export($model->errors);exit;
-            } 
+            }
             SaveImage::save($model, 'image');
 
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
