@@ -2,12 +2,12 @@
 
 namespace backend\controllers;
 
-use Yii;
 use backend\models\MingruiQa;
 use backend\models\MingruiQaSearch;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * MingruiQaController implements the CRUD actions for MingruiQa model.
@@ -21,7 +21,7 @@ class MingruiQaController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class'   => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -35,11 +35,20 @@ class MingruiQaController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new MingruiQaSearch();
+        $searchModel  = new MingruiQaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
+         
+
+        if (Yii::$app->user->can('admin')) {
+            $viewname = 'index';
+        } else if (Yii::$app->user->can('doctor')) {
+            $viewname = 'index-doctor';
+        } else {
+            $viewname = 'index-doctor';
+        }
+        return $this->render($viewname, [
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -66,7 +75,7 @@ class MingruiQaController extends Controller
         $model = new MingruiQa();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id'           => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -85,7 +94,7 @@ class MingruiQaController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id'           => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,

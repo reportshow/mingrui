@@ -24,7 +24,9 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?= DetailView::widget([
+    <?php
+    
+/*    echo DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
@@ -32,6 +34,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'answer:ntext',
             ['attribute'=>'createtime', 'value'=>date('Y-m-d H:i', $model->createtime)],
         ],
-    ]) ?>
+    ]) ;
+*/
+    
+    
+    echo  $this->render('view-item', [
+        'model' => $model,
+    ]) 
+    
+    
+    ?>
 
 </div>
