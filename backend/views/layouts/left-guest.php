@@ -16,7 +16,7 @@ $menu[] = [
         [
             'label' => '我的报告',
             'icon'  => 'fa fa-github',
-            'url'   => ['/rest-report/view', 'id'=>3965],
+            'url'   => ['/rest-report/myreport', 'id'=>3965],
         ],
         [
             'label' => '上传图片',
