@@ -22103,19 +22103,19 @@
 													var str = '';
 													for (var inkey in tableData[key][21]) {
 																if (tableData[key][21][inkey]) {
-																			str = str.concat(tableData[key][21][inkey][0], '--', tableData[key][21][inkey][1], '--', tableData[key][21][inkey][2], '<br/>');
+																			str = str.concat(tableData[key][21][inkey][0], '--', tableData[key][21][inkey][1], '--', tableData[key][21][inkey][2], "<br/>");
 																}
 													}
 													tableData[key].push(str);
 
 													//功能预测
 													var str = '';
-													str = str.concat(tableData[key][9], '<br/>', tableData[key][10], '<br/>', tableData[key][11], '<br/>', tableData[key][12]);
+													str = str.concat(tableData[key][9], "<br/>", tableData[key][10], "<br/>", tableData[key][11], "<br/>", tableData[key][12]);
 													tableData[key].push(str);
 
 													//突变信息
 													var str = '';
-													str = tableData[key][1].replace(/\s/g, '<br/>');
+													str = tableData[key][1].replace(/\s/g, "<br/>");
 													tableData[key].push(str);
 
 													//HET
@@ -22372,7 +22372,14 @@
 																												_react2.default.createElement(
 																															_Table.TableRowColumn,
 																															{ 'data-tip': row[24] },
-																															row[24]
+																															row[9],
+																															' ',
+																															_react2.default.createElement('br', null),
+																															row[10],
+																															_react2.default.createElement('br', null),
+																															row[11],
+																															_react2.default.createElement('br', null),
+																															row[12]
 																												),
 																												'//功能预测'
 																									);
@@ -38636,7 +38643,7 @@
 	      ariaProps: (0, _aria.parseAria)(props) // aria- and role attributes
 	    };
 
-	    _this.bind(['showTooltip', 'updateTooltip', 'hideTooltip', 'globalRebuild', 'globalShow', 'globalHide', 'onWindowResize']);
+	    _this.bind(['showTooltip', 'updateTooltip', 'hideTooltip', 'globalRebuild', 'globalShow', 'onWindowResize']);
 
 	    _this.mount = true;
 	    _this.delayShowLoop = null;
@@ -38664,7 +38671,7 @@
 	    value: function componentDidMount() {
 	      this.setStyleHeader(); // Set the style to the <link>
 	      this.bindListener(); // Bind listener for tooltip
-	      this.bindWindowEvents(this.props.resizeHide); // Bind global event for static method
+	      this.bindWindowEvents(); // Bind global event for static method
 	    }
 	  }, {
 	    key: 'componentWillReceiveProps',
@@ -38837,15 +38844,6 @@
 
 	      // If it is focus event or called by ReactTooltip.show, switch to `solid` effect
 	      var switchToSolid = e instanceof window.FocusEvent || isGlobalCall;
-
-	      // if it need to skip adding hide listener to scroll
-	      var scrollHide = true;
-	      if (e.currentTarget.getAttribute('data-scroll-hide')) {
-	        scrollHide = e.currentTarget.getAttribute('data-scroll-hide') === 'true';
-	      } else if (this.props.scrollHide != null) {
-	        scrollHide = this.props.scrollHide;
-	      }
-
 	      this.setState({
 	        placeholder: placeholder,
 	        place: e.currentTarget.getAttribute('data-place') || this.props.place || 'top',
@@ -38859,7 +38857,7 @@
 	        extraClass: e.currentTarget.getAttribute('data-class') || this.props.class || '',
 	        countTransform: e.currentTarget.getAttribute('data-count-transform') ? e.currentTarget.getAttribute('data-count-transform') === 'true' : this.props.countTransform != null ? this.props.countTransform : true
 	      }, function () {
-	        if (scrollHide) _this5.addScrollListener(e);
+	        _this5.addScrollListener(e);
 	        _this5.updateTooltip(e);
 
 	        if (getContent && Array.isArray(getContent)) {
@@ -38926,20 +38924,14 @@
 
 	  }, {
 	    key: 'hideTooltip',
-	    value: function hideTooltip(e, hasTarget) {
+	    value: function hideTooltip() {
 	      var _this7 = this;
 
-	      if (!this.mount) return;
-	      if (hasTarget) {
-	        // Don't trigger other elements belongs to other ReactTooltip
-	        var targetArray = this.getTargetArray(this.props.id);
-	        var isMyElement = targetArray.some(function (ele) {
-	          return ele === e.currentTarget;
-	        });
-	        if (!isMyElement || !this.state.show) return;
-	      }
 	      var delayHide = this.state.delayHide;
 	      var afterHide = this.props.afterHide;
+
+
+	      if (!this.mount) return;
 
 	      var resetState = function resetState() {
 	        var isVisible = _this7.state.show;
@@ -39084,11 +39076,7 @@
 	  countTransform: _react.PropTypes.bool,
 	  afterShow: _react.PropTypes.func,
 	  afterHide: _react.PropTypes.func,
-	  disable: _react.PropTypes.bool,
-	  scrollHide: _react.PropTypes.bool,
-	  resizeHide: _react.PropTypes.bool
-	}, _class2.defaultProps = {
-	  resizeHide: true
+	  disable: _react.PropTypes.bool
 	}, _temp)) || _class) || _class) || _class) || _class;
 
 	/* export default not fit for standalone, it will exports {default:...} */
@@ -39165,8 +39153,8 @@
 	   * Hide all tooltip
 	   * @trigger ReactTooltip.hide()
 	   */
-	  target.hide = function (target) {
-	    dispatchGlobalEvent(_constant2.default.GLOBAL.HIDE, { target: target });
+	  target.hide = function () {
+	    dispatchGlobalEvent(_constant2.default.GLOBAL.HIDE);
 	  };
 
 	  /**
@@ -39198,13 +39186,6 @@
 	      // only `float` type cares e.clientX e.clientY
 	      var e = { currentTarget: event.detail.target };
 	      this.showTooltip(e, true);
-	    }
-	  };
-
-	  target.prototype.globalHide = function (event) {
-	    if (this.mount) {
-	      var hasTarget = event && event.detail && event.detail.target && true || false;
-	      this.hideTooltip({ currentTarget: hasTarget && event.detail.target }, hasTarget);
 	    }
 	  };
 	};
@@ -39261,10 +39242,10 @@
 	});
 
 	exports.default = function (target) {
-	  target.prototype.bindWindowEvents = function (resizeHide) {
+	  target.prototype.bindWindowEvents = function () {
 	    // ReactTooltip.hide
-	    window.removeEventListener(_constant2.default.GLOBAL.HIDE, this.globalHide);
-	    window.addEventListener(_constant2.default.GLOBAL.HIDE, this.globalHide, false);
+	    window.removeEventListener(_constant2.default.GLOBAL.HIDE, this.hideTooltip);
+	    window.addEventListener(_constant2.default.GLOBAL.HIDE, this.hideTooltip, false);
 
 	    // ReactTooltip.rebuild
 	    window.removeEventListener(_constant2.default.GLOBAL.REBUILD, this.globalRebuild);
@@ -39275,14 +39256,12 @@
 	    window.addEventListener(_constant2.default.GLOBAL.SHOW, this.globalShow, false);
 
 	    // Resize
-	    if (resizeHide) {
-	      window.removeEventListener('resize', this.onWindowResize);
-	      window.addEventListener('resize', this.onWindowResize, false);
-	    }
+	    window.removeEventListener('resize', this.onWindowResize);
+	    window.addEventListener('resize', this.onWindowResize, false);
 	  };
 
 	  target.prototype.unbindWindowEvents = function () {
-	    window.removeEventListener(_constant2.default.GLOBAL.HIDE, this.globalHide);
+	    window.removeEventListener(_constant2.default.GLOBAL.HIDE, this.hideTooltip);
 	    window.removeEventListener(_constant2.default.GLOBAL.REBUILD, this.globalRebuild);
 	    window.removeEventListener(_constant2.default.GLOBAL.SHOW, this.globalShow);
 	    window.removeEventListener('resize', this.onWindowResize);

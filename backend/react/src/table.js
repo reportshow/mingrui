@@ -273,23 +273,23 @@ export default class TableExampleComplex extends React.Component {
 	    var str = '';
 	    for(var inkey in tableData[key][21]) {
 		if(tableData[key][21][inkey]) {
-		    str = str.concat(tableData[key][21][inkey][0], '--', tableData[key][21][inkey][1], '--', tableData[key][21][inkey][2], '<br/>');
+		    str = str.concat(tableData[key][21][inkey][0], '--', tableData[key][21][inkey][1], '--', tableData[key][21][inkey][2], "<br/>");
 		}
 	    }
 	    tableData[key].push(str);
 
 	    //功能预测
 	    var str = '';
-	    str = str.concat(tableData[key][9], '<br/>',
-			     tableData[key][10], '<br/>',
-			     tableData[key][11], '<br/>',
+	    str = str.concat(tableData[key][9], "<br/>",
+			     tableData[key][10], "<br/>",
+			     tableData[key][11], "<br/>",
 			     tableData[key][12]
 			    );
 	    tableData[key].push(str);
 
 	    //突变信息
 	    var str = '';
-	    str = tableData[key][1].replace(/\s/g, '<br/>');
+	    str = tableData[key][1].replace(/\s/g, "<br/>");
 	    tableData[key].push(str);
 	    
 	    //HET
@@ -429,7 +429,7 @@ export default class TableExampleComplex extends React.Component {
 	    <TableRowColumn data-tip={row[23]}>{row[23]}</TableRowColumn>//疾病信息
 	    <TableRowColumn data-tip={row[26]}>{row[26]}</TableRowColumn>//HET
 	    <TableRowColumn data-tip={row[22]}>{row[22]}</TableRowColumn>//HGDM
-	    <TableRowColumn data-tip={row[24]}>{row[24]}</TableRowColumn>//功能预测
+	    <TableRowColumn data-tip={row[24]}>{row[9]} <br/>{row[10]}<br/>{row[11]}<br/>{row[12]}</TableRowColumn>//功能预测
 	</TableRow>
 	))}
       </TableBody>
