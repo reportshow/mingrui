@@ -15,11 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-  <!--   <p>
-      <?=
-      //Html::a('Create Rest Reports', ['create'], ['class' => 'btn btn-success'])
-      ?>
-  </p> -->
+   
     <?=GridView::widget([
     'emptyCell'=>'搜索',
     'dataProvider' => $dataProvider,

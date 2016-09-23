@@ -2,6 +2,7 @@
 use backend\assets\AppAsset;
 use yii\helpers\Html;
 use backend\models\RestReport;
+use backend\widgets\PdfShow;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\RestReport */
@@ -26,21 +27,5 @@ if($model->pdf){
 	return;
 }
 
+echo  PdfShow::widget(['pdfurl'=>$pdfurl]);
 ?>
-<div class="rest-report-view">
-<?=Html::jsFile('@web/js/pdfobject.min.js')?>
-
-<div id="example1"></div> 
-<script>
-var options = {
-   fallbackLink: "<p>This is a <a href='[url]'>fallback link</a></p>"
-};
-
-PDFObject.embed("<?=$pdfurl ?>", "#example1", options);
-/*PDFObject.embed("upload/NG16010024.pdf", "#example1");*/
-</script>
-<style>
-.pdfobject-container { height: 600px;}
-.pdfobject { border: 1px solid #666; }
-</style>
-</div>
