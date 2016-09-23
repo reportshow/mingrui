@@ -72,20 +72,15 @@ export default class TableExampleComplex extends React.Component {
 		"X-LINKED"
 	    ],
 	    cxsd_values: [
-		"0-10",
-		"10-25",
-		"25-50",
-		"50-100",
-		"100+"
+		"10-20",
+		"20+"
 	    ],
 	    dm_values: [
 		"DM",
 		"DM?",
-		"other",
+		"[Similar]DM",
 	    ],
-	    rqpl_value:"1%",
-	    qrjyz_value:"1%",
-	    oz6500_value:"1%",
+	    qrjyz_value: "1%",
 	    inhouse_value:"1%",
 	};	
     }
@@ -94,6 +89,7 @@ export default class TableExampleComplex extends React.Component {
     rqpl_items = [
 	    <MenuItem key={1} value={"1%"} primaryText="1%" />,
 	    <MenuItem key={2} value={"2%"} primaryText="2%" />,
+	    <MenuItem key={3} value={"5%"} primaryText="5%" />,
     ];
 
     filter_gene = (data, value) => {
@@ -119,8 +115,8 @@ export default class TableExampleComplex extends React.Component {
 
     filter_ycfs = (data, value) => {
 	for(var i in this.state.ycfs_values){
-	    for(var j in data[20]) {
-		if(data[20][j].toLowerCase() === this.state.ycfs_values[i].toLowerCase()) {
+	    for(var j in data[27]) {
+		if(data[27][j].toLowerCase() === this.state.ycfs_values[i].toLowerCase()) {
 		    return true
 		}
 	    }	    
@@ -131,7 +127,7 @@ export default class TableExampleComplex extends React.Component {
 
     filter_tbbl = (data, value) => {
 	var minmax = [];
- 	var data_tbbl = parseFloat(data[25].match(/.*\((.*)\).*/)[1]);
+ 	var data_tbbl = parseFloat(data[26].match(/.*\((.*)\).*/)[1]);
 	for(var i in this.state.tbbl_values) {
 	    var ret = this.state.tbbl_values[i].match(/(.*)-(.*)/);
 	    minmax.push([parseFloat(ret[1]), parseFloat(ret[2])]);
@@ -148,12 +144,12 @@ export default class TableExampleComplex extends React.Component {
 
     filter_cxsd = (data, value) => {
 	var minmax = [];
- 	var data_cxsd = data[25].match(/(.*)\/(.*)\(.*\)/);
+ 	var data_cxsd = data[26].match(/(.*)\/(.*)\(.*\)/);
 	var het = parseInt(data_cxsd[1]) + parseInt(data_cxsd[2]);
 	for(var i in this.state.cxsd_values) {
 	    var ret = this.state.cxsd_values[i].match(/(.*)-(.*)/);
 	    if(ret == null) {
-		minmax.push([100, 20000]);
+		minmax.push([21, 20000]);
 	    }
 	    else {
 		minmax.push([parseInt(ret[1]), parseInt(ret[2])]);
@@ -170,18 +166,13 @@ export default class TableExampleComplex extends React.Component {
     }  
 
     filter_dm = (data, value) => {
-	//TODO:: dm has no data in the report
-	// for(var i in this.state.dm_values){
-	//     if(data[?].toLowerCase() === this.state.dm_values[i].toLowerCase()){	
-	// 	return true
-	//     }
-	// }
-	// return false;
-	return true;
-    }  
-
-    filter_rqpl = (data, value) => {
-	return true;
+	for(var i in this.state.dm_values){
+	    if(data[2].toLowerCase() === this.state.dm_values[i].toLowerCase() && data[2].toLowerCase()!=''){
+		return true
+	    }
+	}
+	
+	return false;
     }  
 
     filter_qrjyz = (data, value) => {
@@ -197,20 +188,6 @@ export default class TableExampleComplex extends React.Component {
 	}
 	return false;
     }
-
-    filter_oz6500 = (data, value) => {
-	var data_oz6500 = parseFloat(data[6][1]);
-	var oz6500_value = parseFloat(this.state.oz6500_value);
-	if(!isNaN(data_oz6500) && !isNaN(oz6500_value)) {
-	    if(data_oz6500 <= oz6500_value/100) {
-		return true;
-	    }
-	}
-	else {
-	    return true;
-	}
-	return false;
-    }  
 
     filter_inhouse = (data, value) => {
 	var data_inhouse = parseFloat(data[6][3]);
@@ -233,9 +210,7 @@ export default class TableExampleComplex extends React.Component {
 	this.filter_tbbl,
 	this.filter_cxsd,
 	this.filter_dm,
-	this.filter_rqpl,
 	this.filter_qrjyz,
-	this.filter_oz6500,
 	this.filter_inhouse
     ];
     
@@ -280,18 +255,10 @@ export default class TableExampleComplex extends React.Component {
 	this.setState({dm_values: v});
     };
 
-    handle_rqpl_Change = (event, index, value) => {
-	this.setState({rqpl_value: value});
-    };
-
     handle_qrjyz_Change = (event, index, value) => {
 	this.setState({qrjyz_value: value});
     };
     
-    handle_oz6500_Change = (event, index, value) => {
-	this.setState({oz6500_value: value});
-    };
-
     handle_inhouse_Change = (event, index, value) => {
 	this.setState({inhouse_value: value});
     };
@@ -311,10 +278,9 @@ export default class TableExampleComplex extends React.Component {
 	    }
 	    tableData[key].push(str);
 
-	    //HET tooltip
+	    //功能预测
 	    var str = '';
-	    str = str.concat(tableData[key][8], '<br/>',
-			     tableData[key][9], '<br/>',
+	    str = str.concat(tableData[key][9], '<br/>',
 			     tableData[key][10], '<br/>',
 			     tableData[key][11], '<br/>',
 			     tableData[key][12]
@@ -332,6 +298,14 @@ export default class TableExampleComplex extends React.Component {
 		    tableData[key].push(tableData[key][15][prop][1]);
 		}
 	    }
+	    //AR AD
+	    var temp = [];
+	    for(var inkey in tableData[key][21]) {
+		if(tableData[key][21][inkey]) {
+		    temp.push(tableData[key][21][inkey][1]);
+		}
+	    }
+	    tableData[key].push(temp);
 	}
 
 	return (
@@ -375,11 +349,8 @@ export default class TableExampleComplex extends React.Component {
 	<TableRow displayBorder={false}>
 	  <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
 	    <MultiSelect fullWidth={true} value={this.state.cxsd_values} floatingLabelText="测序深度" onChange={this.handle_cxsd_Change}>
-	      <ListItem primaryText={"0-10"} value="0-10" />
-	      <ListItem primaryText={"10-25"} value="10-25" />
-	      <ListItem primaryText={"25-50"} value="25-50" />
-	      <ListItem primaryText={"50-100"} value="50-100" />
-	      <ListItem primaryText={"100+"} value="100+" />
+	      <ListItem primaryText={"10-20"} value="10-20" />
+	      <ListItem primaryText={">20"} value="20+" />
 	    </MultiSelect>
 	  </TableHeaderColumn>
 	  <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
@@ -402,12 +373,12 @@ export default class TableExampleComplex extends React.Component {
 	    </MultiSelect>
 	  </TableHeaderColumn>
 	</TableRow>
-	<TableRow displayBorder={false}>
+	<TableRow>
 	  <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
-	    <MultiSelect fullWidth={true} value={this.state.dm_values} floatingLabelText="DM/其它(？)" onChange={this.handle_dm_Change}>
+	    <MultiSelect fullWidth={true} value={this.state.dm_values} floatingLabelText="DM" onChange={this.handle_dm_Change}>
 	      <ListItem primaryText={"DM"} value="DM" />
 	      <ListItem primaryText={"DM?"} value="DM?" />
-	      <ListItem primaryText={"其它"} value="other" />
+	      <ListItem primaryText={"[Similar]DM"} value="[Similar]DM" />
 	    </MultiSelect>
 	  </TableHeaderColumn>
 	  <TableHeaderColumn colSpan="2">
@@ -415,55 +386,33 @@ export default class TableExampleComplex extends React.Component {
 	       fullWidth={true}
 	       value={this.state.qrjyz_value}
 	       onChange={this.handle_qrjyz_Change}
-	      floatingLabelText="千人基因组携带率低于(？)"
+	      floatingLabelText="千人基因组携带率低于"
 	      >
 	      {this.rqpl_items}
 	    </SelectField>
 	  </TableHeaderColumn>
-	  <TableHeaderColumn  colSpan="2">
-	    <SelectField
-	       fullWidth={true}
-	       value={this.state.oz6500_value}
-	       onChange={this.handle_oz6500_Change}
-	      floatingLabelText="欧洲6500低于(？)"
-	      >
-	      {this.rqpl_items}
-	    </SelectField>
-	  </TableHeaderColumn>
-	</TableRow>
-	<TableRow>
-	  <TableHeaderColumn colSpan="2">
+	    <TableHeaderColumn colSpan="2">
 	    <SelectField
 	       fullWidth={true}
 	       value={this.state.inhouse_value}
 	       onChange={this.handle_inhouse_Change}
-	      floatingLabelText="inhouse低于(？)"
+	      floatingLabelText="inhouse低于"
 	      >
 	      {this.rqpl_items}
 	    </SelectField>
 	  </TableHeaderColumn>
-	  <TableHeaderColumn colSpan="2">
-	    <SelectField
-	       fullWidth={true}
-	       value={this.state.rqpl_value}
-	       onChange={this.handle_rqpl_Change}
-	      floatingLabelText="人群频率(？)"
-	      >
-	      {this.rqpl_items}
-	    </SelectField>
-	  </TableHeaderColumn>
-	  <TableHeaderColumn  colSpan="3" style={{textAlign:'right'}}>
+	  <TableHeaderColumn  style={{textAlign:'right'}}>
 	    <RaisedButton label="过滤" primary={true} onClick={this.filter}/>
 	  </TableHeaderColumn>
 	</TableRow>
 	<TableRow>
-	  <TableHeaderColumn tooltip="基因">基因</TableHeaderColumn>
-	  <TableHeaderColumn tooltip="大小">大小</TableHeaderColumn>
+	  <TableHeaderColumn tooltip="基因(大小)">基因(大小)</TableHeaderColumn>
 	  <TableHeaderColumn tooltip="突变信息">突变信息</TableHeaderColumn>
 	  <TableHeaderColumn tooltip="突变类型">突变类型</TableHeaderColumn>
-	  <TableHeaderColumn tooltip="HGMD信息?">HGMD</TableHeaderColumn>
 	  <TableHeaderColumn tooltip="基因疾病信息">基因疾病信息</TableHeaderColumn>
 	  <TableHeaderColumn tooltip="HET信息">HET</TableHeaderColumn>
+	  <TableHeaderColumn tooltip="HGMD信息">HGMD</TableHeaderColumn>
+	  <TableHeaderColumn tooltip="功能预测">功能预测</TableHeaderColumn>
 	</TableRow>
       </TableHeader>
       <TableBody
@@ -474,16 +423,13 @@ export default class TableExampleComplex extends React.Component {
 	 >
 	{this.state.queryResult.map( (row, index) => (
 	  <TableRow key={index} selected={row.selected}>
-	  <TableRowColumn data-tip={row[0]}>{row[0]}</TableRowColumn>//基因
-	  <TableRowColumn data-tip={row[19]}>{row[19]}</TableRowColumn>//大小
-	  <TableRowColumn data-tip={row[24]}>{row[24]}</TableRowColumn>//突变信息
-	  <TableRowColumn data-tip={row[5]}>{row[5]}</TableRowColumn>//突变类型
-	  <TableRowColumn data-tip='数据中无此项'>无数据</TableRowColumn>//HGDM
-
-	  //疾病信息
-	  <TableRowColumn data-tip={row[22]}>{row[22]}</TableRowColumn>
-
-		<TableRowColumn data-tip={row[25].concat('<br>',row[23])}>{row[25]}</TableRowColumn>//HET
+	    <TableRowColumn data-tip={row[0] +'(' + row[19] + ')'}>{row[0] +'(' + row[19] + ')'}</TableRowColumn>//基因
+	    <TableRowColumn data-tip={row[25]}>{row[25]}</TableRowColumn>//突变信息
+	    <TableRowColumn data-tip={row[5]}>{row[5]}</TableRowColumn>//突变类型
+	    <TableRowColumn data-tip={row[23]}>{row[23]}</TableRowColumn>//疾病信息
+	    <TableRowColumn data-tip={row[26]}>{row[26]}</TableRowColumn>//HET
+	    <TableRowColumn data-tip={row[22]}>{row[22]}</TableRowColumn>//HGDM
+	    <TableRowColumn data-tip={row[24]}>{row[24]}</TableRowColumn>//功能预测
 	</TableRow>
 	))}
       </TableBody>
