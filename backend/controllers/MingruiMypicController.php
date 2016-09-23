@@ -37,7 +37,13 @@ class MingruiMypicController extends Controller
     public function actionIndex()
     {
         $searchModel  = new MingruiMypicSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $param = Yii::$app->request->queryParams;
+        $query = MingruiMypic::find();
+        $query = $query
+            ->where(['uid'=>Yii::$app->user->id])
+            ->orderBy('id DESC');
+
+        $dataProvider = $searchModel->search($param, $query);
 
         return $this->render('index', [
             'searchModel'  => $searchModel,
@@ -68,6 +74,7 @@ class MingruiMypicController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->createtime = time();
+            $model->uid = Yii::$app->user->id;
             $model->images     = 'tosave';
             if (!$model->save()) {
                 var_export($model->errors);exit;

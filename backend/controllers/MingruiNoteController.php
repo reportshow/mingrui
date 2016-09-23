@@ -36,7 +36,13 @@ class MingruiNoteController extends Controller
     public function actionIndex()
     {
         $searchModel  = new MingruiNoteSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+                $param = Yii::$app->request->queryParams;
+        $query = MingruiNotes::find();
+        $query = $query
+            ->where(['uid'=>Yii::$app->user->id])
+            ->orderBy('id DESC');
+
+        $dataProvider = $searchModel->search($param, $query);
 
         return $this->render('index', [
             'searchModel'  => $searchModel,
@@ -67,6 +73,7 @@ class MingruiNoteController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->image = 'tosave';
+            $model->uid = Yii::$app->user->id;
             if (!$model->save()) {
                 var_export($model->errors);exit;
             } 

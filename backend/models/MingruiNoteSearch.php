@@ -2,10 +2,9 @@
 
 namespace backend\models;
 
-use Yii;
+use backend\models\MingruiNotes;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\MingruiNotes;
 
 /**
  * MingruiNoteSearch represents the model behind the search form about `backend\models\MingruiNotes`.
@@ -39,10 +38,12 @@ class MingruiNoteSearch extends MingruiNotes
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $query = null)
     {
-        $query = MingruiNotes::find();
-        $query =$query->orderBy('id DESC');
+        if (!$query) {
+            $query = MingruiNotes::find();
+        }
+
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -59,8 +60,8 @@ class MingruiNoteSearch extends MingruiNotes
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id, 
-            'createtime' => $this->createtime, 
+            'id'         => $this->id,
+            'createtime' => $this->createtime,
         ]);
 
         $query->andFilterWhere(['like', 'type', $this->type])

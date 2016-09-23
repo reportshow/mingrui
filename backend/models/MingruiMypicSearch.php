@@ -2,10 +2,9 @@
 
 namespace backend\models;
 
-use Yii;
+use backend\models\MingruiMypic;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use backend\models\MingruiMypic;
 
 /**
  * MingruiMypicSearch represents the model behind the search form about `backend\models\MingruiMypic`.
@@ -39,9 +38,11 @@ class MingruiMypicSearch extends MingruiMypic
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $query = null)
     {
-        $query = MingruiMypic::find();
+        if (!$query) {
+            $query = MingruiMypic::find();
+        }
 
         // add conditions that should always apply here
 
@@ -59,8 +60,8 @@ class MingruiMypicSearch extends MingruiMypic
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id, 
-            'createtime' => $this->createtime, 
+            'id'         => $this->id,
+            'createtime' => $this->createtime,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])

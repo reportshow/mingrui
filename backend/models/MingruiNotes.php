@@ -43,6 +43,7 @@ class MingruiNotes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['uid'], 'required'],
             [['type'], 'string'],
             [['createtime'], 'safe'],
             [['title', 'image'], 'string', 'max' => 512],

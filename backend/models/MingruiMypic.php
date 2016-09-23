@@ -29,8 +29,8 @@ class MingruiMypic extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [[  'title', 'createtime'], 'required'],
-            [[  'createtime'], 'integer'],
+            [['title', 'createtime', 'uid'], 'required'],
+            [['createtime'], 'integer'],
             [['description', 'images'], 'string'],
             [['title'], 'string', 'max' => 1024],
         ];
@@ -42,11 +42,12 @@ class MingruiMypic extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'title' => '标题',
+            'id'          => 'ID',
+            'uid'         => 'myID',
+            'title'       => '标题',
             'description' => '描述',
-            'images' => '图片',
-            'createtime' => 'Createtime',
+            'images'      => '图片',
+            'createtime'  => 'Createtime',
         ];
     }
 }

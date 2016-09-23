@@ -79,13 +79,13 @@ class RestReportController extends Controller
         //var_export(Yii::$app->user);exit;
         $mobile = Yii::$app->user->Identity->username;
         $query  = RestSample::find()->where(['like', "REPLACE(tel1,' ','')", $mobile]);
-        $smp    = $query->one();
+        $smp    = $query->one(); //有多个
         if (!$smp) {
             return '没找到报告' . $query->createCommand()->getRawSql();
         }
         $reports = $smp->restReports; //多个报告
         if (is_array($reports) && count($reports) > 0) {
-            $rpt = $reports[0];
+            $rpt = $reports[0]; 
             return $this->render('view-guest', [
                 'model'    => $rpt,
                 'comments' => $this->getComments($rpt->id),
