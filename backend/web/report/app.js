@@ -21905,7 +21905,7 @@
 
 							var _this = _possibleConstructorReturn(this, (TableExampleComplex.__proto__ || Object.getPrototypeOf(TableExampleComplex)).call(this, props));
 
-							_this.rqpl_items = [_react2.default.createElement(_MenuItem2.default, { key: 1, value: "1%", primaryText: '1%' }), _react2.default.createElement(_MenuItem2.default, { key: 2, value: "2%", primaryText: '2%' })];
+							_this.rqpl_items = [_react2.default.createElement(_MenuItem2.default, { key: 1, value: "1%", primaryText: '1%' }), _react2.default.createElement(_MenuItem2.default, { key: 2, value: "2%", primaryText: '2%' }), _react2.default.createElement(_MenuItem2.default, { key: 3, value: "5%", primaryText: '5%' })];
 
 							_this.filter_gene = function (data, value) {
 										var keywords = _this.state.gene_value.trim().split(/\s+/);
@@ -21930,8 +21930,8 @@
 
 							_this.filter_ycfs = function (data, value) {
 										for (var i in _this.state.ycfs_values) {
-													for (var j in data[20]) {
-																if (data[20][j].toLowerCase() === _this.state.ycfs_values[i].toLowerCase()) {
+													for (var j in data[27]) {
+																if (data[27][j].toLowerCase() === _this.state.ycfs_values[i].toLowerCase()) {
 																			return true;
 																}
 													}
@@ -21942,7 +21942,7 @@
 
 							_this.filter_tbbl = function (data, value) {
 										var minmax = [];
-										var data_tbbl = parseFloat(data[25].match(/.*\((.*)\).*/)[1]);
+										var data_tbbl = parseFloat(data[26].match(/.*\((.*)\).*/)[1]);
 										for (var i in _this.state.tbbl_values) {
 													var ret = _this.state.tbbl_values[i].match(/(.*)-(.*)/);
 													minmax.push([parseFloat(ret[1]), parseFloat(ret[2])]);
@@ -21959,12 +21959,12 @@
 
 							_this.filter_cxsd = function (data, value) {
 										var minmax = [];
-										var data_cxsd = data[25].match(/(.*)\/(.*)\(.*\)/);
+										var data_cxsd = data[26].match(/(.*)\/(.*)\(.*\)/);
 										var het = parseInt(data_cxsd[1]) + parseInt(data_cxsd[2]);
 										for (var i in _this.state.cxsd_values) {
 													var ret = _this.state.cxsd_values[i].match(/(.*)-(.*)/);
 													if (ret == null) {
-																minmax.push([100, 20000]);
+																minmax.push([21, 20000]);
 													} else {
 																minmax.push([parseInt(ret[1]), parseInt(ret[2])]);
 													}
@@ -21980,18 +21980,13 @@
 							};
 
 							_this.filter_dm = function (data, value) {
-										//TODO:: dm has no data in the report
-										// for(var i in this.state.dm_values){
-										//     if(data[?].toLowerCase() === this.state.dm_values[i].toLowerCase()){	
-										// 	return true
-										//     }
-										// }
-										// return false;
-										return true;
-							};
+										for (var i in _this.state.dm_values) {
+													if (data[2].toLowerCase() === _this.state.dm_values[i].toLowerCase() && data[2].toLowerCase() != '') {
+																return true;
+													}
+										}
 
-							_this.filter_rqpl = function (data, value) {
-										return true;
+										return false;
 							};
 
 							_this.filter_qrjyz = function (data, value) {
@@ -21999,19 +21994,6 @@
 										var qrjyz_value = parseFloat(_this.state.qrjyz_value);
 										if (!isNaN(data_qrjyz) && !isNaN(qrjyz_value)) {
 													if (data_qrjyz <= qrjyz_value / 100) {
-																return true;
-													}
-										} else {
-													return true;
-										}
-										return false;
-							};
-
-							_this.filter_oz6500 = function (data, value) {
-										var data_oz6500 = parseFloat(data[6][1]);
-										var oz6500_value = parseFloat(_this.state.oz6500_value);
-										if (!isNaN(data_oz6500) && !isNaN(oz6500_value)) {
-													if (data_oz6500 <= oz6500_value / 100) {
 																return true;
 													}
 										} else {
@@ -22033,7 +22015,7 @@
 										return false;
 							};
 
-							_this.filters = [_this.filter_gene, _this.filter_tblx, _this.filter_ycfs, _this.filter_tbbl, _this.filter_cxsd, _this.filter_dm, _this.filter_rqpl, _this.filter_qrjyz, _this.filter_oz6500, _this.filter_inhouse];
+							_this.filters = [_this.filter_gene, _this.filter_tblx, _this.filter_ycfs, _this.filter_tbbl, _this.filter_cxsd, _this.filter_dm, _this.filter_qrjyz, _this.filter_inhouse];
 
 							_this.filter = function () {
 										var queryResult = [];
@@ -22076,16 +22058,8 @@
 										_this.setState({ dm_values: v });
 							};
 
-							_this.handle_rqpl_Change = function (event, index, value) {
-										_this.setState({ rqpl_value: value });
-							};
-
 							_this.handle_qrjyz_Change = function (event, index, value) {
 										_this.setState({ qrjyz_value: value });
-							};
-
-							_this.handle_oz6500_Change = function (event, index, value) {
-										_this.setState({ oz6500_value: value });
 							};
 
 							_this.handle_inhouse_Change = function (event, index, value) {
@@ -22113,11 +22087,9 @@
 										tblx_values: ["frameshift", "nonframeshift", "nonsynonymous", "splicing", "stopgain", "synonymous", "stoploss", "unknown"],
 										tbbl_values: ["0.9-1", "0.75-0.9", "0.65-0.75", "0.35-0.65", "0.2-0.35", "0-0.2"],
 										ycfs_values: ["AR", "AD", "XR", "XD", "X-LINKED"],
-										cxsd_values: ["0-10", "10-25", "25-50", "50-100", "100+"],
-										dm_values: ["DM", "DM?", "other"],
-										rqpl_value: "1%",
+										cxsd_values: ["10-20", "20+"],
+										dm_values: ["DM", "DM?", "[Similar]DM"],
 										qrjyz_value: "1%",
-										oz6500_value: "1%",
 										inhouse_value: "1%"
 							};
 							return _this;
@@ -22131,19 +22103,19 @@
 													var str = '';
 													for (var inkey in tableData[key][21]) {
 																if (tableData[key][21][inkey]) {
-																			str = str.concat(tableData[key][21][inkey][0], '--', tableData[key][21][inkey][1], '--', tableData[key][21][inkey][2], '<br/>');
+																			str = str.concat(tableData[key][21][inkey][0], '--', tableData[key][21][inkey][1], '--', tableData[key][21][inkey][2], "<br/>");
 																}
 													}
 													tableData[key].push(str);
 
-													//HET tooltip
+													//功能预测
 													var str = '';
-													str = str.concat(tableData[key][8], '<br/>', tableData[key][9], '<br/>', tableData[key][10], '<br/>', tableData[key][11], '<br/>', tableData[key][12]);
+													str = str.concat(tableData[key][9], "<br/>", tableData[key][10], "<br/>", tableData[key][11], "<br/>", tableData[key][12]);
 													tableData[key].push(str);
 
 													//突变信息
 													var str = '';
-													str = tableData[key][1].replace(/\s/g, '<br/>');
+													str = tableData[key][1].replace(/\s/g, "<br/>");
 													tableData[key].push(str);
 
 													//HET
@@ -22152,6 +22124,14 @@
 																			tableData[key].push(tableData[key][15][prop][1]);
 																}
 													}
+													//AR AD
+													var temp = [];
+													for (var inkey in tableData[key][21]) {
+																if (tableData[key][21][inkey]) {
+																			temp.push(tableData[key][21][inkey][1]);
+																}
+													}
+													tableData[key].push(temp);
 										}
 
 										return _react2.default.createElement(
@@ -22221,11 +22201,8 @@
 																												_react2.default.createElement(
 																															_multiselect2.default,
 																															{ fullWidth: true, value: this.state.cxsd_values, floatingLabelText: '测序深度', onChange: this.handle_cxsd_Change },
-																															_react2.default.createElement(_List2.default, { primaryText: "0-10", value: '0-10' }),
-																															_react2.default.createElement(_List2.default, { primaryText: "10-25", value: '10-25' }),
-																															_react2.default.createElement(_List2.default, { primaryText: "25-50", value: '25-50' }),
-																															_react2.default.createElement(_List2.default, { primaryText: "50-100", value: '50-100' }),
-																															_react2.default.createElement(_List2.default, { primaryText: "100+", value: '100+' })
+																															_react2.default.createElement(_List2.default, { primaryText: "10-20", value: '10-20' }),
+																															_react2.default.createElement(_List2.default, { primaryText: ">20", value: '20+' })
 																												)
 																									),
 																									_react2.default.createElement(
@@ -22258,16 +22235,16 @@
 																						),
 																						_react2.default.createElement(
 																									_Table.TableRow,
-																									{ displayBorder: false },
+																									null,
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
 																												{ colSpan: '2', style: { textAlign: 'center' } },
 																												_react2.default.createElement(
 																															_multiselect2.default,
-																															{ fullWidth: true, value: this.state.dm_values, floatingLabelText: 'DM/其它(？)', onChange: this.handle_dm_Change },
+																															{ fullWidth: true, value: this.state.dm_values, floatingLabelText: 'DM', onChange: this.handle_dm_Change },
 																															_react2.default.createElement(_List2.default, { primaryText: "DM", value: 'DM' }),
 																															_react2.default.createElement(_List2.default, { primaryText: "DM?", value: 'DM?' }),
-																															_react2.default.createElement(_List2.default, { primaryText: "其它", value: 'other' })
+																															_react2.default.createElement(_List2.default, { primaryText: "[Similar]DM", value: '[Similar]DM' })
 																												)
 																									),
 																									_react2.default.createElement(
@@ -22279,29 +22256,11 @@
 																																		fullWidth: true,
 																																		value: this.state.qrjyz_value,
 																																		onChange: this.handle_qrjyz_Change,
-																																		floatingLabelText: '千人基因组携带率低于(？)'
+																																		floatingLabelText: '千人基因组携带率低于'
 																															},
 																															this.rqpl_items
 																												)
 																									),
-																									_react2.default.createElement(
-																												_Table.TableHeaderColumn,
-																												{ colSpan: '2' },
-																												_react2.default.createElement(
-																															_SelectField2.default,
-																															{
-																																		fullWidth: true,
-																																		value: this.state.oz6500_value,
-																																		onChange: this.handle_oz6500_Change,
-																																		floatingLabelText: '欧洲6500低于(？)'
-																															},
-																															this.rqpl_items
-																												)
-																									)
-																						),
-																						_react2.default.createElement(
-																									_Table.TableRow,
-																									null,
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
 																												{ colSpan: '2' },
@@ -22311,28 +22270,14 @@
 																																		fullWidth: true,
 																																		value: this.state.inhouse_value,
 																																		onChange: this.handle_inhouse_Change,
-																																		floatingLabelText: 'inhouse低于(？)'
+																																		floatingLabelText: 'inhouse低于'
 																															},
 																															this.rqpl_items
 																												)
 																									),
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
-																												{ colSpan: '2' },
-																												_react2.default.createElement(
-																															_SelectField2.default,
-																															{
-																																		fullWidth: true,
-																																		value: this.state.rqpl_value,
-																																		onChange: this.handle_rqpl_Change,
-																																		floatingLabelText: '人群频率(？)'
-																															},
-																															this.rqpl_items
-																												)
-																									),
-																									_react2.default.createElement(
-																												_Table.TableHeaderColumn,
-																												{ colSpan: '3', style: { textAlign: 'right' } },
+																												{ style: { textAlign: 'right' } },
 																												_react2.default.createElement(_RaisedButton2.default, { label: '过滤', primary: true, onClick: this.filter })
 																									)
 																						),
@@ -22341,13 +22286,8 @@
 																									null,
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
-																												{ tooltip: '基因' },
-																												'基因'
-																									),
-																									_react2.default.createElement(
-																												_Table.TableHeaderColumn,
-																												{ tooltip: '大小' },
-																												'大小'
+																												{ tooltip: '基因(大小)' },
+																												'基因(大小)'
 																									),
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
@@ -22361,11 +22301,6 @@
 																									),
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
-																												{ tooltip: 'HGMD信息?' },
-																												'HGMD'
-																									),
-																									_react2.default.createElement(
-																												_Table.TableHeaderColumn,
 																												{ tooltip: '基因疾病信息' },
 																												'基因疾病信息'
 																									),
@@ -22373,6 +22308,16 @@
 																												_Table.TableHeaderColumn,
 																												{ tooltip: 'HET信息' },
 																												'HET'
+																									),
+																									_react2.default.createElement(
+																												_Table.TableHeaderColumn,
+																												{ tooltip: 'HGMD信息' },
+																												'HGMD'
+																									),
+																									_react2.default.createElement(
+																												_Table.TableHeaderColumn,
+																												{ tooltip: '功能预测' },
+																												'功能预测'
 																									)
 																						)
 																			),
@@ -22390,20 +22335,14 @@
 																												{ key: index, selected: row.selected },
 																												_react2.default.createElement(
 																															_Table.TableRowColumn,
-																															{ 'data-tip': row[0] },
-																															row[0]
+																															{ 'data-tip': row[0] + '(' + row[19] + ')' },
+																															row[0] + '(' + row[19] + ')'
 																												),
 																												'//基因',
 																												_react2.default.createElement(
 																															_Table.TableRowColumn,
-																															{ 'data-tip': row[19] },
-																															row[19]
-																												),
-																												'//大小',
-																												_react2.default.createElement(
-																															_Table.TableRowColumn,
-																															{ 'data-tip': row[24] },
-																															row[24]
+																															{ 'data-tip': row[25] },
+																															row[25]
 																												),
 																												'//突变信息',
 																												_react2.default.createElement(
@@ -22414,21 +22353,35 @@
 																												'//突变类型',
 																												_react2.default.createElement(
 																															_Table.TableRowColumn,
-																															{ 'data-tip': '数据中无此项' },
-																															'无数据'
+																															{ 'data-tip': row[23] },
+																															row[23]
 																												),
-																												'//HGDM //疾病信息',
+																												'//疾病信息',
+																												_react2.default.createElement(
+																															_Table.TableRowColumn,
+																															{ 'data-tip': row[26] },
+																															row[26]
+																												),
+																												'//HET',
 																												_react2.default.createElement(
 																															_Table.TableRowColumn,
 																															{ 'data-tip': row[22] },
 																															row[22]
 																												),
+																												'//HGDM',
 																												_react2.default.createElement(
 																															_Table.TableRowColumn,
-																															{ 'data-tip': row[25].concat('<br>', row[23]) },
-																															row[25]
+																															{ 'data-tip': row[24] },
+																															row[9],
+																															' ',
+																															_react2.default.createElement('br', null),
+																															row[10],
+																															_react2.default.createElement('br', null),
+																															row[11],
+																															_react2.default.createElement('br', null),
+																															row[12]
 																												),
-																												'//HET'
+																												'//功能预测'
 																									);
 																						})
 																			)
@@ -38690,7 +38643,7 @@
 	      ariaProps: (0, _aria.parseAria)(props) // aria- and role attributes
 	    };
 
-	    _this.bind(['showTooltip', 'updateTooltip', 'hideTooltip', 'globalRebuild', 'globalShow', 'globalHide', 'onWindowResize']);
+	    _this.bind(['showTooltip', 'updateTooltip', 'hideTooltip', 'globalRebuild', 'globalShow', 'onWindowResize']);
 
 	    _this.mount = true;
 	    _this.delayShowLoop = null;
@@ -38718,7 +38671,7 @@
 	    value: function componentDidMount() {
 	      this.setStyleHeader(); // Set the style to the <link>
 	      this.bindListener(); // Bind listener for tooltip
-	      this.bindWindowEvents(this.props.resizeHide); // Bind global event for static method
+	      this.bindWindowEvents(); // Bind global event for static method
 	    }
 	  }, {
 	    key: 'componentWillReceiveProps',
@@ -38891,15 +38844,6 @@
 
 	      // If it is focus event or called by ReactTooltip.show, switch to `solid` effect
 	      var switchToSolid = e instanceof window.FocusEvent || isGlobalCall;
-
-	      // if it need to skip adding hide listener to scroll
-	      var scrollHide = true;
-	      if (e.currentTarget.getAttribute('data-scroll-hide')) {
-	        scrollHide = e.currentTarget.getAttribute('data-scroll-hide') === 'true';
-	      } else if (this.props.scrollHide != null) {
-	        scrollHide = this.props.scrollHide;
-	      }
-
 	      this.setState({
 	        placeholder: placeholder,
 	        place: e.currentTarget.getAttribute('data-place') || this.props.place || 'top',
@@ -38913,7 +38857,7 @@
 	        extraClass: e.currentTarget.getAttribute('data-class') || this.props.class || '',
 	        countTransform: e.currentTarget.getAttribute('data-count-transform') ? e.currentTarget.getAttribute('data-count-transform') === 'true' : this.props.countTransform != null ? this.props.countTransform : true
 	      }, function () {
-	        if (scrollHide) _this5.addScrollListener(e);
+	        _this5.addScrollListener(e);
 	        _this5.updateTooltip(e);
 
 	        if (getContent && Array.isArray(getContent)) {
@@ -38980,20 +38924,14 @@
 
 	  }, {
 	    key: 'hideTooltip',
-	    value: function hideTooltip(e, hasTarget) {
+	    value: function hideTooltip() {
 	      var _this7 = this;
 
-	      if (!this.mount) return;
-	      if (hasTarget) {
-	        // Don't trigger other elements belongs to other ReactTooltip
-	        var targetArray = this.getTargetArray(this.props.id);
-	        var isMyElement = targetArray.some(function (ele) {
-	          return ele === e.currentTarget;
-	        });
-	        if (!isMyElement || !this.state.show) return;
-	      }
 	      var delayHide = this.state.delayHide;
 	      var afterHide = this.props.afterHide;
+
+
+	      if (!this.mount) return;
 
 	      var resetState = function resetState() {
 	        var isVisible = _this7.state.show;
@@ -39138,11 +39076,7 @@
 	  countTransform: _react.PropTypes.bool,
 	  afterShow: _react.PropTypes.func,
 	  afterHide: _react.PropTypes.func,
-	  disable: _react.PropTypes.bool,
-	  scrollHide: _react.PropTypes.bool,
-	  resizeHide: _react.PropTypes.bool
-	}, _class2.defaultProps = {
-	  resizeHide: true
+	  disable: _react.PropTypes.bool
 	}, _temp)) || _class) || _class) || _class) || _class;
 
 	/* export default not fit for standalone, it will exports {default:...} */
@@ -39219,8 +39153,8 @@
 	   * Hide all tooltip
 	   * @trigger ReactTooltip.hide()
 	   */
-	  target.hide = function (target) {
-	    dispatchGlobalEvent(_constant2.default.GLOBAL.HIDE, { target: target });
+	  target.hide = function () {
+	    dispatchGlobalEvent(_constant2.default.GLOBAL.HIDE);
 	  };
 
 	  /**
@@ -39252,13 +39186,6 @@
 	      // only `float` type cares e.clientX e.clientY
 	      var e = { currentTarget: event.detail.target };
 	      this.showTooltip(e, true);
-	    }
-	  };
-
-	  target.prototype.globalHide = function (event) {
-	    if (this.mount) {
-	      var hasTarget = event && event.detail && event.detail.target && true || false;
-	      this.hideTooltip({ currentTarget: hasTarget && event.detail.target }, hasTarget);
 	    }
 	  };
 	};
@@ -39315,10 +39242,10 @@
 	});
 
 	exports.default = function (target) {
-	  target.prototype.bindWindowEvents = function (resizeHide) {
+	  target.prototype.bindWindowEvents = function () {
 	    // ReactTooltip.hide
-	    window.removeEventListener(_constant2.default.GLOBAL.HIDE, this.globalHide);
-	    window.addEventListener(_constant2.default.GLOBAL.HIDE, this.globalHide, false);
+	    window.removeEventListener(_constant2.default.GLOBAL.HIDE, this.hideTooltip);
+	    window.addEventListener(_constant2.default.GLOBAL.HIDE, this.hideTooltip, false);
 
 	    // ReactTooltip.rebuild
 	    window.removeEventListener(_constant2.default.GLOBAL.REBUILD, this.globalRebuild);
@@ -39329,14 +39256,12 @@
 	    window.addEventListener(_constant2.default.GLOBAL.SHOW, this.globalShow, false);
 
 	    // Resize
-	    if (resizeHide) {
-	      window.removeEventListener('resize', this.onWindowResize);
-	      window.addEventListener('resize', this.onWindowResize, false);
-	    }
+	    window.removeEventListener('resize', this.onWindowResize);
+	    window.addEventListener('resize', this.onWindowResize, false);
 	  };
 
 	  target.prototype.unbindWindowEvents = function () {
-	    window.removeEventListener(_constant2.default.GLOBAL.HIDE, this.globalHide);
+	    window.removeEventListener(_constant2.default.GLOBAL.HIDE, this.hideTooltip);
 	    window.removeEventListener(_constant2.default.GLOBAL.REBUILD, this.globalRebuild);
 	    window.removeEventListener(_constant2.default.GLOBAL.SHOW, this.globalShow);
 	    window.removeEventListener('resize', this.onWindowResize);

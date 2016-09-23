@@ -11,12 +11,6 @@ $this->params['breadcrumbs'][] = ['label' => 'Report', 'url' => ['view', 'id'=>$
 $this->params['breadcrumbs'][] = $this->title;
 
 AppAsset::register($this); 
-
-$sqliteUrl = str_replace('/primerbean/media/', 'user/', $model->snpsqlite);
-$sqliteUrl = Yii::$app->params['erp_url'] . $sqliteUrl ;
-$data = file_get_contents($sqliteUrl);
-$data = json_decode($data, true);
-$data = json_encode($data);
 ?>
 
 <div id="app"></div>
