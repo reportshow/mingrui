@@ -78,7 +78,7 @@ export default class TableExampleComplex extends React.Component {
 	    dm_values: [
 		"DM",
 		"DM?",
-		"[similar]DM",
+		"[Similar]DM",
 	    ],
 	    qrjyz_value: "1%",
 	    inhouse_value:"1%",
@@ -166,14 +166,13 @@ export default class TableExampleComplex extends React.Component {
     }  
 
     filter_dm = (data, value) => {
-	//TODO:: dm has no data in the report
-	// for(var i in this.state.dm_values){
-	//     if(data[?].toLowerCase() === this.state.dm_values[i].toLowerCase()){	
-	// 	return true
-	//     }
-	// }
-	// return false;
-	return true;
+	for(var i in this.state.dm_values){
+	    if(data[2].toLowerCase() === this.state.dm_values[i].toLowerCase() && data[2].toLowerCase()!=''){
+		return true
+	    }
+	}
+	
+	return false;
     }  
 
     filter_qrjyz = (data, value) => {
@@ -328,7 +327,7 @@ export default class TableExampleComplex extends React.Component {
 	 enableSelectAll={this.state.enableSelectAll}
 	 >
 	<TableRow>
-	  <TableHeaderColumn colSpan="6" tooltip="诊断过滤工具" style={{textAlign: 'center'}}>
+	  <TableHeaderColumn colSpan="7" tooltip="诊断过滤工具" style={{textAlign: 'center'}}>
 	    诊断过滤工具
 	  </TableHeaderColumn>
 	</TableRow>
@@ -376,10 +375,10 @@ export default class TableExampleComplex extends React.Component {
 	</TableRow>
 	<TableRow>
 	  <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
-	    <MultiSelect fullWidth={true} value={this.state.dm_values} floatingLabelText="DM/其它(？)" onChange={this.handle_dm_Change}>
+	    <MultiSelect fullWidth={true} value={this.state.dm_values} floatingLabelText="DM" onChange={this.handle_dm_Change}>
 	      <ListItem primaryText={"DM"} value="DM" />
 	      <ListItem primaryText={"DM?"} value="DM?" />
-	      <ListItem primaryText={"其它"} value="other" />
+	      <ListItem primaryText={"[Similar]DM"} value="[Similar]DM" />
 	    </MultiSelect>
 	  </TableHeaderColumn>
 	  <TableHeaderColumn colSpan="2">

@@ -21930,8 +21930,8 @@
 
 							_this.filter_ycfs = function (data, value) {
 										for (var i in _this.state.ycfs_values) {
-													for (var j in data[26]) {
-																if (data[26][j].toLowerCase() === _this.state.ycfs_values[i].toLowerCase()) {
+													for (var j in data[27]) {
+																if (data[27][j].toLowerCase() === _this.state.ycfs_values[i].toLowerCase()) {
 																			return true;
 																}
 													}
@@ -21942,7 +21942,7 @@
 
 							_this.filter_tbbl = function (data, value) {
 										var minmax = [];
-										var data_tbbl = parseFloat(data[25].match(/.*\((.*)\).*/)[1]);
+										var data_tbbl = parseFloat(data[26].match(/.*\((.*)\).*/)[1]);
 										for (var i in _this.state.tbbl_values) {
 													var ret = _this.state.tbbl_values[i].match(/(.*)-(.*)/);
 													minmax.push([parseFloat(ret[1]), parseFloat(ret[2])]);
@@ -21959,7 +21959,7 @@
 
 							_this.filter_cxsd = function (data, value) {
 										var minmax = [];
-										var data_cxsd = data[25].match(/(.*)\/(.*)\(.*\)/);
+										var data_cxsd = data[26].match(/(.*)\/(.*)\(.*\)/);
 										var het = parseInt(data_cxsd[1]) + parseInt(data_cxsd[2]);
 										for (var i in _this.state.cxsd_values) {
 													var ret = _this.state.cxsd_values[i].match(/(.*)-(.*)/);
@@ -21980,14 +21980,13 @@
 							};
 
 							_this.filter_dm = function (data, value) {
-										//TODO:: dm has no data in the report
-										// for(var i in this.state.dm_values){
-										//     if(data[?].toLowerCase() === this.state.dm_values[i].toLowerCase()){	
-										// 	return true
-										//     }
-										// }
-										// return false;
-										return true;
+										for (var i in _this.state.dm_values) {
+													if (data[2].toLowerCase() === _this.state.dm_values[i].toLowerCase() && data[2].toLowerCase() != '') {
+																return true;
+													}
+										}
+
+										return false;
 							};
 
 							_this.filter_qrjyz = function (data, value) {
@@ -22089,7 +22088,7 @@
 										tbbl_values: ["0.9-1", "0.75-0.9", "0.65-0.75", "0.35-0.65", "0.2-0.35", "0-0.2"],
 										ycfs_values: ["AR", "AD", "XR", "XD", "X-LINKED"],
 										cxsd_values: ["10-20", "20+"],
-										dm_values: ["DM", "DM?", "[similar]DM"],
+										dm_values: ["DM", "DM?", "[Similar]DM"],
 										qrjyz_value: "1%",
 										inhouse_value: "1%"
 							};
@@ -22164,7 +22163,7 @@
 																									null,
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
-																												{ colSpan: '6', tooltip: '诊断过滤工具', style: { textAlign: 'center' } },
+																												{ colSpan: '7', tooltip: '诊断过滤工具', style: { textAlign: 'center' } },
 																												'诊断过滤工具'
 																									)
 																						),
@@ -22242,10 +22241,10 @@
 																												{ colSpan: '2', style: { textAlign: 'center' } },
 																												_react2.default.createElement(
 																															_multiselect2.default,
-																															{ fullWidth: true, value: this.state.dm_values, floatingLabelText: 'DM/其它(？)', onChange: this.handle_dm_Change },
+																															{ fullWidth: true, value: this.state.dm_values, floatingLabelText: 'DM', onChange: this.handle_dm_Change },
 																															_react2.default.createElement(_List2.default, { primaryText: "DM", value: 'DM' }),
 																															_react2.default.createElement(_List2.default, { primaryText: "DM?", value: 'DM?' }),
-																															_react2.default.createElement(_List2.default, { primaryText: "其它", value: 'other' })
+																															_react2.default.createElement(_List2.default, { primaryText: "[Similar]DM", value: '[Similar]DM' })
 																												)
 																									),
 																									_react2.default.createElement(
@@ -22312,7 +22311,7 @@
 																									),
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
-																												{ tooltip: 'HGMD信息?' },
+																												{ tooltip: 'HGMD信息' },
 																												'HGMD'
 																									),
 																									_react2.default.createElement(

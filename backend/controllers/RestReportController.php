@@ -242,18 +242,19 @@ class RestReportController extends Controller
          $datas = file_get_contents($sqliteUrl);
          $datas = json_decode($datas, true);
          foreach($datas as $key=>$data){
+              $str = $datas[$key][2];
               $ret = preg_match('/.*-([0-9]+).*/', $data[1], $matches);
               if($ret) {
                    $types = Genetypes::find()->where(['startcoord' => $matches[1]])->one();
-                   if($types) {//TODO::need to handle similar dm
-                        $datas[$key][] = $types->tag . '<br/>' . $types->disease . '<br/>' . $types->descr;
+                   if($types) {
+                        $datas[$key][] =  $str. '<br/>' . $types->disease . '<br/>' . $types->descr;
                    }
                    else {
-                        $datas[$key][] = '';
+                        $datas[$key][] = $str;
                    }
               }
               else{
-                   $datas[$key][] = '';
+                   $datas[$key][] = $str;
               }
          }
          $data = json_encode($datas);
