@@ -14,7 +14,7 @@ $accountToken =  Yii::$app->params['sms']['accountToken'];
 $appId = Yii::$app->params['sms']['appId'];
 
 //请求地址，格式如下，不需要写https://
-$serverIP = 'sandboxapp.cloopen.com';
+//$serverIP = 'sandboxapp.cloopen.com';
 $serverIP = 'app.cloopen.com';
 //请求端口
 $serverPort = '8883';

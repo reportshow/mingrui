@@ -36,10 +36,16 @@ class WechatOauthController extends Controller
 
     public function actionGetsms($mobile)
     {
-        //$mobile                = Yii::$app->request->post('mobile');
-        $_SESSION['check_sms'] = rand(1000, 9999);
+        /*if ($_SESSION['check_sms_time'] >= time()-60) {
+            return json_encode(['code' => 1]);
+        }*/
 
-        SMS::voiceVerify($_SESSION['check_sms'], $mobile);
+        
+        //$mobile                = Yii::$app->request->post('mobile');
+        $_SESSION['check_sms']      = rand(1000, 9999);
+        $_SESSION['check_sms_time'] = time();
+        //SMS::voiceVerify($_SESSION['check_sms'], $mobile);
+        SMS::SMS($mobile, [$_SESSION['check_sms'], 20]);
         return json_encode(['code' => 1]);
     }
     /**
@@ -73,7 +79,7 @@ class WechatOauthController extends Controller
     public function init1stLogin()
     {
 
-        if (Yii::$app->authManager->checkAccess($this->creator->id, 'guest')) {
+        if (Yii::$app->authManager->checkAccess(Yii::$app->user->id, 'guest')) {
 
             $nt          = new MingruiNotes();
             $nt->type    = 'text';

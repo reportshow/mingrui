@@ -2,7 +2,7 @@
 namespace backend\models;
 
 use yii\web\Controller;
-
+use common\components\SMS;
 /**
  * Site controller
  */
@@ -34,6 +34,9 @@ class WechatDoctorEvent extends WechatEvent
 
     public function sample_order()
     {
+        $mobile = Yii::$app->params['master_vcf_mobile'];
+        $voice  = Yii::$app->params['master_vcf_voice'];
+        //SMS::landingCall($voice, $mobile);
          return $this->reply->text('你的订单已经发往销售部门，我们很快会与你联系');
     }
 }

@@ -5,6 +5,13 @@ use yii\base\Component;
 
 class SMS extends Component
 {
+    public static function sendSMS( $mobile, $data = [])
+    {
+        include_once 'communication/SendTemplateSMS.php';        
+        sendTemplateSMS($mobile,  $data ,"1"); //tpl: 119716
+
+    }
+
     public static function landingCall($voice, $mobile, $times = 3)
     {
         include_once 'communication/LandingCall.php';

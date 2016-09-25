@@ -11,9 +11,7 @@
  *  in the file PATENTS.  All contributing project authors may
  *  be found in the AUTHORS file in the root of the source tree.
  */
-
-include_once("../SDK/CCPRestSDK.php");
-
+ 
 //主帐号
 $accountSid= '';
 
@@ -43,6 +41,7 @@ function sendTemplateSMS($to,$datas,$tempId)
 {
      // 初始化REST SDK
      global $accountSid,$accountToken,$appId,$serverIP,$serverPort,$softVersion;
+    include 'sms.config.php';
      $rest = new REST($serverIP,$serverPort,$softVersion);
      $rest->setAccount($accountSid,$accountToken);
      $rest->setAppId($appId);
@@ -69,5 +68,5 @@ function sendTemplateSMS($to,$datas,$tempId)
 }
 
 //Demo调用,参数填入正确后，放开注释可以调用 
-//sendTemplateSMS("手机号码","内容数据","模板Id");
+// sendTemplateSMS("13910136035", ['1234','7890'], "1");
 ?>
