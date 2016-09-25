@@ -1,6 +1,7 @@
 <?php
 namespace backend\controllers;
 
+use backend\models\MingruiNotes;
 use common\components\SMS;
 use common\models\WechatUser;
 use Yii;
@@ -47,7 +48,7 @@ class WechatOauthController extends Controller
      */
     public function actionBindMobile()
     {
-        if(empty($_SESSION['check_sms'])){
+        if (empty($_SESSION['check_sms'])) {
             exit('请获取短信验证码');
         }
         if ($_SESSION['check_sms'] != Yii::$app->request->post('smscode')) {
@@ -59,12 +60,27 @@ class WechatOauthController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $user = $model->bindMobile()) {
             //权限获取完毕
-
+            self::init1stLogin();
             self::entery($user);
 
         } else {
             //var_export($model->errors);
             return self::askMobile();
+        }
+
+    }
+
+    public function init1stLogin()
+    {
+
+        if (Yii::$app->authManager->checkAccess($this->creator->id, 'guest')) {
+
+            $nt          = new MingruiNotes();
+            $nt->type    = 'text';
+            $nt->title   = '欢迎';
+            $nt->content = "今天我第一次使用明睿云病例";
+            $nt->save();
+
         }
 
     }
@@ -76,7 +92,7 @@ class WechatOauthController extends Controller
     {
         Yii::$app->user->login($user, 0);
         if (Yii::$app->user->isGuest) {
-           exit('Login finally failed!!');
+            exit('Login finally failed!!');
         }
 
         header('Location: ' . $_SESSION['entery_url']);
