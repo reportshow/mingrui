@@ -10,7 +10,8 @@ use backend\widgets\GuestbookDrop;
 
 <header class="main-header">
 
-    <?= Html::a('<span class="logo-mini"><img src=logo.png style="width:36px"></span><span class="logo-lg"><img src=logo.png style="width:36px">' . Yii::$app->name . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
+    <?= Html::a('<span class="logo-mini"><img src=logo.png style="width:36px"></span>
+                <span class="logo-lg"  ><img src=logo.png style="width:64px">' . Yii::$app->name . '</span>', Yii::$app->homeUrl, ['class' => 'logo', 'style'=>'padding-left:0px']) ?>
 
     <nav class="navbar navbar-static-top" role="navigation">
 

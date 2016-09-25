@@ -16,9 +16,15 @@ if($type=='text'){?>
         <!-- timeline icon -->
         <i class="fa fa-envelope bg-aqua"></i>
         <div class="timeline-item">
-            <span class="time"><i class="fa fa-clock-o"></i><?=$model->createtime?></span>
-
-            <h3 class="timeline-header"> <?=$model->title?>  ...</h3>
+                <span  style="float:right;cursor: pointer;padding-right:5px">
+                  <i class="fa move2mypic fa-share-square-o"></i>
+                </span>
+                <span class="time " style="float:left;padding:3px 8px">
+                  <i class="fa fa-clock-o"></i><?=$model->createtime?>
+                </span>
+                
+            
+            <h3 class="timeline-header" style="clear: both;padding-top: 0px"> <?=$model->title?>  ...</h3>
 
             <div class="timeline-body">
                 <?=$model->content?>
@@ -47,9 +53,9 @@ if($type=='text'){?>
         <!-- timeline icon -->
         <i class="fa  fa-wifi bg-yellow" 
         style="transform: rotate(90deg);-webkit-transform: rotate(90deg);"></i>
-        <div class="timeline---item" style="margin-left:60px;margin-top:-10px; ">
+        <div class="timeline-item" style="margin-left:60px;margin-top:-10px; ">
 
-            <audio src="<?=$path ?>" controls="controls" width=60%></audio>
+            <audio src="<?=$path ?>" controls="controls" style='width:160px;margin:10px 0px 0px 10px'></audio>
 
             <div class="timeline-body" style="padding-right: 16px;">
                 <div class="direct-chat-text bg-aqua "  >
@@ -77,9 +83,14 @@ if($type=='text'){?>
               <i class="fa fa-camera bg-purple"></i>
 
               <div class="timeline-item">
-                <span class="time"><i class="fa fa-clock-o"></i> <?=$model->createtime?></span>
+                 <span  style="float:right;cursor: pointer;padding-right:5px">
+                  <i class="fa move2mypic fa-share-square-o"></i>
+                 </span>
+                <span class="time " style="float:left;padding:3px 8px">
+                  <i class="fa fa-clock-o"></i><?=$model->createtime?>
+                </span>
 
-                <h3 class="timeline-header"> <?=$model->title?>  ...</h3>
+                <h3 class="timeline-header" style="clear: both;padding-top: 0px"> <?=$model->title?>  ...</h3>
 
                 <div class="timeline-body">
 

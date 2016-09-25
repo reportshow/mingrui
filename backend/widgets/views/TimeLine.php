@@ -23,6 +23,7 @@ foreach ($models as $key => $model) {
         timeHtml($date1);
         $date = $date1;
     }
+    $model->createtime = date('H:i', strtotime($model->createtime));
     echo $this->render('TimeLine-item', ['model' => $model]);
 
 }
@@ -41,3 +42,8 @@ HTML;
 }
 ?>
 </ul>
+<script type="text/javascript">
+    $('.move2mypic').click(function(){
+        alert('已复制记事到我到病例列表中')
+    })
+</script>
