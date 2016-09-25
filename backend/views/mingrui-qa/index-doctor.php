@@ -18,7 +18,9 @@ $this->params['breadcrumbs'][] = $this->title;
     $models = $dataProvider->getModels();
 
     ?>
-    <?= GridView::widget([
+    <?php
+    
+ /*    GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [ 
@@ -31,5 +33,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
-    ]); ?>
+    ]); 
+*/ 
+    
+foreach ($dataProvider->getModels() as $key => $model) {
+     echo  $this->render('view-item', [
+        'model' => $model,
+    ]); 
+ } 
+ 
+    ?>
 </div>

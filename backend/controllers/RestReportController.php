@@ -108,8 +108,7 @@ class RestReportController extends Controller
             $viewname = 'view';
         } else if (Yii::$app->user->can('doctor')) {
             $viewname = 'view';
-        } else {
-            $id       = 3965;
+        } else {             
             $viewname = 'view-guest';
         }
 

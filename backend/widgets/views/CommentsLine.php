@@ -16,7 +16,7 @@ if($model['position'] != 'right'){
         </span>
     </div>
     <!-- /.direct-chat-info -->
-    <img alt="Message User Image" class="direct-chat-img" src="images/user1-128x128.jpg">
+    <img alt="Message User Image" class="direct-chat-img" src="<?=$model->creator->avatar?>" onerror="this.src='images/user2.png';">
         <!-- /.direct-chat-img -->
         <div class="direct-chat-text">
             <?=$model->content?>
@@ -41,7 +41,7 @@ if($model['position'] != 'right'){
         </span>
     </div>
     <!-- /.direct-chat-info -->
-    <img alt="Message User Image" class="direct-chat-img" src="images/user8-128x128.jpg">
+    <img alt="Message User Image" class="direct-chat-img" src="<?=$model->creator->avatar?>" onerror="this.src='images/user.png';">
         <!-- /.direct-chat-img -->
         <div class="direct-chat-text">
             <?=$model->content?>

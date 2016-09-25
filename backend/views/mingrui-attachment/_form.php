@@ -14,7 +14,7 @@ use kartik\file\FileInput;
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data','class'=>'upload']]); ?>
 
-   <?= $form->field($model, 'report_id')->hiddenInput(['value'=> $_GET['id']  ])->label(false);?>    
+   <?= $form->field($model, 'report_id')->hiddenInput(['value'=> $_GET['reportid']  ])->label(false);?>    
    <?=  $form->field($model, 'image[]')->widget(FileInput::classname(), [    
             'options' => ['multiple' => true, 'accept' => '*/*'],
             'pluginOptions' => [

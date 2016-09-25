@@ -81,7 +81,7 @@ $menu[] = ['label' => '互动平台',
         [
             'label' => '在线留言',
             'icon'  => 'fa fa-pie-chart',
-            'url'   => ['/guestbook/view',  'id'=>'gb'.Yii::$app->user->id],
+            'url'   => ['/guestbook/my' ],
         ],
         [
             'label' => '联系方式',

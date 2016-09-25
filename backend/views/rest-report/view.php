@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
     'class' => 'btn btn-info',
 ])?>
 
-<?=Html::a('完善资料', ['mingrui-attachment/', 'id' => $model->id], [
+<?=Html::a('完善资料', ['mingrui-attachment/', 'reportid' => $model->id], [
     'class' => 'btn btn-warning',
 ])?>
 

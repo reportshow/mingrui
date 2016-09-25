@@ -3,7 +3,8 @@ body {
     height: 100%;
     font-family: 'microsoft Yahei' !important;
 }
-.main-header .logo span{
+
+.main-header .logo  {text-align: left;
         font-family: "Helvetica Neue",Helvetica,Arial,'microsoft Yahei' ;
 }
 .wrap {

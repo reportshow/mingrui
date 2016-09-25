@@ -8,7 +8,7 @@ use backend\widgets\Imglist;
 /* @var $searchModel backend\models\MingruiAttachmentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$id = $_GET['id'];
+$id = $_GET['reportid'];
 global $sick;
 $report = RestReport::findOne($id);
 $sick   = $report->sample->name;
@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?=Html::a('新增 资料', ['create', 'id' => $_GET['id']], ['class' => 'btn btn-success'])?>
+        <?=Html::a('新增 资料', ['create', 'reportid' => $_GET['reportid']], ['class' => 'btn btn-success'])?>
     </p>
    <?= Imglist::widget([
         'dataProvider' => $dataProvider, 

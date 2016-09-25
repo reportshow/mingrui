@@ -62,7 +62,7 @@ class Attachments extends Widget
                     'pdf'  => 'pdf',
                     'ppt'  => 'ppt', 'pptx' => 'ppt', 'pub' => 'pub',
                     'wma'  => 'sound',
-                    'txt'  => 'txt',
+                    'txt'  => 'txt','css'  => 'css',
                     'doc'  => 'doc',
                     'docx' => 'doc',
                 ];

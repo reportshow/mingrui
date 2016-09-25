@@ -55,10 +55,7 @@ class MingruiNotes extends \yii\db\ActiveRecord
     {
         return $this->voice;
     }
-    public function getImages()
-    {
-        return explode(';', $this->image);
-    }
+    
 
     /**
      * @inheritdoc

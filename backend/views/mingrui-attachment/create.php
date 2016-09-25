@@ -5,7 +5,7 @@ use backend\models\RestReport;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\MingruiAttachment */
-$id = $_GET['id'];
+$id = $_GET['reportid'];
 
 $report = RestReport::findOne($id);
 $sick = $report->sample->name;
