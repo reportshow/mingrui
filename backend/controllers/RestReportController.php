@@ -6,6 +6,7 @@ use backend\models\Geneareas;
 use backend\models\GeneDiseases;
 use backend\models\Genetypes;
 use backend\models\MingruiComments;
+use backend\models\RestClient;
 use backend\models\RestReport;
 use backend\models\RestReportSearch;
 use backend\models\RestSample;
@@ -67,6 +68,20 @@ class RestReportController extends Controller
             ->where(['<>', 'ptype', 'yidai'])
             ->andWhere(['rest_report.status' => 'finished']);
 
+        if (Yii::$app->user->can('doctor')) {
+            $mobile = Yii::$app->user->Identity->username;
+            $doctor = RestClient::find()->where(['tel' => $mobile])->one();
+            if(!$doctor){
+               return "医生资料未找到";
+            }
+            $query = $query->joinWith(['sample']);
+
+            $query = $query->where(['rest_sample.doctor_id' => $doctor->id]);
+            //echo $query->createCommand()->getRawSql(); exit;
+        }else if (Yii::$app->user->can('guest')){
+             return "你没有权限查看本页";
+        }
+
         $dataProvider = $searchModel->search($params, $query);
 
         return $this->render('index', [
@@ -86,7 +101,7 @@ class RestReportController extends Controller
         }
         $reports = $smp->restReports; //多个报告
         if (is_array($reports) && count($reports) > 0) {
-            $rpt = $reports[0]; 
+            $rpt = $reports[0];
             return $this->render('view-guest', [
                 'model'    => $rpt,
                 'comments' => $this->getComments($rpt->id),
@@ -108,7 +123,7 @@ class RestReportController extends Controller
             $viewname = 'view';
         } else if (Yii::$app->user->can('doctor')) {
             $viewname = 'view';
-        } else {             
+        } else {
             $viewname = 'view-guest';
         }
 
@@ -238,65 +253,62 @@ class RestReportController extends Controller
 
     public function actionAnalyze($id)
     {
-         $model = $this->findModel($id);         
-         $sqliteUrl = str_replace('/primerbean/media/', 'user/', $model->snpsqlite);
-         $sqliteUrl = Yii::$app->params['erp_url'] . $sqliteUrl ;
-         $datas = file_get_contents($sqliteUrl);
-         $datas = json_decode($datas, true);
-         foreach($datas as $key=>$data){
-              $str = $datas[$key][2];
-              $ret = preg_match('/.*-([0-9]+).*/', $data[1], $matches);
-              if($ret) {
-                   $types = Genetypes::find()->where(['startcoord' => $matches[1]])->one();
-                   if($types) {
-                        $datas[$key][] =  $str. '<br/>' . $types->disease . '<br/>' . $types->descr;
-                   }
-                   else {
-                        $datas[$key][] = $str;
-                   }
-              }
-              else{
-                   $datas[$key][] = $str;
-              }
-         }
-         $data = json_encode($datas);
-         
+        $model     = $this->findModel($id);
+        $sqliteUrl = str_replace('/primerbean/media/', 'user/', $model->snpsqlite);
+        $sqliteUrl = Yii::$app->params['erp_url'] . $sqliteUrl;
+        $datas     = file_get_contents($sqliteUrl);
+        $datas     = json_decode($datas, true);
+        foreach ($datas as $key => $data) {
+            $str = $datas[$key][2];
+            $ret = preg_match('/.*-([0-9]+).*/', $data[1], $matches);
+            if ($ret) {
+                $types = Genetypes::find()->where(['startcoord' => $matches[1]])->one();
+                if ($types) {
+                    $datas[$key][] = $str . '<br/>' . $types->disease . '<br/>' . $types->descr;
+                } else {
+                    $datas[$key][] = $str;
+                }
+            } else {
+                $datas[$key][] = $str;
+            }
+        }
+        $data = json_encode($datas);
+
         return $this->render('analyze', [
-                                  'model' => $model,
-                                  'data' => $data
+            'model' => $model,
+            'data'  => $data,
         ]);
     }
 
     public function actionStats($id)
     {
-         //1. find user's bad gene
-         $userdata = $this->findModel($id);
-         $cnv_array = json_decode($userdata->cnvsave, true);
-         $user_cnv_gene = '';
-         $user_cnv_areas =[];
-         foreach($cnv_array as $key => $data){
-              $user_cnv_gene = $data[2];
-              $user_cnv_areas = $data[4];
-         }
+        //1. find user's bad gene
+        $userdata       = $this->findModel($id);
+        $cnv_array      = json_decode($userdata->cnvsave, true);
+        $user_cnv_gene  = '';
+        $user_cnv_areas = [];
+        foreach ($cnv_array as $key => $data) {
+            $user_cnv_gene  = $data[2];
+            $user_cnv_areas = $data[4];
+        }
 
-         //2. find all areas of this gene
-         $final_areas = [];
-         if(!empty($user_cnv_gene)) {
-              $areas = Geneareas::find()->where(['geneareas.gene' => trim($user_cnv_gene)])->all();
+        //2. find all areas of this gene
+        $final_areas = [];
+        if (!empty($user_cnv_gene)) {
+            $areas = Geneareas::find()->where(['geneareas.gene' => trim($user_cnv_gene)])->all();
 
-              foreach($areas as $area)
-              {
-                   $final_areas[] = ['start'=>$area->startcoord,
-                                     'end'=>$area->endcoord,
-                                     'count' => $area->report_count,
-                                     'bad' => false
-                        ];
-              }
-              
-              foreach($user_cnv_areas as $user_cnv_area) {
-                   $final_areas[$user_cnv_area-1]['bad'] = true;
-              }
-         }
+            foreach ($areas as $area) {
+                $final_areas[] = ['start' => $area->startcoord,
+                    'end'                     => $area->endcoord,
+                    'count'                   => $area->report_count,
+                    'bad'                     => false,
+                ];
+            }
+
+            foreach ($user_cnv_areas as $user_cnv_area) {
+                $final_areas[$user_cnv_area - 1]['bad'] = true;
+            }
+        }
 
         return $this->render('stats', [
             'gene'    => $user_cnv_gene,
