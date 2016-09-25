@@ -312,7 +312,6 @@ export default class TableExampleComplex extends React.Component {
 <MuiThemeProvider muiTheme={muiTheme}>
   <div>
     <ReactTooltip type="info" effect="float" multiline={true}/>
-	    
     <Table
        height={this.state.height}
        fixedHeader={this.state.fixedHeader}
@@ -320,6 +319,7 @@ export default class TableExampleComplex extends React.Component {
        selectable={this.state.selectable}
        multiSelectable={this.state.multiSelectable}
        onRowHover = {this.handleRowHover}
+       className = 'exportable'
        >
       <TableHeader
 	 displaySelectAll={this.state.showCheckboxes}
@@ -371,6 +371,9 @@ export default class TableExampleComplex extends React.Component {
 	      <ListItem primaryText={"XD"} value="XD" />
 	      <ListItem primaryText={"X-LINKED"} value="X-LINKED" />
 	    </MultiSelect>
+	  </TableHeaderColumn>
+	  <TableHeaderColumn  style={{textAlign:'right'}}>
+	    <a href="#" className="export_button">下载过滤结果</a>
 	  </TableHeaderColumn>
 	</TableRow>
 	<TableRow>
