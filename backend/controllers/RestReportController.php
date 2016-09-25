@@ -64,22 +64,28 @@ class RestReportController extends Controller
         //$params['RestReportSearch']['rest_report.status'] = 'finished';
 
         $query = RestReport::find();
-        $query = $query
-            ->where(['<>', 'ptype', 'yidai'])
-            ->andWhere(['rest_report.status' => 'finished']);
+        $query = $query->where(['<>', 'ptype', 'yidai']);
+
+        $unfinished = Yii::$app->request->get('unfinished');
+        if (!empty($unfinished)) {
+          //未出报告
+            $query = $query->andWhere(['<>', 'rest_report.status', 'finished']);
+        } else {
+            $query = $query->andWhere(['rest_report.status' => 'finished']);
+        }
 
         if (Yii::$app->user->can('doctor')) {
             $mobile = Yii::$app->user->Identity->username;
             $doctor = RestClient::find()->where(['tel' => $mobile])->one();
-            if(!$doctor){
-               return "医生资料未找到";
+            if (!$doctor) {
+                return "医生资料未找到";
             }
             $query = $query->joinWith(['sample']);
 
             $query = $query->where(['rest_sample.doctor_id' => $doctor->id]);
             //echo $query->createCommand()->getRawSql(); exit;
-        }else if (Yii::$app->user->can('guest')){
-             return "你没有权限查看本页";
+        } else if (Yii::$app->user->can('guest')) {
+            return "你没有权限查看本页";
         }
 
         $dataProvider = $searchModel->search($params, $query);

@@ -11,9 +11,15 @@ $menu[] = [
     'url'   => '#',
     'items' => [
         [
-            'label' => '报告检索',
+            'label' => '已出报告',
             'icon'  => 'fa fa-calendar-plus-o',
-            'url'   =>   ['/rest-report/index'],
+            'url'   => ['/rest-report/index'],
+
+        ],
+        [
+            'label' => '未出报告',
+            'icon'  => 'fa fa-clock-o',
+            'url'   => ['/rest-report/index', 'unfinished' => 'yes'],
 
         ],
 
@@ -42,7 +48,7 @@ $menu[] = [
             'label' => '历史病人',
             'icon'  => 'fa  fa-history',
             'url'   => '#',
-            'url'   => ['/restsample/index','old'=>'yes'],
+            'url'   => ['/restsample/index', 'old' => 'yes'],
         ],
     ],
 ];
@@ -55,13 +61,13 @@ $menu[] = [
         [
             'label' => '共享视频',
             'icon'  => 'fa  fa-video-camera',
-            'url'   => ['/mingrui-video/index'], 
+            'url'   => ['/mingrui-video/index'],
             'items' => [],
         ],
         [
             'label' => '共享案例',
             'icon'  => 'fa fa-file-powerpoint-o',
-            'url'   => ['/mingrui-doc/index'], 
+            'url'   => ['/mingrui-doc/index'],
             'items' => [
 
             ],
@@ -81,7 +87,7 @@ $menu[] = ['label' => '互动平台',
         [
             'label' => '在线留言',
             'icon'  => 'fa fa-pie-chart',
-            'url'   => ['/guestbook/my' ],
+            'url'   => ['/guestbook/my'],
         ],
         [
             'label' => '联系方式',
@@ -91,6 +97,5 @@ $menu[] = ['label' => '互动平台',
 
     ],
 ];
- 
 
 return $menu;

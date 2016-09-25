@@ -1,14 +1,15 @@
 <?php
 
 use backend\widgets\Comments;
-use yii\helpers\Html;
-use yii\widgets\DetailView;
 use backend\widgets\Summary;
+use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\RestReport */
 
-$this->title                   = '报告:' . $model->sample->name;
+$this->title = '报告:' . $model->sample->name;
+
 $this->params['breadcrumbs'][] = ['label' => '报告列表', 'url' => ['index']];
+
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="rest-report-view">
@@ -41,45 +42,45 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="row">
         <div class="col-md-4">
           <?php
-            echo Summary::widget(['model'=>$model, 'diseases'=>$diseases ]); 
-          ?>
+echo Summary::widget(['model' => $model, 'diseases' => $diseases]);
+?>
         </div>
         <!-- /.col -->
 
 
 
-        <div class="col-md-8">          
+        <div class="col-md-8">
               <?=Comments::widget([
-                  'comments' => $comments,
-                  /*[
-                  [
-                  'position'=>'',
-                  'name'=>'xxx',
-                  'time'=>'23 Jan 2:00 pm',
-                  'avatar'=>'',
-                  'message'=>'Is this template really for free? That s unbelievable!',
-                  ],
-                  [
-                  'position'=>'right',
-                  'name'=>'hello',
-                  'time'=>'23 Jan 2:05 pm',
-                  'avatar'=>'',
-                  'message'=>'You better believe it!',
-                  ],
-                  ],*/
-                  'id'       => $model->id,
-              ])?>
+    'comments' => $comments,
+    /*[
+    [
+    'position'=>'',
+    'name'=>'xxx',
+    'time'=>'23 Jan 2:00 pm',
+    'avatar'=>'',
+    'message'=>'Is this template really for free? That s unbelievable!',
+    ],
+    [
+    'position'=>'right',
+    'name'=>'hello',
+    'time'=>'23 Jan 2:05 pm',
+    'avatar'=>'',
+    'message'=>'You better believe it!',
+    ],
+    ],*/
+    'id'       => $model->id,
+])?>
         </div>
 
 
- 
+
 
 
 </div>
   <!-- /.row -->
 
 
- 
+
 
 
 
@@ -182,9 +183,7 @@ $this->params['breadcrumbs'][] = $this->title;
 //     ],
 // ]);
 
-
-
 ?>
 
 </div>
- 
+

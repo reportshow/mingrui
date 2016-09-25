@@ -30,8 +30,7 @@ use yii\helpers\Html;
         <?=Html::a('查看报告详情', ['show-report', 'id' => $model->id], [
             'class' => 'pull-right badge bg-green', 'style' => "padding:8px",
           ])?>
-         </li>
-        <li><a href="#">相关疾病：<?= $diseases?></a></li>
+         </li>        
         <li style="padding:10px 0px 10px 16px;"> 
            完善资料: 
            <?php 
@@ -41,12 +40,14 @@ use yii\helpers\Html;
            } 
            ?>
 
-           <?=Html::a('管理', ['mingrui-attachment/', 'id' => $model->id], [
+           <?=Html::a('管理', ['mingrui-attachment/', 'reportid' => $model->id], [
               'class' => 'pull-right badge bg-aqua',  
           ])?>
 
          
           </li>
+
+          <li><a href="#">相关疾病：<?= $diseases?></a></li>
       </ul>
     </div>
   </div>

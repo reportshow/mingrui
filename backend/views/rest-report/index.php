@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\RestReportSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
-$this->title                   = '报告检索';
+$unfinished = Yii::$app->request->get('unfinished');
+$this->title                   = $unfinished ? '未出报告':'已出报告';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
