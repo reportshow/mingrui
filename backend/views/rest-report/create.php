@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\RestReport */
 
-$this->title = 'Create Rest Report';
+$this->title = '创建报告';
 $this->params['breadcrumbs'][] = ['label' => 'Rest Reports', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

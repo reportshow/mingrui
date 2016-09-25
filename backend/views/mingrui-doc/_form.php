@@ -25,7 +25,7 @@ use yii\widgets\ActiveForm;
     <?=CKeditor::widget(['name' => 'MingruiDoc[description]','title'=>'内容']);?>
 
     <div class="form-group">
-        <?=Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'])?>
+        <?=Html::submitButton($model->isNewRecord ? '提交' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'])?>
     </div>
 
 

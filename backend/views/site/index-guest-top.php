@@ -3,7 +3,7 @@ use yii\helpers\Html;
 
 ?>
 <div class='row' style="padding:8px">
-	<div class='col-xs-8 col-md-8'> 
+	<div class='col-xs-10 col-md-10'> 
 
 		<?=Html::a('<i class="fa fa-github"></i>查看报告', ['/rest-report/myreport', 'id'=>1], [
 		    'class' => 'btn btn-success  btn-social  ',
