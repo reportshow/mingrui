@@ -17,5 +17,5 @@ AppAsset::register($this);
 <script>
     var tableData = <?php echo $data ?>;
 </script>
-<script src="report/app.js">
-</script>
+<script src="report/app.js"></script>
+<script src="report/export.js"></script>

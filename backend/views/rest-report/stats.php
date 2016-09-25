@@ -126,7 +126,7 @@ for(var i=0; i<areas.length; i++) {
 for(var i=0; i<areas.length; i++) {
     //map 0-max to 0-255
     if(countmax >0) {
-	coloroff = 255/countmax*areas[i][2];
+        coloroff = 255/(countmax-countmin)*areas[i][2];
 	green =  255 - coloroff;
 	red = coloroff;
     }

@@ -22149,7 +22149,8 @@
 																						fixedFooter: this.state.fixedFooter,
 																						selectable: this.state.selectable,
 																						multiSelectable: this.state.multiSelectable,
-																						onRowHover: this.handleRowHover
+																						onRowHover: this.handleRowHover,
+																						className: 'exportable'
 																			},
 																			_react2.default.createElement(
 																						_Table.TableHeader,
@@ -22230,6 +22231,15 @@
 																															_react2.default.createElement(_List2.default, { primaryText: "XR", value: 'XR' }),
 																															_react2.default.createElement(_List2.default, { primaryText: "XD", value: 'XD' }),
 																															_react2.default.createElement(_List2.default, { primaryText: "X-LINKED", value: 'X-LINKED' })
+																												)
+																									),
+																									_react2.default.createElement(
+																												_Table.TableHeaderColumn,
+																												{ style: { textAlign: 'right' } },
+																												_react2.default.createElement(
+																															'a',
+																															{ href: '#', className: 'export_button' },
+																															'下载过滤结果'
 																												)
 																									)
 																						),
