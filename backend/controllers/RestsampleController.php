@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\RestSample;
+use backend\models\RestClient;
 use backend\models\RestSampleSearch;
 use Yii;
 use yii\filters\VerbFilter;
@@ -45,6 +46,18 @@ class RestsampleController extends Controller
              
             $query = $query->where(['<', 'created', $t]);
         }
+
+        if (Yii::$app->user->can('doctor')) {
+            $mobile = Yii::$app->user->Identity->username;
+            $doctor = RestClient::find()->where(['tel' => $mobile])->one();    
+            if(!$doctor){
+               return "医生资料未找到";
+            }
+            $query = $query->where(['doctor_id' => $doctor->id]);
+            //echo $query->createCommand()->getRawSql(); exit;
+        }
+
+        $query = $query->orderBy('sample_id DESC');
 
         $dataProvider = $searchModel->search($params, $query);
 

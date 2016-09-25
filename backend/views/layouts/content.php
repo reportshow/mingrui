@@ -43,9 +43,9 @@ use dmstr\widgets\Alert;
     <div class="pull-right hidden-xs">
         <b>Version</b> 1.0
     </div>
-    <strong>Copyright &copy; 2014-2016 
-    <a href="#">Wisdom Report Management System</a>.</strong> All rights
-    reserved.
+     <strong><a href="#" style="font-size: 1.2em">明睿单病云管家</a>
+       Copyright &copy; 2014-2016  
+      </strong>    All rights    reserved.
 </footer>
 
 <!-- Control Sidebar -->

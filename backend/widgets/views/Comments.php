@@ -10,7 +10,7 @@ use backend\models\MingruiComments;
         </h3>
         <div class="box-tools pull-right">
             <span class="badge bg-light-blue" data-toggle="tooltip" title="3 New Messages">
-                3
+                
             </span>
             <button class="btn btn-box-tool" data-widget="collapse" type="button">
                 <i class="fa fa-minus">
@@ -81,7 +81,7 @@ foreach ($model->comments as $comment) {
 
             <div class="input-group">
                 <input class="form-control" name="MingruiComments[content]" 
-                        placeholder="Type Message ..." type="text">
+                        placeholder="输入留言内容" type="text">
                     <span class="input-group-btn">
                         <button class="btn btn-primary btn-flat" type="submit">
                             留言
