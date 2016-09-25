@@ -20,7 +20,7 @@
     .record_box .info{
         display: block;
     text-align: center;
-    font-size: 1.5em;
+    font-size: 1.2em;
     }
     .record_box .startbtn i{
       /*  border-right:1px solid rgba(255,255,255,0.5); */
@@ -34,6 +34,7 @@
     line-height: 34px;
     font-size: 1.6em;
     text-align: center; 
+    color:#e22;
     border-left: 1px solid rgba(200,200,200,0.5);
     }
 
@@ -55,24 +56,22 @@
      </div>
  </div>
 
+ <button id='addmorevoice'  type="button" class='btn btn-warning hidden ' >增加语音</button>
+
  <div id='record_list'>
-         
-           
- 
-       
-   
+          
 
  </div>
  <textarea id='tpl_voice' style="display: none">
-     <div  >
-        <div class="direct-chat-text bg-aqua "  style="margin-left:0px" >
+      
+        <div class="direct-chat-text bg-aqua voicecontainer"  style="margin-left:0px" >
             <div class='btn-social voiceline' style="height: 30px;line-height: 30px;" >
                <i class='fa  fa-play-circle-o' style="cursor:pointer"></i> 
                <span class='voicetext' onclick="playme(this);">今天肚子有点痛</span>
-               <i class='fa fa-remove' style="border-left:1px solid rgba(200,200,200,0.5);"></i>
+               <i class='fa fa-remove' onclick="removeVoice(this);" style="border-left:1px solid rgba(200,200,200,0.5);"></i>
              </div>
         </div>   
-     </div>
+     
 
  </textarea>
 
@@ -120,7 +119,9 @@ function ActionSwitch(){
   }
   
 }
- 
+
+var allVoice = {}; //存储所有的声音数据
+var voiceCount = 1;
 function recDone(localId){
    $('.record_box').slideUp();
    wx.playVoice({
@@ -128,10 +129,10 @@ function recDone(localId){
    });
    var html = $('#tpl_voice').val();
    var x = $(html);
-   var resID = Math.random();
+   var resID = voiceCount++;
    x.find('.voiceline').attr('localId',localId);
-   x.find('.voicetext').attr('redId',resID);
-   x.find('.voicetext').html('语音识别中..');
+   x.find('.voiceline').attr('redId',resID);
+   x.find('.voiceline .voicetext').html('语音识别中..');
 
    $('#record_list').append(x);
     wx.translateVoice({
@@ -139,10 +140,12 @@ function recDone(localId){
       isShowProgressTips: 1, // 默认为1，显示进度提示
       success: function (res) {
          //alert(res.translateResult);
-         $('#record_list').find("[redId='"+resID+"']").html(res.translateResult); // 语音识别的结果
-         $('body').trigger("voice", 
-          {"localId":localId,"text":res.translateResult,"time":timeTxt()}
-          );
+         $("#record_list [redId='"+resID+"'] .voicetext").html(res.translateResult); // 语音识别的结果
+
+         var voice = {"localId":localId,"text":res.translateResult,"time":timeTxt()};
+         allVoice['res'+resID]=(voice);
+         $('#addmorevoice').removeClass('hidden');
+         $('body').trigger("voiceUpdate", allVoice );
       },
       fail:function(e){
         alert(JSON.stringify(e));
@@ -158,7 +161,49 @@ function playme(obj){
    });
 }
 
+function removeVoice(obj){
+     var redId = $(obj).parent().attr('redId');
+     delete allVoice['res'+redId];
+     var box = $(obj).parents('.voicecontainer');
+     box.css('transition-duration', '2s');
+     box.css('transform', 'translate(-1000px )');
+     setTimeout(function(){
+       box.remove();
+     }, 1000);     
+     $('body').trigger("voiceUpdate", allVoice );
+}
  
+ function voiceUpload(callback){
+   
+      _uploadvoice( 0,callback );  
+   
+}
+function _uploadvoice( index, callback){
+    var keys = [];
+    for(k in allVoice){      
+      keys.push (k);  
+   }
+   if(index >= keys.length){
+     callback(allVoice);
+   }
+
+   var curKey = keys[index];
+    wx.uploadVoice({
+        localId: allVoice[curKey].localId, // 需要上传的音频的本地ID，由stopRecord接口获得
+        isShowProgressTips: 1, // 默认为1，显示进度提示
+            success: function (res) {
+            var serverId = res.serverId; // 返回音频的服务器端ID
+            allVoice[curKey].serverId = res.serverId;
+             index++;
+            _uploadvoice(index, callback);
+
+        }
+     });
+}
+
+ $('#addmorevoice').click(function(){
+       $('body').trigger("voice_init");
+ });
  
 
  

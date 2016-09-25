@@ -23,9 +23,7 @@ if($type=='text'){?>
             <div class="timeline-body">
                 <?=$model->content?>
 
-                
-               
-                
+                 
 
             </div>
 
@@ -38,6 +36,10 @@ if($type=='text'){?>
 
 <?php 
 }else if($type=='voice'){
+    $voices = json_decode($model->voice);
+    if(count($voices))
+    foreach ($voices  as $key => $voice) {
+       $path = $model->voicePath($voice);    
 ?>
 
         <!-- timeline item -->
@@ -47,12 +49,12 @@ if($type=='text'){?>
         style="transform: rotate(90deg);-webkit-transform: rotate(90deg);"></i>
         <div class="timeline---item" style="margin-left:60px;margin-top:-10px; ">
 
-            <!--span class="time"><i class="fa fa-clock-o"></i><?=$model->createtime?></span-->
+            <audio src="<?=$path ?>" controls="controls" width=60%></audio>
 
-             <div class="timeline-body" style="padding-right: 16px;">
+            <div class="timeline-body" style="padding-right: 16px;">
                 <div class="direct-chat-text bg-aqua "  >
                     <div class='btn-social' style="height: 30px;line-height: 30px;">
-                     <i class='fa  fa-play-circle-o' style="cursor:pointer"></i> <?=$model->content?>
+                     <i class='fa  fa-play-circle-o' style="cursor:pointer;margin-left:-5px;margin-top:-2px;"></i> <?=$voice->text?>
                     </div>
                 </div>   
             </div>
@@ -61,6 +63,9 @@ if($type=='text'){?>
     </li>
     <!-- END timeline item -->
 <?php 
+
+ }//foreach
+
 }else if($type=='image'){
 
 /* Imglist::widget([

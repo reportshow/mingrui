@@ -18,10 +18,10 @@ use yii\widgets\ActiveForm;
     <?php
 $model->type = 'text';
 
-$form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data', 'class' => 'upload', /*'onsubmit'=>'alert(666)'*/]]);?>
+$form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data', 'class' => 'upload' ,'id'=>'noteform']]);?>
 
     <div class="btn-group" id='typetabs'>
-          <button type="button" class="btn btn-info" datatype='text'>文字</button>
+          <button type="button" class="btn btn-info active" datatype='text'>文字</button>
           <button type="button" class="btn btn-info" datatype='image'>图片</button>
           <button type="button" class="btn btn-info" datatype='voice'>声音</button>
     </div>
@@ -43,23 +43,24 @@ $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data', 'cl
   <?=$form->field($model, 'content')->textInput(['maxlength' => true])?>
 </div>
 
-<div  class='inputdata voice'> hiddenInput
- <?=$form->field($model, 'voice')->textInput(['maxlength' => true])->label(false)?>
-
-
- <button id='addmorevoice'  type="button" class='btn btn-warning hidden ' >增加语音</button>
-</div>
+<div  class='inputdata voice'> 
+ <?=$form->field($model, 'voice')->hiddenInput(['maxlength' => true])->label(false)?>
 
 <?=
 WechatRecord::widget([]);
 ?>
 
-
-    <div class="form-group">
-        <?=Html::submitButton($model->isNewRecord ? '提交' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary'])?>
-    </div>
+</div>
 
 
+
+
+<div class="form-group " style="margin-top:10px">
+ 
+  <button type="button" id='submitbtn' class="btn btn-success btn-block">提交</button>    
+</div>
+
+ 
     <?php ActiveForm::end();?>
 
 </div>
@@ -79,17 +80,29 @@ WechatRecord::widget([]);
         }
     });
 
-    var allVoice = [];
-    $('body').bind("voice",function(e,voice){
-        $('#addmorevoice').removeClass('hidden');
-       allVoice.push(voice);
-       $('#mingruinotes-voice').val(JSON.stringify(allVoice) );
+   
+    $('body').bind("voiceUpdate",function(e,voices){       
+       
+       $('#mingruinotes-voice').val(JSON.stringify(voices) );
     });
 
 
-    $('#addmorevoice').click(function(){
-       $('body').trigger("voice_init");
-    });
+$("#submitbtn").click(function(e){
+  var datatype =  $('#typetabs .active').attr('datatype');
+  if(datatype=='voice'){
+     voiceUpload(function(voices){        
+        $('#mingruinotes-voice').val(JSON.stringify(voices) );
+        $('#noteform').submit();
+     });
+  }else{
+     $('#noteform').submit();
+  }
+  
+});
+   
+    
+
+    
 </script>
 
 
