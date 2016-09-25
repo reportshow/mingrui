@@ -10,7 +10,7 @@
         <li><!-- start message -->
             <a href="#">
                 <div class="pull-left">
-                    <img src="images/user2.png" class="img-circle" alt="User Image"/>
+                    <img src="images/user2.png" style='width:30px;height:30px' class="img-circle" alt="User Image"/>
                 </div>
                 <h4 style="font-size: 0.9em">
                     管理员

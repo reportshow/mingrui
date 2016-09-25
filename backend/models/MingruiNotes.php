@@ -56,6 +56,11 @@ class MingruiNotes extends \yii\db\ActiveRecord
         return $this->voice;
     }
     
+    public function voicePath($voice)
+    {
+        $serverId = md5($voice->serverId);
+        return "upload/voice/".$serverId.".amr";
+    }
 
     /**
      * @inheritdoc

@@ -63,15 +63,16 @@ class WechatController extends Controller
 
     public function actionTest1()
     {
-        $user =   User::findOne(6);
+        $serverId =   'B7eBGfvmDDRyO9ZKZRHXG8bIN0jUz-LTohyKIXzmb8_Lm8lYBc-9s_3XxCSy5X8R';
 
      /*   $model = new Assignment(10);
         $success = $model->assign(['guest']); 
 */
-         $auth = Yii::$app->authManager; 
-         $role = (object) null;
-         $role->name = 'guest';
-            $auth->assign(  $role, 11);;
+        $rlt = Yii::$app->wechat->getMedia($serverId);
+        if($rlt) {
+            file_put_contents('1.wav',  $rlt);
+        }
+          
 
 
     }

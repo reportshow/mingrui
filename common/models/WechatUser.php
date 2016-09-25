@@ -80,12 +80,7 @@ class WechatUser extends Model
             $model->role_tab_id = $userid;
             $model->save();
 
-            //为用户指定角色
-            $auth       = Yii::$app->authManager;
-            $role       = (object) null;
-            $role->name = $role_text;
-            $auth->assign($role, $model->id);
-
+            $this->initAfter1stLogin($model, $role_text);
             return true;
         } else {
 
@@ -98,7 +93,21 @@ class WechatUser extends Model
             exit(10);
         }
     }
+    /**
+     * 首次登陆后，设置一些基本数据
+     * @param  [type] $model     [description]
+     * @param  [type] $role_text [description]
+     * @return [type]            [description]
+     */
+    public function initAfter1stLogin($model, $role_text)
+    {
+        //为用户指定角色
+        $auth       = Yii::$app->authManager;
+        $role       = (object) null;
+        $role->name = $role_text;
+        $auth->assign($role, $model->id);
 
+    }
     public function switchTestMobile($mobile)
     {
         if (!empty(Yii::$app->params['mobile_aliases'])) {

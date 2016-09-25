@@ -75,6 +75,18 @@ class MingruiNoteController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->image = 'tosave';
             $model->uid   = Yii::$app->user->id;
+            if ($model->type == 'voice') {
+                $voices = json_decode($model->voice);
+                foreach ($voices as $key => $voice) {
+                    $path   = $model->voicePath($voice);
+                    $result = Yii::$app->wechat->getMedia($voice->serverId);
+                    if ($result) {
+                        //exit( $path);
+                        file_put_contents($path, $result);
+                    }
+                }
+            }
+
             if (!$model->save()) {
                 var_export($model->errors);exit;
             }
