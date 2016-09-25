@@ -13,7 +13,7 @@ $(document).ready(function () {
 
 	var csv = '"基因（大小）","突变信息","突变类型","基因疾病信息","HET","HGMD","功能预测"\r\n';
         // Get table contents
-        csv = '"' + csv + $rows.map(function (i, row) {
+        csv = csv+ '"' + $rows.map(function (i, row) {
             var $row = $(row);
             var $cols = $row.find('td');
             return $cols.map(function (j, col) {
