@@ -280,11 +280,13 @@ export default class TableExampleComplex extends React.Component {
 
 	    //功能预测
 	    var str = '';
-	    str = str.concat(tableData[key][9], "<br/>",
-			     tableData[key][10], "<br/>",
-			     tableData[key][11], "<br/>",
-			     tableData[key][12]
-			    );
+	    str = str.concat(
+		tableData[key][9], "<br/>",
+		tableData[key][9], "<br/>",
+		tableData[key][10], "<br/>",
+		tableData[key][11], "<br/>",
+		tableData[key][12]
+	    );
 	    tableData[key].push(str);
 
 	    //突变信息
@@ -306,9 +308,27 @@ export default class TableExampleComplex extends React.Component {
 		}
 	    }
 	    tableData[key].push(temp);
+	    //HET or other
+	    for (var prop in tableData[key][15]) {
+		if (tableData[key][15].hasOwnProperty(prop)) {
+		    tableData[key].push(tableData[key][15][prop][0]);
+		}
+	    }		    
 	}
 
-	return (
+		    return (
+		    <div>
+		    <div id="colorList">
+		      <form action="#" method="post">
+			<label ><input type="checkbox" name="temp_color" id="color1" value="#ff0000"/>红色</label>
+			<label ><input type="checkbox" name="temp_color" id="color2" value="#ffff00"/>黄色</label>
+			<label ><input type="checkbox" name="temp_color" id="color3" value="#00ff00"/>绿色</label>
+			<label ><input type="checkbox" name="temp_color" id="color4" value="#0000ff"/>蓝色</label>
+		      </form>
+		    </div>
+		    <div id="selectedColorList" class="ibWrapper">
+
+		    </div>
 <MuiThemeProvider muiTheme={muiTheme}>
   <div>
     <ReactTooltip type="info" effect="float" multiline={true}/>
@@ -326,13 +346,8 @@ export default class TableExampleComplex extends React.Component {
 	 adjustForCheckbox={this.state.adjustForCheckboxes}
 	 enableSelectAll={this.state.enableSelectAll}
 	 >
-	<TableRow>
-	  <TableHeaderColumn colSpan="7" tooltip="诊断过滤工具" style={{textAlign: 'center'}}>
-	    诊断过滤工具
-	  </TableHeaderColumn>
-	</TableRow>
 	<TableRow displayBorder={false}>
-	  <TableHeaderColumn colSpan="4"><TextField name='gene' floatingLabelText="基因" defaultValue={this.state.gene_value} fullWidth={true} onChange={this.handle_gene_Change}/></TableHeaderColumn>
+	  <TableHeaderColumn colSpan="4"><TextField name='gene' floatingLabelText="重点关注基因" defaultValue={this.state.gene_value} fullWidth={true} onChange={this.handle_gene_Change}/></TableHeaderColumn>
 	    <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
 	    <MultiSelect fullWidth={true} value={this.state.tblx_values} floatingLabelText="突变类型" onChange={this.handle_tblx_Change}>
 	      <ListItem primaryText={"frameshift"} value="frameshift" />
@@ -379,7 +394,7 @@ export default class TableExampleComplex extends React.Component {
 	<TableRow>
 	  <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
 	    <MultiSelect fullWidth={true} value={this.state.dm_values} floatingLabelText="DM" onChange={this.handle_dm_Change}>
-	      <ListItem primaryText={"DM"} value="DM" />
+	      <ListItem primaryText={"DM"} butvalue="DM" />
 	      <ListItem primaryText={"DM?"} value="DM?" />
 	      <ListItem primaryText={"[Similar]DM"} value="[Similar]DM" />
 	    </MultiSelect>
@@ -394,7 +409,7 @@ export default class TableExampleComplex extends React.Component {
 	      {this.rqpl_items}
 	    </SelectField>
 	  </TableHeaderColumn>
-	    <TableHeaderColumn colSpan="2">
+	  <TableHeaderColumn colSpan="2">
 	    <SelectField
 	       fullWidth={true}
 	       value={this.state.inhouse_value}
@@ -405,15 +420,18 @@ export default class TableExampleComplex extends React.Component {
 	    </SelectField>
 	  </TableHeaderColumn>
 	  <TableHeaderColumn  style={{textAlign:'right'}}>
-	    <RaisedButton label="过滤" primary={true} onClick={this.filter}/>
+	    <RaisedButton label="确认" primary={true} onClick={this.filter}/>
 	  </TableHeaderColumn>
+	</TableRow>
+	<TableRow>
+	  <TableHeaderColumn colSpan="7" style={{verticalAlign: 'bottom', fontWeight:'bold', fontSize:'120%'}}>当前选择：{this.state.queryResult.length} /{tableData.length}(筛选/全部)</TableHeaderColumn>
 	</TableRow>
 	<TableRow>
 	  <TableHeaderColumn tooltip="基因(大小)">基因(大小)</TableHeaderColumn>
 	  <TableHeaderColumn tooltip="突变信息">突变信息</TableHeaderColumn>
 	  <TableHeaderColumn tooltip="突变类型">突变类型</TableHeaderColumn>
 	  <TableHeaderColumn tooltip="基因疾病信息">基因疾病信息</TableHeaderColumn>
-	  <TableHeaderColumn tooltip="HET信息">HET</TableHeaderColumn>
+	  <TableHeaderColumn tooltip="测序深度和比例">测序深度和比例</TableHeaderColumn>
 	  <TableHeaderColumn tooltip="HGMD信息">HGMD</TableHeaderColumn>
 	  <TableHeaderColumn tooltip="功能预测">功能预测</TableHeaderColumn>
 	</TableRow>
@@ -430,15 +448,16 @@ export default class TableExampleComplex extends React.Component {
 	    <TableRowColumn data-tip={row[25]}>{row[25]}</TableRowColumn>//突变信息
 	    <TableRowColumn data-tip={row[5]}>{row[5]}</TableRowColumn>//突变类型
 	    <TableRowColumn data-tip={row[23]}>{row[23]}</TableRowColumn>//疾病信息
-	    <TableRowColumn data-tip={row[26]}>{row[26]}</TableRowColumn>//HET
+	    <TableRowColumn data-tip={row[28] + '<br/>' +row[26]}>{row[28]}<br/>{row[26]}</TableRowColumn>//HET
 	    <TableRowColumn data-tip={row[22]}>{row[22]}</TableRowColumn>//HGDM
-	    <TableRowColumn data-tip={row[24]}>{row[9]} <br/>{row[10]}<br/>{row[11]}<br/>{row[12]}</TableRowColumn>//功能预测
+	    <TableRowColumn data-tip={row[24]}><a>详情</a></TableRowColumn>//功能预测
 	</TableRow>
 	))}
       </TableBody>
     </Table>
   </div>
 </MuiThemeProvider>
+</div>
 	);
     }
 }

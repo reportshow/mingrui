@@ -22110,7 +22110,7 @@
 
 													//功能预测
 													var str = '';
-													str = str.concat(tableData[key][9], "<br/>", tableData[key][10], "<br/>", tableData[key][11], "<br/>", tableData[key][12]);
+													str = str.concat(tableData[key][9], "<br/>", tableData[key][9], "<br/>", tableData[key][10], "<br/>", tableData[key][11], "<br/>", tableData[key][12]);
 													tableData[key].push(str);
 
 													//突变信息
@@ -22132,6 +22132,12 @@
 																}
 													}
 													tableData[key].push(temp);
+													//HET or other
+													for (var prop in tableData[key][15]) {
+																if (tableData[key][15].hasOwnProperty(prop)) {
+																			tableData[key].push(tableData[key][15][prop][0]);
+																}
+													}
 										}
 
 										return _react2.default.createElement(
@@ -22161,20 +22167,11 @@
 																						},
 																						_react2.default.createElement(
 																									_Table.TableRow,
-																									null,
-																									_react2.default.createElement(
-																												_Table.TableHeaderColumn,
-																												{ colSpan: '7', tooltip: '诊断过滤工具', style: { textAlign: 'center' } },
-																												'诊断过滤工具'
-																									)
-																						),
-																						_react2.default.createElement(
-																									_Table.TableRow,
 																									{ displayBorder: false },
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
 																												{ colSpan: '4' },
-																												_react2.default.createElement(_TextField2.default, { name: 'gene', floatingLabelText: '基因', defaultValue: this.state.gene_value, fullWidth: true, onChange: this.handle_gene_Change })
+																												_react2.default.createElement(_TextField2.default, { name: 'gene', floatingLabelText: '重点关注基因', defaultValue: this.state.gene_value, fullWidth: true, onChange: this.handle_gene_Change })
 																									),
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
@@ -22252,7 +22249,7 @@
 																												_react2.default.createElement(
 																															_multiselect2.default,
 																															{ fullWidth: true, value: this.state.dm_values, floatingLabelText: 'DM', onChange: this.handle_dm_Change },
-																															_react2.default.createElement(_List2.default, { primaryText: "DM", value: 'DM' }),
+																															_react2.default.createElement(_List2.default, { primaryText: "DM", butvalue: 'DM' }),
 																															_react2.default.createElement(_List2.default, { primaryText: "DM?", value: 'DM?' }),
 																															_react2.default.createElement(_List2.default, { primaryText: "[Similar]DM", value: '[Similar]DM' })
 																												)
@@ -22288,7 +22285,20 @@
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
 																												{ style: { textAlign: 'right' } },
-																												_react2.default.createElement(_RaisedButton2.default, { label: '过滤', primary: true, onClick: this.filter })
+																												_react2.default.createElement(_RaisedButton2.default, { label: '确认', primary: true, onClick: this.filter })
+																									)
+																						),
+																						_react2.default.createElement(
+																									_Table.TableRow,
+																									null,
+																									_react2.default.createElement(
+																												_Table.TableHeaderColumn,
+																												{ colSpan: '7', style: { verticalAlign: 'bottom', fontWeight: 'bold', fontSize: '120%' } },
+																												'当前选择：',
+																												this.state.queryResult.length,
+																												' /',
+																												tableData.length,
+																												'(筛选/全部)'
 																									)
 																						),
 																						_react2.default.createElement(
@@ -22316,8 +22326,8 @@
 																									),
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
-																												{ tooltip: 'HET信息' },
-																												'HET'
+																												{ tooltip: '测序深度和比例' },
+																												'测序深度和比例'
 																									),
 																									_react2.default.createElement(
 																												_Table.TableHeaderColumn,
@@ -22369,7 +22379,9 @@
 																												'//疾病信息',
 																												_react2.default.createElement(
 																															_Table.TableRowColumn,
-																															{ 'data-tip': row[26] },
+																															{ 'data-tip': row[28] + '<br/>' + row[26] },
+																															row[28],
+																															_react2.default.createElement('br', null),
 																															row[26]
 																												),
 																												'//HET',
@@ -22382,14 +22394,11 @@
 																												_react2.default.createElement(
 																															_Table.TableRowColumn,
 																															{ 'data-tip': row[24] },
-																															row[9],
-																															' ',
-																															_react2.default.createElement('br', null),
-																															row[10],
-																															_react2.default.createElement('br', null),
-																															row[11],
-																															_react2.default.createElement('br', null),
-																															row[12]
+																															_react2.default.createElement(
+																																		'a',
+																																		null,
+																																		'详情'
+																															)
 																												),
 																												'//功能预测'
 																									);

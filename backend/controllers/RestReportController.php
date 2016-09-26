@@ -136,7 +136,6 @@ class RestReportController extends Controller
         }
 
         $userdata = $this->findModel($id);
-
         $cnv_array     = json_decode($userdata->cnvsave, true);
         $user_cnv_gene = '';
         foreach ($cnv_array as $key => $data) {
@@ -292,13 +291,17 @@ class RestReportController extends Controller
     {
         //1. find user's bad gene
         $userdata       = $this->findModel($id);
-        $cnv_array      = json_decode($userdata->cnvsave, true);
-        $user_cnv_gene  = '';
-        $user_cnv_areas = [];
-        foreach ($cnv_array as $key => $data) {
-            $user_cnv_gene  = $data[2];
-            $user_cnv_areas = $data[4];
+        $snp_array      = json_decode($userdata->snpsave, true);
+        print_r($snp_array);
+        exit;
+        $user_snp_genes  = [];//name areas[]
+        $user_snp_areas = [];
+        foreach ($snp_array as $key => $data) {
+            $user_snp_genes[]= $data[0];
         }
+
+        print_r($user_snp_genes);
+        exit;
 
         //2. find all areas of this gene
         $final_areas = [];
