@@ -54,7 +54,7 @@ class UtilsController extends Controller
 
         $_SESSION['verify_code'] = strtolower($authstr); //全部转为小写，主要是为了不区分大小写
 
-   header("scode: " . $_SESSION['scode']);
+ 
 //随机画点,已经改为划星星了
         for ($i = 0; $i < $imgwidth; $i++) {
             $randcolor = imageColorallocate($im, mt_rand(200, 255), mt_rand(200, 255), mt_rand(200, 255));

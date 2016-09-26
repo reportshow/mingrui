@@ -49,8 +49,8 @@ $fieldOptions2 = [
          <div class="nav-tabs-custom tab-info" style='margin-bottom: 0px; '>
             <ul class="nav nav-tabs pull-right">
                 <li ck-data='account'><a data-toggle="tab" href="#tab_1-1">帐号</a></li>
-                <li class="active" ck-data='sick'><a data-toggle="tab" href="#tab_2-2"><i class="fa fa-qrcode"></i> 二维码</a></li>
-                <li ck-data='doctor' style=''><a data-toggle="tab" href="#tab_2-3"><i class="fa fa-qrcode"></i> 短信登录</a></li>
+                <li ck-data='sick'><a data-toggle="tab" href="#tab_2-2"><i class="fa fa-qrcode"></i> 二维码</a></li>
+                <li class="active" ck-data='sms' style=''><a data-toggle="tab" href="#tab_2-3"><i class="fa fa-envelope-o"></i> 短信登录</a></li>
                 <li class="pull-left header"> 登录</li>
             </ul>
             <div class="tab-content" style="padding:30px;">
@@ -81,7 +81,7 @@ $fieldOptions2 = [
                     <?php ActiveForm::end();?>
                 </div>
                 <!-- /.tab-pane -->
-                <div class="tab-pane active" id="tab_2-2">
+                <div class="tab-pane " id="tab_2-2">
                 <center>
                     <img src="<?=$model->QrLoginUrl('sick')?>" style="width:200px"><br>微信扫一扫
                 </center>
@@ -89,7 +89,7 @@ $fieldOptions2 = [
                 </div>
                 <!-- /.tab-pane -->
 
-                <div class="tab-pane" id="tab_2-3">
+                <div class="tab-pane active" id="tab_2-3">
                  <?php require 'login-sms.php'  ?>
 
                 </div>
@@ -112,6 +112,9 @@ $fieldOptions2 = [
     var checkUrl =check_sick_url;
 
     setInterval(function(){
+        var datatype =  $('.nav-tabs li.active').attr('ck-data');
+        if(datatype!='sick') return;
+
         $.ajax({
              type: "GET",
              url: checkUrl ,
