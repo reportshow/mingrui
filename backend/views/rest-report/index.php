@@ -25,17 +25,17 @@ $this->params['breadcrumbs'][] = $this->title;
         return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
     },
     'columns'      => [
-        //['class' => 'yii\grid\SerialColumn'],
+        ['class' => 'yii\grid\SerialColumn'],
 
 /*        [
 'value'   => 'id',
 'headerOptions' => ['width' => '60']
 ],*/
 
-        [
+/*        [
             'attribute' => 'id',
             'options'   => ['width' => '60px;'],
-        ],
+        ],*/
 
 /*
 ['attribute' => 'created',
@@ -127,14 +127,14 @@ $this->params['breadcrumbs'][] = $this->title;
         // 'sample_id',
         // 'pdf',
         // 'conclusion',
-        ['label'        => '结论',
+/*        ['label'        => '结论',
             'attribute'     => 'conclusion',
             'filter'        => ['阴性' => '阴性', '疑似阳性' => '疑似阳性', '阳性' => '阳性'],
             'format'        => 'raw',
             'value'         => 'conclusiontag',
             //or 'filter' => Html::activeDropDownList($searchModel, 'sex',['1'=>'男','0'=>'女'], ['prompt'=>'全部'] )
             'headerOptions' => ['width' => '100'],
-        ],
+        ],*/
         // 'explain:ntext',
         // 'jxyanzhen',
         // 'mut_type',
@@ -160,9 +160,9 @@ $this->params['breadcrumbs'][] = $this->title;
         // 'kyupload',
         // 'yidai_marked',
 
-        ['class'   => 'yii\grid\ActionColumn',
-            'template' => '{view} {update} {000delete}',
-        ],
+/*        ['class'   => 'yii\grid\ActionColumn',
+            'template' => '{view} {000update} {000delete}',
+        ],*/
     ],
 ]);?>
 </div>

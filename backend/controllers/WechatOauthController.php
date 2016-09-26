@@ -37,15 +37,14 @@ class WechatOauthController extends Controller
     public function actionGetsms($mobile)
     {
         /*if ($_SESSION['check_sms_time'] >= time()-60) {
-            return json_encode(['code' => 1]);
+        return json_encode(['code' => 1]);
         }*/
 
-        
         //$mobile                = Yii::$app->request->post('mobile');
         $_SESSION['check_sms']      = rand(1000, 9999);
         $_SESSION['check_sms_time'] = time();
         //SMS::voiceVerify($_SESSION['check_sms'], $mobile);
-        SMS::SMS($mobile, [$_SESSION['check_sms'], 20]);
+        SMS::sendSMS($mobile, [$_SESSION['check_sms'], 20]);
         return json_encode(['code' => 1]);
     }
     /**
@@ -54,13 +53,12 @@ class WechatOauthController extends Controller
      */
     public function actionBindMobile()
     {
-        if (empty($_SESSION['check_sms'])) {
+       /* if (empty($_SESSION['check_sms'])) {
             exit('请获取短信验证码');
-        }
-        if ($_SESSION['check_sms'] != Yii::$app->request->post('smscode')) {
+        } else if ($_SESSION['check_sms'] != Yii::$app->request->post('smscode')) {
             echo "<h1>短信验证码错误</h1>";
             //return;
-        }
+        }*/
 
         $model = new WechatUser();
 

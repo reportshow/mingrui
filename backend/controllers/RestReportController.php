@@ -84,7 +84,9 @@ class RestReportController extends Controller
 
             $query = $query->where(['rest_sample.doctor_id' => $doctor->id]);
             //echo $query->createCommand()->getRawSql(); exit;
-        } else if (Yii::$app->user->can('guest')) {
+        } else if (Yii::$app->user->can(  'admin')) {
+              
+        }else if (Yii::$app->user->can( 'guest')) {
             return "你没有权限查看本页";
         }
 

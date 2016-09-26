@@ -36,8 +36,9 @@ $fieldOptions2 = [
 
       }
     </style>
-<div class="login-logo" style='margin-top:7%'>
-        <a href="#"><b>Wisdom</b> Report Management System  </a>
+ 
+<div class="login-logo" style="margin-top:7%;font-family: 'Microsoft Yahei'">
+        <a href="#"><b>明睿</b>单病云管家</a>
 </div>
 
 <div class="login-box " style='margin-top:0%;'>
@@ -49,7 +50,7 @@ $fieldOptions2 = [
             <ul class="nav nav-tabs pull-right">
                 <li ck-data='account'><a data-toggle="tab" href="#tab_1-1">帐号</a></li>
                 <li class="active" ck-data='sick'><a data-toggle="tab" href="#tab_2-2"><i class="fa fa-qrcode"></i> 二维码</a></li>
-                <li ck-data='doctor' style='display: none'><a data-toggle="tab" href="#tab_2-3"><i class="fa fa-qrcode"></i> 医生</a></li>
+                <li ck-data='doctor' style=''><a data-toggle="tab" href="#tab_2-3"><i class="fa fa-qrcode"></i> 短信登录</a></li>
                 <li class="pull-left header"> 登录</li>
             </ul>
             <div class="tab-content" style="padding:30px;">
@@ -59,7 +60,7 @@ $fieldOptions2 = [
                     <?=$form
 ->field($model, 'username', $fieldOptions1)
 ->label(false)
-->textInput(['placeholder' => $model->getAttributeLabel('用户名')])?>
+->textInput(['placeholder' => $model->getAttributeLabel('用户名'),'type'=>'tel'])?>
 
                     <?=$form
 ->field($model, 'password', $fieldOptions2)
@@ -89,9 +90,7 @@ $fieldOptions2 = [
                 <!-- /.tab-pane -->
 
                 <div class="tab-pane" id="tab_2-3">
-                <center>
-                    <img src="<?=$model->QrLoginUrl('doctor')?>" style="width:200px"><br>微信扫一扫
-                </center>
+                 <?php require 'login-sms.php'  ?>
 
                 </div>
                 <!-- /.tab-pane -->
@@ -128,7 +127,7 @@ $fieldOptions2 = [
          });
     },2000);
 
-    $('.nav-tabs li').click(function(){
+/*    $('.nav-tabs li').click(function(){
         var tag = $(this).attr('ck-data');
         if(tag=='sick'){
             checkUrl =check_sick_url;
@@ -137,5 +136,5 @@ $fieldOptions2 = [
         }else{
             
         }
-    });
+    });*/
 </script>
