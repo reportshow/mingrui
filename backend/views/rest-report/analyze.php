@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\RestReport */
 
-$this->title                   = '报告:' . $model->sample->name;
+$this->title                   = '报告:' . $model->sample->name . '      数据自分析';
 $this->params['breadcrumbs'][] = ['label' => 'Rest Reports', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => 'Report', 'url' => ['view', 'id'=>$model->id]];
 $this->params['breadcrumbs'][] = $this->title;
