@@ -42,7 +42,7 @@ $fieldOptions2 = [
     }
     </style>
 <div class="login-logo" style='margin-top:7%'>
-        <a href="#"><b>Wisdom</b> Report Management System  </a>
+        <a href="#"><b>明睿</b>单病云管家 </a>
 </div>
 
 <div class="login-box " style='margin-top:0%;'>
@@ -56,7 +56,7 @@ $fieldOptions2 = [
         <?=$form
 ->field($model, 'mobile', $fieldOptions1)
 ->label(false)
-->textInput(['placeholder' => '手机号'])?>
+->textInput(['placeholder' => '手机号','type'=>'tel'])?>
 
         <?=$form
 ->field($model, 'smscode', $fieldOptions2)
