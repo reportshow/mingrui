@@ -316,7 +316,19 @@ export default class TableExampleComplex extends React.Component {
 	    }		    
 	}
 
-	return (
+		    return (
+		    <div>
+		    <div id="colorList">
+		      <form action="#" method="post">
+			<label ><input type="checkbox" name="temp_color" id="color1" value="#ff0000"/>红色</label>
+			<label ><input type="checkbox" name="temp_color" id="color2" value="#ffff00"/>黄色</label>
+			<label ><input type="checkbox" name="temp_color" id="color3" value="#00ff00"/>绿色</label>
+			<label ><input type="checkbox" name="temp_color" id="color4" value="#0000ff"/>蓝色</label>
+		      </form>
+		    </div>
+		    <div id="selectedColorList" class="ibWrapper">
+
+		    </div>
 <MuiThemeProvider muiTheme={muiTheme}>
   <div>
     <ReactTooltip type="info" effect="float" multiline={true}/>
@@ -445,6 +457,7 @@ export default class TableExampleComplex extends React.Component {
     </Table>
   </div>
 </MuiThemeProvider>
+</div>
 	);
     }
 }
