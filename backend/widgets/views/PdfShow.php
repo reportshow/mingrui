@@ -24,7 +24,7 @@ if( /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera/i.test(navigator.u
   options.pdfOpenParams.pagemode = 'none';
   options.forcePDFJS=false;
 }else{
-  options.pdfOpenParams.pagemode = 'outline';
+ // options.pdfOpenParams.pagemode = 'outline';
   options.forcePDFJS=true;
 }
 

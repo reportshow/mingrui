@@ -23,9 +23,22 @@ use backend\widgets\GuestbookDrop;
 
             <ul class="nav navbar-nav">
 
+                
+                  
+               <li class="dropdown messages-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"  title="报告留言">
+                        <i class="fa fa-files-o"></i>
+                        <span class="label label-warning"><?=count($message) ?></span>
+                    </a>
+                      <ul class="dropdown-menu">
+                        <?=GuestbookDrop::widget(['message'=>$message]);?>
+                      </ul>
+                </li>
+
+
                 <!-- Messages: style can be found in dropdown.less-->
                 <li class="dropdown messages-menu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"   title="互动留言">
                         <i class="fa fa-envelope-o"></i>
                         <span class="label label-success"><?=count($message) ?></span>
                     </a>
@@ -34,7 +47,6 @@ use backend\widgets\GuestbookDrop;
                       </ul>
                 </li>
                   
-             
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">

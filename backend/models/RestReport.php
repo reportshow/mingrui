@@ -104,7 +104,7 @@ class RestReport extends \yii\db\ActiveRecord
     {
         return [
             'id'                 => 'ID',
-            'report_id'          => '报告编号',
+            'report_id'          => '项目编号',
             'created'            => '送检日期',
             'updated'            => 'Updated',
             'status'             => '报告状态',
@@ -174,6 +174,16 @@ class RestReport extends \yii\db\ActiveRecord
         if ($json) {
             if (property_exists($json, 'summary')) {
                 return $json->summary;
+            }
+
+        }
+    }
+        public function getExplainDescription()
+    {
+        $json = json_decode($this->explain);
+        if ($json) {
+            if (property_exists($json, 'description')) {
+                return $json->description;
             }
 
         }

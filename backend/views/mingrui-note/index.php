@@ -10,9 +10,11 @@ use backend\widgets\TimeLine;
 
 $this->title = '记事本';
 //$this->params['breadcrumbs'][] = $this->title;
+
+echo $this->render('/site/index-guest-top'); 
 ?>
 <div class="mingrui-notes-index">
-     <p style="text-align: right;padding-right:26px; ">
+     <p style="padding-right:26px; ">
         <?= Html::a(' <i class="fa  fa-edit"></i>新建记事  ', ['create'], ['class' => 'btn btn-social btn-danger']) ?>
     </p>
     <?=TimeLine::widget(['dataProvider'=>$dataProvider]); ?>
