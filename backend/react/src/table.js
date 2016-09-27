@@ -266,7 +266,7 @@ export default class TableExampleComplex extends React.Component {
     handleRowHover = (row) => {
 	ReactTooltip.rebuild();
     };
-    
+
     render() {
 	for(var key in tableData) {
 	    //疾病信息
@@ -316,21 +316,65 @@ export default class TableExampleComplex extends React.Component {
 	    }		    
 	}
 
+
+	var settings = {
+	    dots: false,
+	    infinite: true,
+	    speed: 500,
+	    slidesToShow: 1,
+	    slidesToScroll: 1
+	};
+	
 	return (
-<div>
-  <div id="colorList">
-    <form action="#" method="post">
-      <label ><input type="checkbox" name="temp_color" id="color1" value="#ff0000"/>红色</label>
-      <label ><input type="checkbox" name="temp_color" id="color2" value="#ffff00"/>黄色</label>
-      <label ><input type="checkbox" name="temp_color" id="color3" value="#00ff00"/>绿色</label>
-      <label ><input type="checkbox" name="temp_color" id="color4" value="#0000ff"/>蓝色</label>
-    </form>
-  </div>
-  <div id="selectedColorList" class="ibWrapper"> </div>
-  
-  <MuiThemeProvider muiTheme={muiTheme}>
-    <div>
-      <ReactTooltip type="info" effect="float" multiline={true}/>
+<MuiThemeProvider muiTheme={muiTheme}>
+  <div>  
+    <ReactTooltip type="info" effect="float" multiline={true}/>
+    <div className="box box-solid">
+      <div className="box-header with-border">
+	<h3 className="box-title">Carousel</h3>
+      </div>
+      <div className="box-body">
+	<div id="carousel-example-generic" className="carousel slide" data-ride="carousel" data-interval="false">
+          <div className="carousel-inner">
+            <div className="item active">
+	      <div className="carousel-caption">
+		First Slide
+	      </div>
+	      <Table
+		 fixedHeader={this.state.fixedHeader}
+		 fixedFooter={this.state.fixedFooter}
+		 selectable={this.state.selectable}
+		 multiSelectable={this.state.multiSelectable}
+		 onRowHover = {this.handleRowHover}
+		 className = 'exportable'
+		 >
+		<TableHeader
+		   displaySelectAll={this.state.showCheckboxes}
+		   adjustForCheckbox={this.state.adjustForCheckboxes}
+		   enableSelectAll={this.state.enableSelectAll}
+		   >
+		  <TableRow displayBorder={false}>
+		    <TableHeaderColumn colSpan="4"><TextField name='gene' floatingLabelText="重点关注基因" defaultValue={this.state.gene_value} fullWidth={true} onChange={this.handle_gene_Change}/></TableHeaderColumn>
+		  </TableRow>
+		</TableHeader>
+	      </Table>
+            </div>
+            <div className="item">
+	      <div className="carousel-caption">
+		Second Slide
+	      </div>
+	      <img src="http://placehold.it/900x500/3c8dbc/ffffff&text=I+Love+Bootstrap" alt="Second slide" />
+            </div>
+            <a className="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+              <span className="fa fa-angle-left"></span>
+            </a>
+            <a className="right carousel-control" href="#carousel-example-generic" data-slide="next">
+              <span className="fa fa-angle-right"></span>
+            </a>
+	  </div>
+	</div>
+      </div>
+      
       <Table
 	 height={this.state.height}
 	 fixedHeader={this.state.fixedHeader}
@@ -386,9 +430,6 @@ export default class TableExampleComplex extends React.Component {
 		<ListItem primaryText={"X-LINKED"} value="X-LINKED" />
 	      </MultiSelect>
 	    </TableHeaderColumn>
-	    <TableHeaderColumn  style={{textAlign:'right'}}>
-	      <a href="#" className="export_button">下载过滤结果</a>
-	    </TableHeaderColumn>
 	  </TableRow>
 	  <TableRow>
 	    <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
@@ -423,7 +464,11 @@ export default class TableExampleComplex extends React.Component {
 	    </TableHeaderColumn>
 	  </TableRow>
 	  <TableRow>
-	    <TableHeaderColumn colSpan="7" style={{verticalAlign: 'bottom', fontWeight:'bold', fontSize:'120%'}}>当前选择：{this.state.queryResult.length} /{tableData.length}(筛选/全部)</TableHeaderColumn>
+	    <TableHeaderColumn colSpan="4" style={{verticalAlign: 'bottom', fontWeight:'bold', fontSize:'120%'}}>当前选择：{this.state.queryResult.length} /{tableData.length}(筛选/全部)
+	    </TableHeaderColumn>
+	    <TableHeaderColumn  colSpan="3" style={{verticalAlign: 'bottom', textAlign:'right'}}>
+	      <a href="#" className="export_button">下载过滤结果</a>
+	    </TableHeaderColumn>
 	  </TableRow>
 	  <TableRow>
 	    <TableHeaderColumn tooltip="基因(大小)">基因(大小)</TableHeaderColumn>
@@ -455,8 +500,8 @@ export default class TableExampleComplex extends React.Component {
 	</TableBody>
       </Table>
     </div>
-  </MuiThemeProvider>
-</div>
+  </div>
+</MuiThemeProvider>
 	);
     }
 }
