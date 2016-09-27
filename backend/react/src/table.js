@@ -279,13 +279,13 @@ export default class TableExampleComplex extends React.Component {
 	    tableData[key].push(str);
 
 	    //功能预测
-	    var str = '';
+	    var str='';
 	    str = str.concat(
-		tableData[key][9], "<br/>",
-		tableData[key][9], "<br/>",
-		tableData[key][10], "<br/>",
-		tableData[key][11], "<br/>",
-		tableData[key][12]
+	    	'SIFT:  ', tableData[key][8], "<br/>",
+	    	'PolyPhen:  ', tableData[key][9],'  ',
+	    	tableData[key][10], "<br/>",
+	    	'MutationTaster:  ', tableData[key][11], "<br/>",
+	    	'GERP++:  ',tableData[key][12]
 	    );
 	    tableData[key].push(str);
 
@@ -316,133 +316,132 @@ export default class TableExampleComplex extends React.Component {
 	    }		    
 	}
 
-		    return (
-		    <div>
-		    <div id="colorList">
-		      <form action="#" method="post">
-			<label ><input type="checkbox" name="temp_color" id="color1" value="#ff0000"/>红色</label>
-			<label ><input type="checkbox" name="temp_color" id="color2" value="#ffff00"/>黄色</label>
-			<label ><input type="checkbox" name="temp_color" id="color3" value="#00ff00"/>绿色</label>
-			<label ><input type="checkbox" name="temp_color" id="color4" value="#0000ff"/>蓝色</label>
-		      </form>
-		    </div>
-		    <div id="selectedColorList" class="ibWrapper">
-
-		    </div>
-<MuiThemeProvider muiTheme={muiTheme}>
-  <div>
-    <ReactTooltip type="info" effect="float" multiline={true}/>
-    <Table
-       height={this.state.height}
-       fixedHeader={this.state.fixedHeader}
-       fixedFooter={this.state.fixedFooter}
-       selectable={this.state.selectable}
-       multiSelectable={this.state.multiSelectable}
-       onRowHover = {this.handleRowHover}
-       className = 'exportable'
-       >
-      <TableHeader
-	 displaySelectAll={this.state.showCheckboxes}
-	 adjustForCheckbox={this.state.adjustForCheckboxes}
-	 enableSelectAll={this.state.enableSelectAll}
+	return (
+<div>
+  <div id="colorList">
+    <form action="#" method="post">
+      <label ><input type="checkbox" name="temp_color" id="color1" value="#ff0000"/>红色</label>
+      <label ><input type="checkbox" name="temp_color" id="color2" value="#ffff00"/>黄色</label>
+      <label ><input type="checkbox" name="temp_color" id="color3" value="#00ff00"/>绿色</label>
+      <label ><input type="checkbox" name="temp_color" id="color4" value="#0000ff"/>蓝色</label>
+    </form>
+  </div>
+  <div id="selectedColorList" class="ibWrapper"> </div>
+  
+  <MuiThemeProvider muiTheme={muiTheme}>
+    <div>
+      <ReactTooltip type="info" effect="float" multiline={true}/>
+      <Table
+	 height={this.state.height}
+	 fixedHeader={this.state.fixedHeader}
+	 fixedFooter={this.state.fixedFooter}
+	 selectable={this.state.selectable}
+	 multiSelectable={this.state.multiSelectable}
+	 onRowHover = {this.handleRowHover}
+	 className = 'exportable'
 	 >
-	<TableRow displayBorder={false}>
-	  <TableHeaderColumn colSpan="4"><TextField name='gene' floatingLabelText="重点关注基因" defaultValue={this.state.gene_value} fullWidth={true} onChange={this.handle_gene_Change}/></TableHeaderColumn>
+	<TableHeader
+	   displaySelectAll={this.state.showCheckboxes}
+	   adjustForCheckbox={this.state.adjustForCheckboxes}
+	   enableSelectAll={this.state.enableSelectAll}
+	   >
+	  <TableRow displayBorder={false}>
+	    <TableHeaderColumn colSpan="4"><TextField name='gene' floatingLabelText="重点关注基因" defaultValue={this.state.gene_value} fullWidth={true} onChange={this.handle_gene_Change}/></TableHeaderColumn>
 	    <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
-	    <MultiSelect fullWidth={true} value={this.state.tblx_values} floatingLabelText="突变类型" onChange={this.handle_tblx_Change}>
-	      <ListItem primaryText={"frameshift"} value="frameshift" />
-	      <ListItem primaryText={"nonframeshift"} value="nonframeshift" />
-	      <ListItem primaryText={"nonsynonymous"} value="nonsynonymous" />
-	      <ListItem primaryText={"splicing"} value="splicing" />
-	      <ListItem primaryText={"stopgain"} value="stopgain" />
-	      <ListItem primaryText={"synonymous"} value="synonymous" />
-	      <ListItem primaryText={"stoploss"} value="stoploss" />
-	      <ListItem primaryText={"unknown"} value="unknown" />
-	    </MultiSelect>
-	  </TableHeaderColumn>
-	</TableRow>
-	<TableRow displayBorder={false}>
-	  <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
-	    <MultiSelect fullWidth={true} value={this.state.cxsd_values} floatingLabelText="测序深度" onChange={this.handle_cxsd_Change}>
-	      <ListItem primaryText={"10-20"} value="10-20" />
-	      <ListItem primaryText={">20"} value="20+" />
-	    </MultiSelect>
-	  </TableHeaderColumn>
-	  <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
-		<MultiSelect fullWidth={true} value={this.state.tbbl_values} floatingLabelText="突变比例" onChange={this.handle_tbbl_Change}>
-	      <ListItem primaryText={"0.9-1"} value="0.9-1" />
-	      <ListItem primaryText={"0.75-0.9"} value="0.75-0.9" />
-	      <ListItem primaryText={"0.65-0.75"} value="0.65-0.75" />
-	      <ListItem primaryText={"0.35-0.65"} value="0.35-0.65" />
-	      <ListItem primaryText={"0.2-0.35"} value="0.2-0.35" />
-	      <ListItem primaryText={"0-0.2"} value="0-0.2" />
-	    </MultiSelect>
-	  </TableHeaderColumn>
-	  <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
-	    <MultiSelect fullWidth={true} value={this.state.ycfs_values} floatingLabelText="遗传方式" onChange={this.handle_ycfs_Change}>
-	      <ListItem primaryText={"AR"} value="AR" />
-	      <ListItem primaryText={"AD"} value="AD" />
-	      <ListItem primaryText={"XR"} value="XR" />
-	      <ListItem primaryText={"XD"} value="XD" />
-	      <ListItem primaryText={"X-LINKED"} value="X-LINKED" />
-	    </MultiSelect>
-	  </TableHeaderColumn>
-	  <TableHeaderColumn  style={{textAlign:'right'}}>
-	    <a href="#" className="export_button">下载过滤结果</a>
-	  </TableHeaderColumn>
-	</TableRow>
-	<TableRow>
-	  <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
-	    <MultiSelect fullWidth={true} value={this.state.dm_values} floatingLabelText="DM" onChange={this.handle_dm_Change}>
-	      <ListItem primaryText={"DM"} butvalue="DM" />
-	      <ListItem primaryText={"DM?"} value="DM?" />
-	      <ListItem primaryText={"[Similar]DM"} value="[Similar]DM" />
-	    </MultiSelect>
-	  </TableHeaderColumn>
-	  <TableHeaderColumn colSpan="2">
-	    <SelectField
-	       fullWidth={true}
-	       value={this.state.qrjyz_value}
-	       onChange={this.handle_qrjyz_Change}
-	      floatingLabelText="千人基因组携带率低于"
-	      >
-	      {this.rqpl_items}
-	    </SelectField>
-	  </TableHeaderColumn>
-	  <TableHeaderColumn colSpan="2">
-	    <SelectField
-	       fullWidth={true}
-	       value={this.state.inhouse_value}
-	       onChange={this.handle_inhouse_Change}
-	      floatingLabelText="inhouse低于"
-	      >
-	      {this.rqpl_items}
-	    </SelectField>
-	  </TableHeaderColumn>
-	  <TableHeaderColumn  style={{textAlign:'right'}}>
-	    <RaisedButton label="确认" primary={true} onClick={this.filter}/>
-	  </TableHeaderColumn>
-	</TableRow>
-	<TableRow>
-	  <TableHeaderColumn colSpan="7" style={{verticalAlign: 'bottom', fontWeight:'bold', fontSize:'120%'}}>当前选择：{this.state.queryResult.length} /{tableData.length}(筛选/全部)</TableHeaderColumn>
-	</TableRow>
-	<TableRow>
-	  <TableHeaderColumn tooltip="基因(大小)">基因(大小)</TableHeaderColumn>
-	  <TableHeaderColumn tooltip="突变信息">突变信息</TableHeaderColumn>
-	  <TableHeaderColumn tooltip="突变类型">突变类型</TableHeaderColumn>
-	  <TableHeaderColumn tooltip="基因疾病信息">基因疾病信息</TableHeaderColumn>
-	  <TableHeaderColumn tooltip="测序深度和比例">测序深度和比例</TableHeaderColumn>
-	  <TableHeaderColumn tooltip="HGMD信息">HGMD</TableHeaderColumn>
-	  <TableHeaderColumn tooltip="功能预测">功能预测</TableHeaderColumn>
-	</TableRow>
-      </TableHeader>
-      <TableBody
-	 displayRowCheckbox={this.state.showCheckboxes}
-	 deselectOnClickaway={this.state.deselectOnClickaway}
-	 showRowHover={this.state.showRowHover}
-	 stripedRows={this.state.stripedRows}
-	 >
-	{this.state.queryResult.map( (row, index) => (
+	      <MultiSelect fullWidth={true} value={this.state.tblx_values} floatingLabelText="突变类型" onChange={this.handle_tblx_Change}>
+		<ListItem primaryText={"frameshift"} value="frameshift" />
+		<ListItem primaryText={"nonframeshift"} value="nonframeshift" />
+		<ListItem primaryText={"nonsynonymous"} value="nonsynonymous" />
+		<ListItem primaryText={"splicing"} value="splicing" />
+		<ListItem primaryText={"stopgain"} value="stopgain" />
+		<ListItem primaryText={"synonymous"} value="synonymous" />
+		<ListItem primaryText={"stoploss"} value="stoploss" />
+		<ListItem primaryText={"unknown"} value="unknown" />
+	      </MultiSelect>
+	    </TableHeaderColumn>
+	  </TableRow>
+	  <TableRow displayBorder={false}>
+	    <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
+	      <MultiSelect fullWidth={true} value={this.state.cxsd_values} floatingLabelText="测序深度" onChange={this.handle_cxsd_Change}>
+		<ListItem primaryText={"10-20"} value="10-20" />
+		<ListItem primaryText={">20"} value="20+" />
+	      </MultiSelect>
+	    </TableHeaderColumn>
+	    <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
+	      <MultiSelect fullWidth={true} value={this.state.tbbl_values} floatingLabelText="突变比例" onChange={this.handle_tbbl_Change}>
+		<ListItem primaryText={"0.9-1"} value="0.9-1" />
+		<ListItem primaryText={"0.75-0.9"} value="0.75-0.9" />
+		<ListItem primaryText={"0.65-0.75"} value="0.65-0.75" />
+		<ListItem primaryText={"0.35-0.65"} value="0.35-0.65" />
+		<ListItem primaryText={"0.2-0.35"} value="0.2-0.35" />
+		<ListItem primaryText={"0-0.2"} value="0-0.2" />
+	      </MultiSelect>
+	    </TableHeaderColumn>
+	    <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
+	      <MultiSelect fullWidth={true} value={this.state.ycfs_values} floatingLabelText="遗传方式" onChange={this.handle_ycfs_Change}>
+		<ListItem primaryText={"AR"} value="AR" />
+		<ListItem primaryText={"AD"} value="AD" />
+		<ListItem primaryText={"XR"} value="XR" />
+		<ListItem primaryText={"XD"} value="XD" />
+		<ListItem primaryText={"X-LINKED"} value="X-LINKED" />
+	      </MultiSelect>
+	    </TableHeaderColumn>
+	    <TableHeaderColumn  style={{textAlign:'right'}}>
+	      <a href="#" className="export_button">下载过滤结果</a>
+	    </TableHeaderColumn>
+	  </TableRow>
+	  <TableRow>
+	    <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
+	      <MultiSelect fullWidth={true} value={this.state.dm_values} floatingLabelText="DM" onChange={this.handle_dm_Change}>
+		<ListItem primaryText={"DM"} butvalue="DM" />
+		<ListItem primaryText={"DM?"} value="DM?" />
+		<ListItem primaryText={"[Similar]DM"} value="[Similar]DM" />
+	      </MultiSelect>
+	    </TableHeaderColumn>
+	    <TableHeaderColumn colSpan="2">
+	      <SelectField
+		 fullWidth={true}
+		 value={this.state.qrjyz_value}
+		 onChange={this.handle_qrjyz_Change}
+		 floatingLabelText="千人基因组携带率低于"
+		 >
+		{this.rqpl_items}
+	      </SelectField>
+	    </TableHeaderColumn>
+	    <TableHeaderColumn colSpan="2">
+	      <SelectField
+		 fullWidth={true}
+		 value={this.state.inhouse_value}
+		 onChange={this.handle_inhouse_Change}
+		 floatingLabelText="inhouse低于"
+		 >
+		{this.rqpl_items}
+	      </SelectField>
+	    </TableHeaderColumn>
+	    <TableHeaderColumn  style={{textAlign:'right'}}>
+	      <RaisedButton label="确认" primary={true} onClick={this.filter}/>
+	    </TableHeaderColumn>
+	  </TableRow>
+	  <TableRow>
+	    <TableHeaderColumn colSpan="7" style={{verticalAlign: 'bottom', fontWeight:'bold', fontSize:'120%'}}>当前选择：{this.state.queryResult.length} /{tableData.length}(筛选/全部)</TableHeaderColumn>
+	  </TableRow>
+	  <TableRow>
+	    <TableHeaderColumn tooltip="基因(大小)">基因(大小)</TableHeaderColumn>
+	    <TableHeaderColumn tooltip="突变信息">突变信息</TableHeaderColumn>
+	    <TableHeaderColumn tooltip="突变类型">突变类型</TableHeaderColumn>
+	    <TableHeaderColumn tooltip="基因疾病信息">基因疾病信息</TableHeaderColumn>
+	    <TableHeaderColumn tooltip="测序深度和比例">测序深度和比例</TableHeaderColumn>
+	    <TableHeaderColumn tooltip="HGMD信息">HGMD</TableHeaderColumn>
+	    <TableHeaderColumn tooltip="功能预测">功能预测</TableHeaderColumn>
+	  </TableRow>
+	</TableHeader>
+	<TableBody
+	   displayRowCheckbox={this.state.showCheckboxes}
+	   deselectOnClickaway={this.state.deselectOnClickaway}
+	   showRowHover={this.state.showRowHover}
+	   stripedRows={this.state.stripedRows}
+	   >
+	  {this.state.queryResult.map( (row, index) => (
 	  <TableRow key={index} selected={row.selected}>
 	    <TableRowColumn data-tip={row[0] +'(' + row[19] + ')'}>{row[0] +'(' + row[19] + ')'}</TableRowColumn>//基因
 	    <TableRowColumn data-tip={row[25]}>{row[25]}</TableRowColumn>//突变信息
@@ -451,12 +450,12 @@ export default class TableExampleComplex extends React.Component {
 	    <TableRowColumn data-tip={row[28] + '<br/>' +row[26]}>{row[28]}<br/>{row[26]}</TableRowColumn>//HET
 	    <TableRowColumn data-tip={row[22]}>{row[22]}</TableRowColumn>//HGDM
 	    <TableRowColumn data-tip={row[24]}><a>详情</a></TableRowColumn>//功能预测
-	</TableRow>
-	))}
-      </TableBody>
-    </Table>
-  </div>
-</MuiThemeProvider>
+	  </TableRow>
+	  ))}
+	</TableBody>
+      </Table>
+    </div>
+  </MuiThemeProvider>
 </div>
 	);
     }
