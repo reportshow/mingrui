@@ -61,6 +61,8 @@ class UtilsController extends Controller
             imagestring($im, mt_rand(1, 5), mt_rand(0, $imgwidth), mt_rand(0, $imgheight), '*', $randcolor);
             //imagesetpixel($im,mt_rand(0,$imgwidth),mt_rand(0,$imgheight),$randcolor);
         }
+
+        imagesetthickness($im, 4);
 //随机画线,线条数量=字符数量（随便）
         for ($i = 0; $i < $codelen; $i++) {
             $randcolor = imagecolorallocate($im, mt_rand(0, 255), mt_rand(0, 255), mt_rand(0, 255));

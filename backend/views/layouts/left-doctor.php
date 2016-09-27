@@ -1,10 +1,11 @@
 <?php
 
-$menu = [
+$menu =[];
+/* [
     ['label' => '管理后台', 'options' => ['class' => 'header']],
     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
 ];
-
+*/
 $menu[] = [
     'label' => '报告管理',
     'icon'  => 'fa fa-files-o',

@@ -78,16 +78,23 @@ echo $form->field($model, 'password', $fieldOptions2)
         $.ajax({url:url,
             method:'get',
             data:{code: code},
-            type:'json',
+            dataType:'json',
            success:function(d){
                 console.log(d);
-                $('#getsms').removeClass('disabled');
+                if(d.code==1){
+                  $('#getsms').removeClass('disabled');
+                  $('#loginform-verify').attr('disabled','disabled');
+                  $('#getverifyimg').addClass('disabled','disabled');
+                }
+                
            },
        });
     });
 
     //更新验证码
     $('#getverifyimg').click(function(){
+         if($(this).hasClass('disabled')) return;
+
          $('#verifyimg').attr('src','<?=$verifyUrl?>&x='+Math.random());
     });
 

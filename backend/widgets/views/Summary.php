@@ -20,18 +20,21 @@ use yii\helpers\Html;
     </div>
     <div class="box-footer no-padding">
       <ul class="nav nav-stacked">
-        <li><a href="#">日期：<?=$model->created?></a></li>
-        <li><a href="#">主诉：<?=$model->sample->symptom?></a></li>
-        <li><a href="#">项目：<?=$model->product->name?></a></li>                 
-        <li><a href="#">注释：<?=$model->explainsummary?>
-         </a></li>
-        <li style="padding:10px 0px 10px 16px;">
-        编号：<?=$model->report_id?>
+         <li style="padding:10px 0px 10px 16px;">
+        项目编号：<?=$model->report_id?>
         <?=Html::a('查看报告详情', ['show-report', 'id' => $model->id], [
             'class' => 'pull-right badge bg-green', 'style' => "padding:8px",
           ])?>
-         </li>        
-        <li style="padding:10px 0px 10px 16px;"> 
+         </li>
+          <li><a href="#">报告日期：<?=$model->created?></a></li>
+
+        <li><a href="#">临床症状：<?=$model->sample->symptom?></a></li>
+        <li><a href="#">检查项目：<?=$model->product->name?></a></li>                 
+        <li><a href="#">检测结果：<?=$model->explainsummary?>
+         </a></li>
+        <li><a href="#">详细解读：<?=$model->explaindescription?>
+         </a></li>
+        <li style="padding:10px 0px 10px 16px;display:none"> 
            完善资料: 
            <?php 
            if(!empty($model->attachments))
@@ -46,19 +49,24 @@ use yii\helpers\Html;
 
          
           </li>
-
-        <li>
-	  <a href="#">相关疾病：<br/>
+         <?php  
+           if(Yii::$app->user->can('doctor') ||Yii::$app->user->can('admin')){
+          ?>
+         <li>
+          <a href="#">MOMI描述：<br/>
 	    <?php
-                foreach($diseases as $gene_disease){
-                     foreach($gene_disease as $gene=>$disease){
-                          echo $gene . ":" . $disease;
-                     }
-                     echo "<br/>";
-                }
+               foreach($diseases as $gene_disease){
+                    foreach($gene_disease as $gene=>$disease){
+                         echo $gene . ":" . $disease;
+                    }
+                    echo "<br/>";
+               }
 	    ?>
 	  </a>
-	</li>
+	 </li>
+	 <?php  
+            }
+	    ?>
       </ul>
     </div>
   </div>

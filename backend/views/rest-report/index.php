@@ -20,10 +20,10 @@ $this->params['breadcrumbs'][] = $this->title;
     'emptyCell'=>'搜索',
     'dataProvider' => $dataProvider,
     'filterModel'  => $searchModel,
-    'rowOptions'   => function ($model) {
+/*    'rowOptions'   => function ($model) {
         $url = Yii::$app->urlManager->createUrl(['rest-report/view', 'id' => $model->id]);
         return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
-    },
+    },*/
     'columns'      => [
         ['class' => 'yii\grid\SerialColumn'],
 
@@ -48,6 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 return $date->format('Y-m-d');
 
             },
+             'options'   => ['width' => '80px;'],
         ],
 
         [
@@ -62,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'report_id',
 
         [
-            'label'     => '检查类型ok',
+            'label'     => '检测项目',
             'attribute' => 'product_name',
             'value'     => 'product.name',
             'filter'    => Html::activeTextInput($searchModel, 'product_name', [
@@ -160,9 +161,9 @@ $this->params['breadcrumbs'][] = $this->title;
         // 'kyupload',
         // 'yidai_marked',
 
-/*        ['class'   => 'yii\grid\ActionColumn',
+      ['class'   => 'yii\grid\ActionColumn',
             'template' => '{view} {000update} {000delete}',
-        ],*/
+        ], 
     ],
 ]);?>
 </div>
