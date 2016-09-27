@@ -136,28 +136,32 @@ class RestReportController extends Controller
         }
 
         $userdata = $this->findModel($id);
-        $cnv_array     = json_decode($userdata->cnvsave, true);
-        $user_cnv_gene = '';
-        foreach ($cnv_array as $key => $data) {
-            $user_cnv_gene = $data[2];
+        $user_snp_genes = [];
+        $snp_array      = json_decode($userdata->snpsave, true);
+        foreach ($snp_array as $key => $data) {
+            $user_snp_genes[]= $data[0];
         }
 
-        $str_diseases = "";
-        $diseases     = GeneDiseases::find()->where(['gene' => $user_cnv_gene])->one();
-        if ($diseases) {
-            $temp           = $diseases->diseases;
-            $array_diseases = explode('|', $temp);
-            foreach ($array_diseases as $disease) {
-                $str_diseases .= $disease . '<br>';
-            }
-        } else {
-            $str_diseases = "";
+        $gene_diseases = [];
+        foreach($user_snp_genes as $gene) {
+             $str_diseases = "";
+             $diseases  = GeneDiseases::find()->where(['gene' => $gene])->one();
+             if ($diseases) {
+                  $temp           = $diseases->diseases;
+                  $array_diseases = explode('|', $temp);
+                  foreach ($array_diseases as $disease) {
+                       $str_diseases .= $disease . '<br>';
+                  }
+             } else {
+                  $str_diseases = "";
+             }
+             $gene_diseases[] = [$gene=>$str_diseases];
         }
-
+        
         return $this->render($viewname, [
             'model'    => $userdata,
             'comments' => $this->getComments($id),
-            'diseases' => $str_diseases,
+            'diseases' => $gene_diseases,
         ]);
     }
 
@@ -292,21 +296,17 @@ class RestReportController extends Controller
         //1. find user's bad gene
         $userdata       = $this->findModel($id);
         $snp_array      = json_decode($userdata->snpsave, true);
-        print_r($snp_array);
-        exit;
+
         $user_snp_genes  = [];//name areas[]
         $user_snp_areas = [];
         foreach ($snp_array as $key => $data) {
             $user_snp_genes[]= $data[0];
         }
 
-        print_r($user_snp_genes);
-        exit;
-
         //2. find all areas of this gene
         $final_areas = [];
-        if (!empty($user_cnv_gene)) {
-            $areas = Geneareas::find()->where(['geneareas.gene' => trim($user_cnv_gene)])->all();
+        if (!empty($user_snp_genes[0])) {
+            $areas = Geneareas::find()->where(['geneareas.gene' => trim($user_snp_genes[0])])->all();
 
             foreach ($areas as $area) {
                 $final_areas[] = ['start' => $area->startcoord,
@@ -316,7 +316,7 @@ class RestReportController extends Controller
                 ];
             }
 
-            foreach ($user_cnv_areas as $user_cnv_area) {
+            foreach ($user_snp_areas as $user_cnv_area) {
                 $final_areas[$user_cnv_area - 1]['bad'] = true;
             }
         }

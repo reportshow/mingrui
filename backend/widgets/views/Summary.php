@@ -47,7 +47,18 @@ use yii\helpers\Html;
          
           </li>
 
-          <li><a href="#">相关疾病：<?= $diseases?></a></li>
+        <li>
+	  <a href="#">相关疾病：<br/>
+	    <?php
+                foreach($diseases as $gene_disease){
+                     foreach($gene_disease as $gene=>$disease){
+                          echo $gene . ":" . $disease;
+                     }
+                     echo "<br/>";
+                }
+	    ?>
+	  </a>
+	</li>
       </ul>
     </div>
   </div>
