@@ -44,7 +44,7 @@ class WechatOauthController extends Controller
         $_SESSION['check_sms']      = rand(1000, 9999);
         $_SESSION['check_sms_time'] = time();
         //SMS::voiceVerify($_SESSION['check_sms'], $mobile);
-        SMS::sendSMS($mobile, [$_SESSION['check_sms'], 20]);
+        SMS::sendSMS($mobile, [[$_SESSION['check_sms'], 20]]);
         return json_encode(['code' => 1]);
     }
     /**

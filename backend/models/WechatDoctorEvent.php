@@ -36,7 +36,7 @@ class WechatDoctorEvent extends WechatEvent
     {
         $mobile = Yii::$app->params['master_vcf_mobile'];
         $voice  = Yii::$app->params['master_vcf_voice'];
-        //SMS::landingCall($voice, $mobile);
-         return $this->reply->text('你的订单已经发往销售部门，我们很快会与你联系');
+        SMS::landingCall($voice, $mobile);
+        return $this->reply->text('你的订单已经发往销售部门，我们很快会与你联系');
     }
 }
