@@ -2,7 +2,8 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use backend\models\MingruiComments;
-
+use backend\widgets\WechatRecord;
+ 
 ?><div class="box box-primary direct-chat direct-chat-primary">
     <div class="box-header with-border">
         <h3 class="box-title">
@@ -73,24 +74,66 @@ foreach ($model->comments as $comment) {
 
     <div class="box-footer">    
        <?php 
-       $form = ActiveForm::begin(['action' => $model->formaction ,'method'=>'post',]); 
+       $form = ActiveForm::begin(['action' => $model->formaction ,'method'=>'post', 'id'=>'noteform']); 
 
        ?>
            
            <input type="hidden" name="MingruiComments[report_id]" value="<?=$model->id?>">
 
             <div class="input-group">
-                <input class="form-control" name="MingruiComments[content]" 
+                    <input class="form-control" id='MingruiComments-content'  name="MingruiComments[content]" 
                         placeholder="输入留言内容" type="text">
+                    <span class="input-group-btn voiceActionBtn">
+                        <button type=button class="btn btn-info btn-flat"  >
+                         <i class='fa fa-microphone'> </i> 语音
+                        </button>
+                    </span>
                     <span class="input-group-btn">
-                        <button class="btn btn-primary btn-flat" type="submit">
+                        <button type=button  class="btn btn-primary btn-flat" id="submitbtn">
                             留言
                         </button>
                     </span>
-                </input>
+                 
             </div>
+            <?=
+            WechatRecord::widget([]);
+            ?>
+
         <?php ActiveForm::end(); ?>
     </div>
     <!-- /.box-footer-->
 </div>
+
+<script type="text/javascript">
+    
+    $(function(){
+        if(!isWeixin()){
+             $('.voiceActionBtn').hide();
+        }        
+    });
+
+     $('.voiceActionBtn').click(function(){
+        $('body').trigger("voice_init");  //弹出语音 
+     });
+    
+    var nowdataType = 'text';
+    $('body').bind("voiceUpdate",function(e,voices){
+        nowdataType= 'voice';
+       $('#MingruiComments-content').val(JSON.stringify(voices) );
+       $('#MingruiComments-content').hide();
+    });
+   
+    $("#submitbtn").click(function(e){ 
+      if(nowdataType=='voice'){
+         voiceUpload(function(voices){        
+            $('#MingruiComments-content').val(JSON.stringify(voices) );
+            $('#noteform').submit();
+         });
+      }else{
+         $('#noteform').submit();
+      }
+      
+    });
+     
+</script>
 

@@ -28,7 +28,7 @@ use kartik\file\FileInput;
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?> 
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? ' 创 建 ' : '更新',
+        <?= Html::submitButton($model->isNewRecord ? ' 保 存 ' : '更新',
          ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary',
          'style'=>'padding-left:30px;padding-right:30px;']
          ) ?>

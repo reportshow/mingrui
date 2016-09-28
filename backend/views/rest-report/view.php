@@ -19,6 +19,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
 
 
+<?=Html::a('意见反馈', ['rest-report/view', 'id' => $model->id], [
+    'class' => 'btn btn-info',
+])?>
 
 
 <?=Html::a('查看报告详情', ['show-report', 'id' => $model->id], [
@@ -29,14 +32,16 @@ $this->params['breadcrumbs'][] = $this->title;
     'class' => 'btn btn-primary',
 ])?>
 
-<?=Html::a('数据分析', ['rest-report/analyze', 'id' => $model->id], [
-    'class' => 'btn btn-info',
-])?>
+
 
 <?=Html::a('完善资料', ['mingrui-attachment/', 'reportid' => $model->id], [
     'class' => 'btn btn-warning',
 ])?>
 
+&nbsp;&nbsp;&nbsp;
+<?=Html::a('数据分析', ['rest-report/analyze', 'id' => $model->id], [
+    'class' => 'btn btn-danger',
+])?>
     </p>
 
 <div class="row">
@@ -50,6 +55,7 @@ echo Summary::widget(['model' => $model, 'diseases' => $diseases]);
 
 
         <div class="col-md-8">
+            
               <?=Comments::widget([
     'comments' => $comments,
     /*[

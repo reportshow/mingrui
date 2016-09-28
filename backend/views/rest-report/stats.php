@@ -34,6 +34,33 @@ AppAsset::register($this);
 
 <div class="box box-success">
     <div class="box-body">
+
+          <!-- Horizontal Form -->
+          <div class="box box-info">
+            <div class="box-header with-border">
+              <h3 class="box-title">临床表型(phepotype)</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form class="form-horizontal">           
+                
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-1 control-label">临床表型/特异</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputPassword3" placeholder="临床">
+                    <button type="submit" class="btn btn-info pull-right">确定</button>
+                  </div>
+                </div> 
+              
+              <!-- /.box-body -->
+               
+            </form>
+          </div>
+          <!-- /.box -->
+
+   <div class="box box-info">
+
 <?php if(strcmp($data, '[]')) {?>
     <p>基因:<?php echo $gene; ?></p>
     <p>注释:<?php echo $summary; ?></p>

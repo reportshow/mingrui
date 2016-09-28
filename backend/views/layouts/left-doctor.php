@@ -12,26 +12,29 @@ $menu[] = [
     'url'   => '#',
     'items' => [
         [
-            'label' => '已出报告',
+            'label' => '报告检索',
             'icon'  => 'fa fa-calendar-plus-o',
             'url'   => ['/rest-report/index'],
 
         ],
-        [
-            'label' => '未出报告',
-            'icon'  => 'fa fa-clock-o',
-            'url'   => ['/rest-report/index', 'unfinished' => 'yes'],
-
-        ],
 
         [
-            'label' => '外链数据',
+            'label' => '外源数据分析',
             'icon'  => 'fa fa-puzzle-piece',
             'url'   => ['vcf/'],
             'items' => [
 
             ],
         ],
+        [
+            'label' => '外源报告',
+            'icon'  => 'fa fa-puzzle-piece',
+            'url'   => ['myreport/'],
+            'items' => [
+
+            ],
+        ],
+
     ],
 ];
 
@@ -55,7 +58,7 @@ $menu[] = [
 ];
 
 $menu[] = [
-    'label' => '资料共享',
+    'label' => '共享资料',
     'icon'  => 'fa fa-file-video-o',
     'url'   => '#',
     'items' => [

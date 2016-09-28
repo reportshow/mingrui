@@ -77,8 +77,25 @@
 
  <script type="text/javascript">
 
+     function isWeixin(){
+        var ua = navigator.userAgent.toLowerCase();
+        if(ua.match(/MicroMessenger/i)=="micromessenger") {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    if(isWeixin()){
+      wx.config(<?=$config ?>);
+      wx.onVoiceRecordEnd({
+          // 录音时间超过一分钟没有停止的时候会执行 complete 回调
+          complete: function (res) {
+              var localId = res.localId; 
+              recDone(localId);
+          }
+      });
+    }
      
-     wx.config(<?=$config ?>);
 
      /*
    wx.config({
@@ -207,13 +224,7 @@ function _uploadvoice( index, callback){
  
 
  
-wx.onVoiceRecordEnd({
-    // 录音时间超过一分钟没有停止的时候会执行 complete 回调
-    complete: function (res) {
-        var localId = res.localId; 
-        recDone(localId);
-    }
-});
+
  
 
 /*wx.playVoice({

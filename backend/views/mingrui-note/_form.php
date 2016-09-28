@@ -80,6 +80,12 @@ WechatRecord::widget([]);
         }
     });
 
+
+/*******语音******/
+    if(!isWeixin()){
+      $('#typetabs button[datatype="voice"]').hide();
+    }
+
    
     $('body').bind("voiceUpdate",function(e,voices){       
        
@@ -100,7 +106,7 @@ $("#submitbtn").click(function(e){
   
 });
    
-    
+/*语音*/    
 
     
 </script>

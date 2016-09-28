@@ -18,9 +18,17 @@ $menu[] = [
         ],
 
         [
-            'label' => '外链数据',
+            'label' => '外源数据分析',
             'icon'  => 'fa fa-puzzle-piece',
             'url'   => ['vcf/'],
+            'items' => [
+
+            ],
+        ],
+        [
+            'label' => '外源报告',
+            'icon'  => 'fa fa-puzzle-piece',
+            'url'   => ['myreport/'],
             'items' => [
 
             ],

@@ -52,6 +52,9 @@ return [
                         'position' => \yii\web\View::POS_HEAD,
                     ],
                 ],
+                'dmstr\web\AdminLteAsset' => [
+                    'skin' => 'skin-black-light',
+                ],
             ],
         ],
         'log'          => [
