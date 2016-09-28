@@ -327,54 +327,40 @@ export default class TableExampleComplex extends React.Component {
 	
 	return (
 <MuiThemeProvider muiTheme={muiTheme}>
-  <div>  
+  <div>
     <ReactTooltip type="info" effect="float" multiline={true}/>
-    <div className="box box-solid">
-      <div className="box-header with-border">
-	<h3 className="box-title">Carousel</h3>
-      </div>
-      <div className="box-body">
-	<div id="carousel-example-generic" className="carousel slide" data-ride="carousel" data-interval="false">
-          <div className="carousel-inner">
-            <div className="item active">
-	      <div className="carousel-caption">
-		First Slide
-	      </div>
-	      <Table
-		 fixedHeader={this.state.fixedHeader}
-		 fixedFooter={this.state.fixedFooter}
-		 selectable={this.state.selectable}
-		 multiSelectable={this.state.multiSelectable}
-		 onRowHover = {this.handleRowHover}
-		 className = 'exportable'
-		 >
-		<TableHeader
-		   displaySelectAll={this.state.showCheckboxes}
-		   adjustForCheckbox={this.state.adjustForCheckboxes}
-		   enableSelectAll={this.state.enableSelectAll}
-		   >
-		  <TableRow displayBorder={false}>
-		    <TableHeaderColumn colSpan="4"><TextField name='gene' floatingLabelText="重点关注基因" defaultValue={this.state.gene_value} fullWidth={true} onChange={this.handle_gene_Change}/></TableHeaderColumn>
-		  </TableRow>
-		</TableHeader>
-	      </Table>
-            </div>
-            <div className="item">
-	      <div className="carousel-caption">
-		Second Slide
-	      </div>
-	      <img src="http://placehold.it/900x500/3c8dbc/ffffff&text=I+Love+Bootstrap" alt="Second slide" />
-            </div>
-            <a className="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-              <span className="fa fa-angle-left"></span>
-            </a>
-            <a className="right carousel-control" href="#carousel-example-generic" data-slide="next">
-              <span className="fa fa-angle-right"></span>
-            </a>
+    <div style={{width:'80%', marginLeft:'auto', marginRight:'auto'}}>
+      <TextField name='gene' floatingLabelText="重点关注基因" defaultValue={this.state.gene_value} fullWidth={true} onChange={this.handle_gene_Change}/>
+    </div>
+    <div id="carousel-example-generic" className="carousel slide" data-ride="carousel" data-interval="false">
+      <div className="carousel-inner">
+        <div className="item active">
+	  <div className="carousel-caption" style={{top:'0px', bottom: 'auto', paddingTop:'0px'}}>
+	    精准推荐
 	  </div>
-	</div>
+	  <div style={{width:'80%', marginLeft:'auto', marginRight:'auto', paddingTop:'20px', overflow:'hidden'}}>
+	    adfkjkajdfkajkdfjakjdfkajdfkjkdjfkajdfkajkdfjkajdfkajkdfjajdfkajdfkjakdjfkajdkf<br/>
+	    adfkjkajdfkajkdfjakjdfkajdfkjkdjfkajdfkajkdfjkajdfkajkdfjajdfkajdfkjakdjfkajdkf<br/>
+	    adfkjkajdfkajkdfjakjdfkajdfkjkdjfkajdfkajkdfjkajdfkajkdfjajdfkajdfkjakdjfkajdkf<br/>
+	  </div>
+        </div>
+        <div className="item">
+	  <div className="carousel-caption" style={{top:'0px', bottom: 'auto', paddingTop:'0px'}}>
+	    自选过滤
+	  </div>
+	  <div style={{width:'80%', marginLeft:'auto', marginRight:'auto', paddingTop:'20px', overflow:'hidden'}}>
+	    <img src="http://placehold.it/900x500/3c8dbc/ffffff&text=I+Love+Bootstrap" alt="Second slide" />
+	  </div>
+        </div>
+
+        <a className="left carousel-control" style={{width:'5%'}} href="#carousel-example-generic" data-slide="prev">
+          <span className="fa fa-angle-left"></span>
+        </a>
+        <a className="right carousel-control" style={{width:'5%'}} href="#carousel-example-generic" data-slide="next">
+          <span className="fa fa-angle-right"></span>
+        </a>
       </div>
-      
+  
       <Table
 	 height={this.state.height}
 	 fixedHeader={this.state.fixedHeader}

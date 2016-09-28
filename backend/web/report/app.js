@@ -22157,83 +22157,57 @@
 						_react2.default.createElement(_reactTooltip2.default, { type: 'info', effect: 'float', multiline: true }),
 						_react2.default.createElement(
 							'div',
-							{ className: 'box box-solid' },
+							{ style: { width: '80%', marginLeft: 'auto', marginRight: 'auto' } },
+							_react2.default.createElement(_TextField2.default, { name: 'gene', floatingLabelText: '重点关注基因', defaultValue: this.state.gene_value, fullWidth: true, onChange: this.handle_gene_Change })
+						),
+						_react2.default.createElement(
+							'div',
+							{ id: 'carousel-example-generic', className: 'carousel slide', 'data-ride': 'carousel', 'data-interval': 'false' },
 							_react2.default.createElement(
 								'div',
-								{ className: 'box-header with-border' },
-								_react2.default.createElement(
-									'h3',
-									{ className: 'box-title' },
-									'Carousel'
-								)
-							),
-							_react2.default.createElement(
-								'div',
-								{ className: 'box-body' },
+								{ className: 'carousel-inner' },
 								_react2.default.createElement(
 									'div',
-									{ id: 'carousel-example-generic', className: 'carousel slide', 'data-ride': 'carousel', 'data-interval': 'false' },
+									{ className: 'item active' },
 									_react2.default.createElement(
 										'div',
-										{ className: 'carousel-inner' },
-										_react2.default.createElement(
-											'div',
-											{ className: 'item active' },
-											_react2.default.createElement(
-												'div',
-												{ className: 'carousel-caption' },
-												'First Slide'
-											),
-											_react2.default.createElement(
-												_Table.Table,
-												{
-													fixedHeader: this.state.fixedHeader,
-													fixedFooter: this.state.fixedFooter,
-													selectable: this.state.selectable,
-													multiSelectable: this.state.multiSelectable,
-													onRowHover: this.handleRowHover,
-													className: 'exportable'
-												},
-												_react2.default.createElement(
-													_Table.TableHeader,
-													{
-														displaySelectAll: this.state.showCheckboxes,
-														adjustForCheckbox: this.state.adjustForCheckboxes,
-														enableSelectAll: this.state.enableSelectAll
-													},
-													_react2.default.createElement(
-														_Table.TableRow,
-														{ displayBorder: false },
-														_react2.default.createElement(
-															_Table.TableHeaderColumn,
-															{ colSpan: '4' },
-															_react2.default.createElement(_TextField2.default, { name: 'gene', floatingLabelText: '重点关注基因', defaultValue: this.state.gene_value, fullWidth: true, onChange: this.handle_gene_Change })
-														)
-													)
-												)
-											)
-										),
-										_react2.default.createElement(
-											'div',
-											{ className: 'item' },
-											_react2.default.createElement(
-												'div',
-												{ className: 'carousel-caption' },
-												'Second Slide'
-											),
-											_react2.default.createElement('img', { src: 'http://placehold.it/900x500/3c8dbc/ffffff&text=I+Love+Bootstrap', alt: 'Second slide' })
-										),
-										_react2.default.createElement(
-											'a',
-											{ className: 'left carousel-control', href: '#carousel-example-generic', 'data-slide': 'prev' },
-											_react2.default.createElement('span', { className: 'fa fa-angle-left' })
-										),
-										_react2.default.createElement(
-											'a',
-											{ className: 'right carousel-control', href: '#carousel-example-generic', 'data-slide': 'next' },
-											_react2.default.createElement('span', { className: 'fa fa-angle-right' })
-										)
+										{ className: 'carousel-caption', style: { top: '0px', bottom: 'auto', paddingTop: '0px' } },
+										'精准推荐'
+									),
+									_react2.default.createElement(
+										'div',
+										{ style: { width: '80%', marginLeft: 'auto', marginRight: 'auto', paddingTop: '20px', overflow: 'hidden' } },
+										'adfkjkajdfkajkdfjakjdfkajdfkjkdjfkajdfkajkdfjkajdfkajkdfjajdfkajdfkjakdjfkajdkf',
+										_react2.default.createElement('br', null),
+										'adfkjkajdfkajkdfjakjdfkajdfkjkdjfkajdfkajkdfjkajdfkajkdfjajdfkajdfkjakdjfkajdkf',
+										_react2.default.createElement('br', null),
+										'adfkjkajdfkajkdfjakjdfkajdfkjkdjfkajdfkajkdfjkajdfkajkdfjajdfkajdfkjakdjfkajdkf',
+										_react2.default.createElement('br', null)
 									)
+								),
+								_react2.default.createElement(
+									'div',
+									{ className: 'item' },
+									_react2.default.createElement(
+										'div',
+										{ className: 'carousel-caption', style: { top: '0px', bottom: 'auto', paddingTop: '0px' } },
+										'自选过滤'
+									),
+									_react2.default.createElement(
+										'div',
+										{ style: { width: '80%', marginLeft: 'auto', marginRight: 'auto', paddingTop: '20px', overflow: 'hidden' } },
+										_react2.default.createElement('img', { src: 'http://placehold.it/900x500/3c8dbc/ffffff&text=I+Love+Bootstrap', alt: 'Second slide' })
+									)
+								),
+								_react2.default.createElement(
+									'a',
+									{ className: 'left carousel-control', style: { width: '5%' }, href: '#carousel-example-generic', 'data-slide': 'prev' },
+									_react2.default.createElement('span', { className: 'fa fa-angle-left' })
+								),
+								_react2.default.createElement(
+									'a',
+									{ className: 'right carousel-control', style: { width: '5%' }, href: '#carousel-example-generic', 'data-slide': 'next' },
+									_react2.default.createElement('span', { className: 'fa fa-angle-right' })
 								)
 							),
 							_react2.default.createElement(
