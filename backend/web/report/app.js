@@ -22171,13 +22171,18 @@
 									{ className: 'item active' },
 									_react2.default.createElement(
 										'div',
-										{ className: 'carousel-caption' },
+										{ className: 'carousel-caption', style: { top: '0px', bottom: 'auto', paddingTop: '0px' } },
 										'精准推荐'
 									),
 									_react2.default.createElement(
 										'div',
-										{ style: { width: '80%', marginLeft: 'auto', marginRight: 'auto' } },
-										'adfkjkajdfkajkdfjakjdfkajdfkjkdjfkajdfkajkdfjkajdfkajkdfjajdfkajdfkjakdjfkajdkf'
+										{ style: { width: '80%', marginLeft: 'auto', marginRight: 'auto', paddingTop: '20px', overflow: 'hidden' } },
+										'adfkjkajdfkajkdfjakjdfkajdfkjkdjfkajdfkajkdfjkajdfkajkdfjajdfkajdfkjakdjfkajdkf',
+										_react2.default.createElement('br', null),
+										'adfkjkajdfkajkdfjakjdfkajdfkjkdjfkajdfkajkdfjkajdfkajkdfjajdfkajdfkjakdjfkajdkf',
+										_react2.default.createElement('br', null),
+										'adfkjkajdfkajkdfjakjdfkajdfkjkdjfkajdfkajkdfjkajdfkajkdfjajdfkajdfkjakdjfkajdkf',
+										_react2.default.createElement('br', null)
 									)
 								),
 								_react2.default.createElement(
@@ -22185,12 +22190,12 @@
 									{ className: 'item' },
 									_react2.default.createElement(
 										'div',
-										{ className: 'carousel-caption' },
+										{ className: 'carousel-caption', style: { top: '0px', bottom: 'auto', paddingTop: '0px' } },
 										'自选过滤'
 									),
 									_react2.default.createElement(
 										'div',
-										{ style: { width: '80%', marginLeft: 'auto', marginRight: 'auto', overflow: 'hidden' } },
+										{ style: { width: '80%', marginLeft: 'auto', marginRight: 'auto', paddingTop: '20px', overflow: 'hidden' } },
 										_react2.default.createElement('img', { src: 'http://placehold.it/900x500/3c8dbc/ffffff&text=I+Love+Bootstrap', alt: 'Second slide' })
 									)
 								),

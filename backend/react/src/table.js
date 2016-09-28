@@ -335,18 +335,20 @@ export default class TableExampleComplex extends React.Component {
     <div id="carousel-example-generic" className="carousel slide" data-ride="carousel" data-interval="false">
       <div className="carousel-inner">
         <div className="item active">
-	  <div className="carousel-caption">
+	  <div className="carousel-caption" style={{top:'0px', bottom: 'auto', paddingTop:'0px'}}>
 	    精准推荐
 	  </div>
-	  <div style={{width:'80%', marginLeft:'auto', marginRight:'auto', overflow:'hidden'}}>
-	    adfkjkajdfkajkdfjakjdfkajdfkjkdjfkajdfkajkdfjkajdfkajkdfjajdfkajdfkjakdjfkajdkf
+	  <div style={{width:'80%', marginLeft:'auto', marginRight:'auto', paddingTop:'20px', overflow:'hidden'}}>
+	    adfkjkajdfkajkdfjakjdfkajdfkjkdjfkajdfkajkdfjkajdfkajkdfjajdfkajdfkjakdjfkajdkf<br/>
+	    adfkjkajdfkajkdfjakjdfkajdfkjkdjfkajdfkajkdfjkajdfkajkdfjajdfkajdfkjakdjfkajdkf<br/>
+	    adfkjkajdfkajkdfjakjdfkajdfkjkdjfkajdfkajkdfjkajdfkajkdfjajdfkajdfkjakdjfkajdkf<br/>
 	  </div>
         </div>
         <div className="item">
-	  <div className="carousel-caption">
+	  <div className="carousel-caption" style={{top:'0px', bottom: 'auto', paddingTop:'0px'}}>
 	    自选过滤
 	  </div>
-	  <div style={{width:'80%', marginLeft:'auto', marginRight:'auto', overflow:'hidden'}}>
+	  <div style={{width:'80%', marginLeft:'auto', marginRight:'auto', paddingTop:'20px', overflow:'hidden'}}>
 	    <img src="http://placehold.it/900x500/3c8dbc/ffffff&text=I+Love+Bootstrap" alt="Second slide" />
 	  </div>
         </div>
