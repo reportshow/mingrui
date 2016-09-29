@@ -33,55 +33,7 @@ const styles = {
 export default class TableExampleComplex extends React.Component {
     constructor(props) {
 	super(props);
-	this.state = {
-	    queryResult: tableData,
-	    fixedHeader: true,
-	    fixedFooter: true,
-	    stripedRows: true,
-	    showRowHover: true,
-	    selectable: false,
-	    multiSelectable: false,
-	    enableSelectAll: false,
-	    deselectOnClickaway: true,
-	    showCheckboxes: false,
-	    adjustForCheckboxes: false,
-	    height: '500px',
-	    gene_value: "",
-	    tblx_values: [
-		"frameshift",
-		"nonframeshift",
-		"nonsynonymous",
-		"splicing",
-		"stopgain",
-		"synonymous",
-		"stoploss",
-		"unknown"],
-	    tbbl_values: [
-		"0.9-1",
-		"0.75-0.9",
-		"0.65-0.75",
-		"0.35-0.65",
-		"0.2-0.35",
-		"0-0.2"],
-	    ycfs_values: [
-		"AR",
-		"AD",
-		"XR",
-		"XD",
-		"X-LINKED"
-	    ],
-	    cxsd_values: [
-		"10-20",
-		"20+"
-	    ],
-	    dm_values: [
-		"DM",
-		"DM?",
-		"[Similar]DM",
-	    ],
-	    qrjyz_value: "1%",
-	    inhouse_value:"1%",
-	};	
+	this.state = this.getDefaultState();	
     }
 
     componentDidMount() {
