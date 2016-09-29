@@ -1,7 +1,6 @@
 import React from 'react';
 import {Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import TextField from 'material-ui/TextField';
-import Toggle from 'material-ui/Toggle';
 import {deepOrange500} from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -18,17 +17,6 @@ const muiTheme = getMuiTheme({
 	accent1Color: deepOrange500,
     },
 });
-
-const styles = {
-    propContainer: {
-	width: 200,
-        overflow: 'hidden',
-	margin: '20px auto 0',
-    },
-    propToggleHeader: {
-	margin: '20px auto 10px',
-    },
-};
 
 export default class TableExampleComplex extends React.Component {
     constructor(props) {
@@ -340,7 +328,7 @@ export default class TableExampleComplex extends React.Component {
   <div>
     <ReactTooltip type="info" effect="float" multiline={true}/>
     <div style={{width:'80%', marginLeft:'auto', marginRight:'auto'}}>
-      <TextField name='gene' floatingLabelText="重点关注基因" defaultValue={this.state.gene_value} fullWidth={true} onChange={this.handle_gene_Change}/>
+      <TextField name='gene' floatingLabelText="重点关注基因" value={this.state.gene_value} fullWidth={true} onChange={this.handle_gene_Change}/>
     </div>
     <div id="carousel-example-generic" className="carousel slide" data-ride="carousel" data-interval="false">
       <div className="carousel-inner">
