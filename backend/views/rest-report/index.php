@@ -1,13 +1,14 @@
 <?php
 
+use backend\components\Functions;
 use yii\grid\GridView;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\RestReportSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$unfinished = Yii::$app->request->get('unfinished');
-$this->title                   = $unfinished ? '未出报告':'已出报告';
+$unfinished                    = Yii::$app->request->get('unfinished');
+$this->title                   = $unfinished ? '未出报告' : '已出报告';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -15,15 +16,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-   
-    <?=GridView::widget([
-    'emptyCell'=>'搜索',
+
+    <?php $GridViewParam = [
+    'emptyCell'    => '搜索',
     'dataProvider' => $dataProvider,
     'filterModel'  => $searchModel,
 /*    'rowOptions'   => function ($model) {
-        $url = Yii::$app->urlManager->createUrl(['rest-report/view', 'id' => $model->id]);
-        return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
-    },*/
+$url = Yii::$app->urlManager->createUrl(['rest-report/view', 'id' => $model->id]);
+return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
+},*/
     'columns'      => [
         ['class' => 'yii\grid\SerialColumn'],
 
@@ -33,9 +34,9 @@ $this->params['breadcrumbs'][] = $this->title;
 ],*/
 
 /*        [
-            'attribute' => 'id',
-            'options'   => ['width' => '60px;'],
-        ],*/
+'attribute' => 'id',
+'options'   => ['width' => '60px;'],
+],*/
 
 /*
 ['attribute' => 'created',
@@ -48,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 return $date->format('Y-m-d');
 
             },
-             'options'   => ['width' => '80px;'],
+            'options'   => ['width' => '80px;'],
         ],
 
         [
@@ -98,7 +99,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 $tels = $model->sample->tel1;
                 //$list = explode('、', $tels);
                 //return str_replace(' ', '', $list[0]) . (count($list) > 1 ? '-等' : '');
-                $tels = str_replace(' ', '', $tels); $tels = str_replace('-', '', $tels);
+                $tels = str_replace(' ', '', $tels);
+                $tels = str_replace('-', '', $tels);
                 if (strlen($tels) > 11) {
                     $tels = substr($tels, 0, 11) . '...';
                 }
@@ -128,13 +130,13 @@ $this->params['breadcrumbs'][] = $this->title;
         // 'sample_id',
         // 'pdf',
         // 'conclusion',
-/*        ['label'        => '结论',
-            'attribute'     => 'conclusion',
-            'filter'        => ['阴性' => '阴性', '疑似阳性' => '疑似阳性', '阳性' => '阳性'],
-            'format'        => 'raw',
-            'value'         => 'conclusiontag',
-            //or 'filter' => Html::activeDropDownList($searchModel, 'sex',['1'=>'男','0'=>'女'], ['prompt'=>'全部'] )
-            'headerOptions' => ['width' => '100'],
+        /*        ['label'        => '结论',
+        'attribute'     => 'conclusion',
+        'filter'        => ['阴性' => '阴性', '疑似阳性' => '疑似阳性', '阳性' => '阳性'],
+        'format'        => 'raw',
+        'value'         => 'conclusiontag',
+        //or 'filter' => Html::activeDropDownList($searchModel, 'sex',['1'=>'男','0'=>'女'], ['prompt'=>'全部'] )
+        'headerOptions' => ['width' => '100'],
         ],*/
         // 'explain:ntext',
         // 'jxyanzhen',
@@ -161,9 +163,21 @@ $this->params['breadcrumbs'][] = $this->title;
         // 'kyupload',
         // 'yidai_marked',
 
-      ['class'   => 'yii\grid\ActionColumn',
+        ['class'   => 'yii\grid\ActionColumn',
             'template' => '{view} {000update} {000delete}',
-        ], 
+        ],
     ],
-]);?>
+];
+
+if (Functions::ismobile()) {
+
+    $GridViewParam['rowOptions'] = function ($model) {
+        $url = Yii::$app->urlManager->createUrl(['rest-report/view', 'id' => $model->id]);
+        return ['onclick' => "location.href='$url';", 'style' => 'cursor:pointer'];
+    };
+}
+
+echo GridView::widget($GridViewParam);
+
+?>
 </div>

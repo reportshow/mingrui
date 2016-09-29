@@ -9,6 +9,7 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use backend\models\VoiceRecord;
 
 /**
  * MingruiNoteController implements the CRUD actions for MingruiNotes model.
@@ -63,6 +64,8 @@ class MingruiNoteController extends Controller
         ]);
     }
 
+ 
+
     /**
      * Creates a new MingruiNotes model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -76,15 +79,7 @@ class MingruiNoteController extends Controller
             $model->image = 'tosave';
             $model->uid   = Yii::$app->user->id;
             if ($model->type == 'voice') {
-                $voices = json_decode($model->voice);
-                foreach ($voices as $key => $voice) {
-                    $path   = $model->voicePath($voice);
-                    $result = Yii::$app->wechat->getMedia($voice->serverId);
-                    if ($result) {
-                        //exit( $path);
-                        file_put_contents($path, $result);
-                    }
-                }
+                $voices = VoiceRecord::saveRecordVoice($model->voice);
             }
 
             if (!$model->save()) {

@@ -1,5 +1,20 @@
 <?php
- 
+use backend\widgets\VoiceShow;
+
+if(!function_exists('commentLineShowTxt')){
+   function commentLineShowTxt($content){
+    $js = json_decode($content);
+    if ($js) { 
+        foreach ($js as $res => $voice) {
+           echo VoiceShow::widget(['voice'=>$voice]); ;
+        }         
+    }else{
+         echo "<div class='direct-chat-text'> $content </div>";
+    }
+  
+} 
+}
+
 
 if($model['position'] != 'right'){
     
@@ -18,16 +33,19 @@ if($model['position'] != 'right'){
     <!-- /.direct-chat-info -->
     <img alt="Message User Image" class="direct-chat-img" src="<?=$model->creator->avatar?>" onerror="this.src='images/user2.png';">
         <!-- /.direct-chat-img -->
-        <div class="direct-chat-text">
-            <?=$model->content?>
-        </div>
+        
+            <?php
+              commentLineShowTxt($model->content);
+            ?>
+         
         <!-- /.direct-chat-text -->
-    </img>
+     
 </div>
 <!-- /.direct-chat-msg -->
 <?php
 
 }else{ //right     
+ 
 
 ?>
 <!-- Message to the right -->
@@ -41,13 +59,16 @@ if($model['position'] != 'right'){
         </span>
     </div>
     <!-- /.direct-chat-info -->
-    <img alt="Message User Image" class="direct-chat-img" src="<?=$model->creator->avatar?>" onerror="this.src='images/user.png';">
+    <img alt="Message User Image" class="direct-chat-img" src="<?=$model->creator->avatar?>" 
+       onerror="this.src='images/user.png';">
         <!-- /.direct-chat-img -->
-        <div class="direct-chat-text">
-            <?=$model->content?>
-        </div>
+        
+           <?php
+            commentLineShowTxt($model->content);
+           ?>
+         
         <!-- /.direct-chat-text -->
-    </img>
+     
 </div>
 <!-- /.direct-chat-msg -->
 <?php

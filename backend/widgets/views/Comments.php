@@ -3,6 +3,8 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use backend\models\MingruiComments;
 use backend\widgets\WechatRecord;
+ use backend\widgets\VoiceShow;
+
  
 ?><div class="box box-primary direct-chat direct-chat-primary">
     <div class="box-header with-border">
@@ -113,7 +115,7 @@ foreach ($model->comments as $comment) {
     });
 
      $('.voiceActionBtn').click(function(){
-        $('body').trigger("voice_init");  //弹出语音 
+        $('body').trigger("voice_init",{"multi":false});  //弹出语音 
      });
     
     var nowdataType = 'text';
@@ -121,6 +123,7 @@ foreach ($model->comments as $comment) {
         nowdataType= 'voice';
        $('#MingruiComments-content').val(JSON.stringify(voices) );
        $('#MingruiComments-content').hide();
+       $('.voiceActionBtn').hide();
     });
    
     $("#submitbtn").click(function(e){ 
@@ -136,4 +139,4 @@ foreach ($model->comments as $comment) {
     });
      
 </script>
-
+<?=VoiceShow::begin();?>

@@ -10,11 +10,12 @@ use backend\models\RestClient;
 use backend\models\RestReport;
 use backend\models\RestReportSearch;
 use backend\models\RestSample;
+use backend\models\VoiceRecord;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-
+use backend\widgets\Nodata;
 /**
  * RestReportController implements the CRUD actions for RestReport model.
  */
@@ -68,7 +69,7 @@ class RestReportController extends Controller
 
         $unfinished = Yii::$app->request->get('unfinished');
         if (!empty($unfinished)) {
-          //未出报告
+            //未出报告
             $query = $query->andWhere(['<>', 'rest_report.status', 'finished']);
         } else {
             $query = $query->andWhere(['rest_report.status' => 'finished']);
@@ -84,9 +85,9 @@ class RestReportController extends Controller
 
             $query = $query->where(['rest_sample.doctor_id' => $doctor->id]);
             //echo $query->createCommand()->getRawSql(); exit;
-        } else if (Yii::$app->user->can(  'admin')) {
-              
-        }else if (Yii::$app->user->can( 'guest')) {
+        } else if (Yii::$app->user->can('admin')) {
+
+        } else if (Yii::$app->user->can('guest')) {
             return "你没有权限查看本页";
         }
 
@@ -105,7 +106,8 @@ class RestReportController extends Controller
         $query  = RestSample::find()->where(['like', "REPLACE(tel1,' ','')", $mobile]);
         $smp    = $query->one(); //有多个
         if (!$smp) {
-            return '没找到报告' . $query->createCommand()->getRawSql();
+            return Nodata::widget(['message' => '没有与您相关的报告记录']);
+            //return '没找到报告' . $query->createCommand()->getRawSql();
         }
         $reports = $smp->restReports; //多个报告
         if (is_array($reports) && count($reports) > 0) {
@@ -135,29 +137,29 @@ class RestReportController extends Controller
             $viewname = 'view-guest';
         }
 
-        $userdata = $this->findModel($id);
+        $userdata       = $this->findModel($id);
         $user_snp_genes = [];
         $snp_array      = json_decode($userdata->snpsave, true);
         foreach ($snp_array as $key => $data) {
-            $user_snp_genes[]= $data[0];
+            $user_snp_genes[] = $data[0];
         }
 
         $gene_diseases = [];
-        foreach($user_snp_genes as $gene) {
-             $str_diseases = "";
-             $diseases  = GeneDiseases::find()->where(['gene' => $gene])->one();
-             if ($diseases) {
-                  $temp           = $diseases->diseases;
-                  $array_diseases = explode('|', $temp);
-                  foreach ($array_diseases as $disease) {
-                       $str_diseases .= $disease . '<br>';
-                  }
-             } else {
-                  $str_diseases = "";
-             }
-             $gene_diseases[] = [$gene=>$str_diseases];
+        foreach ($user_snp_genes as $gene) {
+            $str_diseases = "";
+            $diseases     = GeneDiseases::find()->where(['gene' => $gene])->one();
+            if ($diseases) {
+                $temp           = $diseases->diseases;
+                $array_diseases = explode('|', $temp);
+                foreach ($array_diseases as $disease) {
+                    $str_diseases .= $disease . '<br>';
+                }
+            } else {
+                $str_diseases = "";
+            }
+            $gene_diseases[] = [$gene => $str_diseases];
         }
-        
+
         return $this->render($viewname, [
             'model'    => $userdata,
             'comments' => $this->getComments($id),
@@ -175,6 +177,10 @@ class RestReportController extends Controller
         $model = new MingruiComments();
         $model->load(Yii::$app->request->post());
         $model->uid = Yii::$app->user->id;
+
+        if (json_decode($model->content)) {
+            $voices = VoiceRecord::saveRecordVoice($model->content);
+        }
 
         if ($model->save()) {
             //return $this->redirect(['view', 'id' => $id]);
@@ -271,7 +277,7 @@ class RestReportController extends Controller
         //data for fast debug
         /* $datas = '[["ABCB1", "c.2677T>A chr7-87160618 p.S893T", "DP", "Lung cancer, lower risk, association with", "Ser893Thr", "nonsynonymous", [null, null, 0.0366178], "Gervasini.Cancer,107,2850,2006(17120199)", "Damaging(0.03)", "Benign(0.001)", "Benign(0.997)", "Polymorphism(3.72)", "Conserved(3.72)", "het", ["NM_000927", "exon22"], {"NG16070026": ["het", "85/93(0.52)"]}, [1, 0, "AD"], 1, 0, "4383", ["\u4e0d\u660e"], [["\u79cb\u6c34\u4ed9\u78b1\u6297\u6027", "\u4e0d\u660e", "\u4e0d\u660e"], ["\u708e\u6027\u80a0\u75c513\u578b", "\u4e0d\u660e", "\u4e0d\u660e"]]], ["ABCC8", " chr11-17417496 ", "DM?", "Hypoglycaemia, persistent hyperinsulinaemic", "IVS33 as C-T -19", "unknown", [0.03, 0.010768, null], "Fernandez-Marmiesse.Human mutation,27,214,2006(16429405)", null, null, null, null, null, "het", ["", ""], {"NG16070026": ["het", "63/53(0.46)"]}, [1, 0, "AD"], 0, 1, "5605", ["\u4e0d\u660e", "AD"], [["\u7cd6\u5c3f\u75c5", "AD", "\u65e0"], ["\u7cd6\u5c3f\u75c5", "AD", "\u65e0"], ["\u7cd6\u5c3f\u75c5", "\u4e0d\u660e", "\u65e0"]]], ["ACAT1", "c.436-4G>A chr11-108009621 splicing", "", "", "", "splicing", [0.01, 0.000385, null], null, null, null, null, null, null, "het", ["NM_000019", "exon6"], {"NG16070026": ["het", "95/96(0.50)"]}, [1, 0, "AD"], 0, 2, "1622", ["AR"], [["Beta\u786b\u89e3\u9176\u7f3a\u4e4f\u75c7", "AR", "\u6709\u4e2d\u7b49\uff0c\u5927\u7247\u6bb5\u7f3a\u5931"]]], ["ADAMTSL4", "c.926G>A chr1-150526393 p.R309Q", "DM?", "Ectopia lentis, isolated form", "Arg309Gln", "nonsynonymous", [0.04, 0.001387, 0.0163116], "Aragon-Martin.Human mutation,31,E1622,2010(20564469)", "Tolerable(0.36)", "Benign(0.18)", "Benign(1)", "Polymorphism(2.29)", "Conserved(2.29)", "het", ["NM_001288607", "exon6"], {"NG16070026": ["het", "126/114(0.47)"]}, [1, 0, "AD"], 0, 3, "3729", ["AR"], [["\u6676\u72b6\u4f53\u53ca\u77b3\u5b54\u5f02\u4f4d", "AR", "\u6076\u6027\u7a81\u53d8\u4e3a\u4e3b"], ["\u5355\u7eaf\u6676\u72b6\u4f53\u5f02\u4f4d", "AR", "\u6076\u6027\u7a81\u53d8\u4e3a\u4e3b"]]]]'; */
 
-        $datas     = json_decode($datas, true);
+        $datas = json_decode($datas, true);
 
         foreach ($datas as $key => $data) {
             $str = $datas[$key][2];
@@ -298,13 +304,13 @@ class RestReportController extends Controller
     public function actionStats($id)
     {
         //1. find user's bad gene
-        $userdata       = $this->findModel($id);
-        $snp_array      = json_decode($userdata->snpsave, true);
+        $userdata  = $this->findModel($id);
+        $snp_array = json_decode($userdata->snpsave, true);
 
-        $user_snp_genes  = [];//name areas[]
+        $user_snp_genes = []; //name areas[]
         $user_snp_areas = [];
         foreach ($snp_array as $key => $data) {
-            $user_snp_genes[]= $data[0];
+            $user_snp_genes[] = $data[0];
         }
 
         //2. find all areas of this gene
