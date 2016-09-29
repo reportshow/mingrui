@@ -6,13 +6,12 @@ import {deepOrange500} from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import ListItem from 'material-ui/List';
-import ReactTooltip from 'react-tooltip';
-import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem';
 import Checkbox from 'material-ui/Checkbox';
 import MultiSelect from './multiselecttab';
+import SingleSelect from './singleselecttab';
 import SelectField from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
+import ReactTooltip from 'react-tooltip';
 
 const muiTheme = getMuiTheme({
     palette: {
@@ -85,11 +84,66 @@ export default class TableExampleComplex extends React.Component {
 	};	
     }
 
+    componentDidMount() {
+	this.filter();
+    }
 
+    getDefaultState() {
+	return ({
+	    queryResult: tableData,
+	    fixedHeader: true,
+	    fixedFooter: true,
+	    stripedRows: true,
+	    showRowHover: true,
+	    selectable: false,
+	    multiSelectable: false,
+	    enableSelectAll: false,
+	    deselectOnClickaway: true,
+	    showCheckboxes: false,
+	    adjustForCheckboxes: false,
+	    height: '500px',
+	    gene_value: "",
+	    tblx_values: [
+		"frameshift",
+		"nonframeshift",
+		"nonsynonymous",
+		"splicing",
+		"stopgain",
+		"synonymous",
+		"stoploss",
+		"unknown"],
+	    tbbl_values: [
+		"0.9-1",
+		"0.75-0.9",
+		"0.65-0.75",
+		"0.35-0.65",
+		"0.2-0.35",
+		"0-0.2"],
+	    ycfs_values: [
+		"AR",
+		"AD",
+		"XR",
+		"XD",
+		"X-LINKED"
+	    ],
+	    cxsd_values: [
+		"10-20",
+		"20+"
+	    ],
+	    dm_values: [
+		"DM",
+		"DM?",
+		"[Similar]DM",
+	    ],
+	    qrjyz_value: "1%",
+	    inhouse_value:"1%",
+	});
+    }
+    
     rqpl_items = [
-	    <MenuItem key={1} value={"1%"} primaryText="1%" />,
-	    <MenuItem key={2} value={"2%"} primaryText="2%" />,
-	    <MenuItem key={3} value={"5%"} primaryText="5%" />,
+	    <ListItem key={1} value={"1%"} primaryText="1%" />,
+	    <ListItem key={2} value={"2%"} primaryText="2%" />,
+	    <ListItem key={3} value={"5%"} primaryText="5%" />,
     ];
 
     filter_gene = (data, value) => {
@@ -232,39 +286,43 @@ export default class TableExampleComplex extends React.Component {
     }
     
     handle_gene_Change = (event) => {
-	this.setState({gene_value:  event.target.value});
+	this.setState({gene_value:  event.target.value}, this.filter);
     };
 
     handle_tblx_Change = (e,v) => {
-	this.setState({tblx_values: v});
+	this.setState({tblx_values: v}, this.filter);
     };
 
     handle_tbbl_Change = (e,v) => {
-	this.setState({tbbl_values: v});
+	this.setState({tbbl_values: v}, this.filter);
     };
 
     handle_ycfs_Change = (e,v) => {
-	this.setState({ycfs_values: v});
+	this.setState({ycfs_values: v}, this.filter);
     };
 
     handle_cxsd_Change = (e,v) => {
-	this.setState({cxsd_values: v});
+	this.setState({cxsd_values: v}, this.filter);
     };
 
     handle_dm_Change = (e,v) => {
-	this.setState({dm_values: v});
+	this.setState({dm_values: v}, this.filter);
     };
 
-    handle_qrjyz_Change = (event, index, value) => {
-	this.setState({qrjyz_value: value});
+    handle_qrjyz_Change = (event, value) => {
+	this.setState({qrjyz_value: value}, this.filter);
     };
     
-    handle_inhouse_Change = (event, index, value) => {
-	this.setState({inhouse_value: value});
+    handle_inhouse_Change = (event, value) => {
+	this.setState({inhouse_value: value}, this.filter);
     };
 
     handleRowHover = (row) => {
 	ReactTooltip.rebuild();
+    };
+
+    handleCarouselSlide = () => {
+	this.setState(this.getDefaultState(), this.filter);
     };
 
     render() {
@@ -379,34 +437,31 @@ export default class TableExampleComplex extends React.Component {
 	    </div>
 	    <div>
 	      <MultiSelect fullWidth={true} value={this.state.dm_values} floatingLabelText="DM" onChange={this.handle_dm_Change}>
-		<ListItem primaryText={"DM"} butvalue="DM" />
+		<ListItem primaryText={"DM"} value="DM" />
 		<ListItem primaryText={"DM?"} value="DM?" />
 		<ListItem primaryText={"[Similar]DM"} value="[Similar]DM" />
 	      </MultiSelect>
 	    </div>
 	    <div>
-	      <SelectField
+	      <SingleSelect
 		 fullWidth={true}
 		 value={this.state.qrjyz_value}
 		 onChange={this.handle_qrjyz_Change}
 		 floatingLabelText="千人基因组携带率低于"
 		 >
 		{this.rqpl_items}
-	      </SelectField>
+	      </SingleSelect>
 	    </div>
 	    <div>
-	      <SelectField
+	      <SingleSelect
 		 fullWidth={true}
 		 value={this.state.inhouse_value}
 		 onChange={this.handle_inhouse_Change}
 		 floatingLabelText="inhouse低于"
 		 >
 		{this.rqpl_items}
-	      </SelectField>
+	      </SingleSelect>
 	    </div>
-	    <div>
-	      <RaisedButton label="确认" primary={true} onClick={this.filter}/>
-	    </div>	    
 	  </div>
         </div>
 
@@ -415,14 +470,78 @@ export default class TableExampleComplex extends React.Component {
 	    自选过滤
 	  </div>
 	  <div style={{width:'80%', marginLeft:'auto', marginRight:'auto', paddingTop:'20px', overflow:'hidden'}}>
-	    <img src="http://placehold.it/900x500/3c8dbc/ffffff&text=I+Love+Bootstrap" alt="Second slide" />
+	    	    <div>
+	      <MultiSelect fullWidth={true} value={this.state.tblx_values} floatingLabelText="突变类型" onChange={this.handle_tblx_Change}>
+		<ListItem primaryText={"frameshift"} value="frameshift" />
+		<ListItem primaryText={"nonframeshift"} value="nonframeshift" />
+		<ListItem primaryText={"nonsynonymous"} value="nonsynonymous" />
+		<ListItem primaryText={"splicing"} value="splicing" />
+		<ListItem primaryText={"stopgain"} value="stopgain" />
+		<ListItem primaryText={"synonymous"} value="synonymous" />
+		<ListItem primaryText={"stoploss"} value="stoploss" />
+		<ListItem primaryText={"unknown"} value="unknown" />
+	      </MultiSelect>
+	    </div>
+
+	    <div>
+	      <MultiSelect fullWidth={true} value={this.state.cxsd_values} floatingLabelText="测序深度" onChange={this.handle_cxsd_Change}>
+		<ListItem primaryText={"10-20"} value="10-20" />
+		<ListItem primaryText={">20"} value="20+" />
+	      </MultiSelect>
+	    </div>
+	    <div>
+	      <MultiSelect fullWidth={true} value={this.state.tbbl_values} floatingLabelText="突变比例" onChange={this.handle_tbbl_Change}>
+		<ListItem primaryText={"0.9-1"} value="0.9-1" />
+		<ListItem primaryText={"0.75-0.9"} value="0.75-0.9" />
+		<ListItem primaryText={"0.65-0.75"} value="0.65-0.75" />
+		<ListItem primaryText={"0.35-0.65"} value="0.35-0.65" />
+		<ListItem primaryText={"0.2-0.35"} value="0.2-0.35" />
+		<ListItem primaryText={"0-0.2"} value="0-0.2" />
+	      </MultiSelect>
+	    </div>
+	    <div>
+	      <MultiSelect fullWidth={true} value={this.state.ycfs_values} floatingLabelText="遗传方式" onChange={this.handle_ycfs_Change}>
+		<ListItem primaryText={"AR"} value="AR" />
+		<ListItem primaryText={"AD"} value="AD" />
+		<ListItem primaryText={"XR"} value="XR" />
+		<ListItem primaryText={"XD"} value="XD" />
+		<ListItem primaryText={"X-LINKED"} value="X-LINKED" />
+	      </MultiSelect>
+	    </div>
+	    <div>
+	      <MultiSelect fullWidth={true} value={this.state.dm_values} floatingLabelText="DM" onChange={this.handle_dm_Change}>
+		<ListItem primaryText={"DM"} value="DM" />
+		<ListItem primaryText={"DM?"} value="DM?" />
+		<ListItem primaryText={"[Similar]DM"} value="[Similar]DM" />
+	      </MultiSelect>
+	    </div>
+	    <div>
+	      <SingleSelect
+		 fullWidth={true}
+		 value={this.state.qrjyz_value}
+		 onChange={this.handle_qrjyz_Change}
+		 floatingLabelText="千人基因组携带率低于"
+		 >
+		{this.rqpl_items}
+	      </SingleSelect>
+	    </div>
+	    <div>
+	      <SingleSelect
+		 fullWidth={true}
+		 value={this.state.inhouse_value}
+		 onChange={this.handle_inhouse_Change}
+		 floatingLabelText="inhouse低于"
+		 >
+		{this.rqpl_items}
+	      </SingleSelect>
+	    </div>
 	  </div>
         </div>
 
-        <a className="left carousel-control" style={{width:'5%'}} href="#carousel-example-generic" data-slide="prev">
+        <a className="left carousel-control" style={{width:'5%'}} href="#carousel-example-generic" data-slide="prev" onClick={this.handleCarouselSlide}>
           <span className="fa fa-angle-left"></span>
         </a>
-        <a className="right carousel-control" style={{width:'5%'}} href="#carousel-example-generic" data-slide="next">
+        <a className="right carousel-control" style={{width:'5%'}} href="#carousel-example-generic" data-slide="next" onClick={this.handleCarouselSlide}>
           <span className="fa fa-angle-right"></span>
         </a>
       </div>
@@ -441,85 +560,11 @@ export default class TableExampleComplex extends React.Component {
 	   adjustForCheckbox={this.state.adjustForCheckboxes}
 	   enableSelectAll={this.state.enableSelectAll}
 	   >
-	  <TableRow displayBorder={false}>
-	    <TableHeaderColumn colSpan="4"><TextField name='gene' floatingLabelText="重点关注基因" defaultValue={this.state.gene_value} fullWidth={true} onChange={this.handle_gene_Change}/></TableHeaderColumn>
-	    <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
-	      <MultiSelect fullWidth={true} value={this.state.tblx_values} floatingLabelText="突变类型" onChange={this.handle_tblx_Change}>
-		<ListItem primaryText={"frameshift"} value="frameshift" />
-		<ListItem primaryText={"nonframeshift"} value="nonframeshift" />
-		<ListItem primaryText={"nonsynonymous"} value="nonsynonymous" />
-		<ListItem primaryText={"splicing"} value="splicing" />
-		<ListItem primaryText={"stopgain"} value="stopgain" />
-		<ListItem primaryText={"synonymous"} value="synonymous" />
-		<ListItem primaryText={"stoploss"} value="stoploss" />
-		<ListItem primaryText={"unknown"} value="unknown" />
-	      </MultiSelect>
-	    </TableHeaderColumn>
-	  </TableRow>
-	  <TableRow displayBorder={false}>
-	    <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
-	      <MultiSelect fullWidth={true} value={this.state.cxsd_values} floatingLabelText="测序深度" onChange={this.handle_cxsd_Change}>
-		<ListItem primaryText={"10-20"} value="10-20" />
-		<ListItem primaryText={">20"} value="20+" />
-	      </MultiSelect>
-	    </TableHeaderColumn>
-	    <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
-	      <MultiSelect fullWidth={true} value={this.state.tbbl_values} floatingLabelText="突变比例" onChange={this.handle_tbbl_Change}>
-		<ListItem primaryText={"0.9-1"} value="0.9-1" />
-		<ListItem primaryText={"0.75-0.9"} value="0.75-0.9" />
-		<ListItem primaryText={"0.65-0.75"} value="0.65-0.75" />
-		<ListItem primaryText={"0.35-0.65"} value="0.35-0.65" />
-		<ListItem primaryText={"0.2-0.35"} value="0.2-0.35" />
-		<ListItem primaryText={"0-0.2"} value="0-0.2" />
-	      </MultiSelect>
-	    </TableHeaderColumn>
-	    <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
-	      <MultiSelect fullWidth={true} value={this.state.ycfs_values} floatingLabelText="遗传方式" onChange={this.handle_ycfs_Change}>
-		<ListItem primaryText={"AR"} value="AR" />
-		<ListItem primaryText={"AD"} value="AD" />
-		<ListItem primaryText={"XR"} value="XR" />
-		<ListItem primaryText={"XD"} value="XD" />
-		<ListItem primaryText={"X-LINKED"} value="X-LINKED" />
-	      </MultiSelect>
-	    </TableHeaderColumn>
-	  </TableRow>
-	  <TableRow>
-	    <TableHeaderColumn colSpan="2" style={{textAlign: 'center'}}>
-	      <MultiSelect fullWidth={true} value={this.state.dm_values} floatingLabelText="DM" onChange={this.handle_dm_Change}>
-		<ListItem primaryText={"DM"} butvalue="DM" />
-		<ListItem primaryText={"DM?"} value="DM?" />
-		<ListItem primaryText={"[Similar]DM"} value="[Similar]DM" />
-	      </MultiSelect>
-	    </TableHeaderColumn>
-	    <TableHeaderColumn colSpan="2">
-	      <SelectField
-		 fullWidth={true}
-		 value={this.state.qrjyz_value}
-		 onChange={this.handle_qrjyz_Change}
-		 floatingLabelText="千人基因组携带率低于"
-		 >
-		{this.rqpl_items}
-	      </SelectField>
-	    </TableHeaderColumn>
-	    <TableHeaderColumn colSpan="2">
-	      <SelectField
-		 fullWidth={true}
-		 value={this.state.inhouse_value}
-		 onChange={this.handle_inhouse_Change}
-		 floatingLabelText="inhouse低于"
-		 >
-		{this.rqpl_items}
-	      </SelectField>
-	    </TableHeaderColumn>
-	    <TableHeaderColumn  style={{textAlign:'right'}}>
-	      <RaisedButton label="确认" primary={true} onClick={this.filter}/>
-	    </TableHeaderColumn>
-	  </TableRow>
 	  <TableRow>
 	    <TableHeaderColumn colSpan="4" style={{verticalAlign: 'bottom', fontWeight:'bold', fontSize:'120%'}}>当前选择：{this.state.queryResult.length} /{tableData.length}(筛选/全部)
 	    </TableHeaderColumn>
 	    <TableHeaderColumn  colSpan="3" style={{verticalAlign: 'bottom', textAlign:'right'}}>
-	      <a href="#" className="export_button">下载过滤结果</a>
+		<a href="#" className="export_button" style={{color: 'blue'}}>下载过滤结果</a>
 	    </TableHeaderColumn>
 	  </TableRow>
 	  <TableRow>

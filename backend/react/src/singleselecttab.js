@@ -1,6 +1,6 @@
 import React from 'react';
 
-class MultiSelect extends React.Component {    
+class SingleSelect extends React.Component {    
     render() {
 	const {
 	    autoWidth,
@@ -26,7 +26,7 @@ class MultiSelect extends React.Component {
 	    value,
 		...other
 	} = this.props;
-
+	
 	if(floatingLabelText.length>9)
 	{
 	    var marginleft ='60px'
@@ -45,19 +45,12 @@ class MultiSelect extends React.Component {
 		{
 		    children.map((item, i) => {
 			return (
-		    		<li key={i} className={value.indexOf(item.props.value) >= 0 ? 'selected': ''}>
+		    		<li key={i} className={value == item.props.value ? 'selected': ''}>
 		    		  <a href="javascript:;" onClick={(event) =>{
-				      const index = value.indexOf(item.props.value);
-				      if(index < 0) {
-				      	  value.push(item.props.value);
-				      	  if(this.props.onChange) this.props.onChange(event, value);
-				      } else if(index >= 0) {
-				      	  value.splice(index, 1);
-				      	  if(this.props.onChange) this.props.onChange(event, value);
-				      }
-				  }				     
-								 }
-				     >
+				      if(this.props.onChange) this.props.onChange(event, item.props.value);
+				  }
+								 } 
+				>
 				  {item.props.primaryText}</a>
 		    		<i></i>
 		    		</li>
@@ -73,4 +66,4 @@ class MultiSelect extends React.Component {
     }
 }
 
-export default MultiSelect;
+export default SingleSelect;
