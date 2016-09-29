@@ -8,8 +8,7 @@ class SMS extends Component
     public static function sendSMS( $mobile, $data = [])
     {
         include_once 'communication/SendTemplateSMS.php';        
-        sendTemplateSMS($mobile,  $data ,"1"); //tpl: 119716
-
+        sendTemplateSMS($mobile,  $data ,"120078");
     }
 
     public static function landingCall($voice, $mobile, $times = 3)

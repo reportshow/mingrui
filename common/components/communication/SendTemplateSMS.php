@@ -47,26 +47,31 @@ function sendTemplateSMS($to,$datas,$tempId)
      $rest->setAppId($appId);
     
      // 发送模板短信
-     echo "Sending TemplateSMS to $to <br/>";
+     _log ("Sending TemplateSMS to $to <br/>");
      $result = $rest->sendTemplateSMS($to,$datas,$tempId);
      if($result == NULL ) {
-         echo "result error!";
+         _log( "result error!");
          break;
      }
      if($result->statusCode!=0) {
-         echo "error code :" . $result->statusCode . "<br>";
-         echo "error msg :" . $result->statusMsg . "<br>";
+         _log ("error code :" . $result->statusCode . "<br>");
+         _log ("error msg :" . $result->statusMsg . "<br>");
          //TODO 添加错误处理逻辑
      }else{
-         echo "Sendind TemplateSMS success!<br/>";
+         _log ("Sendind TemplateSMS success!<br/>");
          // 获取返回信息
          $smsmessage = $result->TemplateSMS;
-         echo "dateCreated:".$smsmessage->dateCreated."<br/>";
-         echo "smsMessageSid:".$smsmessage->smsMessageSid."<br/>";
+         _log ("dateCreated:".$smsmessage->dateCreated."<br/>");
+         _log( "smsMessageSid:".$smsmessage->smsMessageSid."<br/>");
          //TODO 添加成功处理逻辑
      }
 }
+if (!function_exists('_log')) {
+    function _log()
+    {
 
+    }
+}
 //Demo调用,参数填入正确后，放开注释可以调用 
 // sendTemplateSMS("13910136035", ['1234','7890'], "1");
 ?>
