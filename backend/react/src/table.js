@@ -10,7 +10,7 @@ import ReactTooltip from 'react-tooltip';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import Checkbox from 'material-ui/Checkbox';
-import MultiSelect from './multiselect';
+import MultiSelect from './multiselecttab';
 import SelectField from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
 
@@ -335,15 +335,81 @@ export default class TableExampleComplex extends React.Component {
     <div id="carousel-example-generic" className="carousel slide" data-ride="carousel" data-interval="false">
       <div className="carousel-inner">
         <div className="item active">
-	  <div className="carousel-caption" style={{top:'0px', bottom: 'auto', paddingTop:'0px'}}>
+	  <div className="carousel-caption" style={{top:'0px', bottom: 'auto', paddingTop:'0px', paddingBottom:'0px'}}>
 	    精准推荐
 	  </div>
 	  <div style={{width:'80%', marginLeft:'auto', marginRight:'auto', paddingTop:'20px', overflow:'hidden'}}>
-	    adfkjkajdfkajkdfjakjdfkajdfkjkdjfkajdfkajkdfjkajdfkajkdfjajdfkajdfkjakdjfkajdkf<br/>
-	    adfkjkajdfkajkdfjakjdfkajdfkjkdjfkajdfkajkdfjkajdfkajkdfjajdfkajdfkjakdjfkajdkf<br/>
-	    adfkjkajdfkajkdfjakjdfkajdfkjkdjfkajdfkajkdfjkajdfkajkdfjajdfkajdfkjakdjfkajdkf<br/>
+	    <div>
+	      <MultiSelect fullWidth={true} value={this.state.tblx_values} floatingLabelText="突变类型" onChange={this.handle_tblx_Change}>
+		<ListItem primaryText={"frameshift"} value="frameshift" />
+		<ListItem primaryText={"nonframeshift"} value="nonframeshift" />
+		<ListItem primaryText={"nonsynonymous"} value="nonsynonymous" />
+		<ListItem primaryText={"splicing"} value="splicing" />
+		<ListItem primaryText={"stopgain"} value="stopgain" />
+		<ListItem primaryText={"synonymous"} value="synonymous" />
+		<ListItem primaryText={"stoploss"} value="stoploss" />
+		<ListItem primaryText={"unknown"} value="unknown" />
+	      </MultiSelect>
+	    </div>
+
+	    <div>
+	      <MultiSelect fullWidth={true} value={this.state.cxsd_values} floatingLabelText="测序深度" onChange={this.handle_cxsd_Change}>
+		<ListItem primaryText={"10-20"} value="10-20" />
+		<ListItem primaryText={">20"} value="20+" />
+	      </MultiSelect>
+	    </div>
+	    <div>
+	      <MultiSelect fullWidth={true} value={this.state.tbbl_values} floatingLabelText="突变比例" onChange={this.handle_tbbl_Change}>
+		<ListItem primaryText={"0.9-1"} value="0.9-1" />
+		<ListItem primaryText={"0.75-0.9"} value="0.75-0.9" />
+		<ListItem primaryText={"0.65-0.75"} value="0.65-0.75" />
+		<ListItem primaryText={"0.35-0.65"} value="0.35-0.65" />
+		<ListItem primaryText={"0.2-0.35"} value="0.2-0.35" />
+		<ListItem primaryText={"0-0.2"} value="0-0.2" />
+	      </MultiSelect>
+	    </div>
+	    <div>
+	      <MultiSelect fullWidth={true} value={this.state.ycfs_values} floatingLabelText="遗传方式" onChange={this.handle_ycfs_Change}>
+		<ListItem primaryText={"AR"} value="AR" />
+		<ListItem primaryText={"AD"} value="AD" />
+		<ListItem primaryText={"XR"} value="XR" />
+		<ListItem primaryText={"XD"} value="XD" />
+		<ListItem primaryText={"X-LINKED"} value="X-LINKED" />
+	      </MultiSelect>
+	    </div>
+	    <div>
+	      <MultiSelect fullWidth={true} value={this.state.dm_values} floatingLabelText="DM" onChange={this.handle_dm_Change}>
+		<ListItem primaryText={"DM"} butvalue="DM" />
+		<ListItem primaryText={"DM?"} value="DM?" />
+		<ListItem primaryText={"[Similar]DM"} value="[Similar]DM" />
+	      </MultiSelect>
+	    </div>
+	    <div>
+	      <SelectField
+		 fullWidth={true}
+		 value={this.state.qrjyz_value}
+		 onChange={this.handle_qrjyz_Change}
+		 floatingLabelText="千人基因组携带率低于"
+		 >
+		{this.rqpl_items}
+	      </SelectField>
+	    </div>
+	    <div>
+	      <SelectField
+		 fullWidth={true}
+		 value={this.state.inhouse_value}
+		 onChange={this.handle_inhouse_Change}
+		 floatingLabelText="inhouse低于"
+		 >
+		{this.rqpl_items}
+	      </SelectField>
+	    </div>
+	    <div>
+	      <RaisedButton label="确认" primary={true} onClick={this.filter}/>
+	    </div>	    
 	  </div>
         </div>
+
         <div className="item">
 	  <div className="carousel-caption" style={{top:'0px', bottom: 'auto', paddingTop:'0px'}}>
 	    自选过滤

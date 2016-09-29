@@ -17,5 +17,7 @@ AppAsset::register($this);
 <script>
     var tableData = <?php echo $data ?>;
 </script>
+
+<link type="text/css" href="css/multiselect.css" rel="stylesheet" />
 <script src="report/app.js"></script>
 <script src="report/export.js"></script>
