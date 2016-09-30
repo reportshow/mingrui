@@ -23,10 +23,10 @@ var options = {
 
 if( /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera/i.test(navigator.userAgent.toLowerCase()) ) {
   options.pdfOpenParams.pagemode = 'none';
-  options.forcePDFJS=false;
+  options.forcePDFJS=true;
 }else{
  // options.pdfOpenParams.pagemode = 'outline';
-  options.forcePDFJS=true;
+  options.forcePDFJS=false;
 }
 
 

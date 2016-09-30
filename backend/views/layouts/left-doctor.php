@@ -29,7 +29,7 @@ $menu[] = [
         [
             'label' => '外源报告',
             'icon'  => 'fa fa-puzzle-piece',
-            'url'   => ['myreport/'],
+            'url'   => ['reportstore/'],
             'items' => [
 
             ],
