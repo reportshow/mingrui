@@ -13,7 +13,8 @@ var options = {
     toolbar: 0,
     statusbar: 0,
     pagemode: "none", //[thumbs|bookmarks|outline|none]
-    view: "FitV"
+    view: "FitV",
+    'locale':'zh-CN'
   },
   forcePDFJS: false,
   PDFJS_URL: "../../common/components/pdfjs/web/showpdf.php",

@@ -20,11 +20,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 <?=Html::a('意见反馈', ['rest-report/view', 'id' => $model->id], [
-    'class' => 'btn btn-info',
+    'class' => 'btn btn-info actived',
 ])?>
 
 
-<?=Html::a('查看报告详情', ['show-report', 'id' => $model->id], [
+<?=Html::a('报告详情', ['show-report', 'id' => $model->id], [
     'class' => 'btn btn-success',
 ])?>
 

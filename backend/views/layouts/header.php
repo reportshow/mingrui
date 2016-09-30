@@ -56,12 +56,13 @@ use backend\widgets\GuestbookDrop;
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="<?= Yii::$app->user->identity->avatar ?>" onerror="this.src='images/user2.png';"  class="img-circle"
+                            <img src="<?= Yii::$app->user->identity->avatar ?>" 
+                               onerror="this.src='images/user2.png';"  class="img-circle"
                                  alt="User Image"/>
 
                             <p>
-                                 周振芳
-                                <small>（女，6岁）</small>
+                                 <?= Yii::$app->user->identity->nickname; ?>
+                                <small style="display: none">（女，6岁）</small>
                             </p>
                         </li>
                         <!-- Menu Body -->
