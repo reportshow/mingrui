@@ -6,9 +6,9 @@ use yii\helpers\Html;
 /* @var $model backend\models\RestReport */
 
 $this->title                   = '报告:' . $model->sample->name;
-$this->params['breadcrumbs'][] = ['label' => 'Rest Reports', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => 'Report', 'url' => ['view', 'id'=>$model->id]];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => '报告列表', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id'=>$model->id]];
+$this->params['breadcrumbs'][] = $this->title . ' 数据分类';
 
 AppAsset::register($this);
 ?>
@@ -154,8 +154,9 @@ for(var i=0; i<areas.length; i++) {
     //map 0-max to 0-255
     if(countmax >0) {
         coloroff = 255/(countmax-countmin)*areas[i][2];
-	green =  255 - coloroff;
-	red = coloroff;
+	coloroff = Math.round(coloroff);
+        green =  255 - coloroff;
+        red = coloroff;
     }
     else{
 	green =  255;

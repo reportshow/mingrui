@@ -326,13 +326,13 @@ class RestReportController extends Controller
                 ];
             }
 
-            foreach ($user_snp_areas as $user_cnv_area) {
-                $final_areas[$user_cnv_area - 1]['bad'] = true;
-            }
+            /* foreach ($user_snp_areas as $user_snp_area) { */
+            /*     $final_areas[$user_snp_area - 1]['bad'] = true; */
+            /* } */
         }
 
         return $this->render('stats', [
-            'gene'    => $user_cnv_gene,
+            'gene'    => empty($user_snp_genes)? null : $user_snp_genes[0],
             'summary' => $userdata->explainsummary,
             'data'    => json_encode($final_areas),
             'model'   => $this->findModel($id),
