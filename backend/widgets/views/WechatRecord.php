@@ -300,7 +300,11 @@ wx.uploadVoice({
       setInfo();
    }
 
-   $('body').bind("voice_init", function(){
+   $('body').bind("voice_init", function(e, data){
+      if(typeof(data) != "undefined")
+      if(typeof(data.multi) != "undefined" && !data.multi){
+         //$('#addmorevoice').hide();
+      }
       statusInit();
       $('.record_box').slideDown();
    });

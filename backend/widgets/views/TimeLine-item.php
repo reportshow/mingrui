@@ -2,10 +2,11 @@
 
 use backend\widgets\Imglist;
 use backend\widgets\Attachments;
+use backend\widgets\VoiceShow;
 
 
 echo Attachments::begin( );
-
+echo VoiceShow::begin();
 
 
 
@@ -45,7 +46,7 @@ if($type=='text'){?>
     $voices = json_decode($model->voice);
     if(count($voices))
     foreach ($voices  as $key => $voice) {
-       $path = $model->voicePath($voice);    
+       
 ?>
 
         <!-- timeline item -->
@@ -54,15 +55,9 @@ if($type=='text'){?>
         <i class="fa  fa-wifi bg-yellow" 
         style="transform: rotate(90deg);-webkit-transform: rotate(90deg);"></i>
         <div class="timeline-item" style="margin-left:60px;margin-top:-10px; ">
-
-            <audio src="<?=$path ?>" controls="controls" style='width:160px;margin:10px 0px 0px 10px'></audio>
-
+           
             <div class="timeline-body" style="padding-right: 16px;">
-                <div class="direct-chat-text bg-aqua "  >
-                    <div class='btn-social' style="height: 30px;line-height: 30px;">
-                     <i class='fa  fa-play-circle-o' style="cursor:pointer;margin-left:-5px;margin-top:-2px;"></i> <?=$voice->text?>
-                    </div>
-                </div>   
+               <?=  VoiceShow::widget(['voice'=>$voice]); ;  ?> 
             </div>
  
         </div>

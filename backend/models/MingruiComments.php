@@ -34,7 +34,7 @@ class MingruiComments extends \yii\db\ActiveRecord
             [['uid', 'report_id', 'content'], 'required'],
             [['uid', 'to_uid'], 'integer'],
             [['createtime', 'report_id'], 'safe'],
-            [['content'], 'string', 'max' => 1024],
+            [['content'], 'safe'  ],
         ];
     }
     public function behaviors()

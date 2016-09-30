@@ -17,6 +17,11 @@ if (Yii::$app->controller->action->id === 'login') {
     return;
 }  
 
+ if(!Yii::$app->user->Identity){
+   return Yii::$app->controller->goHome();  
+ }
+
+
     if (class_exists('backend\assets\AppAsset')) {
         backend\assets\AppAsset::register($this);
     } else {
