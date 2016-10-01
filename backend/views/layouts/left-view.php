@@ -1,4 +1,6 @@
- 
+<style type="text/css">
+    .sidebar-menu .treeview-menu{padding-left: 15px}
+</style>
 <aside class="main-sidebar">
 
     <section class="sidebar">
@@ -38,5 +40,6 @@ echo dmstr\widgets\Menu::widget([
 ?>
 
     </section>
+
 
 </aside>

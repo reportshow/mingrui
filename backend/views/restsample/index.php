@@ -33,10 +33,30 @@ $this->params['breadcrumbs'][] = $this->title;
             //'type',
             //'ypkd_id',
             //'barcode',
-              'sex',
+         ['attribute'=>'sex',
+          'value'=>function ($model){
+            return  $model->sex =='female' ? '女' :'男';
+         }],
              'birthday',
             // 'age',
-              'tel1',
+           [
+            'attribute' => 'tel1',
+            'label'     => '联系方式',
+            'value'     => function ($model) {
+                $tels = $model->tel1;
+                //$list = explode('、', $tels);
+                //return str_replace(' ', '', $list[0]) . (count($list) > 1 ? '-等' : '');
+                $tels = str_replace(' ', '', $tels);
+                $tels = str_replace('-', '', $tels);
+                if (strlen($tels) > 11) {
+                    $tels = substr($tels, 0, 11) . '...';
+                }
+                return $tels;
+            },
+            'filter'    => Html::activeTextInput($searchModel, 'tel1', [
+                'class' => 'form-control',
+            ]),
+        ],
             // 'tel2',
             // 'email:email',
               'address',

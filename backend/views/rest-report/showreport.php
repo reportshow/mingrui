@@ -19,6 +19,42 @@ $this->params['breadcrumbs'][] = $this->title;
 AppAsset::register($this); 
 //$this->registerJsFile('@web/js/pdfobject.min.js',['position' => POS_HEAD,'depends'=>['backend\assets\AppAsset']]);  
 //$this->registerCssFile('@web/css/ionicons.min.css',['depends'=>['backend\assets\AppAsset']]); 
+//
+?>
+
+
+    <p>
+
+
+<?=Html::a('意见反馈', ['rest-report/view', 'id' => $model->id], [
+    'class' => 'btn btn-info actived',
+])?>
+
+
+<?=Html::a('报告详情', ['show-report', 'id' => $model->id], [
+    'class' => 'btn btn-success',
+])?>
+
+<?=Html::a('报告归类', ['rest-report/stats', 'id' => $model->id], [
+    'class' => 'btn btn-primary',
+])?>
+
+
+
+<?=Html::a('完善资料', ['mingrui-attachment/', 'reportid' => $model->id], [
+    'class' => 'btn btn-warning',
+])?>
+
+&nbsp;&nbsp;&nbsp;
+<?=Html::a('数据分析', ['rest-report/analyze', 'id' => $model->id], [
+    'class' => 'btn btn-danger',
+])?>
+    </p>
+
+
+    
+<?php
+
 if($model->pdf){
 	$pdfurl = str_replace('/primerbean/media/', 'user/', $model->pdf);
     $pdfurl = Yii::$app->params['erp_url'] . $pdfurl ;

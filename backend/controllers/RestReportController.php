@@ -65,15 +65,18 @@ class RestReportController extends Controller
         //$params['RestReportSearch']['rest_report.status'] = 'finished';
 
         $query = RestReport::find();
-        $query = $query->where(['<>', 'ptype', 'yidai']);
+        $query = $query->where(['<>', 'ptype', 'yidai']);/*
+        $query = $query->andWhere(['not like', 'name', '之父']);
+        $query = $query->andWhere(['not like', 'name', '之母']);*/
+        
 
-        $unfinished = Yii::$app->request->get('unfinished');
+/*        $unfinished = Yii::$app->request->get('unfinished');
         if (!empty($unfinished)) {
             //未出报告
             $query = $query->andWhere(['<>', 'rest_report.status', 'finished']);
         } else {
             $query = $query->andWhere(['rest_report.status' => 'finished']);
-        }
+        }*/
 
         if (Yii::$app->user->can('doctor')) {
             $mobile = Yii::$app->user->Identity->username;

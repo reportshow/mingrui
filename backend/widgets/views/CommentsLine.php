@@ -4,7 +4,9 @@ use backend\widgets\VoiceShow;
 if(!function_exists('commentLineShowTxt')){
    function commentLineShowTxt($content){
     $js = json_decode($content);
-    if ($js) { 
+    if ($js) {
+        if(is_object($js)   ) 
+
         foreach ($js as $res => $voice) {
            echo VoiceShow::widget(['voice'=>$voice]); ;
         }         

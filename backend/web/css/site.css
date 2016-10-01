@@ -38,6 +38,7 @@ body {
 .not-set {
     color: #888;
     font-style: italic;
+    content: '-'
 }
 
 /* add sorting icons to gridview sort links */

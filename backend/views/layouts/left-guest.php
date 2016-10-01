@@ -89,3 +89,6 @@ return $menu;
 
 ?>
 
+    <div style='position:fixed;bottom:0px;'>
+        &nbsp;客服电话:010-87788888
+    </div>

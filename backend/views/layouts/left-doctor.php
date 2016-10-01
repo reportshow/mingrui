@@ -7,17 +7,22 @@ $menu =[];
 ];
 */
 $menu[] = [
-    'label' => '报告管理',
+    'label' => '报告仓库',
     'icon'  => 'fa fa-files-o',
     'url'   => '#',
     'items' => [
         [
-            'label' => '报告检索',
+            'label' => '报告管理',
             'icon'  => 'fa fa-calendar-plus-o',
             'url'   => ['/rest-report/index'],
 
         ],
+       [
+            'label' => '报告分类',
+            'icon'  => 'fa fa-calendar-plus-o',
+            'url'   => ['/rest-report/index'],
 
+        ],
         [
             'label' => '外源数据分析',
             'icon'  => 'fa fa-puzzle-piece',
@@ -38,7 +43,7 @@ $menu[] = [
     ],
 ];
 
-$menu[] = [
+/*$menu[] = [
     'label' => '我的病人',
     'icon'  => 'fa fa-users',
     'url'   => '#',
@@ -55,7 +60,21 @@ $menu[] = [
             'url'   => ['/restsample/index', 'old' => 'yes'],
         ],
     ],
-];
+];*/
+$menu[]=[
+            'label' => '我的病人',
+            'icon'  => 'fa   fa-heartbeat',
+            'url'   => ['/restsample/index'],
+        ];
+        
+$menu[]= [
+            'label' => '案例分享',
+            'icon'  => 'fa fa-file-powerpoint-o',
+            'url'   => ['/mingrui-doc/index'],
+            'items' => [
+
+            ],
+        ];
 
 $menu[] = [
     'label' => '共享资料',
@@ -69,13 +88,22 @@ $menu[] = [
             'items' => [],
         ],
         [
-            'label' => '共享案例',
+            'label' => '文档资料',
             'icon'  => 'fa fa-file-powerpoint-o',
             'url'   => ['/mingrui-doc/index'],
             'items' => [
 
             ],
         ],
+
+/*        [
+            'label' => '检测目录',
+            'icon'  => 'fa fa-file-powerpoint-o',
+            'url'   => ['/'],
+            'items' => [
+
+            ],
+        ],*/
     ],
 ];
 

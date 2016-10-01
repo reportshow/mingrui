@@ -8,7 +8,7 @@ use yii\helpers\Html;
 /* @var $searchModel backend\models\RestReportSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 $unfinished                    = Yii::$app->request->get('unfinished');
-$this->title                   = $unfinished ? '未出报告' : '已出报告';
+$this->title                   = '报告检索'; //$unfinished ? '未出报告' : '已出报告';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -55,13 +55,34 @@ return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
         [
             'label'     => '姓名',
             'attribute' => 'username',
-            'value'     => 'sample.name',
+            'value'     => function ($model) {
+                $sample = $model->sample;
+                $name   = $sample->name;
+                //return $name;
+                return mb_strlen($name) > 9 ? mb_substr($name, 0, 9) . '..' : $name;
+            },
             'filter'    => Html::activeTextInput($searchModel, 'username', [
                 'class' => 'form-control',
             ]),
+            'options'   => ['width' => '80px;'],
         ], //<=====加入这句,
 
-        'report_id',
+        ['attribute' => 'sample.sex',
+            'value'      => function ($model) {
+                return $model->sample->sex == 'female' ? '女' : '男';
+            }],
+        [
+            'attribute' => 'sample.age',
+            'label'     => '年龄',
+            'value'     => function ($model) {
+                return $model->sample->age ? $model->sample->age : '-';
+            },
+        ],
+
+        [
+            'attribute' => 'report_id',
+            'options'   => ['width' => '120px;'],
+        ],
 
         [
             'label'     => '检测项目',
@@ -78,6 +99,8 @@ return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
             'value'     => function ($model) {
                 if (strpos($model->report_id, 'NG') !== false) {
                     return 'NGS';
+                } else if (strpos($model->report_id, 'YD') !== false) {
+                    return 'PCR';
                 } else {
                     $template = $model->product->name;
                     $mm       = ['_MLPA', '_CNV', 'PolyQ'];
@@ -92,24 +115,33 @@ return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
             },
         ],
 
-        [
-            'attribute' => 'tel1',
-            'label'     => '联系方式',
-            'value'     => function ($model) {
-                $tels = $model->sample->tel1;
-                //$list = explode('、', $tels);
-                //return str_replace(' ', '', $list[0]) . (count($list) > 1 ? '-等' : '');
-                $tels = str_replace(' ', '', $tels);
-                $tels = str_replace('-', '', $tels);
-                if (strlen($tels) > 11) {
-                    $tels = substr($tels, 0, 11) . '...';
-                }
-                return $tels;
-            },
-            'filter'    => Html::activeTextInput($searchModel, 'tel', [
-                'class' => 'form-control',
-            ]),
-        ],
+/*        [
+'attribute' => 'tel1',
+'label'     => '联系方式',
+'value'     => function ($model) {
+$tels = $model->sample->tel1;
+//$list = explode('、', $tels);
+//return str_replace(' ', '', $list[0]) . (count($list) > 1 ? '-等' : '');
+$tels = str_replace(' ', '', $tels);
+$tels = str_replace('-', '', $tels);
+if (strlen($tels) > 11) {
+$tels = substr($tels, 0, 11) . '...';
+}
+return $tels;
+},
+'filter'    => Html::activeTextInput($searchModel, 'tel', [
+'class' => 'form-control',
+]),
+],*/
+
+/*        ['attribute'=>'status',
+'format'=>'raw',
+'value'=>function($model){
+return $model->status =='finished' ? '<span class="bg-primary" style="padding:3px">完成</span>':
+'<span class="bg-gray" style="padding:3px">未出</span>';
+},
+'options'   => ['width' => '80px;'],
+],*/
         //'status',
         // 'note:ntext',
         // 'assigner_id',
@@ -163,9 +195,27 @@ return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
         // 'kyupload',
         // 'yidai_marked',
 
-        ['class'   => 'yii\grid\ActionColumn',
-            'template' => '{view} {000update} {000delete}',
-        ],
+        /* ['class'   => 'yii\grid\ActionColumn',
+        'template' => '{view} {000update} {000delete}',
+        ],*/
+        ['attribute' => '',
+            'format'     => 'raw',
+            'value'      => function ($model) {
+                $urlreport = Yii::$app->urlManager->createUrl(
+                    ['rest-report/view', 'id' => $model->id]
+                );
+                $urldata = Yii::$app->urlManager->createUrl(
+                    ['rest-report/analyze', 'id' => $model->id]
+                );
+                $reportStatus     = $model->status == 'finished' ? '' : 'disabled';
+                $reportStatusText = $model->status == 'finished' ? '查报告' : '检测中';
+                $dataStatus       = $model->snpsqlite ? '' : 'disabled';
+                $dataStatuseText  = strpos($model->report_id, 'YD') !== false ? '无数据' : '查数据';
+                $html             = "<a href='$urlreport' class='btn btn-info $reportStatus'>$reportStatusText</a>";
+                $html .= "<a href='$urldata' class='btn btn-info  $dataStatus'>$dataStatuseText</a>";
+                return $html;
+            }],
+
     ],
 ];
 
@@ -181,3 +231,7 @@ echo GridView::widget($GridViewParam);
 
 ?>
 </div>
+<style type="text/css">
+    .content-wrapper{overflow: auto}
+    .disabled{background: #999;border:0px;}
+</style>

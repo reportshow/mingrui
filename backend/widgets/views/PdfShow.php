@@ -26,7 +26,7 @@ if( /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera/i.test(navigator.u
   options.forcePDFJS=true;
 }else{
  // options.pdfOpenParams.pagemode = 'outline';
-  options.forcePDFJS=false;
+  options.forcePDFJS=true;
 }
 
 
