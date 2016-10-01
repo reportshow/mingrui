@@ -2,13 +2,14 @@
 
 namespace backend\controllers;
 
+use backend\models\MingruiComments;
 use backend\models\MingruiDoc;
 use backend\models\MingruiDocSearch;
+use backend\models\SaveImage;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use backend\models\MingruiComments;
 
 /**
  * MingruiDocController implements the CRUD actions for MingruiDoc model.
@@ -34,14 +35,20 @@ class MingruiDocController extends Controller
      * Lists all MingruiDoc models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($type)
     {
-        $searchModel  = new MingruiDocSearch();
-        $params      = Yii::$app->request->queryParams; 
+        $searchModel = new MingruiDocSearch();
+        $params      = Yii::$app->request->queryParams;
 
         $query = MingruiDoc::find();
+        if($type=='article'){
+            $query = $query->where(['doc'=>'']);
+        }else if($type=='doc'){
+             $query = $query->where(['<>','doc', '']);
+        }
         $query = $query
-            ->orderBy('id DESC') ;
+            ->orderBy('id DESC');
+  //echo $query->createCommand()->getRawSql(); exit;
 
         $dataProvider = $searchModel->search($params, $query);
 
@@ -74,12 +81,14 @@ class MingruiDocController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->uid = Yii::$app->user->id;
-            if ($model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            } else {
+            $model->doc = '';
+            if (!$model->save()) {
                 var_export($model->errors);
             }
+            //var_export($model);exit;
 
+            SaveImage::save($model, 'doc');
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -116,7 +125,7 @@ class MingruiDocController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post())) {            
+        if ($model->load(Yii::$app->request->post())) {
             if ($model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {

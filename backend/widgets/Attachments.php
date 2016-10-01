@@ -6,6 +6,7 @@ use yii\base\Widget;
 class Attachments extends Widget
 {
     public $model             = [];
+    public $field             = null; //取模型的这个字段
     public static $hasbegined = false;
     public static function begin($config = [])
     {
@@ -23,7 +24,10 @@ class Attachments extends Widget
     {
 
         $imglist = '';
-        if (!empty($this->model->images)) {
+        if ($this->field) {
+            $field   = $this->field;
+            $imglist = $this->model->$field;
+        } else if (!empty($this->model->images)) {
             $imglist = $this->model->images;
         } else if (!empty($this->model->image)) {
             $imglist = $this->model->image;
@@ -62,7 +66,7 @@ class Attachments extends Widget
                     'pdf'  => 'pdf',
                     'ppt'  => 'ppt', 'pptx' => 'ppt', 'pub' => 'pub',
                     'wma'  => 'sound',
-                    'txt'  => 'txt','css'  => 'css',
+                    'txt'  => 'txt', 'css'  => 'css',
                     'doc'  => 'doc',
                     'docx' => 'doc',
                 ];

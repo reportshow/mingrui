@@ -70,7 +70,7 @@ $menu[]=[
 $menu[]= [
             'label' => '案例分享',
             'icon'  => 'fa fa-file-powerpoint-o',
-            'url'   => ['/mingrui-doc/index'],
+            'url'   => ['/mingrui-doc/index','type'=>'article'],
             'items' => [
 
             ],
@@ -90,7 +90,7 @@ $menu[] = [
         [
             'label' => '文档资料',
             'icon'  => 'fa fa-file-powerpoint-o',
-            'url'   => ['/mingrui-doc/index'],
+            'url'   => ['/mingrui-doc/index','type'=>'doc'],
             'items' => [
 
             ],

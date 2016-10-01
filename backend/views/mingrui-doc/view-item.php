@@ -1,5 +1,8 @@
 <?php
 use yii\helpers\Html;
+use backend\widgets\Attachments;
+
+
 if (!function_exists('delScript')) {
     function delScript($string)
     {
@@ -7,24 +10,24 @@ if (!function_exists('delScript')) {
         $pregreplace = array('', '');
         $string      = preg_replace($pregfind, $pregreplace, $string);
         return $string;
-    } 
+    }
 }
-
 
 $url = Yii::$app->urlManager->createUrl(['mingrui-doc/view', 'id' => $model->id]);
 
 $actname = Yii::$app->controller->action->id;
 
-if ($actname == 'index') {
-    $description = Html::encode(strip_tags($model->description));
+if ($model->doc) {
+  $content =  Attachments::widget(['model' => $model, 'field' => 'doc']);
+
 } else {
-
-    // $description =   HtmlPurifier::process($model->description);
-    $description = delScript($model->description);
+    if ($actname == 'index') {
+         $content = Html::encode(strip_tags($model->description));
+    } else {
+        // $description =   HtmlPurifier::process($model->description);
+         $content = delScript($model->description);
+    }
 }
-
-
-
 
 ?><div class="row">
     <div class="col-md-12">
@@ -63,7 +66,7 @@ if ($actname == 'index') {
                  href="<?=$url?>">
                     <?=$model->title?>
                 </a><br>
-                <?=$description?>
+                <?= $content  ?>
             </div>
             <!-- /.box-body -->
         </div>
