@@ -2,6 +2,7 @@
 
 use backend\widgets\Comments;
 use backend\widgets\Summary;
+use backend\widgets\RestrepotTop;
 use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\RestReport */
@@ -14,38 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="rest-report-view">
 
-
-
-    <p>
-
-
-<?=Html::a('意见反馈', ['rest-report/view', 'id' => $model->id], [
-    'class' => 'btn btn-info actived',
-])?>
-
-
-<?=Html::a('报告详情', ['show-report', 'id' => $model->id], [
-    'class' => 'btn btn-success',
-])?>
-
-<?=Html::a('报告归类', ['rest-report/stats', 'id' => $model->id], [
-    'class' => 'btn btn-primary',
-])?>
-
-
-
-<?=Html::a('完善资料', ['mingrui-attachment/', 'reportid' => $model->id], [
-    'class' => 'btn btn-warning',
-])?>
-
-&nbsp;&nbsp;&nbsp;
-<?=Html::a('数据分析', ['rest-report/analyze', 'id' => $model->id], [
-    'class' => 'btn btn-danger',
-])?>
-    </p>
-
-
-
+<?=RestrepotTop::widget(['report_id'=>$model->id]); ?>
 
 <div class="row">
         <div class="col-md-4">

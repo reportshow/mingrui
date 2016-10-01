@@ -4,6 +4,8 @@ use backend\models\RestReport;
 use yii\grid\GridView;
 use yii\helpers\Html;
 use backend\widgets\Imglist;
+use backend\widgets\RestrepotTop;
+
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\MingruiAttachmentSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -22,6 +24,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
+<?=RestrepotTop::widget(['report_id'=>$id]); ?>
 
     <p>
         <?=Html::a('新增 资料', ['create', 'reportid' => $_GET['reportid']], ['class' => 'btn btn-success'])?>

@@ -1,6 +1,7 @@
 <?php
 use backend\assets\AppAsset;
 use yii\helpers\Html;
+use backend\widgets\RestrepotTop;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\RestReport */
@@ -12,6 +13,9 @@ $this->params['breadcrumbs'][] = $this->title . ' 数据分类';
 
 AppAsset::register($this);
 ?>
+<?=RestrepotTop::widget(['report_id'=>$model->id]); ?>
+
+
 <style>
   table {
   border-collapse: collapse;
@@ -36,22 +40,29 @@ AppAsset::register($this);
     <div class="box-body">
 
           <!-- Horizontal Form -->
-          <div class="box box-info">
-            <div class="box-header with-border">
+          <div class="box box-info" style="box-shadow:none">
+            <div class="box-header ">
               <h3 class="box-title">临床表型(phepotype)</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
             <form class="form-horizontal">           
                 
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-1 control-label">临床表型/特异</label>
+                <div class="input-group col-md-4" style="margin-bottom: 15px;">
 
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputPassword3" placeholder="临床">
-                    <button type="submit" class="btn btn-info pull-right">确定</button>
-                  </div>
-                </div> 
+                      <input type="text" id="" class="form-control" name="linchuang" 
+                      placeholder="临床表型/特异"> 
+                      <span class='input-group-btn'>
+                        <button id='' type='button' class='btn btn-info btn-flat'
+                        style='border-top-left-radius: 0;border-bottom-left-radius: 0;'>
+                        <i id='getsmsIcon' class='fa  fa-check'></i> <span>确定</span>
+                        </button>
+                      </span>
+
+                      <p class="help-block help-block-error"></p>
+                </div>
+
+ 
               
               <!-- /.box-body -->
                
@@ -86,7 +97,7 @@ AppAsset::register($this);
     </div>
     <!-- /.box-body -->			       
 <?php } else { ?>
-          <p style="text-align:center;">没有检测到异常基因!</p>         
+          <h1 style="text-align:center;">没有检测到异常基因!</h1>         
 <?php } ?>
   </div>
   <!-- /.box-body -->

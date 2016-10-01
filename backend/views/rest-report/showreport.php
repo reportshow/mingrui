@@ -3,6 +3,7 @@ use backend\assets\AppAsset;
 use yii\helpers\Html;
 use backend\models\RestReport;
 use backend\widgets\PdfShow;
+use backend\widgets\RestrepotTop;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\RestReport */
@@ -23,33 +24,7 @@ AppAsset::register($this);
 ?>
 
 
-    <p>
-
-
-<?=Html::a('意见反馈', ['rest-report/view', 'id' => $model->id], [
-    'class' => 'btn btn-info actived',
-])?>
-
-
-<?=Html::a('报告详情', ['show-report', 'id' => $model->id], [
-    'class' => 'btn btn-success',
-])?>
-
-<?=Html::a('报告归类', ['rest-report/stats', 'id' => $model->id], [
-    'class' => 'btn btn-primary',
-])?>
-
-
-
-<?=Html::a('完善资料', ['mingrui-attachment/', 'reportid' => $model->id], [
-    'class' => 'btn btn-warning',
-])?>
-
-&nbsp;&nbsp;&nbsp;
-<?=Html::a('数据分析', ['rest-report/analyze', 'id' => $model->id], [
-    'class' => 'btn btn-danger',
-])?>
-    </p>
+<?=RestrepotTop::widget(['report_id'=>$model->id]); ?>
 
 
     

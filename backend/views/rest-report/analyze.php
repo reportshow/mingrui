@@ -1,6 +1,7 @@
 <?php
 use backend\assets\AppAsset;
 use yii\helpers\Html;
+use backend\widgets\RestrepotTop;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\RestReport */
@@ -12,6 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 AppAsset::register($this); 
 ?>
+<?=RestrepotTop::widget(['report_id'=>$model->id]); ?>
 
 <div id="app"></div>
 <script>
