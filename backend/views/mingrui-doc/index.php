@@ -16,7 +16,12 @@ $newBtnText = '新建 ' . $doctype;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?=Html::a($newBtnText, ['create', 'type' => $_GET['type']], ['class' => 'btn btn-success'])?>
+        <?php
+if (Yii::$app->user->can('admin')) {
+    echo Html::a($newBtnText, ['create', 'type' => $_GET['type']], ['class' => 'btn btn-success']);
+}
+
+?>
     </p>
     <?php
 /*    GridView::widget([

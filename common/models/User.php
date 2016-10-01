@@ -1,12 +1,13 @@
 <?php
 namespace common\models;
 
+use backend\models\RestClient;
+use backend\models\RestDanwei;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
-use backend\models\RestClient;
-use backend\models\RestDanwei;
+
 /**
  * User model
  *
@@ -198,12 +199,14 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function getDanwei()
     {
-
-        $doctor = RestClient::findOne($this->role_tab_id);
-        if ($doctor) {
-            $hospital = RestDanwei::findOne($doctor->hospital_id);
-            return $hospital->name;
+        if ($this->role_tab_id) {
+            $doctor = RestClient::findOne($this->role_tab_id);
+            if ($doctor) {
+                $hospital = RestDanwei::findOne($doctor->hospital_id);
+                return $hospital->name;
+            }
         }
+
     }
- 
+
 }
