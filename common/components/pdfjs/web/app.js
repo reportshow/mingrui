@@ -1458,7 +1458,7 @@ function webViewerInitialized() {
 //#if !(FIREFOX || MOZCENTRAL)
     if ('locale' in hashParams) {
       PDFJS.locale = hashParams['locale'];
-    }
+    } 
 //#endif
     if ('textlayer' in hashParams) {
       switch (hashParams['textlayer']) {

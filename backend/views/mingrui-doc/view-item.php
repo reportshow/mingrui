@@ -1,19 +1,48 @@
-<div class="row">
+<?php
+use yii\helpers\Html;
+if (!function_exists('delScript')) {
+    function delScript($string)
+    {
+        $pregfind    = array("/<script.*>.*<\/script>/siU", '/on(mousewheel|mouseover|click|load|onload|submit|focus|blur)="[^"]*"/i');
+        $pregreplace = array('', '');
+        $string      = preg_replace($pregfind, $pregreplace, $string);
+        return $string;
+    } 
+}
+
+
+$url = Yii::$app->urlManager->createUrl(['mingrui-doc/view', 'id' => $model->id]);
+
+$actname = Yii::$app->controller->action->id;
+
+if ($actname == 'index') {
+    $description = Html::encode(strip_tags($model->description));
+} else {
+
+    // $description =   HtmlPurifier::process($model->description);
+    $description = delScript($model->description);
+}
+
+
+
+
+?><div class="row">
     <div class="col-md-12">
         <!-- Box Comment -->
         <div class="box box-widget">
             <div class="box-header with-border">
                 <div class="user-block">
-                    <img alt="User Image" class="img-circle" src="<?=$model->creator->avatar ?>" onerror="this.src='images/user2.png';"  />
-                        <span class="username">
+                    <img alt="User Image" class="img-circle" src="<?=$model->creator->avatar?>" onerror="this.src='images/user2.png';"  />
+                        <span class="username" style="color:#999;font-weight: normal">
                             <a href="#">
-                                <?=$model->creator->nickname ?>
-                            </a>
+                                <?=$model->creator->nickname?>
+
+                            </a>   <?=$model->creator->danwei?>
                         </span>
                         <span class="description">
-                            <?=date('Y-m-d',$model->createtime)?>
+                            <?=date('Y-m-d', $model->createtime)?>
                         </span>
-                    
+
                 </div>
                 <!-- /.user-block -->
                 <div class="box-tools ">
@@ -30,10 +59,11 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <h2 style="font-family: 'Microsoft Yahei';">
+                <a style="font-family: 'Microsoft Yahei';font-size: 1.5em;color: #333; line-height: 2em;"
+                 href="<?=$url?>">
                     <?=$model->title?>
-                </h2>
-                <?=$model->description?>
+                </a><br>
+                <?=$description?>
             </div>
             <!-- /.box-body -->
         </div>

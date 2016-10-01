@@ -19,8 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
           
         <div class="col-md-8">          
               <?=Comments::widget([
-                  'comments' => $comments,
-                   
+                  'action'=>'guestbook/send-comment',              
                   'id'       => $id,
               ])?>
         </div> 

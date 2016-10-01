@@ -8,6 +8,7 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use backend\models\MingruiComments;
 
 /**
  * MingruiDocController implements the CRUD actions for MingruiDoc model.
@@ -83,6 +84,25 @@ class MingruiDocController extends Controller
             return $this->render('create', [
                 'model' => $model,
             ]);
+        }
+    }
+
+    /**
+     * Displays a single RestReport model.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionSendComment($id)
+    {
+        $model = new MingruiComments();
+        $model->load(Yii::$app->request->post());
+        $model->uid = Yii::$app->user->id;
+
+        if ($model->save()) {
+            $id = substr($id, 3);
+            return $this->redirect(['view', 'id' => $id]);
+        } else {
+            var_dump($model->errors);
         }
     }
 

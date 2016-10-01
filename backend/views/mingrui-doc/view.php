@@ -3,6 +3,9 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
+use backend\widgets\Comments;
+
+
 /* @var $this yii\web\View */
 /* @var $model backend\models\MingruiDoc */
 
@@ -39,3 +42,13 @@ echo  $this->render('view-item', [
         'model' => $model,
     ]) 
     ?>
+
+
+        <div class="col-md-8" style="padding-left: 0px;">
+
+              <?=Comments::widget([
+                    'action'=>'mingrui-doc/send-comment',
+                    'id' => 'doc'.$model->id,
+                ])?>
+        </div>
+</div>

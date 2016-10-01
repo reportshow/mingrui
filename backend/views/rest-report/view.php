@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
 
-    
+
 
 <div class="row">
         <div class="col-md-4">
@@ -58,27 +58,11 @@ echo Summary::widget(['model' => $model, 'diseases' => $diseases]);
 
 
         <div class="col-md-8">
-            
+
               <?=Comments::widget([
-    'comments' => $comments,
-    /*[
-    [
-    'position'=>'',
-    'name'=>'xxx',
-    'time'=>'23 Jan 2:00 pm',
-    'avatar'=>'',
-    'message'=>'Is this template really for free? That s unbelievable!',
-    ],
-    [
-    'position'=>'right',
-    'name'=>'hello',
-    'time'=>'23 Jan 2:05 pm',
-    'avatar'=>'',
-    'message'=>'You better believe it!',
-    ],
-    ],*/
-    'id'       => $model->id,
-])?>
+                     'action'=>'rest-report/send-comment',
+                    'id' => $model->id,
+                ])?>
         </div>
 
 

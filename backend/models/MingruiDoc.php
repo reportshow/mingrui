@@ -5,6 +5,8 @@ namespace backend\models;
 use Yii;
 use common\models\User;
 use yii\behaviors\TimestampBehavior;
+use backend\models\RestClient;
+
 /**
  * This is the model class for table "mingrui_doc".
  *
@@ -49,6 +51,15 @@ class MingruiDoc extends \yii\db\ActiveRecord
     public function getCreator()
     {
         return $this->hasOne(User::className(), ['id' => 'uid']);
+    }
+    public function getDanwei(){
+        if($this->creator->role_text=='doctor'){
+               $doctor =  RestClient::findOne($this->creator->role_tab_id);
+               if($doctor){
+                    $hospital = RestDanwei::findOne($doctor->hospital_id);
+                    return $hospital->name;
+               }
+        }
     }
     /**
      * @inheritdoc

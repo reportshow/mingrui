@@ -5,6 +5,7 @@ namespace backend\models;
 use common\models\User;
 use Yii;
 use yii\behaviors\TimestampBehavior;
+
 /**
  * This is the model class for table "mingrui_comments".
  *
@@ -34,7 +35,7 @@ class MingruiComments extends \yii\db\ActiveRecord
             [['uid', 'report_id', 'content'], 'required'],
             [['uid', 'to_uid'], 'integer'],
             [['createtime', 'report_id'], 'safe'],
-            [['content'], 'safe'  ],
+            [['content'], 'safe'],
         ];
     }
     public function behaviors()
@@ -47,7 +48,14 @@ class MingruiComments extends \yii\db\ActiveRecord
             ],
         ];
     }
-
+    public static function getOnegroup($id)
+    {
+        $comments = MingruiComments::find()
+            ->where(['report_id' => $id])
+            ->joinWith(['creator'])
+            ->all();
+        return $comments;
+    }
     public function getCreator()
     {
         return $this->hasOne(User::className(), ['id' => 'uid']);
@@ -59,14 +67,14 @@ class MingruiComments extends \yii\db\ActiveRecord
     public function getPosition()
     {
         // var_export(  Yii::$app->authManager->checkAccess($this->creator->id,'admin'));
-         //  var_export(  Yii::$app->authManager->getRoles(  $this->creator->id) );
-      
-       // exit ("/////");
+        //  var_export(  Yii::$app->authManager->getRoles(  $this->creator->id) );
 
-        if ( Yii::$app->authManager->checkAccess($this->creator->id,'admin')) {
-             return 'right'; 
-        }else{
-          return 'left';
+        // exit ("/////");
+
+        if (Yii::$app->authManager->checkAccess($this->creator->id, 'admin')) {
+            return 'right';
+        } else {
+            return 'left';
         }
     }
 
