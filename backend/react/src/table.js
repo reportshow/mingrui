@@ -7,6 +7,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import ListItem from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
 import MultiSelect from './multiselecttab';
+import MultiSelectTBLX from './multiselecttab_tblx';
 import SingleSelect from './singleselecttab';
 import SelectField from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -25,6 +26,55 @@ export default class TableExampleComplex extends React.Component {
     }
 
     componentDidMount() {
+	for(var key in tableData) {
+	    //疾病信息
+	    var str = '';
+	    for(var inkey in tableData[key][21]) {
+	    	if(tableData[key][21][inkey]) {
+	    	    str = str.concat(tableData[key][21][inkey][0], '--', tableData[key][21][inkey][1], '--', tableData[key][21][inkey][2], "<br/>");
+	    	}
+	    }
+	    tableData[key].push(str);
+
+	    //功能预测
+	    var str='';
+	    str = str.concat(
+	    	'SIFT:  ', tableData[key][8], "<br/>",
+	    	'PolyPhen:  ', tableData[key][9],'  ',
+	    	tableData[key][10], "<br/>",
+	    	'MutationTaster:  ', tableData[key][11], "<br/>",
+	    	'GERP++:  ',tableData[key][12]
+	    );
+	    tableData[key].push(str);
+
+	    //突变信息
+	    var str = '';
+	    str = tableData[key][1].replace(/\s/g, "<br/>");
+	    tableData[key].push(str);
+	    
+	    //HET
+	    for (var prop in tableData[key][15]) {
+	    	if (tableData[key][15].hasOwnProperty(prop)) {
+	    	    tableData[key].push(tableData[key][15][prop][1]);
+	    	}
+	    }
+	    //AR AD
+	    var temp = [];
+	    for(var inkey in tableData[key][21]) {
+	    	if(tableData[key][21][inkey]) {
+	    	    temp.push(tableData[key][21][inkey][1]);
+	    	}
+	    }
+	    tableData[key].push(temp);
+
+	    //HET or other
+	    for (var prop in tableData[key][15]) {
+	    	if (tableData[key][15].hasOwnProperty(prop)) {
+	    	    tableData[key].push(tableData[key][15][prop][0]);
+	    	}
+	    }		    	    
+	}
+
 	this.filter();
     }
 
@@ -57,14 +107,14 @@ export default class TableExampleComplex extends React.Component {
 		"0.75-0.9",
 		"0.65-0.75",
 		"0.35-0.65",
-		"0.2-0.35",
-		"0-0.2"],
+		"0.2-0.35"],
 	    ycfs_values: [
 		"AR",
 		"AD",
 		"XR",
 		"XD",
-		"X-LINKED"
+		"X-LINKED",
+		"不明"
 	    ],
 	    cxsd_values: [
 		"10-20",
@@ -81,6 +131,7 @@ export default class TableExampleComplex extends React.Component {
     }
     
     rqpl_items = [
+	    <ListItem key={1} value={"null"} primaryText="0" />,
 	    <ListItem key={1} value={"1%"} primaryText="1%" />,
 	    <ListItem key={2} value={"2%"} primaryText="2%" />,
 	    <ListItem key={3} value={"5%"} primaryText="5%" />,
@@ -98,6 +149,10 @@ export default class TableExampleComplex extends React.Component {
     }
 
     filter_tblx = (data, value) => {
+	if(this.state.tblx_values[0] ==='') {
+	    return true;
+	}
+	    
 	for(var i in this.state.tblx_values){
 	    if(data[5].toLowerCase() === this.state.tblx_values[i].toLowerCase()){	
 		return true
@@ -108,6 +163,9 @@ export default class TableExampleComplex extends React.Component {
     }
 
     filter_ycfs = (data, value) => {
+	if(this.state.ycfs_values[0] === '') {
+	    return true;
+	}
 	for(var i in this.state.ycfs_values){
 	    for(var j in data[27]) {
 		if(data[27][j].toLowerCase() === this.state.ycfs_values[i].toLowerCase()) {
@@ -132,7 +190,7 @@ export default class TableExampleComplex extends React.Component {
 		return true;
 	    }
 	}
-	
+
 	return false;
     }  
 
@@ -155,45 +213,49 @@ export default class TableExampleComplex extends React.Component {
 		return true;
 	    }
 	}
-	
+
 	return false;
     }  
 
     filter_dm = (data, value) => {
 	for(var i in this.state.dm_values){
-	    if(data[2].toLowerCase() === this.state.dm_values[i].toLowerCase() && data[2].toLowerCase()!=''){
+	    if((data[2].toLowerCase() === this.state.dm_values[i].toLowerCase() && data[2].toLowerCase()!='') || this.state.dm_values[i].toLowerCase() === '') {
 		return true
 	    }
 	}
-	
+
 	return false;
     }  
 
     filter_qrjyz = (data, value) => {
 	var data_qrjyz = parseFloat(data[6][0]);
 	var qrjyz_value = parseFloat(this.state.qrjyz_value);
+	if(this.state.qrjyz_value === 'null' && data[6][0] === null) {
+	    return true;
+	}
+	
 	if(!isNaN(data_qrjyz) && !isNaN(qrjyz_value)) {
 	    if(data_qrjyz <= qrjyz_value/100) {
 		return true;
 	    }
 	}
-	else {
-	    return true;
-	}
+
 	return false;
     }
 
     filter_inhouse = (data, value) => {
-	var data_inhouse = parseFloat(data[6][3]);
+	var data_inhouse = parseFloat(data[6][2]);
 	var inhouse_value = parseFloat(this.state.inhouse_value);
+	if(this.state.inhouse_value === 'null' && data[6][2] === null) {
+	    return true;
+	}
+	
 	if(!isNaN(data_inhouse) && !isNaN(inhouse_value)) {
 	    if(data_inhouse <= inhouse_value/100) {
 		return true;
 	    }
 	}
-	else {
-	    return true;
-	}
+	
 	return false;
     }
 
@@ -266,63 +328,6 @@ export default class TableExampleComplex extends React.Component {
     };
 
     render() {
-	for(var key in tableData) {
-	    //疾病信息
-	    var str = '';
-	    for(var inkey in tableData[key][21]) {
-		if(tableData[key][21][inkey]) {
-		    str = str.concat(tableData[key][21][inkey][0], '--', tableData[key][21][inkey][1], '--', tableData[key][21][inkey][2], "<br/>");
-		}
-	    }
-	    tableData[key].push(str);
-
-	    //功能预测
-	    var str='';
-	    str = str.concat(
-	    	'SIFT:  ', tableData[key][8], "<br/>",
-	    	'PolyPhen:  ', tableData[key][9],'  ',
-	    	tableData[key][10], "<br/>",
-	    	'MutationTaster:  ', tableData[key][11], "<br/>",
-	    	'GERP++:  ',tableData[key][12]
-	    );
-	    tableData[key].push(str);
-
-	    //突变信息
-	    var str = '';
-	    str = tableData[key][1].replace(/\s/g, "<br/>");
-	    tableData[key].push(str);
-	    
-	    //HET
-	    for (var prop in tableData[key][15]) {
-		if (tableData[key][15].hasOwnProperty(prop)) {
-		    tableData[key].push(tableData[key][15][prop][1]);
-		}
-	    }
-	    //AR AD
-	    var temp = [];
-	    for(var inkey in tableData[key][21]) {
-		if(tableData[key][21][inkey]) {
-		    temp.push(tableData[key][21][inkey][1]);
-		}
-	    }
-	    tableData[key].push(temp);
-	    //HET or other
-	    for (var prop in tableData[key][15]) {
-		if (tableData[key][15].hasOwnProperty(prop)) {
-		    tableData[key].push(tableData[key][15][prop][0]);
-		}
-	    }		    
-	}
-
-
-	var settings = {
-	    dots: false,
-	    infinite: true,
-	    speed: 500,
-	    slidesToShow: 1,
-	    slidesToScroll: 1
-	};
-	
 	return (
 <MuiThemeProvider muiTheme={muiTheme}>
   <div>
@@ -334,37 +339,40 @@ export default class TableExampleComplex extends React.Component {
       <div className="carousel-inner">
         <div className="item active">
 	  <div className="carousel-caption" style={{top:'0px', bottom: 'auto', paddingTop:'0px', paddingBottom:'0px'}}>
-	    精准推荐
+		精准推荐
+		<i className="fa fa-fw fa-question"
+		   onMouseEnter={()=>{$('#tip').show();}}
+		   onMouseLeave={()=>{$('#tip').hide();}}
+		/>
 	  </div>
 	  <div style={{width:'80%', marginLeft:'auto', marginRight:'auto', paddingTop:'20px', overflow:'hidden'}}>
+	    <div id='tip' className="callout callout-info" style={{display:'none'}}>
+              <h4>精准推荐过滤说明！</h4>
+              <p>每个指标都是精心挑选的，只要按照这个顺序来挑选就能得到我们预期的结果</p>
+	    </div>
+	      
 	    <div>
-	      <MultiSelect fullWidth={true} value={this.state.tblx_values} floatingLabelText="突变类型" onChange={this.handle_tblx_Change}>
+	      <MultiSelect fullWidth={true} value={this.state.dm_values} floatingLabelText="HGMD" onChange={this.handle_dm_Change}>
+		<ListItem primaryText={"DM"} value="DM" />
+		<ListItem primaryText={"DM?"} value="DM?" />
+		<ListItem primaryText={"[Similar]DM"} value="[Similar]DM" />
+		<ListItem primaryText={"不筛选"} value="" />
+	      </MultiSelect>
+	    </div>
+	    <div>
+	      <MultiSelectTBLX fullWidth={true} value={this.state.tblx_values} floatingLabelText="突变类型" onChange={this.handle_tblx_Change}>
 		<ListItem primaryText={"frameshift"} value="frameshift" />
-		<ListItem primaryText={"nonframeshift"} value="nonframeshift" />
-		<ListItem primaryText={"nonsynonymous"} value="nonsynonymous" />
-		<ListItem primaryText={"splicing"} value="splicing" />
 		<ListItem primaryText={"stopgain"} value="stopgain" />
-		<ListItem primaryText={"synonymous"} value="synonymous" />
+		<ListItem primaryText={"splicing"} value="splicing" />
 		<ListItem primaryText={"stoploss"} value="stoploss" />
+		<ListItem primaryText={""} value="ph" />
+		<ListItem primaryText={"nonsynonymous"} value="nonsynonymous" />
+		<ListItem primaryText={""} value="br" />
+		<ListItem primaryText={"nonframeshift"} value="nonframeshift" />
+		<ListItem primaryText={"synonymous"} value="synonymous" />
 		<ListItem primaryText={"unknown"} value="unknown" />
-	      </MultiSelect>
-	    </div>
-
-	    <div>
-	      <MultiSelect fullWidth={true} value={this.state.cxsd_values} floatingLabelText="测序深度" onChange={this.handle_cxsd_Change}>
-		<ListItem primaryText={"10-20"} value="10-20" />
-		<ListItem primaryText={">20"} value="20+" />
-	      </MultiSelect>
-	    </div>
-	    <div>
-	      <MultiSelect fullWidth={true} value={this.state.tbbl_values} floatingLabelText="突变比例" onChange={this.handle_tbbl_Change}>
-		<ListItem primaryText={"0.9-1"} value="0.9-1" />
-		<ListItem primaryText={"0.75-0.9"} value="0.75-0.9" />
-		<ListItem primaryText={"0.65-0.75"} value="0.65-0.75" />
-		<ListItem primaryText={"0.35-0.65"} value="0.35-0.65" />
-		<ListItem primaryText={"0.2-0.35"} value="0.2-0.35" />
-		<ListItem primaryText={"0-0.2"} value="0-0.2" />
-	      </MultiSelect>
+		<ListItem primaryText={"不筛选"} value="" />
+	      </MultiSelectTBLX>
 	    </div>
 	    <div>
 	      <MultiSelect fullWidth={true} value={this.state.ycfs_values} floatingLabelText="遗传方式" onChange={this.handle_ycfs_Change}>
@@ -373,13 +381,14 @@ export default class TableExampleComplex extends React.Component {
 		<ListItem primaryText={"XR"} value="XR" />
 		<ListItem primaryText={"XD"} value="XD" />
 		<ListItem primaryText={"X-LINKED"} value="X-LINKED" />
+		<ListItem primaryText={"不明"} value="不明" />
+		<ListItem primaryText={"不筛选"} value="" />
 	      </MultiSelect>
 	    </div>
 	    <div>
-	      <MultiSelect fullWidth={true} value={this.state.dm_values} floatingLabelText="DM" onChange={this.handle_dm_Change}>
-		<ListItem primaryText={"DM"} value="DM" />
-		<ListItem primaryText={"DM?"} value="DM?" />
-		<ListItem primaryText={"[Similar]DM"} value="[Similar]DM" />
+	      <MultiSelect fullWidth={true} value={this.state.cxsd_values} floatingLabelText="测序深度" onChange={this.handle_cxsd_Change}>
+		<ListItem primaryText={"10-20"} value="10-20" />
+		<ListItem primaryText={">20"} value="20+" />
 	      </MultiSelect>
 	    </div>
 	    <div>
@@ -397,10 +406,20 @@ export default class TableExampleComplex extends React.Component {
 		 fullWidth={true}
 		 value={this.state.inhouse_value}
 		 onChange={this.handle_inhouse_Change}
-		 floatingLabelText="inhouse低于"
+		 floatingLabelText="本地人携带率低于"
 		 >
 		{this.rqpl_items}
 	      </SingleSelect>
+	    </div>
+	    <div>
+	      <MultiSelect fullWidth={true} value={this.state.tbbl_values} floatingLabelText="突变比例" onChange={this.handle_tbbl_Change}>
+		<ListItem primaryText={"0.9-1"} value="0.9-1" />
+		<ListItem primaryText={"0.75-0.9"} value="0.75-0.9" />
+		<ListItem primaryText={"0.65-0.75"} value="0.65-0.75" />
+		<ListItem primaryText={"0.35-0.65"} value="0.35-0.65" />
+		<ListItem primaryText={"0.2-0.35"} value="0.2-0.35" />
+		<ListItem primaryText={"0-0.2"} value="0-0.2" />
+	      </MultiSelect>
 	    </div>
 	  </div>
         </div>
@@ -410,34 +429,28 @@ export default class TableExampleComplex extends React.Component {
 	    自选过滤
 	  </div>
 	  <div style={{width:'80%', marginLeft:'auto', marginRight:'auto', paddingTop:'20px', overflow:'hidden'}}>
-	    	    <div>
-	      <MultiSelect fullWidth={true} value={this.state.tblx_values} floatingLabelText="突变类型" onChange={this.handle_tblx_Change}>
+	    <div>
+	      <MultiSelect fullWidth={true} value={this.state.dm_values} floatingLabelText="HGMD" onChange={this.handle_dm_Change}>
+		<ListItem primaryText={"DM"} value="DM" />
+		<ListItem primaryText={"DM?"} value="DM?" />
+		<ListItem primaryText={"[Similar]DM"} value="[Similar]DM" />
+		<ListItem primaryText={"不筛选"} value="" />
+	      </MultiSelect>
+	    </div>
+	    <div>
+	      <MultiSelectTBLX fullWidth={true} value={this.state.tblx_values} floatingLabelText="突变类型" onChange={this.handle_tblx_Change}>
 		<ListItem primaryText={"frameshift"} value="frameshift" />
-		<ListItem primaryText={"nonframeshift"} value="nonframeshift" />
-		<ListItem primaryText={"nonsynonymous"} value="nonsynonymous" />
-		<ListItem primaryText={"splicing"} value="splicing" />
 		<ListItem primaryText={"stopgain"} value="stopgain" />
-		<ListItem primaryText={"synonymous"} value="synonymous" />
+		<ListItem primaryText={"splicing"} value="splicing" />
 		<ListItem primaryText={"stoploss"} value="stoploss" />
+		<ListItem primaryText={""} value="ph" />
+		<ListItem primaryText={"nonsynonymous"} value="nonsynonymous" />
+		<ListItem primaryText={""} value="br" />
+		<ListItem primaryText={"nonframeshift"} value="nonframeshift" />
+		<ListItem primaryText={"synonymous"} value="synonymous" />
 		<ListItem primaryText={"unknown"} value="unknown" />
-	      </MultiSelect>
-	    </div>
-
-	    <div>
-	      <MultiSelect fullWidth={true} value={this.state.cxsd_values} floatingLabelText="测序深度" onChange={this.handle_cxsd_Change}>
-		<ListItem primaryText={"10-20"} value="10-20" />
-		<ListItem primaryText={">20"} value="20+" />
-	      </MultiSelect>
-	    </div>
-	    <div>
-	      <MultiSelect fullWidth={true} value={this.state.tbbl_values} floatingLabelText="突变比例" onChange={this.handle_tbbl_Change}>
-		<ListItem primaryText={"0.9-1"} value="0.9-1" />
-		<ListItem primaryText={"0.75-0.9"} value="0.75-0.9" />
-		<ListItem primaryText={"0.65-0.75"} value="0.65-0.75" />
-		<ListItem primaryText={"0.35-0.65"} value="0.35-0.65" />
-		<ListItem primaryText={"0.2-0.35"} value="0.2-0.35" />
-		<ListItem primaryText={"0-0.2"} value="0-0.2" />
-	      </MultiSelect>
+		<ListItem primaryText={"不筛选"} value="" />
+	      </MultiSelectTBLX>
 	    </div>
 	    <div>
 	      <MultiSelect fullWidth={true} value={this.state.ycfs_values} floatingLabelText="遗传方式" onChange={this.handle_ycfs_Change}>
@@ -446,13 +459,14 @@ export default class TableExampleComplex extends React.Component {
 		<ListItem primaryText={"XR"} value="XR" />
 		<ListItem primaryText={"XD"} value="XD" />
 		<ListItem primaryText={"X-LINKED"} value="X-LINKED" />
+		<ListItem primaryText={"不明"} value="不明" />
+		<ListItem primaryText={"不筛选"} value="" />
 	      </MultiSelect>
 	    </div>
 	    <div>
-	      <MultiSelect fullWidth={true} value={this.state.dm_values} floatingLabelText="DM" onChange={this.handle_dm_Change}>
-		<ListItem primaryText={"DM"} value="DM" />
-		<ListItem primaryText={"DM?"} value="DM?" />
-		<ListItem primaryText={"[Similar]DM"} value="[Similar]DM" />
+	      <MultiSelect fullWidth={true} value={this.state.cxsd_values} floatingLabelText="测序深度" onChange={this.handle_cxsd_Change}>
+		<ListItem primaryText={"10-20"} value="10-20" />
+		<ListItem primaryText={">20"} value="20+" />
 	      </MultiSelect>
 	    </div>
 	    <div>
@@ -470,11 +484,22 @@ export default class TableExampleComplex extends React.Component {
 		 fullWidth={true}
 		 value={this.state.inhouse_value}
 		 onChange={this.handle_inhouse_Change}
-		 floatingLabelText="inhouse低于"
+		 floatingLabelText="本地人携带率低于"
 		 >
 		{this.rqpl_items}
 	      </SingleSelect>
 	    </div>
+	    <div>
+	      <MultiSelect fullWidth={true} value={this.state.tbbl_values} floatingLabelText="突变比例" onChange={this.handle_tbbl_Change}>
+		<ListItem primaryText={"0.9-1"} value="0.9-1" />
+		<ListItem primaryText={"0.75-0.9"} value="0.75-0.9" />
+		<ListItem primaryText={"0.65-0.75"} value="0.65-0.75" />
+		<ListItem primaryText={"0.35-0.65"} value="0.35-0.65" />
+		<ListItem primaryText={"0.2-0.35"} value="0.2-0.35" />
+		<ListItem primaryText={"0-0.2"} value="0-0.2" />
+	      </MultiSelect>
+	    </div>
+
 	  </div>
         </div>
 
