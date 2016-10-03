@@ -3,7 +3,7 @@
 namespace backend\models;
 
 use Yii;
-
+use yii\behaviors\TimestampBehavior;
 /**
  * This is the model class for table "mingrui_pingjia".
  *
@@ -23,7 +23,16 @@ class MingruiPingjia extends \yii\db\ActiveRecord
     {
         return 'mingrui_pingjia';
     }
-
+   public function behaviors()
+    {
+        return [
+            [
+                'class'              => TimestampBehavior::className(),
+                'createdAtAttribute' => 'createtime',
+                'updatedAtAttribute' => false,
+            ],
+        ];
+    }
     /**
      * @inheritdoc
      */

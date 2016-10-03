@@ -82,20 +82,27 @@ class PingjiaController extends Controller
  */
     public function actionSaveXingji()
     {
-        $reportid = Yii::$app->request->post('report_id');
-        $pingjia  = Yii::$app->request->post('pingjia');
-        if(!$reportid || !$pingjia){
+        $reportid  = Yii::$app->request->post('report_id');
+        $pingjia   = Yii::$app->request->post('pingjia');
+        $linchuang = Yii::$app->request->post('linchuang');
+        if (!$reportid || !($pingjia || $linchuang)) {
             return;
         }
-        $model    = MingruiPingjia::find()->where(['report_id' => $reportid])->one();
+        $model = MingruiPingjia::find()->where(['report_id' => $reportid])->one();
         if (!$model) {
-            $model = new MingruiPingjia();
+            $model            = new MingruiPingjia();
             $model->report_id = $reportid;
         }
-        $model->pingjia = $pingjia;
+        if ($pingjia) {
+            $model->pingjia = $pingjia;
+        }
+
+        if ($linchuang) {
+            $model->pingjia = $linchuang;
+        }
 
         if ($model->save()) {
-          echo  json_encode(['code' => 1, 'msg' => 'ok']);
+            echo json_encode(['code' => 1, 'msg' => 'ok']);
         } else {
             var_export($model->errors);
         }

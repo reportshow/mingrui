@@ -12,6 +12,11 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id
 $this->params['breadcrumbs'][] = $this->title . ' 数据分类';
 
 AppAsset::register($this);
+
+$report_id = $model->id;
+$pingjiaUrl= Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
+
+
 ?>
 <?=RestrepotTop::widget(['report_id'=>$model->id]); ?>
 
@@ -39,41 +44,55 @@ AppAsset::register($this);
 <div class="box box-success">
     <div class="box-body">
 
-          <!-- Horizontal Form -->
-          <div class="box box-info" style="box-shadow:none">
-            <div class="box-header ">
-              <h3 class="box-title">临床表型(phepotype)</h3>
-            </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <form class="form-horizontal">           
-                
-                <div class="input-group col-md-4" style="margin-bottom: 15px;">
+      <!-- Horizontal Form -->
+      <div class="box box-info" style="box-shadow:none;margin-bottom: 20px">
+        <div class="box-header ">
+          <h3 >1.临床表型(phepotype)</h3>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start --> 
+            <div class="input-group col-md-4" style="margin-bottom: 15px;">
+                  <input type="text" id="linchuang" class="form-control" name="linchuang" 
+                  placeholder="临床表型/特异"> 
+                  <span class='input-group-btn'>
+                    <button id='linchuangpingjia' ctype='button' class='btn btn-info btn-flat'
+                    style='border-top-left-radius: 0;border-bottom-left-radius: 0;'>
+                    <i class='fa  fa-check'></i> <span>确定</span>
+                    </button>
+                  </span>
 
-                      <input type="text" id="" class="form-control" name="linchuang" 
-                      placeholder="临床表型/特异"> 
-                      <span class='input-group-btn'>
-                        <button id='' type='button' class='btn btn-info btn-flat'
-                        style='border-top-left-radius: 0;border-bottom-left-radius: 0;'>
-                        <i id='getsmsIcon' class='fa  fa-check'></i> <span>确定</span>
-                        </button>
-                      </span>
+                  <p class="help-block help-block-error"></p>
+            </div>             
+          <!-- /.box-body -->               
+        
+      </div>
+      <!-- /.box -->
+      <script type="text/javascript">
+           
+          $('#linchuangpingjia').click(function(){
+              var url = "<?=$pingjiaUrl ?>";
+              var val = $('#linchuang').val();
+              $.ajax({
+                   type: "POST",
+                   url:  url,
+                   data: {report_id: '<?=$report_id?>', linchuang: val},
+                   dataType: "json",
+                   success: function(d){
+                        if(d.code==1){
+                           alert('设置成功');
+                        }
+                   }
+               });
+          }); 
+      </script>
 
-                      <p class="help-block help-block-error"></p>
-                </div>
-
- 
-              
-              <!-- /.box-body -->
-               
-            </form>
-          </div>
-          <!-- /.box -->
 
    <div class="box box-info">
+    <h3 >2.基因型(genotype)</h3>
+
 
 <?php if(strcmp($data, '[]')) {?>
-    <p>基因:<?php echo $gene; ?></p>
+    <p>突变基因:<?php echo $gene; ?></p>
     <p>注释:<?php echo $summary; ?></p>
     <br/>
     <p style="text-align:center;">外显子分布及病人突变外显子</p>
@@ -216,3 +235,8 @@ function drawArea(contextO, start, width, count, text,index,fillstyle) {
     context.fillText('E' + (index+1), start+width/2, startY+height+31+i%4*12);
 }
 </script>
+
+
+
+
+
