@@ -27,9 +27,9 @@ class SingleSelect extends React.Component {
 		...other
 	} = this.props;
 	
-	if(floatingLabelText.length>9)
+	if(floatingLabelText.length>5)
 	{
-	    var marginleft ='60px'
+	    var marginleft ='62px'
 	}
 	else {
 	    var marginleft = 'auto'
