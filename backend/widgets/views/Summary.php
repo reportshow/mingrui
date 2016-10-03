@@ -55,9 +55,9 @@ use yii\helpers\Html;
          <li>
           <a href="#">MOMI描述：<br/>
 	    <?php
-               foreach($diseases as $gene_disease){
-                    foreach($gene_disease as $gene=>$disease){
-                         echo $gene . ":" . $disease;
+               foreach($omims as $gene_omim){
+                    foreach($gene_omim as $gene=>$disease_id){
+                         echo $gene . ":" . $disease_id;
                     }
                     echo "<br/>";
                }

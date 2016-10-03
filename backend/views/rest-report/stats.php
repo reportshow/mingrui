@@ -73,8 +73,7 @@ AppAsset::register($this);
    <div class="box box-info">
 
 <?php if(strcmp($data, '[]')) {?>
-    <p>基因:<?php echo $gene; ?></p>
-    <p>注释:<?php echo $summary; ?></p>
+    <p>基因型:<?php echo $gene; ?></p>
     <br/>
     <p style="text-align:center;">外显子分布及病人突变外显子</p>
     <div class="chart">
@@ -89,6 +88,7 @@ AppAsset::register($this);
             <th>起始位置</th>
             <th>终止位置</th>
             <th>是否异常</th>
+            <th>报道次数</th>
           </tr>
         </thead>
         <tbody>
@@ -145,6 +145,7 @@ for(var i=0; i< data_length; i++) {
     else {
 	row = row + "<td>否</td>";
     }
+    row = row + "<td>" + data[i].count + "</td>";    
     row = row + "</tr>";
     $('#table').find('tbody').append(row);		
 }
