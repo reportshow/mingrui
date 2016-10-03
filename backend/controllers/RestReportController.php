@@ -5,6 +5,7 @@ namespace backend\controllers;
 use backend\models\Geneareas;
 use backend\models\GeneDiseases;
 use backend\models\Genetypes;
+use backend\models\Omims;
 use backend\models\MingruiComments;
 use backend\models\RestClient;
 use backend\models\RestReport;
@@ -146,27 +147,22 @@ class RestReportController extends Controller
         foreach ($snp_array as $key => $data) {
             $user_snp_genes[] = $data[0];
         }
+        
 
-        $gene_diseases = [];
+        $gene_omims = [];
         foreach ($user_snp_genes as $gene) {
-            $str_diseases = "";
-            $diseases     = GeneDiseases::find()->where(['gene' => $gene])->one();
-            if ($diseases) {
-                $temp           = $diseases->diseases;
-                $array_diseases = explode('|', $temp);
-                foreach ($array_diseases as $disease) {
-                    $str_diseases .= $disease . '<br>';
-                }
-            } else {
-                $str_diseases = "";
+            $str_omim = "数据库中未找到";
+            $omim     = Omims::find()->where(['gene' => trim($gene)])->one();
+            if ($omim) {
+                 $str_omim = $omim->disease_id;
             }
-            $gene_diseases[] = [$gene => $str_diseases];
+            $gene_omims[] = [$gene => $str_omim];
         }
 
         return $this->render($viewname, [
             'model'    => $userdata,
             'comments' => $this->getComments($id),
-            'diseases' => $gene_diseases,
+            'omims' => $gene_omims,
         ]);
     }
 
@@ -467,6 +463,26 @@ class RestReportController extends Controller
         echo "OK";
     }
 
+    /* //import omim gene relation to db */
+    /* public function actionImportomims() */
+    /* { */
+    /*      $handle=fopen("omim.csv","r"); */
+    /*      $count = 0; */
+    /*      while($data=fgetcsv($handle,0,",")){ */
+    /*           $omim_id = $data[0]; */
+    /*           $disease_id= $data[1]; */
+    /*           $gene = $data[2]; */
+    /*           preg_match('/#*[0-9]*(.*)/', $disease_id, $matches); */
+    /*           $omim = new Omims; */
+    /*           $omim->omim_id = trim($omim_id); */
+    /*           $omim->disease_id = trim($matches[1]); */
+    /*           $omim->gene = trim($gene); */
+    /*           $omim->save(); */
+    /*           $count++; */
+    /*      } */
+    /*      echo "OK" . $count; */
+    /* } */
+    
     // public function
     /**
      * Finds the RestReport model based on its primary key value.
