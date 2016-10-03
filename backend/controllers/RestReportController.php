@@ -308,34 +308,54 @@ class RestReportController extends Controller
         $userdata  = $this->findModel($id);
         $snp_array = json_decode($userdata->snpsave, true);
 
-        $user_snp_genes = []; //name areas[]
         $user_snp_areas = [];
         foreach ($snp_array as $key => $data) {
-            $user_snp_genes[] = $data[0];
+             $user_snp_areas[$data[0]]['bad'][]= $data[1];
         }
 
-        //2. find all areas of this gene
-        $final_areas = [];
-        if (!empty($user_snp_genes[0])) {
-            $areas = Geneareas::find()->where(['geneareas.gene' => trim($user_snp_genes[0])])->all();
-
-            foreach ($areas as $area) {
-                $final_areas[] = ['start' => $area->startcoord,
-                    'end'                     => $area->endcoord,
-                    'count'                   => $area->report_count,
-                    'bad'                     => false,
-                ];
-            }
-
-            /* foreach ($user_snp_areas as $user_snp_area) { */
-            /*     $final_areas[$user_snp_area - 1]['bad'] = true; */
-            /* } */
+        //2. find all areas of these genes
+        foreach($user_snp_areas as $gene => $bad_point_array) {
+             $final_areas = [];
+             $areas = Geneareas::find()->where(['geneareas.gene' => trim($gene)])->all();
+             if($areas) {
+                  foreach ($areas as $area) {
+                       $final_areas[] = ['start' => $area->startcoord,
+                                         'end'   => $area->endcoord,
+                                         'count' => $area->report_count,
+                                         'bad'   => false,
+                                         /* //for debug */
+                                         /* 'bad'   => true, */
+                            ];
+                  }
+             }
+             $user_snp_areas[$gene]['areas'] = $final_areas; 
         }
 
+        //mark the bad area
+        foreach($user_snp_areas as $gene => $data) {
+             foreach($data['bad'] as $i => $bad) {
+                  $temp = explode(' ', $bad);
+                  $type = Genetypes::find()->where(['gene'=>trim($gene), 'hgvs'=>trim($temp[0])])->one();
+                  if($type) {
+                       foreach($data['areas'] as $key => $area) {
+                            if($type->startcoord>=$area['start'] and $type->startcoord<=$area['end']){
+                                 $user_snp_areas[$gene]['areas'][$key]['bad'] = true;
+                                 $user_snp_areas[$gene]['genetype_str'][$i] = $gene . '--E' . $key. '--' . $bad;
+                            }
+                       }
+                  }
+                  else
+                  {
+                       $user_snp_areas[$gene]['genetype_str'][$i] = $gene . '--____' . '--' . $bad;
+                  }
+             }
+        }
+
+        /* //for debug of multiple bad gene */
+        /* $user_snp_areas['ABC'] = $user_snp_areas['CBS']; */
+        
         return $this->render('stats', [
-            'gene'    => empty($user_snp_genes)? null : $user_snp_genes[0],
-            'summary' => $userdata->explainsummary,
-            'data'    => json_encode($final_areas),
+            'data'    => json_encode($user_snp_areas),
             'model'   => $this->findModel($id),
         ]);
     }

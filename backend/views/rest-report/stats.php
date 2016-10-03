@@ -40,14 +40,11 @@ $pingjiaUrl= Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
   var data = <?php echo $data ?>;
 </script>
 
-
 <div class="box box-success">
     <div class="box-body">
-
       <!-- Horizontal Form -->
-      <div class="box box-info" style="box-shadow:none;margin-bottom: 20px">
         <div class="box-header ">
-          <h3 >1.临床表型(phepotype)</h3>
+          <h3>临床表型(phepotype)</h3>
         </div>
         <!-- /.box-header -->
         <!-- form start --> 
@@ -64,11 +61,7 @@ $pingjiaUrl= Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
                   <p class="help-block help-block-error"></p>
             </div>             
           <!-- /.box-body -->               
-        
-      </div>
-      <!-- /.box -->
-      <script type="text/javascript">
-           
+      <script type="text/javascript">         
           $('#linchuangpingjia').click(function(){
               var url = "<?=$pingjiaUrl ?>";
               var val = $('#linchuang').val();
@@ -86,20 +79,21 @@ $pingjiaUrl= Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
           }); 
       </script>
 
-
-   <div class="box box-info">
-    <h3 >2.基因型(genotype)</h3>
-
 <?php if(strcmp($data, '[]')) {?>
-    <p>基因型:<?php echo $gene; ?></p>
-    <br/>
+<?php foreach(json_decode($data, true) as $gene=>$gene_data) {?>
+          <div class="box-header ">
+            <h3>基因型(genetype):</h3>
+<?php foreach($gene_data['genetype_str'] as $str) {?>
+       <?= $str?><br/>
+<?php }?>
+       </div>
     <p style="text-align:center;">外显子分布及病人突变外显子</p>
     <div class="chart">
-      <div id="coords" style="text-align:center;display:none"></div>
-      <canvas id="genearea" width="800"></canvas>
+      <div id="coords_<?=$gene?>" style="text-align:center;display:none"></div>
+      <canvas id="genearea_<?=$gene?>" width="800"></canvas>
     </div>
     <div class="box-body">
-      <table id="table" class="table table-bordered table-hover">
+      <table id="table_<?=$gene?>" class="table table-bordered table-hover">
         <thead>
           <tr>
             <th>序号</th>
@@ -113,7 +107,8 @@ $pingjiaUrl= Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
         </tbody>
       </table>
     </div>
-    <!-- /.box-body -->			       
+    <!-- /.box-body -->
+<?php }?>
 <?php } else { ?>
           <h1 style="text-align:center;">没有检测到异常基因!</h1>         
 <?php } ?>
@@ -124,84 +119,93 @@ $pingjiaUrl= Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
 
 <script>
 var startX = 50;
-var startY = 10;
 var height = 40;
 var width  = 600
-var context = null;
-var coords_div = document.getElementById('coords');
-var graphCanvas = document.getElementById('genearea');
+
+for(var gene in data) {
+     areas = new Array();
+     data_length = data[gene].areas.length;
+     min = data[gene].areas[0].start;
+     max  = data[gene].areas[data_length-1].end;
+
+     for(var i=0; i< data_length; i++) {
+          var area = new Array();
+          area[0] = (width / (max-min)* (data[gene].areas[i].start-min))+startX;// X start
+          area[1] = width / (max-min)*(data[gene].areas[i].end-data[gene].areas[i].start);//width
+          area[2] = data[gene].areas[i].count;// text for count
+          area[4] = data[gene].areas[i].start.toString().concat('--', data[gene].areas[i].end.toString());//text for coordination
+          area[5] = i;//index
+          areas[i] = area;
+
+          //fill the tables
+          var row = "<tr><td>" + 'E' + (i+1) + "</td><td>" +
+               data[gene].areas[i] .start + "</td><td>"+ data[gene].areas[i].end +"</td>";
+          if(data[gene].areas[i].bad){
+               row = row + "<td>是</td>";
+          }
+          else {
+               row = row + "<td>否</td>";
+          }
+          row = row + "<td>" + data[gene].areas[i].count + "</td>";
+          row = row + "</tr>";
+          $('#table_'+gene).find('tbody').append(row);
+     }
+
+     
+     countmax = areas[0][2];
+     countmin = areas[0][2];
+     for(var i=0; i<areas.length; i++) {
+          if(areas[i][2] >countmax) {
+               countmax = areas[i][2];
+          }
+          if(areas[i][2] <countmin) {
+               countmin = areas[i][2];
+          }
+     }
+
+     var startY = 10;
+     var context = null;
+
+     var coords_div = document.getElementById('coords_'+gene);
+     var graphCanvas = document.getElementById('genearea_'+gene);
 // Ensure that the element is available within the DOM
-if (graphCanvas && graphCanvas.getContext) {
-    // Open a 2D context within the canvas
-    context = graphCanvas.getContext('2d');
-}
+     if (graphCanvas && graphCanvas.getContext) {
+          // Open a 2D context within the canvas
+          context = graphCanvas.getContext('2d');
+     }
 
 //Draw vertival line
-drawLine(context, startX, startY, startX, startY+height, '#000000');
+     drawLine(context, startX, startY, startX, startY+height, '#000000');
 
 //Draw horizontal line
-drawLine(context, startX, startY+height/2, startX+width, startY+height/2, '#000000');
-
-data_length = data.length;
-min = data[0].start;
-max  = data[data_length-1].end;
-
-areas = new Array();
-for(var i=0; i< data_length; i++) {
-    var area = new Array();
-    area[0] = (width / (max-min)* (data[i].start-min))+startX;// X start
-    area[1] = width / (max-min)*(data[i].end-data[i].start);//width
-    area[2] = data[i].count;// text for count
-    area[4] = data[i].start.toString().concat('--', data[i].end.toString());//text for coordination
-    area[5] = i;//index
-    areas[i] = area;
-    var row = "<tr><td>" + 'E' + (i+1) + "</td><td>" +
-	data[i] .start + "</td><td>"+ data[i].end +"</td>";
-    if(data[i].bad){
-	row = row + "<td>是</td>";
-    }
-    else {
-	row = row + "<td>否</td>";
-    }
-    row = row + "<td>" + data[i].count + "</td>";    
-    row = row + "</tr>";
-    $('#table').find('tbody').append(row);		
-}
-
-countmax = areas[0][2];
-countmin = areas[0][2];
-for(var i=0; i<areas.length; i++) {
-    if(areas[i][2] >countmax) {
-	countmax = areas[i][2];
-    }
-    if(areas[i][2] <countmin) {
-	countmin = areas[i][2];
-    }
-}
+     drawLine(context, startX, startY+height/2, startX+width, startY+height/2, '#000000');
 
 //Draw areas
-for(var i=0; i<areas.length; i++) {
-    //map 0-max to 0-255
-    if(countmax >0) {
-        coloroff = 255/(countmax-countmin)*areas[i][2];
-	coloroff = Math.round(coloroff);
-        green =  255 - coloroff;
-        red = coloroff;
-    }
-    else{
-	green =  255;
-	red = 0;
-    }
-    fillstyle = 'rgb('.concat(red.toString(),',',  green.toString(), ',0)');
-    drawArea(context, areas[i][0], areas[i][1], areas[i][2], areas[i][4], areas[i][5], fillstyle);
-}
+     for(var i=0; i<areas.length; i++) {
+          //map 0-max to 0-255
+          if(countmax >0) {
+               coloroff = 255/(countmax-countmin)*areas[i][2];
+               coloroff = Math.round(coloroff);
+               green =  255 - coloroff;
+               red = coloroff;
+          }
+          else{
+               green =  255;
+               red = 0;
+          }
+          fillstyle = 'rgb('.concat(red.toString(),',',  green.toString(), ',0)');
+          drawArea(context, areas[i][0], areas[i][1], areas[i][2], areas[i][4], areas[i][5], fillstyle);
+     }
 
 //Draw line for bad area
-for(var i=0; i< data_length; i++) {
-     if(data[i].bad){
-          drawLine(context, areas[i][0]+areas[i][1]/2, startY-20, areas[i][0]+areas[i][1]/2, startY+height+20, '#ff0000');
+     for(var i=0; i< data_length; i++) {
+          if(data[gene].areas[i].bad){
+               drawLine(context, areas[i][0]+areas[i][1]/2, startY-20, areas[i][0]+areas[i][1]/2, startY+height+20, '#ff0000');
+          }
      }
+     
 }
+
 
 // drawLine - draws a line on a canvas context from the start point to the end point
 function drawLine(contextO, startx, starty, endx, endy, strokeStyle) {
