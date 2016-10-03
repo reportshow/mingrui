@@ -98,7 +98,7 @@ class PingjiaController extends Controller
         }
 
         if ($linchuang) {
-            $model->pingjia = $linchuang;
+            $model->linchuang = $linchuang;
         }
 
         if ($model->save()) {

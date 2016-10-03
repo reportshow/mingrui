@@ -16,6 +16,8 @@ use yii\behaviors\TimestampBehavior;
  */
 class MingruiPingjia extends \yii\db\ActiveRecord
 {
+    
+    public static $pingjiaText = ['1'=>'★','2'=>'★★',3=>'★★★',4=>'■',5=>'■ ■'];
     /**
      * @inheritdoc
      */
@@ -32,6 +34,9 @@ class MingruiPingjia extends \yii\db\ActiveRecord
                 'updatedAtAttribute' => false,
             ],
         ];
+    }
+    public function getPingjaX(){
+        return self::$pingjiaText[$this->pingjia];
     }
     /**
      * @inheritdoc
@@ -56,7 +61,7 @@ class MingruiPingjia extends \yii\db\ActiveRecord
             'report_id' => 'Report ID',
             'uid' => 'Uid',
             'pingjia' => 'Pingjia',
-            'linchuang' => 'Linchuang',
+            'linchuang' => '临床',
             'createtime' => 'Createtime',
         ];
     }

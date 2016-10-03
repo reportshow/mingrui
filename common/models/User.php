@@ -209,4 +209,15 @@ class User extends ActiveRecord implements IdentityInterface
 
     }
 
+    public function getDoctor(){
+        if ($this->role_tab_id) {
+            $doctor = RestClient::findOne($this->role_tab_id);
+            if ($doctor) {
+                return $doctor;
+            }else{
+                exit( "您的医生资料未找到");
+            }
+        }
+    }
+
 }

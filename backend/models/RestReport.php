@@ -178,7 +178,7 @@ class RestReport extends \yii\db\ActiveRecord
 
         }
     }
-        public function getExplainDescription()
+    public function getExplainDescription()
     {
         $json = json_decode($this->explain);
         if ($json) {
@@ -215,6 +215,19 @@ class RestReport extends \yii\db\ActiveRecord
         return "<span class='$class' style='padding:0px 5px'>" . $conclusion . '</span>';
     }
 
+    public function getGene()
+    {
+        
+        $snp_array = json_decode($this->snpsave, true);
+
+        $user_snp_genes = [];
+        foreach ($snp_array as $key => $data) {
+            $user_snp_genes[] = $data[0];
+        }
+        return empty($user_snp_genes) ? null : $user_snp_genes[0];
+
+    }
+
     // /**
     //  * @return \yii\db\ActiveQuery
     //  */
@@ -245,6 +258,10 @@ class RestReport extends \yii\db\ActiveRecord
     public function getSample()
     {
         return $this->hasOne(RestSample::className(), ['sample_id' => 'sample_id']);
+    }
+    public function getPingjia()
+    {
+        return $this->hasOne(MingruiPingjia::className(), ['report_id' => 'id']);
     }
     // /**
     //  * @return \yii\db\ActiveQuery

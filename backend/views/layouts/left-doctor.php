@@ -20,7 +20,7 @@ $menu[] = [
        [
             'label' => '报告分类',
             'icon'  => 'fa fa-calendar-plus-o',
-            'url'   => ['/rest-report/index'],
+            'url'   => ['/rest-report-class/index'],
 
         ],
         [
