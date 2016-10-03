@@ -24,7 +24,7 @@ AppAsset::register($this);
 ?>
 
 
-<?=RestrepotTop::widget(['report_id'=>$model->id]); ?>
+<?=RestrepotTop::widget(['model_id'=>$model->id]); ?>
 
 
     

@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-<?=RestrepotTop::widget(['report_id'=>$id]); ?>
+<?=RestrepotTop::widget(['model_id'=>$id]); ?>
 
     <p>
         <?=Html::a('新增 资料', ['create', 'reportid' => $_GET['reportid']], ['class' => 'btn btn-success'])?>

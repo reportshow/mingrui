@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title . '      数据自分析';
 
 AppAsset::register($this); 
 ?>
-<?=RestrepotTop::widget(['report_id'=>$model->id]); ?>
+<?=RestrepotTop::widget(['model_id'=>$model->id]); ?>
 
 <div id="app"></div>
 <script>

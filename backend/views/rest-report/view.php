@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="rest-report-view">
 
-<?=RestrepotTop::widget(['report_id'=>$model->id]); ?>
+<?=RestrepotTop::widget(['model_id'=>$model->id]); ?>
 
 <div class="row">
         <div class="col-md-4">
