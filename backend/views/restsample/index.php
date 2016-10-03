@@ -34,6 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'ypkd_id',
             //'barcode',
          ['attribute'=>'sex',
+         'options'=>['width'=>30],
           'value'=>function ($model){
             return  $model->sex =='female' ? '女' :'男';
          }],
