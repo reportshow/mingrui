@@ -40,16 +40,16 @@ $pingjiaUrl = Yii::$app->urlManager->createUrl(['pingjia/save-xingji'])
 <p>
 
 
-<?=Html::a('意见反馈', ['rest-report/view', 'id' => $report_id], [
+<?=Html::a('意见反馈', ['rest-report/view', 'id' => $model_id], [
     'class' => 'btn btn-info ' . $active['view'],
 ])?>
 
 
-<?=Html::a('报告详情', ['show-report', 'id' => $report_id], [
+<?=Html::a('报告详情', ['show-report', 'id' => $model_id], [
     'class' => 'btn btn-success ' . $active['show-report'],
 ])?>
 
-<?=Html::a('报告归类', ['rest-report/stats', 'id' => $report_id], [
+<?=Html::a('报告归类', ['rest-report/stats', 'id' => $model_id], [
     'class' => 'btn btn-primary ' . $active['stats'],
 ])?>
 
@@ -58,12 +58,12 @@ $pingjiaUrl = Yii::$app->urlManager->createUrl(['pingjia/save-xingji'])
     'onclick'=>'abc()'
 ])?>
 
-<?=Html::a('完善资料', ['mingrui-attachment/', 'reportid' => $report_id], [
+<?=Html::a('完善资料', ['mingrui-attachment/', 'reportid' => $model_id], [
     'class' => 'btn btn-warning ' . $active['index'],
 ])?>
 
 &nbsp;&nbsp;&nbsp;
-<?=Html::a('数据分析', ['rest-report/analyze', 'id' => $report_id], [
+<?=Html::a('数据分析', ['rest-report/analyze', 'id' => $model_id], [
     'class' => 'btn btn-danger ' . $active['analyze'],
 ])?>
 
@@ -125,7 +125,7 @@ $pingjiaUrl = Yii::$app->urlManager->createUrl(['pingjia/save-xingji'])
         $.ajax({
              type: "POST",
              url:  url,
-             data: {report_id: '<?=$report_id?>', pingjia: val},
+             data: {report_id: '<?=$model_id?>', pingjia: val},
              dataType: "json",
              success: function(d){
                   if(d.code==1){

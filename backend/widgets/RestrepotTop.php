@@ -5,10 +5,10 @@ use yii\base\Widget;
 
 class RestrepotTop extends Widget
 {
-    public $report_id;
+    public $model_id;
     public function run()
     {  
-        return $this->render('RestrepotTop', ['report_id' => $this->report_id]);
+        return $this->render('RestrepotTop', ['model_id' => $this->model_id]);
     }
  
 }

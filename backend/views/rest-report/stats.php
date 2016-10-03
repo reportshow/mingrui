@@ -18,7 +18,7 @@ $pingjiaUrl= Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
 
 
 ?>
-<?=RestrepotTop::widget(['report_id'=>$model->id]); ?>
+<?=RestrepotTop::widget(['model_id'=>$model->id]); ?>
 
 
 <style>
