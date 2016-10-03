@@ -18,8 +18,8 @@ class MingruiReportstoreResearch extends MingruiReportstore
     public function rules()
     {
         return [
-            [['id', 'uid', 'createtime'], 'integer'],
-            [['sick', 'product', 'tel', 'diagnose', 'attachements'], 'safe'],
+            [['id', 'uid', 'pingjia', 'createtime'], 'integer'],
+            [['sick', 'product', 'tel', 'diagnose', 'gene', 'attachements'], 'safe'],
         ];
     }
 
@@ -61,6 +61,7 @@ class MingruiReportstoreResearch extends MingruiReportstore
         $query->andFilterWhere([
             'id' => $this->id, 
             'uid' => $this->uid, 
+            'pingjia' => $this->pingjia, 
             'createtime' => $this->createtime, 
         ]);
 
@@ -68,6 +69,7 @@ class MingruiReportstoreResearch extends MingruiReportstore
             ->andFilterWhere(['like', 'product', $this->product])
             ->andFilterWhere(['like', 'tel', $this->tel])
             ->andFilterWhere(['like', 'diagnose', $this->diagnose])
+            ->andFilterWhere(['like', 'gene', $this->gene])
             ->andFilterWhere(['like', 'attachements', $this->attachements]);
 
         return $dataProvider;

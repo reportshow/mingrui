@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use backend\models\MingruiPingjia;
 
 $controllerID = Yii::$app->controller->id;
 $actionID     = Yii::$app->controller->action->id;
@@ -92,15 +93,19 @@ $pingjiaUrl = Yii::$app->urlManager->createUrl(['pingjia/save-xingji'])
       </div>
       <div class="modal-body">
         <div class='pingjia' >
-           <p><input type=radio name='pingjia' value="1"> <i class='tag'>★</i>疑似阳性</p>
-           <p><input type=radio name='pingjia' value="2"> <i class='tag'>★★</i>阳性</p>
-           <p><input type=radio name='pingjia' value="3"> <i class='tag'>★★★</i>阳性+好案例</p>
-           <p><input type=radio name='pingjia' value="4" > <i class='tag'>■</i>阴性</p>
-           <p><input type=radio name='pingjia' value="5"> <i class='tag'>■ ■</i>阳性+特殊案例</p>
+        <?php
+         foreach (MingruiPingjia::$pingjiaText  as $key => $value) {
+             $star = $value['key'];
+             $label = $value['label'];
+             echo  " <p><input type=radio name='pingjia' value='$key'> <i class='tag'>$star</i> $label </p> ";        
+
+          } 
+       ?>
+           
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline pull-left" data-dismiss="modal"> 取 消 </button>
+        <button type="button" class="btn btn-outline pull-left cancel" data-dismiss="modal"  > 取 消 </button>
         <button type="button" class="btn btn-outline" id='pingjisendBtn'> 确 定 </button>
       </div>
     </div>
@@ -115,9 +120,9 @@ $pingjiaUrl = Yii::$app->urlManager->createUrl(['pingjia/save-xingji'])
 <script type="text/javascript">
     function abc(){
        $('#xingjipingjiaBox').show();
-    }
-    $('#xingjipingjiaBox').click(function(){
-        $(this).fadeOut();
+    } 
+    $('.cancel').click(function(){
+       $('#xingjipingjiaBox').hide();
     });
     $('#pingjisendBtn').click(function(){
         var url = "<?=$pingjiaUrl ?>";

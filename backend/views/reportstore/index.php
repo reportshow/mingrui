@@ -11,8 +11,7 @@ $this->title = '外源报告';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mingrui-reportstore-index">
-
-    
+ 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
@@ -24,15 +23,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-             [
-               'attribute'   => 'id','value'   => 'id',
-               'headerOptions' => ['width' => '60']
-            ],
+            'id',
             'uid',
             'sick',
             'product',
             'tel',
               'diagnose:ntext',
+              'gene',
+              'pingjia',
             // 'attachements:ntext',
             // 'createtime',
 

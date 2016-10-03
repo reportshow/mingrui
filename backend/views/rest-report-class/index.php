@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <?php $GridViewParam = [
-    'emptyCell'    => '搜索',
+    //'emptyCell'    => '搜索',
     'dataProvider' => $dataProvider,
     'filterModel'  => $searchModel,
 /*    'rowOptions'   => function ($model) {

@@ -65,8 +65,15 @@ class ReportstoreController extends Controller
     {
         $model = new MingruiReportstore();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id'           => $model->id]);
+        if ($model->load(Yii::$app->request->post())  ) {
+            $model->uid = Yii::$app->user->id;
+            $model->attachements = '';
+            if (!$model->save()) {
+                var_export($model->errors);
+            }
+            SaveImage::save($model, 'attachements');
+
+            return $this->redirect(['index', 'id'           => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,

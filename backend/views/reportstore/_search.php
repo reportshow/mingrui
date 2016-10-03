@@ -27,6 +27,10 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'diagnose') ?>
 
+    <?php // echo $form->field($model, 'gene') ?>
+
+    <?php // echo $form->field($model, 'pingjia') ?>
+
     <?php // echo $form->field($model, 'attachements') ?>
 
     <?php // echo $form->field($model, 'createtime') ?>

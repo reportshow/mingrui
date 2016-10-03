@@ -13,6 +13,8 @@ use yii\behaviors\TimestampBehavior;
  * @property string $product
  * @property string $tel
  * @property string $diagnose
+ * @property string $gene
+ * @property string $pingjia
  * @property string $attachements
  * @property string $createtime
  */
@@ -42,9 +44,9 @@ class MingruiReportstore extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['uid', 'createtime'], 'integer'],
+            [['uid', 'pingjia', 'createtime'], 'integer'],
             [['diagnose', 'attachements'], 'string'],
-            [['sick', 'tel'], 'string', 'max' => 64],
+            [['sick', 'tel', 'gene'], 'string', 'max' => 64],
             [['product'], 'string', 'max' => 128],
         ];
     }
@@ -61,6 +63,8 @@ class MingruiReportstore extends \yii\db\ActiveRecord
             'product' => '检测项目',
             'tel' => '联系电话',
             'diagnose' => '临床诊断',
+            'gene' => '异常基因',
+            'pingjia' => '星级评价',
             'attachements' => '报告',
             'createtime' => '时间',
         ];
