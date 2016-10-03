@@ -14,6 +14,10 @@ class RestReportSearch extends RestReport
     public $product_name;
     public $username;
     public $tel;
+
+    public $pingjia;
+    public $gene;
+    public $linchuang;
     /**
      * @inheritdoc
      */
@@ -22,6 +26,7 @@ class RestReportSearch extends RestReport
         return [
             [['id', 'assigner_id', 'product_id', 'complete', 'analysis_id', 'yidai_complete', 'jxyanzhen', 'star', 'abiexported', 'locked', 'express_sent', 'sale_marked', 'yidai_marked'], 'integer'],
             [['username', 'product_name', 'tel', //新增的几个
+            'gene','pingjia','linchuang',//再增加几个
             'report_id',  'created', 'updated', 'status', 'note', 'cnvsqlite', 'snpsqlite', 'cnvsave', 'snpsave', 'finish', 'xiafa', 'url', 'yidai_note', 'express', 'express_no', 'sample_id', 'pdf', 'conclusion', 'explain', 'mut_type', 'template', 'type', 'gene_template', 'ptype', 'csupload', 'family_id', 'date', 'abiresult', 'snpexplain', 'final_note', 'assigner_note', 'shenhe_date', 'time_stamp', 'yidaifinished_date', 'kyupload'], 'safe'],
         ];
     }
@@ -49,7 +54,7 @@ class RestReportSearch extends RestReport
         }
         $query = $query->joinWith(['product']);
         $query = $query->joinWith(['sample']);
-
+        $query = $query->joinWith(['pingjia']);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -121,9 +126,14 @@ class RestReportSearch extends RestReport
             ->andFilterWhere(['like', 'assigner_note', $this->assigner_note])
             ->andFilterWhere(['like', 'time_stamp', $this->time_stamp])
             ->andFilterWhere(['like', 'kyupload', $this->kyupload])
+
             ->andFilterWhere(['like', 'rest_product.name', $this->product_name]) //<=====加入这句
             ->andFilterWhere(['like', 'rest_sample.name', $this->username])//<=====加入这句
             ->andFilterWhere(['like', 'rest_sample.tel', $this->tel])
+
+            ->andFilterWhere(['like', 'pingjia.pingjia', $this->pingjia]) //<=====加入这句
+            ->andFilterWhere(['like', 'pingjia.linchuang', $this->linchuang])//<=====加入这句
+            ->andFilterWhere(['like', 'snpsave', $this->gene])       
             ; 
 
 
