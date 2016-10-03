@@ -65,6 +65,12 @@ class MingruiQaController extends Controller
         ]);
     }
 
+ public function actionViewcontact()
+    {
+        return $this->render('viewcontact', [
+            //'model' => $this->findModel($id),
+        ]);
+    }
     /**
      * Creates a new MingruiQa model.
      * If creation is successful, the browser will be redirected to the 'view' page.

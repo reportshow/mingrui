@@ -42,3 +42,15 @@ el.innerHTML = (myPDF) ? "PDFObject was successful!" : "Uh-oh, the embed didn't 
 .pdfobject { border: 1px solid #666; }
 </style>
 </div>
+<script type="text/javascript">
+ var resizeTimer =  setInterval(function(){
+   var h =  $("iframe").contents().find("#viewer").height();
+   if(h > 1000){
+      $(".pdfobject-container").height(h+50);
+      $("iframe").height(h+50);
+      clearInterval(resizeTimer);
+       
+   }
+
+  },2000);
+</script>

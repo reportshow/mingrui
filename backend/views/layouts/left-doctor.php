@@ -124,7 +124,7 @@ $menu[] = ['label' => '互动平台',
         [
             'label' => '联系方式',
             'icon'  => 'fa fa-pie-chart',
-            'url'   => ['#'],
+            'url'   => ['/mingrui-qa/viewcontact','id'=>1],
         ],
 
     ],

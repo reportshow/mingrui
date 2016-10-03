@@ -48,10 +48,16 @@ use backend\widgets\GuestbookDrop;
                 </li>
                   
 
-                <li class="dropdown user user-menu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <li class="dropdown user user-menu"> 
+                  <?= Html::a(  '退出',
+                                    ['/site/logout'],
+                                    ['data-method' => 'post', 'class' => 'btn btn-default btn-flat' ,
+                                    'style'=>'display:inline-block;border:0px;background:none']
+                                ) ?>
+
+                    <a href="#" class="dropdown-toggle hidden" data-toggle="dropdown">
                         <img src="<?= Yii::$app->user->identity->avatar ?>" class="user-image"  onerror="this.src='images/user2.png';"  alt="User Imagexx"/>
-                        <span class="hidden-xs"><?= Yii::$app->user->identity->nickname; ?></span>
+                       
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
