@@ -44,14 +44,17 @@ class WechatController extends Controller
 
     public function actionTalk()
     {
+       //exit($_GET["echostr"] ) ;
+
         $this->wechatInit();
         /*if ($wechat->checkSignature()) {
         echo $_GET["echostr"];
         }*/
         //$this->xml['Content']
-        //echo $this->reply->text(  json_encode($this->xml));
+       // echo $this->reply->text(  json_encode($this->xml));
+     
 
-        if (1 || $this->xml['MsgType'] == "event") {
+        if ($this->xml['MsgType'] == "event") {
             $ev = new WechatSickEvent($this->xml);
             echo $ev->response();
         }
@@ -93,6 +96,7 @@ class WechatController extends Controller
     }
     public function actionMenuinit()
     {
+        var_export(Yii::$app->params['wechat_sick']['menu']);
 
         return Yii::$app->wechat->createMenu(Yii::$app->params['wechat_sick']['menu']);
     }

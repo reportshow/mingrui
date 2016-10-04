@@ -21,6 +21,7 @@ class WechatEvent
 
     public function response()
     {
+        //exit($this->reply->text('response')); 
         $Event = strtoupper(trim($this->xml['Event']));
 
         switch ($Event) {
@@ -39,12 +40,17 @@ class WechatEvent
     }
     public function event_click()
     {
+        //exit($this->reply->text('xxxxx')); 
+
         $eventname = strtolower(trim($this->xml['EventKey']));
 
         $eventname = str_replace('-', '_', $eventname);
 
         if (method_exists($this, $eventname)) {
-            return $this->$eventname();
+           // return $this->sample_order(); 
+            //return $this->$eventname();
+            return call_user_func(array($this, $eventname));
+
         } else {
             return $this->reply->text('function not exists');
         }

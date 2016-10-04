@@ -67,7 +67,8 @@ class WechatUser extends Model
             $userid    = $user->id;
         } else {
             //SELECT * FROM `rest_sample` where REPLACE(tel1,' ','') like '%15942175885%' ;
-            $user = RestSample::find()->where(['like', 'tel1', $mobile])->one();
+           // $user = RestSample::find()->where(['like', 'tel1', $mobile])->one();
+             $user = RestSample::find()->where(['like', "REPLACE(tel1,' ','')", $mobile])->one();
             if ($user) {
                 $role_text = 'guest';
                 $userid    = $user->sample_id;
@@ -86,7 +87,7 @@ class WechatUser extends Model
 
             echo (' <div class="alert alert-info alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-info"></i> 该号码未被记录!</h4>
+                <h4><i class="icon fa fa-info"></i> 该号码'.$mobile.'未被记录!</h4>
                 请联系客服/销售，将你的手机号录入系统中.
               </div>');
             return false;
@@ -239,6 +240,21 @@ class WechatUser extends Model
             //var_dump(Yii::$app->wechat);
         }
 
+    }
+
+    public static function getWechat($isdoctor = false){
+        if($isdoctor){
+            //echo "use doctor";
+            $config = Yii::$app->params['wechat_doctor']['config'];
+           return Yii::createObject([
+                'class'     => 'callmez\wechat\sdk\Wechat',
+                'appId'     => $config['appId'],
+                'appSecret' => $config['appSecret'],
+                'token'     => $config['token'],
+            ]); 
+        }else{
+            return Yii::$app->wechat;
+        }
     }
 
     public function wechatQrcodeUrl()
