@@ -19,11 +19,12 @@ class MingruiPingjia extends \yii\db\ActiveRecord
 {
 
     public static $pingjiaText =
-        [1 => ['key' => '★', 'label' => '疑似阳性'],
+        [1 => ['key' => '★', 'label' => '疑似阳性',''],
         2  => ['key' => '★★', 'label' => '阳性'],
         3  => ['key' => '★★★', 'label' => '阳性+好案例'],
         4  => ['key' => '■', 'label' => '阴性'],
         5  => ['key' => '■ ■', 'label' => '阳性+特殊案例'],
+        //6 =>['key'=>' x', 'label'=>'x'],
     ];
     /**
      * @inheritdoc

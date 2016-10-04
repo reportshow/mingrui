@@ -40,17 +40,19 @@ $pingjiaUrl= Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
   var data = <?php echo $data ?>;
 </script>
 
-<div class="box box-success">
+<div class="box box-info">
     <div class="box-body">
       <!-- Horizontal Form -->
-        <div class="box-header ">
+        <div class="box-header " style="padding-left: 0px">
           <h3>临床表型(phepotype)</h3>
         </div>
         <!-- /.box-header -->
         <!-- form start --> 
-            <div class="input-group col-md-4" style="margin-bottom: 15px;">
+            <div> 临床诊断/特异表型</div>
+
+            <div class="input-group col-md-6" style="margin-bottom: 15px;">
                   <input type="text" id="linchuang" class="form-control" name="linchuang" 
-                  placeholder="临床表型/特异"> 
+                  placeholder=""> 
                   <span class='input-group-btn'>
                     <button id='linchuangpingjia' ctype='button' class='btn btn-info btn-flat'
                     style='border-top-left-radius: 0;border-bottom-left-radius: 0;'>
@@ -79,10 +81,17 @@ $pingjiaUrl= Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
           }); 
       </script>
 
+</div>
+<div class="box box-info">
+    <h3 style="padding-left:10px">基因型(genotype)</h3>
+
+
+
+
 <?php if(strcmp($data, '[]')) {?>
 <?php foreach(json_decode($data, true) as $gene=>$gene_data) {?>
           <div class="box-header ">
-            <h3>基因型(genetype):</h3>
+           <!--  <h3>基因型(genetype):</h3> -->
 <?php foreach($gene_data['genetype_str'] as $str) {?>
        <?= $str?><br/>
 <?php }?>

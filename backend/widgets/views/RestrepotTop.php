@@ -39,19 +39,12 @@ $pingjiaUrl = Yii::$app->urlManager->createUrl(['pingjia/save-xingji'])
 </style>
 
 <p>
-
-
-<?=Html::a('意见反馈', ['rest-report/view', 'id' => $model_id], [
-    'class' => 'btn btn-info ' . $active['view'],
-])?>
-
-
 <?=Html::a('报告详情', ['show-report', 'id' => $model_id], [
     'class' => 'btn btn-success ' . $active['show-report'],
 ])?>
 
-<?=Html::a('报告归类', ['rest-report/stats', 'id' => $model_id], [
-    'class' => 'btn btn-primary ' . $active['stats'],
+<?=Html::a('意见反馈', ['rest-report/view', 'id' => $model_id], [
+    'class' => 'btn btn-info ' . $active['view'],
 ])?>
 
 <?=Html::a('星级评价', '#', [
@@ -59,11 +52,17 @@ $pingjiaUrl = Yii::$app->urlManager->createUrl(['pingjia/save-xingji'])
     'onclick'=>'abc()'
 ])?>
 
+
+<?=Html::a('报告归类', ['rest-report/stats', 'id' => $model_id], [
+    'class' => 'btn btn-primary ' . $active['stats'],
+])?>
+
+
+
 <?=Html::a('完善资料', ['mingrui-attachment/', 'reportid' => $model_id], [
     'class' => 'btn btn-warning ' . $active['index'],
 ])?>
-
-&nbsp;&nbsp;&nbsp;
+ 
 <?=Html::a('数据分析', ['rest-report/analyze', 'id' => $model_id], [
     'class' => 'btn btn-danger ' . $active['analyze'],
 ])?>
@@ -83,7 +82,7 @@ $pingjiaUrl = Yii::$app->urlManager->createUrl(['pingjia/save-xingji'])
 </style>
 <div class="example-modal" >
 <div class="modal modal-primary" id='xingjipingjiaBox'>
-  <div class="modal-dialog">
+  <div class="modal-dialog" style="margin-top: 150px;">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">

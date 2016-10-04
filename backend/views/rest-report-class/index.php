@@ -81,10 +81,10 @@ return $model->sample->age ? $model->sample->age : '-';
 },
 ],*/
 
-        [
+/*        [
             'attribute' => 'report_id',
             'options'   => ['width' => '120px;'],
-        ],
+        ],*/
 
         [
             'label'     => '检测项目',
@@ -97,12 +97,12 @@ return $model->sample->age ? $model->sample->age : '-';
 
         [
             'attribute' => 'gene',
-            'label'     => '基因', 
+            'label'     => '基因型', 
             'headerOptions' => ['width' => '60'],
         ], 
         [
             'attribute' => 'linchuang',
-            'label'         => '临床',
+            'label'         => '临床表型',
             'value'=>'pingjia.linchuang',
         ],
         
@@ -111,11 +111,11 @@ return $model->sample->age ? $model->sample->age : '-';
             'value'         => function ($model) {
                 $obj = $model->pingjia;
                 if ($obj) {
-                    return MingruiPingjia::$pingjiaText[$obj->pingjia];
+                   // return MingruiPingjia::$pingjiaText[$obj->pingjia];
                 }
             },
-            'label'         => '评价',
-            'headerOptions' => ['width' => '40'],
+            'label'         => '星级评价',
+            'headerOptions' => ['width' => '80'],
         ],
 
 

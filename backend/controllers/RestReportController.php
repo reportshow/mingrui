@@ -17,11 +17,27 @@ use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use backend\widgets\Nodata;
+use common\models\WechatUser;
 /**
  * RestReportController implements the CRUD actions for RestReport model.
  */
 class RestReportController extends Controller
 {
+    
+    public function beforeAction($action){
+         if(!Yii::$app->user->Identity){
+            if(!empty($_SESSION['entery_url'] )){
+                WechatUser::oauth();
+                return;
+               // header('Location: ' . $_SESSION['entery_url']);
+              //  exit('hello');
+            }
+            return Yii::$app->controller->goHome();  
+         }
+         //var_dump(Yii::$app->user->Identity);exit;
+        return parent::beforeAction($action); 
+    }
+
     /**
      * @inheritdoc
      */
@@ -104,14 +120,27 @@ class RestReportController extends Controller
     }
 
     public function actionMyreport()
-    {
-        //var_export(Yii::$app->user);exit;
+    { 
+        $role = Yii::$app->user->Identity->role_text;
+        if($role=='doctor'){
+
+             $content = Nodata::widget(['message' => '您是医生身份，无法查看自己的报告']);
+            return $this->render(
+                '/layouts/main-login',
+                ['content' => $content]
+            );
+        }
         $mobile = Yii::$app->user->Identity->username;
+         
         $query  = RestSample::find()->where(['like', "REPLACE(tel1,' ','')", $mobile]);
         $smp    = $query->one(); //有多个
         if (!$smp) {
-            return Nodata::widget(['message' => '没有与您相关的报告记录']);
-            //return '没找到报告' . $query->createCommand()->getRawSql();
+            echo  $query->createCommand()->getRawSql();
+            $content = Nodata::widget(['message' => '没有与您相关的报告记录'.$mobile]);
+             return $this->render(
+                '/layouts/main-login',
+                ['content' => $content]
+            );
         }
         $reports = $smp->restReports; //多个报告
         if (is_array($reports) && count($reports) > 0) {
