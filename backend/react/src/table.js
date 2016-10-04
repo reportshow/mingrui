@@ -284,7 +284,7 @@ export default class TableExampleComplex extends React.Component {
 		queryResult.push(record);
 	    }
 	}, this);
-	this.setState({queryResult: queryResult});
+	this.setState({queryResult: queryResult}, ReactTooltip.rebuild);
     }
     
     handle_gene_Change = (event) => {
@@ -511,14 +511,9 @@ export default class TableExampleComplex extends React.Component {
         </a>
       </div>
   
-      <Table
-	 height={this.state.height}
-	 fixedHeader={this.state.fixedHeader}
-	 fixedFooter={this.state.fixedFooter}
-	 selectable={this.state.selectable}
-	 multiSelectable={this.state.multiSelectable}
-	 onRowHover = {this.handleRowHover}
+      <table
 	 className = 'exportable'
+	 style={{backgroundColor:'rgb(255, 255, 255)', padding:'0px 24px',width:'770px',borderCollapse: 'collapse',borderSpacing:'0px', fontFamily:'Roboto, sans-serif', tableLayout:'fixed'}}
 	 >
 	<TableHeader
 	   displaySelectAll={this.state.showCheckboxes}
@@ -526,20 +521,20 @@ export default class TableExampleComplex extends React.Component {
 	   enableSelectAll={this.state.enableSelectAll}
 	   >
 	  <TableRow>
-	    <TableHeaderColumn colSpan="4" style={{verticalAlign: 'bottom', fontWeight:'bold', fontSize:'120%'}}>当前选择：{this.state.queryResult.length} /{tableData.length}(筛选/全部)
+		<TableHeaderColumn colSpan="4" style={{verticalAlign: 'bottom', fontWeight:'bold', fontSize:'120%', overflow:'hidden'}} data-tip={"当前选择：" +this.state.queryResult.length +'/'+tableData.length+"(筛选/全部)"}>当前选择：{this.state.queryResult.length} /{tableData.length}(筛选/全部)
 	    </TableHeaderColumn>
 	    <TableHeaderColumn  colSpan="3" style={{verticalAlign: 'bottom', textAlign:'right'}}>
-		<a href="#" className="export_button" style={{color: 'blue'}}>下载过滤结果</a>
+		<a href="#" className="export_button" style={{color: 'blue', overflow:'hidden'}}>下载过滤结果</a>
 	    </TableHeaderColumn>
 	  </TableRow>
 	  <TableRow>
-	    <TableHeaderColumn tooltip="基因(大小)">基因(大小)</TableHeaderColumn>
-	    <TableHeaderColumn tooltip="突变信息">突变信息</TableHeaderColumn>
-	    <TableHeaderColumn tooltip="突变类型">突变类型</TableHeaderColumn>
-	    <TableHeaderColumn tooltip="基因疾病信息">基因疾病信息</TableHeaderColumn>
-	    <TableHeaderColumn tooltip="测序深度和比例">测序深度和比例</TableHeaderColumn>
-	    <TableHeaderColumn tooltip="HGMD信息">HGMD</TableHeaderColumn>
-	    <TableHeaderColumn tooltip="功能预测">功能预测</TableHeaderColumn>
+	    <TableHeaderColumn data-tip="基因(大小)" style={{overflow:'hidden'}}>基因(大小)</TableHeaderColumn>
+	    <TableHeaderColumn data-tip="突变信息" style={{overflow:'hidden'}}>突变信息</TableHeaderColumn>
+	    <TableHeaderColumn data-tip="突变类型" style={{overflow:'hidden'}}>突变类型</TableHeaderColumn>
+	    <TableHeaderColumn data-tip="基因疾病信息" style={{overflow:'hidden'}}>基因疾病信息</TableHeaderColumn>
+	    <TableHeaderColumn data-tip="测序深度和比例" style={{overflow:'hidden'}}>测序深度和比例</TableHeaderColumn>
+	    <TableHeaderColumn data-tip="HGMD信息" style={{overflow:'hidden'}}>HGMD</TableHeaderColumn>
+	    <TableHeaderColumn data-tip="功能预测" style={{overflow:'hidden'}}>功能预测</TableHeaderColumn>
 	  </TableRow>
 	</TableHeader>
 	<TableBody
@@ -550,17 +545,17 @@ export default class TableExampleComplex extends React.Component {
 	   >
 	  {this.state.queryResult.map( (row, index) => (
 	  <TableRow key={index} selected={row.selected}>
-	    <TableRowColumn data-tip={row[0] +'(' + row[19] + ')'}>{row[0] +'(' + row[19] + ')'}</TableRowColumn>//基因
-	    <TableRowColumn data-tip={row[25]}>{row[25]}</TableRowColumn>//突变信息
-	    <TableRowColumn data-tip={row[5]}>{row[5]}</TableRowColumn>//突变类型
-	    <TableRowColumn data-tip={row[23]}>{row[23]}</TableRowColumn>//疾病信息
-	    <TableRowColumn data-tip={row[28] + '<br/>' +row[26]}>{row[28]}<br/>{row[26]}</TableRowColumn>//HET
-	    <TableRowColumn data-tip={row[22]}>{row[22]}</TableRowColumn>//HGDM
-	    <TableRowColumn data-tip={row[24]}><a>详情</a></TableRowColumn>//功能预测
+	    <TableRowColumn data-tip={row[0] +'(' + row[19] + ')'} style={{position:'relative'}}>{row[0] +'(' + row[19] + ')'}</TableRowColumn>//基因
+	    <TableRowColumn data-tip={row[25]} style={{position:'relative'}}>{row[25]}</TableRowColumn>//突变信息
+	    <TableRowColumn data-tip={row[5]} style={{position:'relative'}}>{row[5]}</TableRowColumn>//突变类型
+	    <TableRowColumn data-tip={row[23]} style={{position:'relative'}}>{row[23]}</TableRowColumn>//疾病信息
+	    <TableRowColumn data-tip={row[28] + '<br/>' +row[26]} style={{position:'relative'}}>{row[28]}<br/>{row[26]}</TableRowColumn>//HET
+	    <TableRowColumn data-tip={row[22]} style={{position:'relative'}}>{row[22]}</TableRowColumn>//HGDM
+	    <TableRowColumn data-tip={row[24]} style={{position:'relative'}}><a>详情</a></TableRowColumn>//功能预测
 	  </TableRow>
 	  ))}
 	</TableBody>
-      </Table>
+      </table>
     </div>
   </div>
 </MuiThemeProvider>

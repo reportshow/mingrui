@@ -22029,7 +22029,7 @@
 						queryResult.push(record);
 					}
 				}, _this);
-				_this.setState({ queryResult: queryResult });
+				_this.setState({ queryResult: queryResult }, _reactTooltip2.default.rebuild);
 			};
 
 			_this.handle_gene_Change = function (event) {
@@ -22427,15 +22427,10 @@
 								)
 							),
 							_react2.default.createElement(
-								_Table.Table,
+								'table',
 								{
-									height: this.state.height,
-									fixedHeader: this.state.fixedHeader,
-									fixedFooter: this.state.fixedFooter,
-									selectable: this.state.selectable,
-									multiSelectable: this.state.multiSelectable,
-									onRowHover: this.handleRowHover,
-									className: 'exportable'
+									className: 'exportable',
+									style: { backgroundColor: 'rgb(255, 255, 255)', padding: '0px 24px', width: '770px', borderCollapse: 'collapse', borderSpacing: '0px', fontFamily: 'Roboto, sans-serif', tableLayout: 'fixed' }
 								},
 								_react2.default.createElement(
 									_Table.TableHeader,
@@ -22449,7 +22444,7 @@
 										null,
 										_react2.default.createElement(
 											_Table.TableHeaderColumn,
-											{ colSpan: '4', style: { verticalAlign: 'bottom', fontWeight: 'bold', fontSize: '120%' } },
+											{ colSpan: '4', style: { verticalAlign: 'bottom', fontWeight: 'bold', fontSize: '120%', overflow: 'hidden' }, 'data-tip': "当前选择：" + this.state.queryResult.length + '/' + tableData.length + "(筛选/全部)" },
 											'当前选择：',
 											this.state.queryResult.length,
 											' /',
@@ -22461,7 +22456,7 @@
 											{ colSpan: '3', style: { verticalAlign: 'bottom', textAlign: 'right' } },
 											_react2.default.createElement(
 												'a',
-												{ href: '#', className: 'export_button', style: { color: 'blue' } },
+												{ href: '#', className: 'export_button', style: { color: 'blue', overflow: 'hidden' } },
 												'下载过滤结果'
 											)
 										)
@@ -22471,37 +22466,37 @@
 										null,
 										_react2.default.createElement(
 											_Table.TableHeaderColumn,
-											{ tooltip: '基因(大小)' },
+											{ 'data-tip': '基因(大小)', style: { overflow: 'hidden' } },
 											'基因(大小)'
 										),
 										_react2.default.createElement(
 											_Table.TableHeaderColumn,
-											{ tooltip: '突变信息' },
+											{ 'data-tip': '突变信息', style: { overflow: 'hidden' } },
 											'突变信息'
 										),
 										_react2.default.createElement(
 											_Table.TableHeaderColumn,
-											{ tooltip: '突变类型' },
+											{ 'data-tip': '突变类型', style: { overflow: 'hidden' } },
 											'突变类型'
 										),
 										_react2.default.createElement(
 											_Table.TableHeaderColumn,
-											{ tooltip: '基因疾病信息' },
+											{ 'data-tip': '基因疾病信息', style: { overflow: 'hidden' } },
 											'基因疾病信息'
 										),
 										_react2.default.createElement(
 											_Table.TableHeaderColumn,
-											{ tooltip: '测序深度和比例' },
+											{ 'data-tip': '测序深度和比例', style: { overflow: 'hidden' } },
 											'测序深度和比例'
 										),
 										_react2.default.createElement(
 											_Table.TableHeaderColumn,
-											{ tooltip: 'HGMD信息' },
+											{ 'data-tip': 'HGMD信息', style: { overflow: 'hidden' } },
 											'HGMD'
 										),
 										_react2.default.createElement(
 											_Table.TableHeaderColumn,
-											{ tooltip: '功能预测' },
+											{ 'data-tip': '功能预测', style: { overflow: 'hidden' } },
 											'功能预测'
 										)
 									)
@@ -22520,31 +22515,31 @@
 											{ key: index, selected: row.selected },
 											_react2.default.createElement(
 												_Table.TableRowColumn,
-												{ 'data-tip': row[0] + '(' + row[19] + ')' },
+												{ 'data-tip': row[0] + '(' + row[19] + ')', style: { position: 'relative' } },
 												row[0] + '(' + row[19] + ')'
 											),
 											'//基因',
 											_react2.default.createElement(
 												_Table.TableRowColumn,
-												{ 'data-tip': row[25] },
+												{ 'data-tip': row[25], style: { position: 'relative' } },
 												row[25]
 											),
 											'//突变信息',
 											_react2.default.createElement(
 												_Table.TableRowColumn,
-												{ 'data-tip': row[5] },
+												{ 'data-tip': row[5], style: { position: 'relative' } },
 												row[5]
 											),
 											'//突变类型',
 											_react2.default.createElement(
 												_Table.TableRowColumn,
-												{ 'data-tip': row[23] },
+												{ 'data-tip': row[23], style: { position: 'relative' } },
 												row[23]
 											),
 											'//疾病信息',
 											_react2.default.createElement(
 												_Table.TableRowColumn,
-												{ 'data-tip': row[28] + '<br/>' + row[26] },
+												{ 'data-tip': row[28] + '<br/>' + row[26], style: { position: 'relative' } },
 												row[28],
 												_react2.default.createElement('br', null),
 												row[26]
@@ -22552,13 +22547,13 @@
 											'//HET',
 											_react2.default.createElement(
 												_Table.TableRowColumn,
-												{ 'data-tip': row[22] },
+												{ 'data-tip': row[22], style: { position: 'relative' } },
 												row[22]
 											),
 											'//HGDM',
 											_react2.default.createElement(
 												_Table.TableRowColumn,
-												{ 'data-tip': row[24] },
+												{ 'data-tip': row[24], style: { position: 'relative' } },
 												_react2.default.createElement(
 													'a',
 													null,
