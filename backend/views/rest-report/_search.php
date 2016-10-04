@@ -21,9 +21,12 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'created') ?>
 
-    <?= $form->field($model, 'updated') ?>
+    <?php //$form->field($model, 'updated')
+     ?>
 
-    <?= $form->field($model, 'status') ?>
+    <?php
+    // $form->field($model, 'status') 
+    ?>
 
     <?php   echo $form->field($model, 'note') ?>
 

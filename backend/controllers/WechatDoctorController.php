@@ -36,10 +36,13 @@ class WechatDoctorController extends Controller
     }
     public function wechatInit()
     {
-        //parent::init();
-        $this->wechat = Yii::$app->wechat;
+       // file_put_contents('upload/x.txt',  $GLOBALS["HTTP_RAW_POST_DATA"]);
+       
+        $this->wechat =   WechatUser::getWechat(true);
 
         $this->xml = $this->wechat->parseRequestData();
+        //file_put_contents('upload/wechat.do.txt', var_export($this->xml,1));
+
         if ($this->xml) {
             $this->reply = new WechatMessage($this->xml);
         }
@@ -47,15 +50,20 @@ class WechatDoctorController extends Controller
     }
 
     public function actionTalk()
-    {
-        $this->wechatInit();
+    {  
+      //exit($_GET["echostr"] ) ;
+      //
+      //    file_put_contents('filename', data)
+         $this->wechatInit();
         /*if ($wechat->checkSignature()) {
         echo $_GET["echostr"];
         }*/
-        //$this->xml['Content']
-        //echo $this->reply->text(  json_encode($this->xml));
+        //$this->xml['Content']      
+        
+        //exit($this->reply->text('000')); 
 
-        if (1 || $this->xml['MsgType'] == "event") {
+        if ($this->xml['MsgType'] == "event") {
+
             $ev = new WechatDoctorEvent($this->xml);
             echo $ev->response();
         }
@@ -81,8 +89,9 @@ class WechatDoctorController extends Controller
 
     public function actionMenuinit()
     {
-
-        return Yii::$app->wechat->createMenu(Yii::$app->params['wechat_doctor']['menu']);
+        $wechat = WechatUser::getWechat(true);
+        var_export(Yii::$app->params['wechat_doctor']['menu']);
+        return $wechat->createMenu(Yii::$app->params['wechat_doctor']['menu']);
     }
 
     //

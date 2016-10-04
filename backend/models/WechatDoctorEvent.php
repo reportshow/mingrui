@@ -1,6 +1,7 @@
 <?php
 namespace backend\models;
 
+use Yii;
 use yii\web\Controller;
 use common\components\SMS;
 /**
@@ -33,9 +34,12 @@ class WechatDoctorEvent extends WechatEvent
     }
 
     public function sample_order()
-    {
+    {          
         $mobile = Yii::$app->params['master_vcf_mobile'];
-        $voice  = Yii::$app->params['master_vcf_voice'];
+        $voice  = Yii::$app->params['master_vcf_voice']; 
+        if(!$mobile){
+            return $this->reply->text('管理员电话未设置');
+        }
         SMS::landingCall($voice, $mobile);
         return $this->reply->text('你的订单已经发往销售部门，我们很快会与你联系');
     }
