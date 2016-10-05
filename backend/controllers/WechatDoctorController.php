@@ -87,6 +87,11 @@ class WechatDoctorController extends Controller
         WechatUser::show(['restsample/index', 'role' => 'doctor']);
     }
 
+    public function actionDoorder(){
+        $this->layout = '/layouts/main-login';
+        return  "消息已发出";
+    }
+
     public function actionMenuinit()
     {
         $wechat = WechatUser::getWechat(true);

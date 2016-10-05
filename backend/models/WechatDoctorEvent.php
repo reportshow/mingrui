@@ -43,8 +43,11 @@ class WechatDoctorEvent extends WechatEvent
         }
 
         //SMS::songjian($mobile, ['张', $mobile]);
-        SMS::landingCall($voice, $mobile);
+       // SMS::landingCall($voice, $mobile);
         //
-        return $this->reply->text('你的订单已经发往销售部门，我们很快会与你联系');
+        $url = Yii::$app->urlManager->createAbsoluteUrl(['wechat-doctor/doorder']);
+        return $this->reply->text('你即将发起一个送检需求，请'.
+         "\n请点击<a href=\"$url\">确定</a>"  );
+        
     }
 }

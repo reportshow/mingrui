@@ -4,6 +4,9 @@ use backend\widgets\Comments;
 use backend\widgets\Summary;
 use backend\widgets\RestrepotTop;
 use yii\helpers\Html;
+use backend\components\Functions;
+
+
 /* @var $this yii\web\View */
 /* @var $model backend\models\RestReport */
 
@@ -12,13 +15,22 @@ $this->title = '报告:' . $model->sample->name;
 $this->params['breadcrumbs'][] = ['label' => '报告列表', 'url' => ['index']];
 
 $this->params['breadcrumbs'][] = $this->title;
+
+$hidesummary = !empty($_GET['hidesummary']) && Functions::ismobile()   ? 'hide':'';
 ?>
 <div class="rest-report-view">
 
 <?=RestrepotTop::widget(['model_id'=>$model->id]); ?>
 
+<style type="text/css">
+  .hidesummary{
+    transform: translateX(-700px);
+    -webkit-transform: translateX(-700px);
+    transition-duration: 3s;}
+</style>
+
 <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4  <?=$hidesummary?>">
           <?php
 echo Summary::widget(['model' => $model, 'omims' => $omims]);
 ?>

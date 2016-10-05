@@ -43,12 +43,12 @@ $pingjiaUrl = Yii::$app->urlManager->createUrl(['pingjia/save-xingji'])
     'class' => 'btn btn-success ' . $active['show-report'],
 ])?>
 
-<?=Html::a('意见反馈', ['rest-report/view', 'id' => $model_id], [
+<?=Html::a('意见反馈', ['rest-report/view', 'id' => $model_id, 'hidesummary'=>'yes'], [
     'class' => 'btn btn-info ' . $active['view'],
 ])?>
 
 <?=Html::a('星级评价', '#', [
-    'class' => 'btn btn-info ' . $active['index'],
+    'class' => 'btn btn-info '  ,
     'onclick'=>'abc()'
 ])?>
 
