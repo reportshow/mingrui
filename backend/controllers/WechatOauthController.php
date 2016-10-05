@@ -94,13 +94,7 @@ class WechatOauthController extends Controller
      */
     public static function entery($user)
     {
-        Yii::$app->user->login($user, 0);
-        if (Yii::$app->user->isGuest) {
-            exit('Login finally failed!!');
-        }
-
-        header('Location: ' . $_SESSION['entery_url']);
-        exit();
+         WechatUser::login($user);
     }
 
     /**
@@ -117,6 +111,7 @@ class WechatOauthController extends Controller
 
             } else {
                 //权限获取完毕
+                $_SESSION['mobile']= $user->username;
                 self::entery($user);
             }
         } else {

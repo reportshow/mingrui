@@ -101,3 +101,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 </div>
+<style type="text/css">
+    .content-wrapper{overflow: auto}
+    .disabled{background: #999;border:0px;}
+</style> 

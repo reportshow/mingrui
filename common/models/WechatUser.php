@@ -33,7 +33,8 @@ class WechatUser extends Model
         if ($user) {
             //$mobile = $this->mobile ;
             $mobile = $this->switchTestMobile($this->mobile);
-            if ($this->bindMingruiUser($user, $mobile)) {
+            $user   = $this->bindMingruiUser($user, $mobile);
+            if ($user) {
                 $user->username = $mobile;
                 $user->status   = 10;
 
@@ -61,33 +62,34 @@ class WechatUser extends Model
     {
         //设置医生或用户的id
 
-        $user = RestClient::find()->where(['tel' => $mobile])->one();
-        if ($user) {
+        $erp_user = RestClient::find()->where(['tel' => $mobile])->one();
+        if ($erp_user) {
             $role_text = 'doctor';
-            $userid    = $user->id;
+            $userid    = $erp_user->id;
         } else {
             //SELECT * FROM `rest_sample` where REPLACE(tel1,' ','') like '%15942175885%' ;
-           // $user = RestSample::find()->where(['like', 'tel1', $mobile])->one();
-             $user = RestSample::find()->where(['like', "REPLACE(tel1,' ','')", $mobile])->one();
-            if ($user) {
+            // $erp_user = RestSample::find()->where(['like', 'tel1', $mobile])->one();
+            $erp_user = RestSample::find()->where(['like', "REPLACE(tel1,' ','')", $mobile])->one();
+            if ($erp_user) {
                 $role_text = 'guest';
-                $userid    = $user->sample_id;
+                $userid    = $erp_user->sample_id;
             }
 
         }
 
-        if ($user) {
+        if ($erp_user) {
             $model->role_text   = $role_text;
             $model->role_tab_id = $userid;
             $model->save();
+            $_SESSION['mobile'] = $mobile;
 
             $this->initAfter1stLogin($model, $role_text);
-            return true;
+            return $model;
         } else {
 
             echo (' <div class="alert alert-info alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-info"></i> 该号码'.$mobile.'未被记录!</h4>
+                <h4><i class="icon fa fa-info"></i> 该号码' . $mobile . '未被记录!</h4>
                 请联系客服/销售，将你的手机号录入系统中.
               </div>');
             return false;
@@ -168,6 +170,37 @@ class WechatUser extends Model
     {
         $_SESSION['entery_url'] = self::createUrl($url);
         $user                   = self::oauth();
+        if ($user) {
+
+            self::login($user);
+
+        }
+    }
+
+    /**
+     * 给用户登录权限
+     * @param  [type] $user [description]
+     * @return [type]       [description]
+     */
+    public static function login($user)
+    {
+        //判断一下是否进错了号
+        if ($user->role_text == 'doctor' && Yii::$app->controller->id == 'wechat-doctor') {
+            //OK
+        } else if ($user->role_text == 'guest' && Yii::$app->controller->id == 'wechat') {
+            //OK
+        } else {
+            echo "<h1>你没有权限访问该公众号</h1>";
+            exit;
+        }
+
+        Yii::$app->user->login($user, 0);
+        if (Yii::$app->user->isGuest) {
+            exit('Login finally failed!!');
+        }
+
+        header('Location: ' . $_SESSION['entery_url']);
+        exit();
     }
     /**
      * 检查用户身份
@@ -175,12 +208,12 @@ class WechatUser extends Model
      */
     public static function oauth()
     {
-        /*if (!empty($_SESSION['openid']) && !empty($_SESSION['mobile'])) {
-        $user = self::localUser($_SESSION['openid']);
-        if ($usre && $user->status != 0) {
-        return $user;
+        if (!empty($_SESSION['openid']) && !empty($_SESSION['mobile'])) {
+            $user = self::localUser($_SESSION['openid']);
+            if ($user && $user->status != 0) {
+                return $user;
+            }
         }
-        }*/
 
         //去微信认证
         $redirectUrl = self::createUrl(['wechat-oauth/login']);
@@ -242,17 +275,18 @@ class WechatUser extends Model
 
     }
 
-    public static function getWechat($isdoctor = false){
-        if($isdoctor){
+    public static function getWechat($isdoctor = false)
+    {
+        if ($isdoctor) {
             //echo "use doctor";
             $config = Yii::$app->params['wechat_doctor']['config'];
-           return Yii::createObject([
+            return Yii::createObject([
                 'class'     => 'callmez\wechat\sdk\Wechat',
                 'appId'     => $config['appId'],
                 'appSecret' => $config['appSecret'],
                 'token'     => $config['token'],
-            ]); 
-        }else{
+            ]);
+        } else {
             return Yii::$app->wechat;
         }
     }

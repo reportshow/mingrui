@@ -67,7 +67,7 @@
         <div class="direct-chat-text bg-aqua voicecontainer"  style="margin-left:0px" >
             <div class='btn-social voiceline' style="height: 30px;line-height: 30px;" >
                <i class='fa  fa-play-circle-o' style="cursor:pointer"></i> 
-               <span class='voicetext' onclick="playme(this);">今天肚子有点痛</span>
+               <span class='voicetext' onclick="playme(this);"></span>
                <i class='fa fa-remove' onclick="removeVoice(this);" style="border-left:1px solid rgba(200,200,200,0.5);"></i>
              </div>
         </div>   
@@ -149,10 +149,30 @@ function recDone(localId){
    var resID = voiceCount++;
    x.find('.voiceline').attr('localId',localId);
    x.find('.voiceline').attr('redId',resID);
-   x.find('.voiceline .voicetext').html('语音识别中..');
-
+   //x.find('.voiceline .voicetext').html('语音识别中..');
    $('#record_list').append(x);
-    wx.translateVoice({
+   
+   voiceTranslate(localId, resID);
+   
+
+}
+
+function voiceTranslate(localId, resID){
+   var USE_V2T = 0; //1:使用语音识别
+
+   var voicetime = timeTxt();
+   var voice = {"localId":localId,"text":voicetime, "time":voicetime};
+   allVoice['res'+resID]=(voice);
+
+   if(!USE_V2T){
+        $('#addmorevoice').removeClass('hidden');
+        $('body').trigger("voiceUpdate", allVoice );
+        $("#record_list [redId='"+resID+"'] .voicetext").html(voicetime); 
+        return;
+   }
+
+   $("#record_list [redId='"+resID+"'] .voicetext").html('语音识别中..'); 
+   wx.translateVoice({
      localId: localId, // 需要识别的音频的本地Id，由录音相关接口获得
       isShowProgressTips: 1, // 默认为1，显示进度提示
       success: function (res) {
@@ -161,6 +181,7 @@ function recDone(localId){
 
          var voice = {"localId":localId,"text":res.translateResult,"time":timeTxt()};
          allVoice['res'+resID]=(voice);
+
          $('#addmorevoice').removeClass('hidden');
          $('body').trigger("voiceUpdate", allVoice );
       },
@@ -168,8 +189,8 @@ function recDone(localId){
         alert(JSON.stringify(e));
       }
   });
-
 }
+
   
 function playme(obj){
    var localId = $(obj).parent().attr('localId');

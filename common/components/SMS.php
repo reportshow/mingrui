@@ -1,14 +1,17 @@
 <?php
 namespace common\components;
+
 use Yii;
 use yii\base\Component;
 
 class SMS extends Component
 {
-    public static function sendSMS( $mobile, $data = [])
+    const TPL_SONGJIAN = '120079';
+    const TPL_MOBILE   = '120078';
+    public static function sendSMS($mobile, $data = [])
     {
-        include_once 'communication/SendTemplateSMS.php';        
-        sendTemplateSMS($mobile,  $data ,"120078");
+        include_once 'communication/SendTemplateSMS.php';
+        sendTemplateSMS($mobile, $data, self::TPL_MOBILE);
     }
 
     public static function landingCall($voice, $mobile, $times = 3)
@@ -16,6 +19,11 @@ class SMS extends Component
         include_once 'communication/LandingCall.php';
         landingCall($mobile, $voice, "", "", $times, "", '', '', '', '', '', '');
 
+    }
+    public static function songjian($mobile, $data)
+    {
+        include_once 'communication/SendTemplateSMS.php';
+        sendTemplateSMS($mobile, $data, self::TPL_SONGJIAN);
     }
 
     public static function voiceVerify($smscode, $mobile, $times = 3)
@@ -32,7 +40,7 @@ class SMS extends Component
         }
 
         include_once 'communication/VoiceVerify.php';
-        voiceVerify($smscode, $times, $mobile,'','','zh','userdata');
+        voiceVerify($smscode, $times, $mobile, '', '', 'zh', 'userdata');
     }
 
 }
