@@ -23,3 +23,8 @@ AppAsset::register($this);
 <link type="text/css" href="css/multiselect.css" rel="stylesheet" />
 <script src="report/app.js"></script>
 <script src="report/export.js"></script>
+<style type="text/css">
+    .content-wrapper{overflow: auto}
+    .disabled{background: #999;border:0px;}
+</style>
+     
