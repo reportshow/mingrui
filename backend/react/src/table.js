@@ -331,7 +331,7 @@ export default class TableExampleComplex extends React.Component {
 	return (
 <MuiThemeProvider muiTheme={muiTheme}>
   <div>
-    <ReactTooltip type="info" effect="float" multiline={true}/>
+    <ReactTooltip type="info" effect="float" multiline={true} />
     <div style={{width:'80%', marginLeft:'auto', marginRight:'auto'}}>
       <TextField name='gene' floatingLabelText="重点关注基因" value={this.state.gene_value} fullWidth={true} onChange={this.handle_gene_Change}/>
     </div>
@@ -343,6 +343,7 @@ export default class TableExampleComplex extends React.Component {
 		<i className="fa fa-fw fa-question"
 		   onMouseEnter={()=>{$('#tip').show();}}
 		   onMouseLeave={()=>{$('#tip').hide();}}
+		   onTouchStart={()=>{$('#tip').show();}}
 		/>
 	  </div>
 	  <div style={{width:'80%', marginLeft:'auto', marginRight:'auto', paddingTop:'20px', overflow:'hidden'}}>

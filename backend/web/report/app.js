@@ -22184,6 +22184,9 @@
 											},
 											onMouseLeave: function onMouseLeave() {
 												$('#tip').hide();
+											},
+											onTouchStart: function onTouchStart() {
+												$('#tip').show();
 											}
 										})
 									),
@@ -42986,23 +42989,25 @@
 	        }
 	        _this3.unbindBasicListener(target);
 
-	        if (_this3.isCustomEvent(target)) {
-	          _this3.customBindListener(target);
-	          return;
-	        }
+	        // if (_this3.isCustomEvent(target)) {
+	        //   _this3.customBindListener(target);
+	        //   return;
+	        // }
 
 	        target.addEventListener('mouseenter', _this3.showTooltip, isCaptureMode);
 	        if (_this3.state.effect === 'float') {
 	          target.addEventListener('mousemove', _this3.updateTooltip, isCaptureMode);
 	        }
-	        target.addEventListener('mouseleave', _this3.hideTooltip, isCaptureMode);
+	          target.addEventListener('mouseleave', _this3.hideTooltip, isCaptureMode);
+		  target.addEventListener('touchend', _this3.showTooltip, isCaptureMode);
+		  target.addEventListener('touchstart', _this3.showTooltip, isCaptureMode);
 	      });
 
-	      // Global event to hide tooltip
-	      if (globalEventOff) {
-	        window.removeEventListener(globalEventOff, this.hideTooltip);
-	        window.addEventListener(globalEventOff, this.hideTooltip, false);
-	      }
+	      // // Global event to hide tooltip
+	      // if (globalEventOff) {
+	      //   window.removeEventListener(globalEventOff, this.hideTooltip);
+	      //   window.addEventListener(globalEventOff, this.hideTooltip, false);
+	      // }
 	    }
 
 	    /**
@@ -43047,7 +43052,7 @@
 
 	  }, {
 	    key: 'showTooltip',
-	    value: function showTooltip(e, isGlobalCall) {
+	      value: function showTooltip(e, isGlobalCall) {
 	      var _this5 = this;
 
 	      var disabled = e.currentTarget.getAttribute('data-tip-disable') ? e.currentTarget.getAttribute('data-tip-disable') === 'true' : this.props.disable || false;
@@ -43324,6 +43329,7 @@
 
 	module.exports = ReactTooltip;
 
+
 /***/ },
 /* 431 */
 /***/ function(module, exports, __webpack_require__) {
@@ -43549,11 +43555,10 @@
 
 	    var dataEvent = ele.getAttribute('data-event') || event;
 	    var dataEventOff = ele.getAttribute('data-event-off') || eventOff;
-
-	    dataEvent.split(' ').forEach(function (event) {
-	      ele.removeEventListener(event, customListener);
+	      dataEvent.split(' ').forEach(function (event) {
+		  ele.removeEventListener(event, customListener);
 	      customListener = checkStatus.bind(_this, dataEventOff);
-	      ele.addEventListener(event, customListener, false);
+		  ele.addEventListener(event, customListener, false);
 	    });
 	    if (dataEventOff) {
 	      dataEventOff.split(' ').forEach(function (event) {
@@ -43614,6 +43619,7 @@
 	};
 
 	var customListener = void 0;
+
 
 /***/ },
 /* 436 */
