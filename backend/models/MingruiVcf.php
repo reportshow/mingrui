@@ -5,6 +5,8 @@ namespace backend\models;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use common\models\User;
+use yii\web\UploadedFile;
+
 /**
  * This is the model class for table "mingrui_vcf".
  *
@@ -61,4 +63,13 @@ class MingruiVcf extends \yii\db\ActiveRecord
             'status'=>'状态'
         ];
     }
+
+    public function getTaskStatus()
+    {
+         if($this->task_id >= 0) {
+              $vcf_url = Yii::$app->params['vcfservice'] . '/api/task/status/' . $this->task_id;
+              return file_get_contents($vcf_url);
+         }
+    }
+    
 }

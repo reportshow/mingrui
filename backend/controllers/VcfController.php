@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use common\components\SMS;
+use backend\models\Genetypes;
 
 /**
  * VcfController implements the CRUD actions for MingruiVcf model.
@@ -53,9 +54,38 @@ class VcfController extends Controller
      */
     public function actionView($id)
     {
+         $model = $this->findModel($id);
+         $datas='';
+         if($model->task_id >= 0) {
+              $vcf_url = Yii::$app->params['vcfservice'] . '/api/task/result/' . $model->task_id;
+              $datas = file_get_contents($vcf_url);
+         }
+
+         $datas = json_decode($datas, true);
+         if($datas == NULL) {
+              $datas= [];
+         }
+             
+        foreach ($datas as $key => $data) {
+            $str = $datas[$key][2];
+            $ret = preg_match('/.*-([0-9]+).*/', $data[1], $matches);
+            if ($ret) {
+                $types = Genetypes::find()->where(['startcoord' => $matches[1]])->one();
+                if ($types) {
+                    $datas[$key][] = $str . '<br/>' . $types->disease . '<br/>' . $types->descr;
+                } else {
+                    $datas[$key][] = $str;
+                }
+            } else {
+                $datas[$key][] = $str;
+            }
+        }
+        $data = json_encode($datas);
+        
         return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+                                   'model' => $model,
+                                   'data'  => $data
+                                   ]);
     }
 
     public function actionDownload($id)
@@ -85,7 +115,18 @@ class VcfController extends Controller
                 var_export($model->errors);exit;
             }
             SaveImage::save($model, 'vcf');
+            
+            //create annotate task on remote server
+            $vcf_url = Yii::$app->params['vcfservice'] . '/api/task/new';
+            $file = json_decode($model->vcf, true)[0];
+            $file_name_with_full_path = realpath(getcwd() . '/' . $file['path']);
+            $task_id = $this->postFile($vcf_url, 'file', $file['name'], $file_name_with_full_path);
+            if(strcmp($task_id, 'error')){
+                 $model->task_id = $task_id;
+                 $model->save();
+            }
 
+            
             $this->sendNotice();
 
             return $this->redirect(['view', 'id' => $model->id]);
@@ -150,4 +191,33 @@ class VcfController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    private function postFile($url, $key, $file_name, $file)
+    {    
+         $eol = "\r\n"; //default line-break for mime type
+         $BOUNDARY = md5(time());
+         $BODY="";
+         $BODY.= '--'.$BOUNDARY. $eol;
+         $BODY.= 'Content-Disposition: form-data; name="'.$key.'"; filename="'.$file_name.'"'. $eol ;
+         $BODY.= 'Content-Type: application/octet-stream' . $eol;
+         $BODY.= 'Content-Transfer-Encoding: base64' . $eol . $eol;
+         $BODY.= chunk_split(base64_encode(file_get_contents($file))) . $eol;
+         $BODY.= '--'.$BOUNDARY .'--' . $eol. $eol;
+
+         $ch = curl_init();
+         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                          "Content-Type: multipart/form-data; boundary=".$BOUNDARY)
+              );
+         curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/1.0 (Windows NT 6.1; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0');
+         curl_setopt($ch, CURLOPT_URL, $url);
+
+         curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1); // call return content
+         curl_setopt ($ch, CURLOPT_FOLLOWLOCATION, 1);
+         curl_setopt($ch, CURLOPT_POST, true); //set as post
+         curl_setopt($ch, CURLOPT_POSTFIELDS, $BODY); // set our $BODY
+         $response = curl_exec($ch); // start curl navigation
+         
+         return $response;
+    }
+         
 }

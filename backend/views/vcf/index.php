@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         ['attribute' => 'status',  'format' => 'raw', 'options' => ['width' => '60px;'],
             'value'      => function ($model) {
-                $status = $model->status=='done' ? '完成':'处理中..';
+                $status = $model->getTaskStatus()=='complete' ? '完成':'处理中..';
                 return  "<button class='btn'>$status</button>";
             }],
                 
