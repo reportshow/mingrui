@@ -4,6 +4,7 @@ use backend\components\Functions;
 use backend\models\MingruiPingjia;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use backend\components\Functions;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\RestReportSearch */
@@ -238,7 +239,10 @@ return $model->status =='finished' ? '<span class="bg-primary" style="padding:3p
                 $dataStatus       = $model->snpsqlite ? '' : 'disabled';
                 $dataStatuseText  = strpos($model->report_id, 'YD') !== false ? '无数据' : '查数据';
                 $html             = "<a href='$urlreport' class='btn btn-info $reportStatus'>$reportStatusText</a>";
-                $html .= "<a href='$urldata' class='btn btn-info  $dataStatus'>$dataStatuseText</a>";
+                 if(!Functions::ismobile()){
+                    $html .= "<a href='$urldata' class='btn btn-info  $dataStatus'>$dataStatuseText</a>";   
+                }
+
                 return $html;
             }],
 
