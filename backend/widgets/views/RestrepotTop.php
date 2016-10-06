@@ -77,8 +77,10 @@ $pingjiaUrl = Yii::$app->urlManager->createUrl(['pingjia/save-xingji'])
     .pingjia  p{margin-left:40px;}
     .pingjia i{font-style:normal; }
     .pingjia .tag{display: inline-block; width:60px; font-size:1.5em}
+    .pingjia .tag2{display: inline-block; width:120px;  }
     .pingjia .tagtxt{display: inline-block; width:50px;}
-    .pingjia input{margin-right:20px; width: 18px; height: 18px;}
+    .pingjia input{color:#222;}
+    .pingjia input[type=radio]{margin-right:20px; width: 18px; height: 18px;}
 </style>
 <div class="example-modal" >
 <div class="modal modal-primary" id='xingjipingjiaBox'>
@@ -96,11 +98,16 @@ $pingjiaUrl = Yii::$app->urlManager->createUrl(['pingjia/save-xingji'])
          foreach (MingruiPingjia::$pingjiaText  as $key => $value) {
              $star = $value['key'];
              $label = $value['label'];
-             echo  " <p><input type=radio name='pingjia' value='$key'> <i class='tag'>$star</i> $label </p> ";        
+             $desc = $value['description'];
+             echo  " <p><input type=radio name='pingjia' value='$key'>
+                    <i class='tag'>$star</i> <i class='tag2'>$label</i> $desc 
+                   </p> ";        
 
           } 
        ?>
-           
+             <p><input type=radio name='pingjia' value='6'><i class='tag' style="font-size:1em">自定义</i>
+                 <input type=text maxlength="16">   
+             </p>  
         </div>
       </div>
       <div class="modal-footer">

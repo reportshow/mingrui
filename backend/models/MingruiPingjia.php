@@ -5,6 +5,7 @@ namespace backend\models;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
+
 /**
  * This is the model class for table "mingrui_pingjia".
  *
@@ -19,11 +20,12 @@ class MingruiPingjia extends \yii\db\ActiveRecord
 {
 
     public static $pingjiaText =
-        [1 => ['key' => '★', 'label' => '疑似阳性',''],
-        2  => ['key' => '★★', 'label' => '阳性'],
-        3  => ['key' => '★★★', 'label' => '阳性+好案例'],
-        4  => ['key' => '■', 'label' => '阴性'],
-        5  => ['key' => '■ ■', 'label' => '阳性+特殊案例'],
+        [
+        1 => ['key' => '★', 'label' => '疑似阳性', 'description' => '缺乏家系验证；致病性不明确'],
+        2 => ['key' => '★★', 'label' => '阳性', 'description' => '基因型和临床表型相符'],
+        3 => ['key' => '★★★', 'label' => '阳性+好案例', 'description' => '罕见病例；出乎意料'],
+        4 => ['key' => '■', 'label' => '阴性', 'description' => '基因无发现'],
+        5 => ['key' => '■ ■', 'label' => '阳性+特殊案例', 'description' => '临床诊断明确，基因无突变'],
         //6 =>['key'=>' x', 'label'=>'x'],
     ];
     /**
@@ -40,14 +42,15 @@ class MingruiPingjia extends \yii\db\ActiveRecord
                 'class'              => TimestampBehavior::className(),
                 'createdAtAttribute' => 'createtime',
                 'updatedAtAttribute' => false,
-                'value'=> new Expression('NOW()'),
+                'value'              => new Expression('NOW()'),
             ],
         ];
     }
-    public static function getTextArray(){
+    public static function getTextArray()
+    {
         $text = [];
         foreach (self::$pingjiaText as $key => $value) {
-            $text[$key] = $value['key'] .' '. $value['label'] .' ';
+            $text[$key] = $value['key'] . ' ' . $value['label'] . ' ';
         }
         return $text;
     }
