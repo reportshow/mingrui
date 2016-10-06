@@ -6,7 +6,7 @@ $wechat['config'] = [
     'appSecret' => 'a55977c014771490921a0503bf4efd7b',
     'token'     => 'doctor_mingrui',
 ];
-$wechat['menu'] =  [
+$wechat['menu'] = [
     [
         "name"       => "查看报告",
         "sub_button" => [
@@ -29,15 +29,24 @@ $wechat['menu'] =  [
         ],
     ],
 
-   [
-        "type" => "click",
-        "name" => "送检",
-        "key"  => "SAMPLE-ORDER",
+    [
+        "name"       => "报告送检",
+        "sub_button" => [
+            [
+                "type" => "click",
+                "name" => "送检",
+                "key"  => "SAMPLE-ORDER",
+            ], [
+                "type" => "click",
+                "name" => "取消",
+                "key"  => "DO-NOTHING",
+            ],
+        ],
     ],
 
     [
         "type" => "click",
-        "name" => "检查流程",
+        "name" => "常见问题",
         "key"  => "WORK-FLOW",
     ],
 

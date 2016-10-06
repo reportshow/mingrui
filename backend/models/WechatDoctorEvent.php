@@ -41,13 +41,26 @@ class WechatDoctorEvent extends WechatEvent
         if (!$mobile) {
             return $this->reply->text('管理员电话未设置');
         }
+        $openid = $this->reply->openid;
+        $doctor = User::find()->where(['wx_openid' => $openid])->one();
+        if ($doctor) {
+            if ($doctor->role_text != 'doctor') {
+                return $this->reply->text('您没有大夫权限');
+            }
+            $doctorMobile = $doctor->username;
+            $nickname     = $doctor->nickname; //大夫的名字
+            SMS::songjian($mobile, [$nickname, $doctorMobile]);
+        } else {
+            $loginUrl = Yii::$app->urlManager->createAbsoluteUrl(['wechat-doctor/weblogin', 'qr_session' => 'login_itself']);
+            return $this->reply->text("\n请点击<a href=\"$url\">请点击这里</a> 进行身份确认");
+            // SMS::songjian($mobile, ['XX医生', $mobile]);
+        }
 
-        //SMS::songjian($mobile, ['张', $mobile]);
-       // SMS::landingCall($voice, $mobile);
+        // SMS::landingCall($voice, $mobile);
         //
-        $url = Yii::$app->urlManager->createAbsoluteUrl(['wechat-doctor/doorder']);
-        return $this->reply->text('你即将发起一个送检需求，请'.
-         "\n请点击<a href=\"$url\">确定</a>"  );
-        
+        /*   $url = Yii::$app->urlManager->createAbsoluteUrl(['wechat-doctor/doorder']);
+    return $this->reply->text('你即将发起一个送检需求，请'.
+    "\n请点击<a href=\"$url\">确定</a>"  );*/
+
     }
 }
