@@ -51,7 +51,7 @@ class WechatDoctorEvent extends WechatEvent
             $nickname     = $doctor->nickname; //大夫的名字
             SMS::songjian($mobile, [$nickname, $doctorMobile]);
         } else {
-            $loginUrl = Yii::$app->urlManager->createAbsoluteUrl(['wechat-doctor/weblogin', 'qr_session' => 'login_itself']);
+            $loginUrl = Yii::$app->urlManager->createAbsoluteUrl(['wechat/weblogin', 'qr_session' => 'login_itself']);
             return $this->reply->text("\n请点击<a href=\"$url\">请点击这里</a> 进行身份确认");
             // SMS::songjian($mobile, ['XX医生', $mobile]);
         }

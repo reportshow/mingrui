@@ -71,7 +71,10 @@ class RestReportClassController extends Controller
  
 
         if (Yii::$app->user->can('doctor')) {
-            $doctor = Yii::$app->user->Identity->doctor;              
+            $doctor = Yii::$app->user->Identity->doctor;     
+            if(!$doctor){
+                return "医生身份已被禁止";
+            }       
             $query = $query->joinWith(['sample']);
             $query = $query->where(['rest_sample.doctor_id' => $doctor->id]);
             //echo $query->createCommand()->getRawSql(); exit;

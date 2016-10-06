@@ -184,7 +184,7 @@ class WechatUser extends Model
      */
     public static function login($user)
     {
-        //判断一下是否进错了号
+   /*     //判断一下是否进错了号
         if ($user->role_text == 'doctor' && Yii::$app->controller->id == 'wechat-doctor') {
             //OK
         } else if ($user->role_text == 'guest' && Yii::$app->controller->id == 'wechat') {
@@ -192,7 +192,7 @@ class WechatUser extends Model
         } else {
             echo "<h1>你没有权限访问该公众号</h1>";
             exit;
-        }
+        }*/
 
         Yii::$app->user->login($user, 0);
         if (Yii::$app->user->isGuest) {
