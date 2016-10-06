@@ -22,7 +22,7 @@ use yii\helpers\Html;
       <ul class="nav nav-stacked">
          <li style="padding:10px 0px 10px 16px;">
         项目编号：<?=$model->report_id?>
-        <?=Html::a('查看报告详情', ['show-report', 'id' => $model->id], [
+        <?=Html::a('上传图片', ['mingrui-attachment/', 'reportid' => $model->id], [
             'class' => 'pull-right badge bg-green', 'style' => "padding:8px",
           ])?>
          </li>
@@ -53,7 +53,7 @@ use yii\helpers\Html;
            if(Yii::$app->user->can('doctor') ||Yii::$app->user->can('admin')){
           ?>
          <li>
-          <a href="#">MOMI描述：<br/>
+          <a href="#">OMIM描述：<br/>
 	    <?php
                foreach($omims as $gene_omim){
                     foreach($gene_omim as $gene=>$disease_id){

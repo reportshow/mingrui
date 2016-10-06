@@ -30,8 +30,12 @@ AppAsset::register($this);
     
 <?php
 
-if($model->pdf){
+
+if($model->pdf){//使用ERP的pdf
 	$pdfurl = str_replace('/primerbean/media/', 'user/', $model->pdf);
+    $pdfurl = Yii::$app->params['erp_url'] . $pdfurl ;
+}else if($model->csupload){ //使用上传的PDF
+	$pdfurl =  'user/'. $model->csupload;
     $pdfurl = Yii::$app->params['erp_url'] . $pdfurl ;
 }else{
 	echo "<h1>抱歉，没有报告数据！</h1>";

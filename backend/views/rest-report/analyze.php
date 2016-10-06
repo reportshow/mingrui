@@ -2,6 +2,7 @@
 use backend\assets\AppAsset;
 use yii\helpers\Html;
 use backend\widgets\RestrepotTop;
+use backend\components\Functions;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\RestReport */
@@ -14,6 +15,21 @@ $this->params['breadcrumbs'][] = $this->title . '      数据自分析';
 AppAsset::register($this); 
 ?>
 <?=RestrepotTop::widget(['model_id'=>$model->id]); ?>
+
+<?php
+
+ if(Functions::ismobile()){
+?>
+ 	<div class="alert alert-info alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-info"></i> 提示!</h4>
+                请您打开电脑版使用数据分析功能
+     </div>
+<?php
+
+  return;
+}//ismobile
+?>
 
 <div id="app"></div>
 <script>

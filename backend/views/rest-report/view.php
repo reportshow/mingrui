@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = ['label' => '报告列表', 'url' => ['index']]
 $this->params['breadcrumbs'][] = $this->title;
 
 $hidesummary = !empty($_GET['hidesummary']) && Functions::ismobile()   ? 'hide':'';
+$hideComments = $hidesummary=='hide' ? '' : 'hide' ;
 ?>
 <div class="rest-report-view">
 
@@ -39,7 +40,7 @@ echo Summary::widget(['model' => $model, 'omims' => $omims]);
 
 
 
-        <div class="col-md-8">
+        <div class="col-md-8 $hideComments">
 
               <?=Comments::widget([
                      'action'=>'rest-report/send-comment',
