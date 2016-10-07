@@ -2,8 +2,8 @@
 
 use backend\components\Functions;
 use yii\grid\GridView;
-use yii\helpers\Html;
-use backend\components\Functions;
+use yii\helpers\Html; 
+use backend\widgets\WeixinMenubar;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\RestReportSearch */
@@ -239,3 +239,5 @@ echo GridView::widget($GridViewParam);
     .content-wrapper{overflow: auto}
     .disabled{background: #999;border:0px;}
 </style>
+
+

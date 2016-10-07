@@ -1,4 +1,6 @@
  <?php
+ use backend\widgets\WeixinMenubar;
+
  
  ?>
 
@@ -42,3 +44,6 @@
 <script>
   $.widget.bridge('uibutton', $.ui.button);
 </script>
+
+
+<?=WeixinMenubar::widget();?>
