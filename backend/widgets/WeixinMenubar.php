@@ -18,6 +18,5 @@ class WeixinMenubar extends Widget
             return '';
         }
 
-    }
-}
+    } 
 }
