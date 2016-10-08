@@ -14,7 +14,7 @@
             <div class="pull-left info">
                 <p><?=$user->nickname;?></p>
 
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                <a href="#"><i class="fa fa-circle text-success"></i>积分: 0</a>
             </div>
         </div>
 

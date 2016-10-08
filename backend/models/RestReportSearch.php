@@ -100,7 +100,7 @@ class RestReportSearch extends RestReport
 
         $query->andFilterWhere(['like', 'rest_report.report_id', $this->report_id])
             ->andFilterWhere(['like', 'status', $this->status])
-            ->andFilterWhere(['like', 'note', $this->note])
+            ->andFilterWhere(['like', 'rest_report.note', $this->note])
             ->andFilterWhere(['like', 'cnvsqlite', $this->cnvsqlite])
             ->andFilterWhere(['like', 'snpsqlite', $this->snpsqlite])
             ->andFilterWhere(['like', 'cnvsave', $this->cnvsave])

@@ -92,7 +92,7 @@ foreach ($model->comments as $comment) {
                     </span>
                     <span class="input-group-btn">
                         <button type=button  class="btn btn-primary btn-flat" id="submitbtn">
-                            留言
+                            确定
                         </button>
                     </span>
                  

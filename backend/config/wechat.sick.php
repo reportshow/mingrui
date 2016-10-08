@@ -49,7 +49,7 @@ $wechat['menu'] = [
         "type" => "click",
         "name" => "检查流程",
         "key"  => "WORK-FLOW",
-        'url'=>'',
+        'url'=>'javascript:;',
     ],
 
 ];

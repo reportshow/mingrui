@@ -109,14 +109,14 @@ $styleboxtop = Functions::ismobile() ? '0px' : '150px';
 
           } 
        ?>
-             <p><input type=radio name='pingjia' value='6'><i class='tag' style="font-size:1em">自定义</i>
-                 <input type=text maxlength="16">   
+             <p><input type=radio name='pingjia' value='6'><i class='tag' style="font-size:1em">○◎</i>
+                 <input type=text maxlength="16" placeholder="自定义">   
              </p>  
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline pull-left close" data-dismiss="modal"  > 取 消 </button>
-        <button type="button" class="btn btn-outline" id='pingjisendBtn'> 确 定 </button>
+        <button type="button" class="btn btn-outline" id='pingjisendBtn'> 确 定 </button>.......lkkkk
       </div>
     </div>
     <!-- /.modal-content -->
