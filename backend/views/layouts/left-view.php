@@ -19,7 +19,7 @@
         </div>
 
         <!-- search form -->
-        <form action="#" method="get" class="sidebar-form">
+        <form action="#" method="get" class="sidebar-form hide">
             <div class="input-group">
                 <input type="text" name="q" class="form-control" placeholder="Search..."/>
               <span class="input-group-btn">

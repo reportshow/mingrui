@@ -15,7 +15,8 @@ class WeixinMenubar extends Widget
 
             return $this->render('WeixinMenubar', ['menus' => $menus]);
         } else {
-            return '';
+
+            return '<!-- not mobile:  -->'  ;
         }
 
     } 

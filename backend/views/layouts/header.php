@@ -2,9 +2,12 @@
 use yii\helpers\Html;
 use backend\models\userMessage;
 use backend\widgets\GuestbookDrop;
-
+use backend\components\Functions;
 /* @var $this \yii\web\View */
  
+$hideMenuToggle = Functions::ismobile() ? 'hide' : '';
+$showMenuToggleBtn = $hideMenuToggle=='hide' ? '' : 'hide';
+
  $message = userMessage::myMessages();
 ?>
 
@@ -15,10 +18,13 @@ use backend\widgets\GuestbookDrop;
 
     <nav class="navbar navbar-static-top" role="navigation">
 
-        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <a href="#" class="sidebar-toggle <?=$hideMenuToggle ?>" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
         </a>
-
+        <a class="btn btn-info <?=$showMenuToggleBtn ?>" 
+        style='position: absolute;line-height: 50px;line-height: 35px;height: 100%;' data-toggle="offcanvas" role="button">
+        菜单
+        </a>
         <div class="navbar-custom-menu">
 
             <ul class="nav navbar-nav">

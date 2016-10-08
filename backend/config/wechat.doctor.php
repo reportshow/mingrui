@@ -30,19 +30,14 @@ $wechat['menu'] = [
     ],
 
     [
-        "name"       => "报告送检",
+        "name"       => "送检样本",
         "sub_button" => [
             [
                 "type" => "click",
-                "name" => "送检",
+                "name" => "确认送检",
                 "key"  => "SAMPLE-ORDER",
                 'url'=>'',
-            ], [
-                "type" => "click",
-                "name" => "取消",
-                "key"  => "DO-NOTHING",
-                'url'=>'#',
-            ],
+            ], 
         ],
     ],
 

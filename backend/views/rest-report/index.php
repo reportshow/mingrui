@@ -27,7 +27,8 @@ $url = Yii::$app->urlManager->createUrl(['rest-report/view', 'id' => $model->id]
 return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
 },*/
     'columns'      => [
-        ['class' => 'yii\grid\SerialColumn'],
+        ['class' => 'yii\grid\SerialColumn',
+        'options'   => ['width' => '40px;'],],
 
 /*        [
 'value'   => 'id',
@@ -50,7 +51,7 @@ return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
                 return $date->format('Y-m-d');
 
             },
-            'options'   => ['width' => '80px;'],
+            'options'   => ['width' => '120px;'],
         ],
 
         [
@@ -59,25 +60,28 @@ return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
             'value'     => function ($model) {
                 $sample = $model->sample;
                 $name   = $sample->name;
-                //return $name;
+                return $name;
                 return mb_strlen($name) > 9 ? mb_substr($name, 0, 9) . '..' : $name;
             },
             'filter'    => Html::activeTextInput($searchModel, 'username', [
                 'class' => 'form-control',
             ]),
-            'options'   => ['width' => '80px;'],
+            'options'   => ['width' => '100px;'],
         ], //<=====加入这句,
 
         ['attribute' => 'sample.sex',
             'value'      => function ($model) {
                 return $model->sample->sex == 'female' ? '女' : '男';
-            }],
+            },
+            'options'   => ['width' => '60px;'],
+        ],
         [
             'attribute' => 'sample.age',
             'label'     => '年龄',
             'value'     => function ($model) {
                 return $model->sample->age ? $model->sample->age : '-';
             },
+            'options'   => ['width' => '80px;'],
         ],
 
         [
@@ -97,6 +101,7 @@ return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
         [
             'attribute' => 'testmethod',
             'label'     => '方法',
+            'options'   => ['width' => '80px;'],
             'value'     => function ($model) {
                 if (strpos($model->report_id, 'NG') !== false) {
                     return 'NGS';

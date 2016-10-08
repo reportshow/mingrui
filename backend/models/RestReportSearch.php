@@ -98,7 +98,7 @@ class RestReportSearch extends RestReport
             'yidai_marked'       => $this->yidai_marked,
         ]);
 
-        $query->andFilterWhere(['like', 'report_id', $this->report_id])
+        $query->andFilterWhere(['like', 'rest_report.report_id', $this->report_id])
             ->andFilterWhere(['like', 'status', $this->status])
             ->andFilterWhere(['like', 'note', $this->note])
             ->andFilterWhere(['like', 'cnvsqlite', $this->cnvsqlite])

@@ -114,3 +114,14 @@ a.desc:after {
 .nav > li > form > button:hover {
     text-decoration: none;
 }
+
+
+table{
+   table-layout: fixed;
+}
+
+td{    white-space: nowrap !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: keep-all;
+}

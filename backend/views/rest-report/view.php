@@ -40,7 +40,7 @@ echo Summary::widget(['model' => $model, 'omims' => $omims]);
 
 
 
-        <div class="col-md-8 $hideComments">
+        <div class="col-md-8 <?=$hideComments ?>">
 
               <?=Comments::widget([
                      'action'=>'rest-report/send-comment',

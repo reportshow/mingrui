@@ -3,8 +3,7 @@
 use backend\components\Functions;
 use backend\models\MingruiPingjia;
 use yii\grid\GridView;
-use yii\helpers\Html;
-use backend\components\Functions;
+use yii\helpers\Html; 
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\RestReportSearch */
@@ -52,7 +51,7 @@ return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
                 return $date->format('Y-m-d');
 
             },
-            'options'   => ['width' => '80px;'],
+            'options'   => ['width' => '120px;'],
         ],
 
         [
@@ -61,13 +60,13 @@ return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
             'value'     => function ($model) {
                 $sample = $model->sample;
                 $name   = $sample->name;
-                //return $name;
+                return $name;
                 return mb_strlen($name) > 9 ? mb_substr($name, 0, 9) . '..' : $name;
             },
             'filter'    => Html::activeTextInput($searchModel, 'username', [
                 'class' => 'form-control',
             ]),
-            'options'   => ['width' => '80px;'],
+            'options'   => ['width' => '120px;'],
         ], //<=====加入这句,
 
         /*  ['attribute' => 'sample.sex',
@@ -99,7 +98,7 @@ return $model->sample->age ? $model->sample->age : '-';
         [
             'attribute' => 'gene',
             'label'     => '基因型', 
-            'headerOptions' => ['width' => '60'],
+            'headerOptions' => ['width' => '120'],
         ], 
         [
             'attribute' => 'linchuang',
