@@ -12,8 +12,8 @@ use backend\models\RestReportSearch;
 use backend\models\RestSample;
 use backend\models\VoiceRecord;
 use backend\widgets\Nodata;
-use common\models\WechatUser;
 use common\models\User;
+use common\models\WechatUser;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -221,15 +221,17 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
             var_dump($model->errors);
         }
     }
+    
     public function touid($report_id)
-    {  //不能用uid，有可能不存在
+    {
+        //不能用uid，有可能不存在
 
-        if (Yii::$app->user->can('admin')) {       
+        if (Yii::$app->user->can('admin')) {
             $rp = RestReport::findOne($report_id);
             return $rp->sample->doctor_id;
         } else {
             //$admin = User::find()->where(['username' => 'admin'])->one();
-            return 99999999;//$admin->id;
+            return 99999999; //$admin->id;
         }
     }
 
