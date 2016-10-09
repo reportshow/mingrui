@@ -6,11 +6,11 @@ use yii\base\Widget;
 class Nodata extends Widget
 {
     public $message = ''; //一条声音
-
+    public $title   = '抱歉';
     public function run()
     {
 
-        return $this->render('Nodata', ['message' => $this->message]);
+        return $this->render('Nodata', ['message' => $this->message,'title'=>$this->title]);
     }
 
 }

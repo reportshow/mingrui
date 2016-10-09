@@ -33,10 +33,10 @@ $wechat['menu'] = [
         "name"       => "一键下单",
         "sub_button" => [
             [
-                "type" => "click",
+                "type" => "view",
                 "name" => "确认送检",
                 "key"  => "SAMPLE-ORDER",
-                'url'=>'javascript:;',
+                'url'=>'http://ding.scicompound.com/mingrui/report/backend/web/?r=wechat-doctor/doorder',
             ], 
         ],
     ],

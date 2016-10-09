@@ -2,7 +2,7 @@
     <h4>
         <i class="icon fa fa-info">
         </i>
-        抱歉!
+        <?=$title ?>
     </h4>
     <?=$message ?>
 </div>
