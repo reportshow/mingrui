@@ -175,7 +175,7 @@
             <?php
               foreach($menus as $key=>$menu){ 
 
-              $bootmenuHref = !empty($menu['sub_button']) ? 'javascript:;' : $submenu['url'];
+              $bootmenuHref = !empty($menu['url']) ? $menu['url'] : 'javascript:;' ;
           ?>
           <li>
             <a class="" href="<?=$bootmenuHref ?>"><?=$menu['name']?></a>

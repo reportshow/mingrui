@@ -45,7 +45,7 @@ $wechat['menu'] = [
         "type" => "click",
         "name" => "常见问题",
         "key"  => "WORK-FLOW",
-        'url'=>'javascript:;',
+        'url'=>'http://ding.scicompound.com/mingrui/report/backend/web/?r=/mingrui-qa',
     ],
 
 ];
