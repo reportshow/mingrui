@@ -90,7 +90,7 @@ $styleboxtop = Functions::ismobile() ? '0px' : '150px';
   <div class="modal-dialog" style="margin-top: <?=$styleboxtop ?>">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="opacity:1;color:#fff">
           <span aria-hidden="true">&times;</span>
         </button>
         <h4 class="modal-title">星级评价</h4>
@@ -115,8 +115,9 @@ $styleboxtop = Functions::ismobile() ? '0px' : '150px';
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline pull-left close" data-dismiss="modal"  > 取 消 </button>
-        <button type="button" class="btn btn-outline" id='pingjisendBtn'> 确 定 </button>.......lkkkk
+        <span type="button" class="btn btn-outline pull-left close" data-dismiss="modal"  
+        style="font-weight: normal;font-size:1em;opacity: 1;text-shadow:none" > 取 消 </span>
+        <button type="button" class="btn btn-outline" id='pingjisendBtn'> 确 定 </button>
       </div>
     </div>
     <!-- /.modal-content -->

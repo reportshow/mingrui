@@ -136,6 +136,11 @@ foreach ($model->comments as $comment) {
             $('#noteform').submit();
          });
       }else{
+         var content = $('#MingruiComments-content').val() +"";
+         if(content.length < 2){
+            alert('请输入内容');
+            return;
+         }
          $('#noteform').submit();
       }
       
