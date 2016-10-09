@@ -11,7 +11,9 @@ class userMessage
     {
         $myid  = Yii::$app->user->id;
         $query = MingruiComments::find()
-            ->where(['<>', 'uid', $myid])
+            ->where(['like', 'report_id', 'gb'])
+        //->andWhere(['<>', 'uid', $myid])
+            ->andWhere(['to_uid'=> null] )
             ->andWhere(['isread' => 0]);
 
         if (Yii::$app->user->can('admin')) {

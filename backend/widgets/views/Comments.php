@@ -6,7 +6,7 @@ use backend\widgets\WechatRecord;
  use backend\widgets\VoiceShow;
 
  
-$clearUrl = Yii::$app->urlManager->createUrl(['comment/clear-comments','report_id'=>444]);
+$clearUrl = Yii::$app->urlManager->createUrl(['comment/clear-comments','report_id'=>$model->id]);
 
 ?><div class="box box-primary direct-chat direct-chat-primary comment-widget">
     <div class="box-header with-border">
@@ -165,4 +165,4 @@ foreach ($model->comments as $comment) {
     .left>.direct-chat-text{  
       margin-left: 10px;
     }
-</style>>
+</style>
