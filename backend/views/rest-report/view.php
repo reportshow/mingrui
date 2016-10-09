@@ -16,8 +16,13 @@ $this->params['breadcrumbs'][] = ['label' => '报告列表', 'url' => ['index']]
 
 $this->params['breadcrumbs'][] = $this->title;
 
-$hidesummary = !empty($_GET['hidesummary']) && Functions::ismobile()   ? 'hide':'';
-$hideComments = $hidesummary=='hide' ? '' : 'hide' ;
+
+$hidesummary =''; $hideComments = '';
+if(Functions::ismobile() ){
+  $hidesummary = !empty($_GET['hidesummary'])   ? 'hide':'';
+  $hideComments = $hidesummary=='hide'   ? '' : 'hide' ;
+}
+
 ?>
 <div class="rest-report-view">
 

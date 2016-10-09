@@ -9,6 +9,7 @@ $hideMenuToggle = Functions::ismobile() ? 'hide' : '';
 $showMenuToggleBtn = $hideMenuToggle=='hide' ? '' : 'hide';
 
  $message = userMessage::myMessages();
+  $reportMessage = userMessage::reportMessage();
 ?>
 
 <header class="main-header">
@@ -34,10 +35,10 @@ $showMenuToggleBtn = $hideMenuToggle=='hide' ? '' : 'hide';
                <li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"  title="报告留言">
                         <i class="fa fa-files-o"></i>
-                        <span class="label label-warning"><?=count($message) ?></span>
+                        <span class="label label-warning"><?=count($reportMessage ) ?></span>
                     </a>
                       <ul class="dropdown-menu">
-                        <?=GuestbookDrop::widget(['message'=>$message]);?>
+                        <?=GuestbookDrop::widget(['message'=>$reportMessage ]);?>
                       </ul>
                 </li>
 

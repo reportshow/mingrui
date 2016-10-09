@@ -3,39 +3,41 @@
 namespace backend\controllers;
 
 use backend\models\Geneareas;
-use backend\models\GeneDiseases;
 use backend\models\Genetypes;
-use backend\models\Omims;
 use backend\models\MingruiComments;
+use backend\models\Omims;
 use backend\models\RestClient;
 use backend\models\RestReport;
 use backend\models\RestReportSearch;
 use backend\models\RestSample;
 use backend\models\VoiceRecord;
+use backend\widgets\Nodata;
+use common\models\WechatUser;
+use common\models\User;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use backend\widgets\Nodata;
-use common\models\WechatUser;
+
 /**
  * RestReportController implements the CRUD actions for RestReport model.
  */
 class RestReportController extends Controller
 {
-    
-    public function beforeAction($action){
-         if(!Yii::$app->user->Identity){
-            if(!empty($_SESSION['entery_url'] )){
+
+    public function beforeAction($action)
+    {
+        if (!Yii::$app->user->Identity) {
+            if (!empty($_SESSION['entery_url'])) {
                 WechatUser::oauth();
                 return;
-               // header('Location: ' . $_SESSION['entery_url']);
-              //  exit('hello');
+                // header('Location: ' . $_SESSION['entery_url']);
+                //  exit('hello');
             }
-            return Yii::$app->controller->goHome();  
-         }
-         //var_dump(Yii::$app->user->Identity);exit;
-        return parent::beforeAction($action); 
+            return Yii::$app->controller->goHome();
+        }
+        //var_dump(Yii::$app->user->Identity);exit;
+        return parent::beforeAction($action);
     }
 
     /**
@@ -82,18 +84,17 @@ class RestReportController extends Controller
         //$params['RestReportSearch']['rest_report.status'] = 'finished';
 
         $query = RestReport::find();
-        $query = $query->where(['<>', 'ptype', 'yidai']);/*
+        $query = $query->where(['<>', 'ptype', 'yidai']); /*
         $query = $query->andWhere(['not like', 'name', '之父']);
         $query = $query->andWhere(['not like', 'name', '之母']);*/
-        
 
 /*        $unfinished = Yii::$app->request->get('unfinished');
-        if (!empty($unfinished)) {
-            //未出报告
-            $query = $query->andWhere(['<>', 'rest_report.status', 'finished']);
-        } else {
-            $query = $query->andWhere(['rest_report.status' => 'finished']);
-        }*/
+if (!empty($unfinished)) {
+//未出报告
+$query = $query->andWhere(['<>', 'rest_report.status', 'finished']);
+} else {
+$query = $query->andWhere(['rest_report.status' => 'finished']);
+}*/
 
         if (Yii::$app->user->can('doctor')) {
             $mobile = Yii::$app->user->Identity->username;
@@ -120,24 +121,24 @@ class RestReportController extends Controller
     }
 
     public function actionMyreport()
-    { 
+    {
         $role = Yii::$app->user->Identity->role_text;
-        if($role=='doctor'){
+        if ($role == 'doctor') {
 
-             $content = Nodata::widget(['message' => '您是医生身份，无法查看自己的报告']);
+            $content = Nodata::widget(['message' => '您是医生身份，无法查看自己的报告']);
             return $this->render(
                 '/layouts/main-login',
                 ['content' => $content]
             );
         }
         $mobile = Yii::$app->user->Identity->username;
-         
-        $query  = RestSample::find()->where(['like', "REPLACE(tel1,' ','')", $mobile]);
-        $smp    = $query->one(); //有多个
+
+        $query = RestSample::find()->where(['like', "REPLACE(tel1,' ','')", $mobile]);
+        $smp   = $query->one(); //有多个
         if (!$smp) {
-            echo  $query->createCommand()->getRawSql();
-            $content = Nodata::widget(['message' => '没有与您相关的报告记录'.$mobile]);
-             return $this->render(
+            echo $query->createCommand()->getRawSql();
+            $content = Nodata::widget(['message' => '没有与您相关的报告记录' . $mobile]);
+            return $this->render(
                 '/layouts/main-login',
                 ['content' => $content]
             );
@@ -176,14 +177,13 @@ class RestReportController extends Controller
         foreach ($snp_array as $key => $data) {
             $user_snp_genes[] = $data[0];
         }
-        
 
         $gene_omims = [];
         foreach ($user_snp_genes as $gene) {
             $str_omim = "数据库中未找到";
             $omim     = Omims::find()->where(['gene' => trim($gene)])->one();
             if ($omim) {
-                 $str_omim = $omim->disease_id;
+                $str_omim = $omim->disease_id;
             }
             $gene_omims[] = [$gene => $str_omim];
         }
@@ -191,7 +191,7 @@ class RestReportController extends Controller
         return $this->render($viewname, [
             'model'    => $userdata,
             'comments' => $this->getComments($id),
-            'omims' => $gene_omims,
+            'omims'    => $gene_omims,
         ]);
     }
 
@@ -204,7 +204,8 @@ class RestReportController extends Controller
     {
         $model = new MingruiComments();
         $model->load(Yii::$app->request->post());
-        $model->uid = Yii::$app->user->id;
+        $model->uid    = Yii::$app->user->id;
+        $model->to_uid = $this->touid($model->report_id); //rest_client.id / admin uid
 
         if (json_decode($model->content)) {
             $voices = VoiceRecord::saveRecordVoice($model->content);
@@ -218,6 +219,17 @@ class RestReportController extends Controller
             exit;
         } else {
             var_dump($model->errors);
+        }
+    }
+    public function touid($report_id)
+    {  //不能用uid，有可能不存在
+
+        if (Yii::$app->user->can('admin')) {       
+            $rp = RestReport::findOne($report_id);
+            return $rp->sample->doctor_id;
+        } else {
+            //$admin = User::find()->where(['username' => 'admin'])->one();
+            return 99999999;//$admin->id;
         }
     }
 
@@ -305,10 +317,10 @@ class RestReportController extends Controller
         /* //data for fast debug */
         /* $datas = '[["ABCB1", "c.2677T>A chr7-87160618 p.S893T", "DP", "Lung cancer, lower risk, association with", "Ser893Thr", "nonsynonymous", [null, null, 0.0366178], "Gervasini.Cancer,107,2850,2006(17120199)", "Damaging(0.03)", "Benign(0.001)", "Benign(0.997)", "Polymorphism(3.72)", "Conserved(3.72)", "het", ["NM_000927", "exon22"], {"NG16070026": ["het", "85/93(0.52)"]}, [1, 0, "AD"], 1, 0, "4383", ["\u4e0d\u660e"], [["\u79cb\u6c34\u4ed9\u78b1\u6297\u6027", "\u4e0d\u660e", "\u4e0d\u660e"], ["\u708e\u6027\u80a0\u75c513\u578b", "\u4e0d\u660e", "\u4e0d\u660e"]]], ["ABCC8", " chr11-17417496 ", "DM?", "Hypoglycaemia, persistent hyperinsulinaemic", "IVS33 as C-T -19", "unknown", [0.03, 0.010768, null], "Fernandez-Marmiesse.Human mutation,27,214,2006(16429405)", null, null, null, null, null, "het", ["", ""], {"NG16070026": ["het", "63/53(0.46)"]}, [1, 0, "AD"], 0, 1, "5605", ["\u4e0d\u660e", "AD"], [["\u7cd6\u5c3f\u75c5", "AD", "\u65e0"], ["\u7cd6\u5c3f\u75c5", "AD", "\u65e0"], ["\u7cd6\u5c3f\u75c5", "\u4e0d\u660e", "\u65e0"]]], ["ACAT1", "c.436-4G>A chr11-108009621 splicing", "", "", "", "splicing", [0.01, 0.000385, null], null, null, null, null, null, null, "het", ["NM_000019", "exon6"], {"NG16070026": ["het", "95/96(0.50)"]}, [1, 0, "AD"], 0, 2, "1622", ["AR"], [["Beta\u786b\u89e3\u9176\u7f3a\u4e4f\u75c7", "AR", "\u6709\u4e2d\u7b49\uff0c\u5927\u7247\u6bb5\u7f3a\u5931"]]], ["ADAMTSL4", "c.926G>A chr1-150526393 p.R309Q", "DM?", "Ectopia lentis, isolated form", "Arg309Gln", "nonsynonymous", [0.04, 0.001387, 0.0163116], "Aragon-Martin.Human mutation,31,E1622,2010(20564469)", "Tolerable(0.36)", "Benign(0.18)", "Benign(1)", "Polymorphism(2.29)", "Conserved(2.29)", "het", ["NM_001288607", "exon6"], {"NG16070026": ["het", "126/114(0.47)"]}, [1, 0, "AD"], 0, 3, "3729", ["AR"], [["\u6676\u72b6\u4f53\u53ca\u77b3\u5b54\u5f02\u4f4d", "AR", "\u6076\u6027\u7a81\u53d8\u4e3a\u4e3b"], ["\u5355\u7eaf\u6676\u72b6\u4f53\u5f02\u4f4d", "AR", "\u6076\u6027\u7a81\u53d8\u4e3a\u4e3b"]]]]'; */
         $datas = json_decode($datas, true);
-        if($datas == NULL) {
-             $datas= [];
+        if ($datas == null) {
+            $datas = [];
         }
-             
+
         foreach ($datas as $key => $data) {
             $str = $datas[$key][2];
             $ret = preg_match('/.*-([0-9]+).*/', $data[1], $matches);
@@ -339,53 +351,51 @@ class RestReportController extends Controller
 
         $user_snp_areas = [];
         foreach ($snp_array as $key => $data) {
-             $user_snp_areas[$data[0]]['bad'][]= $data[1];
+            $user_snp_areas[$data[0]]['bad'][] = $data[1];
         }
 
         //2. find all areas of these genes
-        foreach($user_snp_areas as $gene => $bad_point_array) {
-             $final_areas = [];
-             $areas = Geneareas::find()->where(['geneareas.gene' => trim($gene)])->all();
-             if($areas) {
-                  foreach ($areas as $area) {
-                       $final_areas[] = ['start' => $area->startcoord,
-                                         'end'   => $area->endcoord,
-                                         'count' => $area->report_count,
-                                         'bad'   => false,
-                                         /* //for debug */
-                                         /* 'bad'   => true, */
-                            ];
-                  }
-             }
-             $user_snp_areas[$gene]['areas'] = $final_areas; 
+        foreach ($user_snp_areas as $gene => $bad_point_array) {
+            $final_areas = [];
+            $areas       = Geneareas::find()->where(['geneareas.gene' => trim($gene)])->all();
+            if ($areas) {
+                foreach ($areas as $area) {
+                    $final_areas[] = ['start' => $area->startcoord,
+                        'end'                     => $area->endcoord,
+                        'count'                   => $area->report_count,
+                        'bad'                     => false,
+                        /* //for debug */
+                        /* 'bad'   => true, */
+                    ];
+                }
+            }
+            $user_snp_areas[$gene]['areas'] = $final_areas;
         }
 
         //mark the bad area
-        foreach($user_snp_areas as $gene => $data) {
-             foreach($data['bad'] as $i => $bad) {
-                  $temp = explode(' ', $bad);
-                  $type = Genetypes::find()->where(['gene'=>trim($gene), 'hgvs'=>trim($temp[0])])->one();
-                  if($type) {
-                       foreach($data['areas'] as $key => $area) {
-                            if($type->startcoord>=$area['start'] and $type->startcoord<=$area['end']){
-                                 $user_snp_areas[$gene]['areas'][$key]['bad'] = true;
-                                 $user_snp_areas[$gene]['genetype_str'][$i] = $gene . '--E' . $key. '--' . $bad;
-                            }
-                       }
-                  }
-                  else
-                  {
-                       $user_snp_areas[$gene]['genetype_str'][$i] = $gene . '--____' . '--' . $bad;
-                  }
-             }
+        foreach ($user_snp_areas as $gene => $data) {
+            foreach ($data['bad'] as $i => $bad) {
+                $temp = explode(' ', $bad);
+                $type = Genetypes::find()->where(['gene' => trim($gene), 'hgvs' => trim($temp[0])])->one();
+                if ($type) {
+                    foreach ($data['areas'] as $key => $area) {
+                        if ($type->startcoord >= $area['start'] and $type->startcoord <= $area['end']) {
+                            $user_snp_areas[$gene]['areas'][$key]['bad'] = true;
+                            $user_snp_areas[$gene]['genetype_str'][$i]   = $gene . '--E' . $key . '--' . $bad;
+                        }
+                    }
+                } else {
+                    $user_snp_areas[$gene]['genetype_str'][$i] = $gene . '--____' . '--' . $bad;
+                }
+            }
         }
 
         /* //for debug of multiple bad gene */
         /* $user_snp_areas['ABC'] = $user_snp_areas['CBS']; */
-        
+
         return $this->render('stats', [
-            'data'    => json_encode($user_snp_areas),
-            'model'   => $this->findModel($id),
+            'data'  => json_encode($user_snp_areas),
+            'model' => $this->findModel($id),
         ]);
     }
 
@@ -531,7 +541,7 @@ class RestReportController extends Controller
     /*      } */
     /*      echo "OK" . $count; */
     /* } */
-    
+
     // public function
     /**
      * Finds the RestReport model based on its primary key value.

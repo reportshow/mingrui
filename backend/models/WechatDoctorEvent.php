@@ -4,7 +4,7 @@ namespace backend\models;
 use common\components\SMS;
 use Yii;
 use yii\web\Controller;
-
+use common\models\User;
 /**
  * Site controller
  */
@@ -41,18 +41,30 @@ class WechatDoctorEvent extends WechatEvent
         if (!$mobile) {
             return $this->reply->text('管理员电话未设置');
         }
+         
         $openid = $this->reply->openid;
+        
+        return $this->reply->text(
+            "您送检样本申请已通过此功能来通知客服部，稍后我们会主动与您联系约定取样时间、地点等细节。"
+            );
+        
+
         $doctor = User::find()->where(['wx_openid' => $openid])->one();
         if ($doctor) {
+             
             if ($doctor->role_text != 'doctor') {
                 return $this->reply->text('您没有大夫权限');
             }
             $doctorMobile = $doctor->username;
             $nickname     = $doctor->nickname; //大夫的名字
             SMS::songjian($mobile, [$nickname, $doctorMobile]);
+
+           return $this->reply->text(
+            "您送检样本申请已通过此功能来通知客服部，稍后我们会主动与您联系约定取样时间、地点等细节。"
+            );
         } else {
             $loginUrl = Yii::$app->urlManager->createAbsoluteUrl(['wechat/weblogin', 'qr_session' => 'login_itself']);
-            return $this->reply->text("\n请点击<a href=\"$url\">请点击这里</a> 进行身份确认");
+            return $this->reply->text("\n请点击<a href=\"$loginUrl\">请点击这里</a> 进行身份确认");
             // SMS::songjian($mobile, ['XX医生', $mobile]);
         }
 

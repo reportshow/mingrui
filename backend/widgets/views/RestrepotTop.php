@@ -109,7 +109,7 @@ $styleboxtop = Functions::ismobile() ? '0px' : '150px';
 
           } 
        ?>
-             <p><input type=radio name='pingjia' value='6'><i class='tag' style="font-size:1em">○◎</i>
+             <p><input type=radio name='pingjia' value='6'><i class='tag' style="">●</i>
                  <input type=text maxlength="16" placeholder="自定义">   
              </p>  
         </div>

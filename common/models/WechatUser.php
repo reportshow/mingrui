@@ -208,6 +208,7 @@ class WechatUser extends Model
      */
     public static function oauth()
     {
+        
         if (!empty($_SESSION['openid']) && !empty($_SESSION['mobile'])) {
             $user = self::localUser($_SESSION['openid']);
             if ($user && $user->status != 0) {
@@ -223,6 +224,10 @@ class WechatUser extends Model
         header("Location: $toUrl");
         exit;
 
+    }
+
+    public static function checkUserExist(){
+        
     }
 
     public static function newUser4wechat($info)

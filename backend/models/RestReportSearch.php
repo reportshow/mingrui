@@ -18,6 +18,8 @@ class RestReportSearch extends RestReport
     public $pingjia;
     public $gene;
     public $linchuang;
+
+    
     /**
      * @inheritdoc
      */
