@@ -6,7 +6,9 @@ use backend\widgets\WechatRecord;
  use backend\widgets\VoiceShow;
 
  
-?><div class="box box-primary direct-chat direct-chat-primary">
+$clearUrl = Yii::$app->urlManager->createUrl(['comment/clear-comments','report_id'=>444]);
+
+?><div class="box box-primary direct-chat direct-chat-primary comment-widget">
     <div class="box-header with-border">
         <h3 class="box-title">
             意见与点评
@@ -45,6 +47,7 @@ foreach ($model->comments as $comment) {
 
         </div>
         <!--/.direct-chat-messages-->
+
         <!-- Contacts are loaded here -->
         <div class="direct-chat-contacts">
             <ul class="contacts-list">
@@ -136,7 +139,30 @@ foreach ($model->comments as $comment) {
          $('#noteform').submit();
       }
       
-    });
+    });//click
+
+     $.ajax({
+         type: "GET",
+         url: "<?=$clearUrl ?>",
+         data: {},
+         dataType: "json",
+         success: function(data){
+                     
+         }
+     });
      
 </script>
 <?=VoiceShow::begin();?>
+
+<style type="text/css">
+   .direct-chat-text{    
+        max-width: 60%;     display: inline-block;
+    } 
+    .direct-chat-primary .right>.direct-chat-text{      
+    float: right;
+    margin-right: 10px;}
+
+    .left>.direct-chat-text{  
+      margin-left: 10px;
+    }
+</style>>

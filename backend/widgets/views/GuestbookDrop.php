@@ -1,4 +1,8 @@
- 
+<?php
+
+//use Yii;
+
+?>
 <li class="header">你有 <?=count($message) ?> 条新消息</li>
 <li>
     <!-- inner menu: contains the actual data -->
@@ -12,9 +16,11 @@
             $avatar = $msg->creator->avatar;
         }
 
+        $url =Yii::$app->urlManager->createUrl(['rest-report/clear-comments','report_id'=>$msg->report_id]); 
+
     ?>
         <li><!-- start message -->
-            <a href="#">
+            <a href="<?=$url ?>">
                 <div class="pull-left">
                     <img src="<?=$avatar ?>" style='width:30px;height:30px' class="img-circle" alt="User Image"/>
                 </div>

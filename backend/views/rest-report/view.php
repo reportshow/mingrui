@@ -1,11 +1,9 @@
 <?php
 
-use backend\widgets\Comments;
-use backend\widgets\Summary;
-use backend\widgets\RestrepotTop;
-use yii\helpers\Html;
 use backend\components\Functions;
-
+use backend\widgets\Comments;
+use backend\widgets\RestrepotTop;
+use backend\widgets\Summary;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\RestReport */
@@ -16,17 +14,17 @@ $this->params['breadcrumbs'][] = ['label' => '报告列表', 'url' => ['index']]
 
 $this->params['breadcrumbs'][] = $this->title;
 
-
-$hidesummary =''; $hideComments = '';
-if(Functions::ismobile() ){
-  $hidesummary = !empty($_GET['hidesummary'])   ? 'hide':'';
-  $hideComments = $hidesummary=='hide'   ? '' : 'hide' ;
+$showSummary  = true;
+$showComments = true;
+if (Functions::ismobile()) {
+    $showSummary  = !empty($_GET['hidesummary']) ? flase : true;
+    $showComments = $showSummary == false ? true : false;
 }
 
 ?>
 <div class="rest-report-view">
 
-<?=RestrepotTop::widget(['model_id'=>$model->id]); ?>
+<?=RestrepotTop::widget(['model_id' => $model->id]);?>
 
 <style type="text/css">
   .hidesummary{
@@ -36,23 +34,26 @@ if(Functions::ismobile() ){
 </style>
 
 <div class="row">
-        <div class="col-md-4  <?=$hidesummary?>">
-          <?php
-echo Summary::widget(['model' => $model, 'omims' => $omims]);
+
+<?php
+
+if ($showSummary) {
+
+    echo " <div class='col-md-4 summarybox'>";
+    echo Summary::widget(['model' => $model, 'omims' => $omims]);
+    echo " </div>";
+}
+
+if ($showComments) {
+    echo " <div class='col-md-8 commentbox'>";
+    echo Comments::widget([
+        'action' => 'rest-report/send-comment',
+        'id'     => $model->id,
+    ]);
+    echo " </div>";
+}
+
 ?>
-        </div>
-        <!-- /.col -->
-
-
-
-        <div class="col-md-8 <?=$hideComments ?>">
-
-              <?=Comments::widget([
-                     'action'=>'rest-report/send-comment',
-                    'id' => $model->id,
-                ])?>
-        </div>
-
 
 
 
@@ -61,7 +62,15 @@ echo Summary::widget(['model' => $model, 'omims' => $omims]);
   <!-- /.row -->
 
 
+<script type="text/javascript">
+  $(function(){
+    $height = $('.summarybox').height();
+    if($height > 200){
+      $('.commentbox .direct-chat-messages').height($height-140);
+    }
 
+  });
+</script>
 
 
 
