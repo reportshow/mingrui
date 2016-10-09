@@ -15,8 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
      
 
     <p>
-        <?= Html::a('Update', ['update', 'id'           => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id'           => $model->id], [
+        <?= Html::a('Update', ['修改', 'id'           => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['删除', 'id'           => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -27,6 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= DetailView::widget([
         'model' => $model,
+
         'attributes' => [
             'id',
             'name',
@@ -45,10 +46,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'speciality',
             'hobby',
             'notes:ntext',
-            'zhuren',
-            'hospital_id',
-            'pianhao:ntext',
+           // 'zhuren',
+            ['attribute'=>'hospitalname','label'=>'医院','value'=>$model->hospital->name],
+            //'pianhao:ntext',
         ],
     ]) ?>
-
+<style type="text/css">
+    .table{width: 60%}
+</style>
 </div>
