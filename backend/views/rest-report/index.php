@@ -96,6 +96,7 @@ return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
             'filter'    => Html::activeTextInput($searchModel, 'product_name', [
                 'class' => 'form-control',
             ]),
+            'options'   => ['width' => '120'],
         ], //<=====加入这句
 
         [
@@ -204,7 +205,9 @@ return $model->status =='finished' ? '<span class="bg-primary" style="padding:3p
         /* ['class'   => 'yii\grid\ActionColumn',
         'template' => '{view} {000update} {000delete}',
         ],*/
-        ['attribute' => '',
+        [
+            'options'   => ['width' => '120'],
+            'attribute' => '',
             'format'     => 'raw',
             'value'      => function ($model) {
                 $urlreport = Yii::$app->urlManager->createUrl(

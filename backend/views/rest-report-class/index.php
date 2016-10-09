@@ -93,6 +93,7 @@ return $model->sample->age ? $model->sample->age : '-';
             'filter'    => Html::activeTextInput($searchModel, 'product_name', [
                 'class' => 'form-control',
             ]),
+            'options'   => ['width' => '120'],
         ], //<=====加入这句
 
         [
@@ -104,6 +105,7 @@ return $model->sample->age ? $model->sample->age : '-';
             'attribute' => 'linchuang',
             'label'         => '临床表型',
             'value'=>'pingjia.linchuang',
+            'options'   => ['width' => '150'],
         ],
         
         [
@@ -225,6 +227,7 @@ return $model->status =='finished' ? '<span class="bg-primary" style="padding:3p
         'template' => '{view} {000update} {000delete}',
         ],*/
         ['attribute' => '',
+        'options'   => ['width' => '120'],
             'format'     => 'raw',
             'value'      => function ($model) {
                 $urlreport = Yii::$app->urlManager->createUrl(
