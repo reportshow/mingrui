@@ -60,7 +60,8 @@ class MingruiComments extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'uid']);
     }
-    public function getTouser()
+
+     public function getTouser()
     {
         return $this->hasOne(User::className(), ['id' => 'to_uid']);
     }

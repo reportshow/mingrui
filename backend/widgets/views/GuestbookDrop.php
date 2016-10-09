@@ -6,14 +6,20 @@
     <?php
      foreach($message as $k=>$msg){
 
+        $name = '';
+        if($msg->creator){
+            $name = $msg->creator->nickname;
+            $avatar = $msg->creator->avatar;
+        }
+
     ?>
         <li><!-- start message -->
             <a href="#">
                 <div class="pull-left">
-                    <img src="images/user2.png" style='width:30px;height:30px' class="img-circle" alt="User Image"/>
+                    <img src="<?=$avatar ?>" style='width:30px;height:30px' class="img-circle" alt="User Image"/>
                 </div>
                 <h4 style="font-size: 0.9em">
-                    管理员
+                    <?=$name ?>
                     <small><i class="fa fa-clock-o"></i> <?=date('Y-m-d H:i',$msg->createtime)?></small>
                 </h4>
                 <p> <?=$msg->content ?></p>
@@ -24,5 +30,5 @@
        ?> <!-- end message --> 
     </ul>
 </li>
-<li class="footer" style=' padding-top:0px; height: auto;  '><a href="#">See All Messages</a></li>
+<li class="footer" style=' padding-top:0px; height: auto;  '><a href="#">清空</a></li>
              
