@@ -41,16 +41,16 @@ class CommentController extends Controller
     public function clearGuestbookComment($report_id)
     {
         //留言
-        $where = "report_id = '$report_id' ";
+        $where = "report_id = '$report_id' "
+        . ' AND uid <>' . Yii::$app->user->id;
+
         if (Yii::$app->user->can('admin')) {
-            $guestid = substr($report_id, 2);
-            $where .= " AND uid <>  '$guestid' ";
+
         } else {
-            $myid = Yii::$app->user->id;
-            if ($report_id != 'gb' . $myid) {
+            $doctorid = Yii::$app->user->Identity->role_tab_id;
+            if ($report_id != 'gb' . $doctorid) {
                 return json_encode(['code' => '101']);
             }
-            $where .= " AND uid =  '$myid' ";
         }
         MingruiComments::updateAll(['isread' => 1], $where);
 

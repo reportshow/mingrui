@@ -1,8 +1,18 @@
  <?php
- use backend\widgets\WeixinMenubar;
+use backend\widgets\WeixinMenubar;
+use backend\components\Functions;
+?>
+<style type="text/css">
+    <?php
+if (!Functions::ismobile()) {
+    echo ".main-header {position:fixed;width:100%} ";
+    echo ".main-sidebar {position: fixed}";
 
- 
- ?>
+}
+
+?>
+</style>
+
 
 <!-- jQuery 2.2.3 -->
 <!-- <script src="plugins/jQuery/jquery-2.2.3.min.js"></script> -->
@@ -18,8 +28,8 @@
 <!-- Sparkline -->
 <script src="plugins/sparkline/jquery.sparkline.min.js"></script>
 <!-- jvectormap -->
-<script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<!--script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script-->
+<!--script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script-->
 <!-- jQuery Knob Chart -->
 <script src="plugins/knob/jquery.knob.js"></script>
 <!-- daterangepicker -->

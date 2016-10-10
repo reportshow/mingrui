@@ -10,16 +10,19 @@ class userMessage
     public static function myMessages()
     {
         $myid  = Yii::$app->user->id;
-        $query = MingruiComments::find()
-            ->where(['like', 'report_id', 'gb'])
-        //->andWhere(['<>', 'uid', $myid])
-            ->andWhere(['to_uid'=> null] )
-            ->andWhere(['isread' => 0]);
+        $query = MingruiComments::find() 
+            ->where(['isread' => 0])
+            ->andWhere(['<>', 'uid', $myid])
+            ->andWhere(['to_uid' => null]);
 
         if (Yii::$app->user->can('admin')) {
-            //
+            $query = $query->andWhere(['like', 'report_id', 'gb']);
         } else if (Yii::$app->user->can('doctor')) {
-            $query = $query->andWhere(['report_id' => 'gb' . $myid]);
+
+            $bookid = 'gb' . Yii::$app->user->Identity->role_tab_id;
+            $query  = $query->andWhere(['report_id' => $bookid]);
+
+           // echo "测试: ".$query->createCommand()->getRawSql(); exit;
         } else {
             return [];
         }

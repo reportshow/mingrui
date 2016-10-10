@@ -6,10 +6,13 @@ use backend\components\Functions;
 $controllerID = Yii::$app->controller->id;
 $actionID     = Yii::$app->controller->action->id;
 
-$active = ['view' => '', 'show-report' => '', 'stats' => '', 'index' => '', 'analyze' => ''];
+$active = ['view' => '', 'show-report' => '', 'comments'=>'', 'stats' => '', 'index' => '', 'analyze' => ''];
 switch ($actionID) {
     case 'view':
         $activeid = 'view';
+        break;
+    case 'comments':
+        $activeid = 'comments';
         break;
     case 'show-report':
         $activeid = 'show-report';
@@ -39,15 +42,31 @@ $styleboxtop = Functions::ismobile() ? '0px' : '150px';
    .btn.active{
       box-shadow: inset 0 3px 5px rgba(0, 0, 0, .7);
     }
+
+@media screen and (min-width: 640px) {    
+  .summary.btn{display: none}
+}
+.summary.btn{
+   width: 70px;height: 70px;float: left;margin-right: 10px;box-shadow: 1px 1px 1px #000;
+}
+.summary.btn i{font-size: 50px;color: #FFFFFF;}
 </style>
 
 <p>
+
+ <?=Html::a('<i class=" fa fa-calendar-plus-o" ></i>', ['rest-report/view', 'id' => $model_id], [
+    'class' => 'summary btn btn-info ' . $active['view'],
+])?>
+
+
+
+
 <?=Html::a('报告详情', ['rest-report/show-report', 'id' => $model_id], [
     'class' => 'btn btn-success ' . $active['show-report'],
 ])?>
 
-<?=Html::a('意见反馈', ['rest-report/view', 'id' => $model_id, 'hidesummary'=>'yes'], [
-    'class' => 'btn btn-info ' . $active['view'],
+<?=Html::a('意见反馈', ['rest-report/comments', 'id' => $model_id], [
+    'class' => 'btn btn-info ' . $active['comments'],
 ])?>
 
 <?=Html::a('星级评价', '#', [

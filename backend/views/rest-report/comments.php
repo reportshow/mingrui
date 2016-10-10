@@ -32,14 +32,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?php
 
-if (1) {
+if (!Functions::ismobile()) {
 
     echo " <div class='col-md-4 summarybox'>";
     echo Summary::widget(['model' => $model, 'omims' => $omims]);
     echo " </div>";
 }
 
-if (!Functions::ismobile()) {
+if (1) {
     echo " <div class='col-md-8 commentbox'>";
     echo Comments::widget([
         'action' => 'rest-report/send-comment',
@@ -47,6 +47,7 @@ if (!Functions::ismobile()) {
     ]);
     echo " </div>";
 }
+
 ?>
 
 

@@ -55,6 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
         [
             'attribute' => 'tel1',
             'label'     => '联系方式',
+            'options'   => ['width' => 120],
             'value'     => function ($model) {
                 $tels = $model->tel1;
                 //$list = explode('、', $tels);
@@ -72,7 +73,8 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         // 'tel2',
         // 'email:email',
-        'address',
+        ['attribute'=>'address','options'   => ['width' => 120],],
+       
         // 'symptom:ntext',
         // 'date',
         // 'has_project',
@@ -109,7 +111,7 @@ $this->params['breadcrumbs'][] = $this->title;
         // 'shouyang_date',
         // 'shouyanged',
 
-        ['class' => 'yii\grid\ActionColumn'],
+        ['class' => 'yii\grid\ActionColumn','options'   => ['width' => 80],],
     ],
 ]);?>
 </div>

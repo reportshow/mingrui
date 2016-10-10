@@ -154,6 +154,11 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
 
     }
 
+    public function actionComments($id)
+    {
+      return   $this->showViewMore('comments', $id);
+    }
+
     /**
      * Displays a single RestReport model.
      * @param integer $id
@@ -171,6 +176,10 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
             $viewname = 'view-guest';
         }
 
+      return  $this->showViewMore($viewname, $id);
+    }
+    public function showViewMore($viewname, $id)
+    {
         $userdata       = $this->findModel($id);
         $user_snp_genes = [];
         $snp_array      = json_decode($userdata->snpsave, true);
@@ -221,7 +230,7 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
             var_dump($model->errors);
         }
     }
-    
+
     public function touid($report_id)
     {
         //不能用uid，有可能不存在

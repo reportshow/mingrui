@@ -9,7 +9,7 @@ $hideMenuToggle = Functions::ismobile() ? 'hide' : '';
 $showMenuToggleBtn = $hideMenuToggle=='hide' ? '' : 'hide';
 
  $message = userMessage::myMessages();
-  $reportMessage = userMessage::reportMessage();
+$reportMessage = userMessage::reportMessage();
 ?>
 
 <header class="main-header">
@@ -22,9 +22,9 @@ $showMenuToggleBtn = $hideMenuToggle=='hide' ? '' : 'hide';
         <a href="#" class="sidebar-toggle <?=$hideMenuToggle ?>" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
         </a>
-        <a class="btn btn-info <?=$showMenuToggleBtn ?>" 
-        style='position: absolute;line-height: 50px;line-height: 35px;height: 100%;' data-toggle="offcanvas" role="button">
-        < 菜单
+        <a class="btn <?=$showMenuToggleBtn ?>" 
+        style='position: absolute;line-height: 50px;line-height: 35px;height: 100%;color:#fff' data-toggle="offcanvas" role="button">
+        <i class='fa fa-list-ul'></i> 菜单
         </a>
         <div class="navbar-custom-menu">
 
