@@ -15,6 +15,57 @@ AppAsset::register($this);
 ?>
 <?=RestrepotTop::widget(['model_id'=>$model->id]); ?>
 
+<style type="text/css">
+#autoscroll{
+    height:100%;
+    overflow:auto;
+    width:100%;
+    text-align:center;
+}
+.barbox{
+    width:960px;
+    height:100%;
+    text-align:left;
+    margin:auto;
+}
+.head{
+    width:958px;
+    height:200px;
+    border:1px solid #eb6100;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.tool{
+    width:958px;
+    border:1px solid #eb6100;
+    background:#FFF;
+}
+.toolabsolute{
+    position:fixed;
+    z-index:100;
+    top: 0;
+}
+.list{
+    width:958px;
+    height:2400px;
+    border:1px solid #eb6100;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+</style>
+
+
+<div id="autoscroll">
+<div class="barbox">
+  <div class="tool" id="mytool">
+  </div>
+</div>
+<div class="barbox">
+  <div class="tool toolabsolute">
+    <?= $this->title?>
+  </div>
+</div>    
+
 <div id="app"></div>
 <script>
     var tableData = <?php echo $data ?>;
@@ -23,8 +74,22 @@ AppAsset::register($this);
 <link type="text/css" href="css/multiselect.css" rel="stylesheet" />
 <script src="report/app.js"></script>
 <script src="report/export.js"></script>
-<style type="text/css">
-    .content-wrapper{overflow: auto}
-    .disabled{background: #999;border:0px;}
-</style>
-     
+<script language="javascript" type="text/javascript">
+    $(document).ready(function(){
+        var mytooltop;
+        var scrolltop;
+        var toolleft;
+        var cloned=false;
+	//$(".toolabsolute").hide();
+        $("#autoscroll").scroll(function(){
+            mytooltop=$("#mytool").get(0).offsetTop;
+            scrolltop=document.getElementById("autoscroll").scrollTop;
+            if(scrolltop>=mytooltop){
+                $(".toolabsolute").show();
+            }
+            if(!(scrolltop>=mytooltop)){
+                $(".toolabsolute").hide();
+            }
+        })
+    })
+</script>
