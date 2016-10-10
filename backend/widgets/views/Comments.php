@@ -34,7 +34,7 @@ $clearUrl = Yii::$app->urlManager->createUrl(['comment/clear-comments','report_i
     <!-- /.box-header -->
     <div class="box-body">
         <!-- Conversations are loaded here -->
-        <div class="direct-chat-messages" style='height:330px'>
+        <div class="direct-chat-messages" style=''>
             <?php
 foreach ($model->comments as $comment) {
     if ($comment) {
@@ -95,7 +95,7 @@ foreach ($model->comments as $comment) {
                     </span>
                     <span class="input-group-btn">
                         <button type=button  class="btn btn-primary btn-flat" id="submitbtn">
-                            确定
+                            发送
                         </button>
                     </span>
                  

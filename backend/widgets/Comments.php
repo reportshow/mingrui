@@ -8,7 +8,7 @@ class Comments extends Widget
 {
     public $comments   = [];
     public $other      = [];
-    public $id         = 10;
+    public $id         = 0;
     public $action     = 'rest-report/send-comment';
     public $formaction = '';
     public function run()

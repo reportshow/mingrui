@@ -86,7 +86,7 @@ class GuestbookController extends Controller
 
     public function actionMy()
     {
-        $id = Yii::$app->user->id; 
+        $id = Yii::$app->user->Identity->role_tab_id;
         return $this->render('view', [
             'id'       => 'gb' . $id,
             'comments' => $this->getComments('gb' . $id),

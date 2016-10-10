@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $showSummary  = true;
 $showComments = true;
 if (Functions::ismobile()) {
-    $showSummary  = !empty($_GET['hidesummary']) ? flase : true;
+    $showSummary  = !empty($_GET['hidesummary']) ? false : true;
     $showComments = $showSummary == false ? true : false;
 }
 

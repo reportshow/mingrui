@@ -24,7 +24,7 @@ $showMenuToggleBtn = $hideMenuToggle=='hide' ? '' : 'hide';
         </a>
         <a class="btn btn-info <?=$showMenuToggleBtn ?>" 
         style='position: absolute;line-height: 50px;line-height: 35px;height: 100%;' data-toggle="offcanvas" role="button">
-        菜单
+        < 菜单
         </a>
         <div class="navbar-custom-menu">
 

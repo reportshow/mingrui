@@ -102,14 +102,20 @@ $styleboxtop = Functions::ismobile() ? '0px' : '150px';
              $star = $value['key'];
              $label = $value['label'];
              $desc = Functions::ismobile() ? '' : $value['description'];
+             $staricon = $star;
+             $list = explode('|',  $star);
+             $listStr = '';
+             foreach ($list as $key => $one) {
+               $listStr .= "<i class='fa $one'></i> ";
+             }
 
              echo  " <p><input type=radio name='pingjia' value='$key'>
-                    <i class='tag'>$star</i> <i class='tag2'>$label</i> $desc 
+                    <i class='tag'>$listStr</i> <i class='tag2'>$label</i> $desc 
                    </p> ";        
 
           } 
        ?>
-             <p><input type=radio name='pingjia' value='6'><i class='tag' style="">●</i>
+             <p><input type=radio name='pingjia' value='6'><i class='tag fa fa-edit' style=""></i>
                  <input type=text maxlength="16" placeholder="自定义">   
              </p>  
         </div>

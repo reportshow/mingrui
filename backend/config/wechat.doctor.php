@@ -8,7 +8,7 @@ $wechat['config'] = [
 ];
 $wechat['menu'] = [
     [
-        "name"       => "查看报告",
+        "name"       => "报告管理",
         "sub_button" => [
             [
                 "type" => "view",
