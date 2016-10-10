@@ -69,7 +69,3 @@ $this->params['breadcrumbs'][] = $this->title;
 
 </div>
 
-
-<style type="text/css">
-    .table{width: 60%}
-</style>

@@ -3,6 +3,9 @@ use yii\helpers\Html;
 use backend\models\userMessage;
 use backend\widgets\GuestbookDrop;
 use backend\components\Functions;
+use backend\models\MingruiOrder;
+
+
 /* @var $this \yii\web\View */
  
 $hideMenuToggle = Functions::ismobile() ? 'hide' : '';
@@ -10,6 +13,9 @@ $showMenuToggleBtn = $hideMenuToggle=='hide' ? '' : 'hide';
 
  $message = userMessage::myMessages();
 $reportMessage = userMessage::reportMessage();
+
+$orderCount = MingruiOrder::find()->where(['status'=>'init'])->count();
+$orderUrl = Yii::$app->urlManager->createUrl(['/orders/']);
 ?>
 
 <header class="main-header">
@@ -29,9 +35,17 @@ $reportMessage = userMessage::reportMessage();
         <div class="navbar-custom-menu">
 
             <ul class="nav navbar-nav">
-
-                
-                  
+                <?php 
+                if(Yii::$app->user->can('admin')){ 
+                ?>
+                 <li class="dropdown messages-menu">
+                    <a href="<?=$orderUrl  ?>"    title="订单">
+                        <i class="fa fa-dollar"></i>&nbsp; 
+                        <span class="label label-danger"><?=$orderCount ?></span>
+                    </a> 
+                </li>
+                  <? }
+                  ?>
                <li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"  title="报告留言">
                         <i class="fa fa-files-o"></i>

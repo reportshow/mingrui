@@ -60,11 +60,17 @@ $menu[] = [
     ],
 ];*/
 $menu[]=[
-            'label' => '我的病人',
+            'label' => '患者管理',
             'icon'  => 'fa   fa-heartbeat',
             'url'   => ['/restsample/index'],
         ];
-        
+
+$menu[]=[
+            'label' => '订单管理',
+            'icon'  => 'fa   fa-dollar',
+            'url'   => ['/orders/index'],
+        ];
+
 $menu[]= [
             'label' => '案例分享',
             'icon'  => 'fa fa-file-powerpoint-o',

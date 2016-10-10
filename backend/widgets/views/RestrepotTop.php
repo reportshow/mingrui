@@ -47,9 +47,9 @@ $styleboxtop = Functions::ismobile() ? '0px' : '150px';
   .summary.btn{display: none}
 }
 .summary.btn{
-   width: 70px;height: 70px;float: left;margin-right: 10px;box-shadow: 1px 1px 1px #000;
+   width: 50px;height:50px;float: left;margin-right: 5px;box-shadow: 1px 1px 1px #333;
 }
-.summary.btn i{font-size: 50px;color: #FFFFFF;}
+.summary.btn i{font-size: 40px;color: #FFFFFF;}
 </style>
 
 <p>

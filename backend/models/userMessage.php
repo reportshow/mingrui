@@ -2,6 +2,7 @@
 namespace backend\models;
 
 use backend\models\MingruiComments;
+use backend\models\MingruiOrder;
 use Yii;
 
 class userMessage
@@ -59,6 +60,11 @@ class userMessage
         }
         return $query->all();
 
+    }
+
+
+    public function Orders(){
+        $all =  MingruiOrder::find()->where(['status'=>'init'])->all();
     }
 
 }
