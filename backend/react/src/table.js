@@ -8,9 +8,11 @@ import ListItem from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
 import MultiSelect from './multiselecttab';
 import MultiSelectTBLX from './multiselecttab_tblx';
+import MultiSelectHGDM from './multiselecttab_hgdm';
 import SingleSelect from './singleselecttab';
 import SelectField from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import ReactTooltip from 'react-tooltip';
 
 const muiTheme = getMuiTheme({
@@ -40,8 +42,7 @@ export default class TableExampleComplex extends React.Component {
 	    var str='';
 	    str = str.concat(
 	    	'SIFT:  ', tableData[key][8], "<br/>",
-	    	'PolyPhen:  ', tableData[key][9],'  ',
-	    	tableData[key][10], "<br/>",
+	    	'PolyPhen:  ', tableData[key][9],"<br/>",
 	    	'MutationTaster:  ', tableData[key][11], "<br/>",
 	    	'GERP++:  ',tableData[key][12]
 	    );
@@ -131,10 +132,11 @@ export default class TableExampleComplex extends React.Component {
     }
     
     rqpl_items = [
-	    <ListItem key={1} value={"null"} primaryText="0" />,
+	    <ListItem key={1} value={"0"} primaryText="0" />,
 	    <ListItem key={1} value={"1%"} primaryText="1%" />,
 	    <ListItem key={2} value={"2%"} primaryText="2%" />,
 	    <ListItem key={3} value={"5%"} primaryText="5%" />,
+	    <ListItem key={3} value={"100%"} primaryText="不筛选" />,
     ];
 
     filter_gene = (data, value) => {
@@ -229,10 +231,10 @@ export default class TableExampleComplex extends React.Component {
 
     filter_qrjyz = (data, value) => {
 	var data_qrjyz = parseFloat(data[6][0]);
-	var qrjyz_value = parseFloat(this.state.qrjyz_value);
-	if(this.state.qrjyz_value === 'null' && data[6][0] === null) {
-	    return true;
+	if(data[6][0] === null) {
+	    data_qrjyz = 0;
 	}
+	var qrjyz_value = parseFloat(this.state.qrjyz_value);
 	
 	if(!isNaN(data_qrjyz) && !isNaN(qrjyz_value)) {
 	    if(data_qrjyz <= qrjyz_value/100) {
@@ -245,10 +247,10 @@ export default class TableExampleComplex extends React.Component {
 
     filter_inhouse = (data, value) => {
 	var data_inhouse = parseFloat(data[6][2]);
-	var inhouse_value = parseFloat(this.state.inhouse_value);
-	if(this.state.inhouse_value === 'null' && data[6][2] === null) {
-	    return true;
+	if(data[6][2] === null) {
+	    data_inhouse = 0;
 	}
+	var inhouse_value = parseFloat(this.state.inhouse_value);
 	
 	if(!isNaN(data_inhouse) && !isNaN(inhouse_value)) {
 	    if(data_inhouse <= inhouse_value/100) {
@@ -326,6 +328,10 @@ export default class TableExampleComplex extends React.Component {
     handleCarouselSlide = () => {
 	this.setState(this.getDefaultState(), this.filter);
     };
+    
+    handleGeneClear = () => {
+	this.setState({gene_value:""}, this.filter);
+    };
 
     render() {
 	return (
@@ -333,18 +339,17 @@ export default class TableExampleComplex extends React.Component {
   <div>
     <ReactTooltip type="info" effect="float" multiline={true} />
     <div style={{width:'80%', marginLeft:'auto', marginRight:'auto'}}>
-      <TextField name='gene' floatingLabelText="重点关注基因" value={this.state.gene_value} fullWidth={true} onChange={this.handle_gene_Change}/>
+      <TextField name='gene' floatingLabelText="重点关注基因" value={this.state.gene_value} onChange={this.handle_gene_Change} style={{width:'80%'}}/>
+      <FlatButton label="清除所有基因" primary={true} onClick={this.handleGeneClear}/>
     </div>
     <div id="carousel-example-generic" className="carousel slide" data-ride="carousel" data-interval="false">
       <div className="carousel-inner">
         <div className="item active">
 	  <div className="carousel-caption" style={{top:'0px', bottom: 'auto', paddingTop:'0px', paddingBottom:'0px'}}>
-		精准推荐
-		<i className="fa fa-fw fa-question"
-		   onMouseEnter={()=>{$('#tip').show();}}
-		   onMouseLeave={()=>{$('#tip').hide();}}
-		   onTouchStart={()=>{$('#tip').show();}}
-		/>
+	    <span onMouseEnter={()=>{$('#tip').show();}}
+	      onMouseLeave={()=>{$('#tip').hide();}}
+	      onTouchStart={()=>{$('#tip').show();}}>精准推荐</span>
+	    <i className="fa fa-fw fa-question"/>
 	  </div>
 	  <div style={{width:'80%', marginLeft:'auto', marginRight:'auto', paddingTop:'20px', overflow:'hidden'}}>
 	    <div id='tip' className="callout callout-info" style={{display:'none'}}>
@@ -353,12 +358,16 @@ export default class TableExampleComplex extends React.Component {
 	    </div>
 	      
 	    <div>
-	      <MultiSelect fullWidth={true} value={this.state.dm_values} floatingLabelText="HGMD" onChange={this.handle_dm_Change}>
+	      <MultiSelectHGDM fullWidth={true} value={this.state.dm_values} floatingLabelText="HGMD" onChange={this.handle_dm_Change}>
 		<ListItem primaryText={"DM"} value="DM" />
 		<ListItem primaryText={"DM?"} value="DM?" />
 		<ListItem primaryText={"[Similar]DM"} value="[Similar]DM" />
 		<ListItem primaryText={"不筛选"} value="" />
-	      </MultiSelect>
+	      </MultiSelectHGDM>
+	      <div id='tipdm' className="callout callout-info" style={{display:'none'}}>
+              <h4>HGMD！</h4>
+              <p>HGDM说明</p>
+	    </div>
 	    </div>
 	    <div>
 	      <MultiSelectTBLX fullWidth={true} value={this.state.tblx_values} floatingLabelText="突变类型" onChange={this.handle_tblx_Change}>
@@ -431,11 +440,11 @@ export default class TableExampleComplex extends React.Component {
 	  </div>
 	  <div style={{width:'80%', marginLeft:'auto', marginRight:'auto', paddingTop:'20px', overflow:'hidden'}}>
 	    <div>
-	      <MultiSelect fullWidth={true} value={this.state.dm_values} floatingLabelText="HGMD" onChange={this.handle_dm_Change}>
-		<ListItem primaryText={"DM"} value="DM" />
-		<ListItem primaryText={"DM?"} value="DM?" />
-		<ListItem primaryText={"[Similar]DM"} value="[Similar]DM" />
-		<ListItem primaryText={"不筛选"} value="" />
+		<MultiSelect fullWidth={true} value={this.state.dm_values} www={"dmdmetc."} floatingLabelText="HGMD" onChange={this.handle_dm_Change}>
+		<ListItem primaryText={"DM"} value="DM" dataTip="1"/>
+		<ListItem primaryText={"DM?"} value="DM?" dataTip="1"/>
+		<ListItem primaryText={"[Similar]DM"} value="[Similar]DM" dataTip="1"/>
+		<ListItem primaryText={"不筛选"} value="" dataTip="1"/>
 	      </MultiSelect>
 	    </div>
 	    <div>
@@ -511,11 +520,16 @@ export default class TableExampleComplex extends React.Component {
           <span className="fa fa-angle-right"></span>
         </a>
       </div>
-  
-      <table
-	 className = 'exportable'
-	 style={{backgroundColor:'rgb(255, 255, 255)', padding:'0px 24px',width:'770px',borderCollapse: 'collapse',borderSpacing:'0px', fontFamily:'Roboto, sans-serif', tableLayout:'fixed'}}
+
+      <Table
+	 height={this.state.height}
+	 fixedHeader={this.state.fixedHeader}
+	 fixedFooter={this.state.fixedFooter}
+	 selectable={this.state.selectable}
+	 multiSelectable={this.state.multiSelectable}
+	 onRowHover = {this.handleRowHover}
 	 >
+	
 	<TableHeader
 	   displaySelectAll={this.state.showCheckboxes}
 	   adjustForCheckbox={this.state.adjustForCheckboxes}
@@ -556,7 +570,7 @@ export default class TableExampleComplex extends React.Component {
 	  </TableRow>
 	  ))}
 	</TableBody>
-      </table>
+      </Table>
     </div>
   </div>
 </MuiThemeProvider>
