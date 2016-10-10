@@ -3,11 +3,12 @@ namespace backend\controllers;
 
 use backend\models\WechatDoctorEvent;
 use common\components\WechatMessage;
-use common\models\WechatUser;
 use common\models\QrcodeSession;
 use common\models\User;
+use common\models\WechatUser;
 use Yii;
 use yii\web\Controller;
+use backend\widgets\Nodata;
 
 /**
  * Site controller
@@ -36,9 +37,9 @@ class WechatDoctorController extends Controller
     }
     public function wechatInit()
     {
-       // file_put_contents('upload/x.txt',  $GLOBALS["HTTP_RAW_POST_DATA"]);
-       
-        $this->wechat =   WechatUser::getWechat(true);
+        // file_put_contents('upload/x.txt',  $GLOBALS["HTTP_RAW_POST_DATA"]);
+
+        $this->wechat = WechatUser::getWechat(true);
 
         $this->xml = $this->wechat->parseRequestData();
         //file_put_contents('upload/wechat.do.txt', var_export($this->xml,1));
@@ -50,17 +51,17 @@ class WechatDoctorController extends Controller
     }
 
     public function actionTalk()
-    {  
-      //exit($_GET["echostr"] ) ;
-      //
-      //    file_put_contents('filename', data)
-         $this->wechatInit();
+    {
+        //exit($_GET["echostr"] ) ;
+        //
+        //    file_put_contents('filename', data)
+        $this->wechatInit();
         /*if ($wechat->checkSignature()) {
         echo $_GET["echostr"];
         }*/
-        //$this->xml['Content']      
-        
-        //exit($this->reply->text('000')); 
+        //$this->xml['Content']
+
+        //exit($this->reply->text('000'));
 
         if ($this->xml['MsgType'] == "event") {
 
@@ -72,7 +73,6 @@ class WechatDoctorController extends Controller
         //$rlt =  $wechat->sendText($xml['FromUserName'], 'xxxx');
         //if($rlt){}
     }
- 
 
     public function actionReport()
     {
@@ -87,9 +87,16 @@ class WechatDoctorController extends Controller
         WechatUser::show(['restsample/index', 'role' => 'doctor']);
     }
 
-    public function actionDoorder(){
-        $this->layout = '/layouts/main-login';
-        return  "消息已发出";
+    public function actionDoorder()
+    {
+       // $this->layout = '/layouts/main-login';
+        $content      = Nodata::widget(['title'=>'送检订单已经发送','message' => '您将通过此功能来通知销售来取样，我们的销售将与您联系约定取样时间、地点等细节。']);
+        return $this->render(
+            '/layouts/main-login',
+            ['content' => $content]
+        );
+
+        // return  "消息已发出";
     }
 
     public function actionMenuinit()

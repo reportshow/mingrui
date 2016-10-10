@@ -22,13 +22,13 @@ if ($model['position'] != 'right') {
 
     ?>
 <!-- Message. Default to the left -->
-<div class="direct-chat-msg">
+<div class="direct-chat-msg left">
     <div class="direct-chat-info clearfix">
         <span class="direct-chat-name pull-left">
             <?=$model->creator->nickname?>
         </span>
-        <span class="direct-chat-timestamp pull-right">
-           <?=date('Y-m-d H:i:s', $model->createtime)?>
+        <span class="direct-chat-timestamp pull-left">
+          &nbsp;&nbsp; <?=date('Y-m-d H:i', $model->createtime)?>
         </span>
     </div>
     <!-- /.direct-chat-info -->
@@ -55,8 +55,8 @@ commentLineShowTxt($model->content);
         <span class="direct-chat-name pull-right">
             <?=$model->creator->nickname?>
         </span>
-        <span class="direct-chat-timestamp pull-left">
-             <?=date('Y-m-d H:i:s', $model->createtime)?>
+        <span class="direct-chat-timestamp pull-right">
+             <?=date('Y-m-d H:i', $model->createtime)?>&nbsp;&nbsp;
         </span>
     </div>
     <!-- /.direct-chat-info -->
@@ -64,7 +64,7 @@ commentLineShowTxt($model->content);
        onerror="this.src='images/user.png';">
         <!-- /.direct-chat-img -->
 
-           <?php
+      <?php
 commentLineShowTxt($model->content);
     ?>
 

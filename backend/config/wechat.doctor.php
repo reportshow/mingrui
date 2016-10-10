@@ -6,9 +6,9 @@ $wechat['config'] = [
     'appSecret' => 'a55977c014771490921a0503bf4efd7b',
     'token'     => 'doctor_mingrui',
 ];
-$wechat['menu'] =  [
+$wechat['menu'] = [
     [
-        "name"       => "查看报告",
+        "name"       => "报告管理",
         "sub_button" => [
             [
                 "type" => "view",
@@ -29,16 +29,23 @@ $wechat['menu'] =  [
         ],
     ],
 
-   [
-        "type" => "click",
-        "name" => "送检",
-        "key"  => "SAMPLE-ORDER",
+    [
+        "name"       => "一键下单",
+        "sub_button" => [
+            [
+                "type" => "view",
+                "name" => "确认送检",
+                "key"  => "SAMPLE-ORDER",
+                'url'=>'http://ding.scicompound.com/mingrui/report/backend/web/?r=wechat-doctor/doorder',
+            ], 
+        ],
     ],
 
     [
         "type" => "click",
-        "name" => "检查流程",
+        "name" => "常见问题",
         "key"  => "WORK-FLOW",
+        'url'=>'http://ding.scicompound.com/mingrui/report/backend/web/?r=/mingrui-qa',
     ],
 
 ];

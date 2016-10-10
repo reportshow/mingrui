@@ -2,7 +2,8 @@
 
 use backend\components\Functions;
 use yii\grid\GridView;
-use yii\helpers\Html;
+use yii\helpers\Html; 
+use backend\widgets\WeixinMenubar;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\RestReportSearch */
@@ -18,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <?php $GridViewParam = [
-    'emptyCell'    => '搜索',
+    //'emptyCell'    => '搜索',
     'dataProvider' => $dataProvider,
     'filterModel'  => $searchModel,
 /*    'rowOptions'   => function ($model) {
@@ -26,7 +27,8 @@ $url = Yii::$app->urlManager->createUrl(['rest-report/view', 'id' => $model->id]
 return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
 },*/
     'columns'      => [
-        ['class' => 'yii\grid\SerialColumn'],
+        ['class' => 'yii\grid\SerialColumn',
+        'options'   => ['width' => '40px;'],],
 
 /*        [
 'value'   => 'id',
@@ -49,7 +51,7 @@ return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
                 return $date->format('Y-m-d');
 
             },
-            'options'   => ['width' => '80px;'],
+            'options'   => ['width' => '120px;'],
         ],
 
         [
@@ -58,25 +60,28 @@ return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
             'value'     => function ($model) {
                 $sample = $model->sample;
                 $name   = $sample->name;
-                //return $name;
+                return $name;
                 return mb_strlen($name) > 9 ? mb_substr($name, 0, 9) . '..' : $name;
             },
             'filter'    => Html::activeTextInput($searchModel, 'username', [
                 'class' => 'form-control',
             ]),
-            'options'   => ['width' => '80px;'],
+            'options'   => ['width' => '100px;'],
         ], //<=====加入这句,
 
         ['attribute' => 'sample.sex',
             'value'      => function ($model) {
                 return $model->sample->sex == 'female' ? '女' : '男';
-            }],
+            },
+            'options'   => ['width' => '60px;'],
+        ],
         [
             'attribute' => 'sample.age',
             'label'     => '年龄',
             'value'     => function ($model) {
                 return $model->sample->age ? $model->sample->age : '-';
             },
+            'options'   => ['width' => '80px;'],
         ],
 
         [
@@ -91,11 +96,13 @@ return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
             'filter'    => Html::activeTextInput($searchModel, 'product_name', [
                 'class' => 'form-control',
             ]),
+            'options'   => ['width' => '120'],
         ], //<=====加入这句
 
         [
             'attribute' => 'testmethod',
             'label'     => '方法',
+            'options'   => ['width' => '80px;'],
             'value'     => function ($model) {
                 if (strpos($model->report_id, 'NG') !== false) {
                     return 'NGS';
@@ -198,7 +205,9 @@ return $model->status =='finished' ? '<span class="bg-primary" style="padding:3p
         /* ['class'   => 'yii\grid\ActionColumn',
         'template' => '{view} {000update} {000delete}',
         ],*/
-        ['attribute' => '',
+        [
+            'options'   => ['width' => '120'],
+            'attribute' => '',
             'format'     => 'raw',
             'value'      => function ($model) {
                 $urlreport = Yii::$app->urlManager->createUrl(
@@ -212,7 +221,10 @@ return $model->status =='finished' ? '<span class="bg-primary" style="padding:3p
                 $dataStatus       = $model->snpsqlite ? '' : 'disabled';
                 $dataStatuseText  = strpos($model->report_id, 'YD') !== false ? '无数据' : '查数据';
                 $html             = "<a href='$urlreport' class='btn btn-info $reportStatus'>$reportStatusText</a>";
-                $html .= "<a href='$urldata' class='btn btn-info  $dataStatus'>$dataStatuseText</a>";
+                if(!Functions::ismobile()){
+                    $html .= "<a href='$urldata' class='btn btn-info  $dataStatus'>$dataStatuseText</a>";   
+                }
+                
                 return $html;
             }],
 
@@ -235,3 +247,5 @@ echo GridView::widget($GridViewParam);
     .content-wrapper{overflow: auto}
     .disabled{background: #999;border:0px;}
 </style>
+
+

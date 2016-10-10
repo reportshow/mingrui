@@ -193,6 +193,12 @@ class RestReport extends \yii\db\ActiveRecord
         if ($this->pdf) {
             $pdfurl = str_replace('/primerbean/media/', 'user/', $this->pdf);
             $pdfurl = Yii::$app->params['erp_url'] . $pdfurl;
+
+            return $pdfurl;
+        } else if ($this->csupload) {
+            //使用上传的PDF
+            $pdfurl = 'user/' . $this->csupload;
+            $pdfurl = Yii::$app->params['erp_url'] . $pdfurl;
             return $pdfurl;
         } else {
 
@@ -217,7 +223,7 @@ class RestReport extends \yii\db\ActiveRecord
 
     public function getGene()
     {
-        
+
         $snp_array = json_decode($this->snpsave, true);
 
         $user_snp_genes = [];

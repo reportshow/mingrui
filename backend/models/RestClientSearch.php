@@ -12,6 +12,7 @@ use backend\models\RestClient;
  */
 class RestClientSearch extends RestClient
 {
+    public $hospitalname;
     /**
      * @inheritdoc
      */
@@ -19,7 +20,11 @@ class RestClientSearch extends RestClient
     {
         return [
             [['id', 'age', 'hospital_id'], 'integer'],
-            [['name', 'sex', 'birthplace', 'email', 'tel', 'school', 'education', 'experience', 'employed', 'department', 'worktime', 'position', 'speciality', 'hobby', 'notes', 'zhuren', 'pianhao'], 'safe'],
+            [[
+            'hospitalname',
+            'name', 'sex', 'birthplace', 'email', 'tel', 'school', 'education', 
+            'experience', 'employed', 'department', 'worktime', 'position', 
+            'speciality', 'hobby', 'notes', 'zhuren', 'pianhao'], 'safe'],
         ];
     }
 
@@ -42,7 +47,7 @@ class RestClientSearch extends RestClient
     public function search($params)
     {
         $query = RestClient::find();
-
+        $query = $query->joinWith(['hospital']);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -50,13 +55,14 @@ class RestClientSearch extends RestClient
         ]);
 
         $this->load($params);
-
+ 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
+            //var_dump($params);exit;
             return $dataProvider;
         }
-
+  
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id, 
@@ -64,7 +70,7 @@ class RestClientSearch extends RestClient
             'hospital_id' => $this->hospital_id, 
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
+        $query->andFilterWhere(['like', 'rest_client.name', $this->name])
             ->andFilterWhere(['like', 'sex', $this->sex])
             ->andFilterWhere(['like', 'birthplace', $this->birthplace])
             ->andFilterWhere(['like', 'email', $this->email])
@@ -80,8 +86,10 @@ class RestClientSearch extends RestClient
             ->andFilterWhere(['like', 'hobby', $this->hobby])
             ->andFilterWhere(['like', 'notes', $this->notes])
             ->andFilterWhere(['like', 'zhuren', $this->zhuren])
-            ->andFilterWhere(['like', 'pianhao', $this->pianhao]);
+            ->andFilterWhere(['like', 'pianhao', $this->pianhao]) 
+            ->andFilterWhere(['like', 'rest_danwei.name', $this->hospitalname]);
 
+        //echo $query->createCommand()->getRawSql(); exit;   
         return $dataProvider;
     }
 }

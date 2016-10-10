@@ -2,10 +2,14 @@
 use yii\helpers\Html;
 use backend\models\userMessage;
 use backend\widgets\GuestbookDrop;
-
+use backend\components\Functions;
 /* @var $this \yii\web\View */
  
+$hideMenuToggle = Functions::ismobile() ? 'hide' : '';
+$showMenuToggleBtn = $hideMenuToggle=='hide' ? '' : 'hide';
+
  $message = userMessage::myMessages();
+$reportMessage = userMessage::reportMessage();
 ?>
 
 <header class="main-header">
@@ -15,10 +19,13 @@ use backend\widgets\GuestbookDrop;
 
     <nav class="navbar navbar-static-top" role="navigation">
 
-        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <a href="#" class="sidebar-toggle <?=$hideMenuToggle ?>" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
         </a>
-
+        <a class="btn <?=$showMenuToggleBtn ?>" 
+        style='position: absolute;line-height: 50px;line-height: 35px;height: 100%;color:#fff' data-toggle="offcanvas" role="button">
+        <i class='fa fa-list-ul'></i> 菜单
+        </a>
         <div class="navbar-custom-menu">
 
             <ul class="nav navbar-nav">
@@ -28,10 +35,10 @@ use backend\widgets\GuestbookDrop;
                <li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"  title="报告留言">
                         <i class="fa fa-files-o"></i>
-                        <span class="label label-warning"><?=count($message) ?></span>
+                        <span class="label label-warning"><?=count($reportMessage ) ?></span>
                     </a>
                       <ul class="dropdown-menu">
-                        <?=GuestbookDrop::widget(['message'=>$message]);?>
+                        <?=GuestbookDrop::widget(['message'=>$reportMessage ]);?>
                       </ul>
                 </li>
 

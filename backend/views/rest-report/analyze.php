@@ -2,6 +2,7 @@
 use backend\assets\AppAsset;
 use yii\helpers\Html;
 use backend\widgets\RestrepotTop;
+use backend\components\Functions;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\RestReport */
@@ -14,6 +15,21 @@ $this->params['breadcrumbs'][] = $this->title . '      数据自分析';
 AppAsset::register($this); 
 ?>
 <?=RestrepotTop::widget(['model_id'=>$model->id]); ?>
+
+<?php
+
+ if(Functions::ismobile()){
+?>
+ 	<div class="alert alert-info alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-info"></i> 提示!</h4>
+                请您打开电脑版使用数据分析功能
+     </div>
+<?php
+
+  return;
+}//ismobile
+?>
 
 <style type="text/css">
 #autoscroll{
@@ -42,7 +58,7 @@ AppAsset::register($this);
 }
 .toolabsolute{
     position:fixed;
-    z-index:100;
+    z-index:10000;
     top: 0;
 }
 .list{
@@ -54,17 +70,18 @@ AppAsset::register($this);
 }
 </style>
 
-
 <div id="autoscroll">
-<div class="barbox">
-  <div class="tool" id="mytool">
+  <div class="barbox">
+    <div class="tool" id="mytool">
+      hjkkll
+    </div>
   </div>
 </div>
 <div class="barbox">
   <div class="tool toolabsolute">
     <?= $this->title?>
   </div>
-</div>    
+</div>
 
 <div id="app"></div>
 <script>
@@ -82,8 +99,8 @@ AppAsset::register($this);
         var cloned=false;
 	//$(".toolabsolute").hide();
         $("#autoscroll").scroll(function(){
-            mytooltop=$("#mytool").get(0).offsetTop;
-            scrolltop=document.getElementById("autoscroll").scrollTop;
+	    mytooltop=$("#mytool").get(0).offsetTop;
+	    scrolltop=document.getElementById("autoscroll").scrollTop;
             if(scrolltop>=mytooltop){
                 $(".toolabsolute").show();
             }
@@ -93,3 +110,4 @@ AppAsset::register($this);
         })
     })
 </script>
+

@@ -7,8 +7,10 @@ use Yii;
 class VoiceRecord
 {
     public static function saveRecordVoice($json)
-    {
+    { 
+
         $voices = json_decode($json);
+        if(is_object($voices))
         foreach ($voices as $key => $voice) {
             $path   = self::voicePath($voice);
             $result = Yii::$app->wechat->getMedia($voice->serverId);

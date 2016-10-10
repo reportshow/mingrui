@@ -3,7 +3,7 @@
 use backend\components\Functions;
 use backend\models\MingruiPingjia;
 use yii\grid\GridView;
-use yii\helpers\Html;
+use yii\helpers\Html; 
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\RestReportSearch */
@@ -51,7 +51,7 @@ return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
                 return $date->format('Y-m-d');
 
             },
-            'options'   => ['width' => '80px;'],
+            'options'   => ['width' => '120px;'],
         ],
 
         [
@@ -60,13 +60,13 @@ return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
             'value'     => function ($model) {
                 $sample = $model->sample;
                 $name   = $sample->name;
-                //return $name;
+                return $name;
                 return mb_strlen($name) > 9 ? mb_substr($name, 0, 9) . '..' : $name;
             },
             'filter'    => Html::activeTextInput($searchModel, 'username', [
                 'class' => 'form-control',
             ]),
-            'options'   => ['width' => '80px;'],
+            'options'   => ['width' => '120px;'],
         ], //<=====加入这句,
 
         /*  ['attribute' => 'sample.sex',
@@ -93,17 +93,19 @@ return $model->sample->age ? $model->sample->age : '-';
             'filter'    => Html::activeTextInput($searchModel, 'product_name', [
                 'class' => 'form-control',
             ]),
+            'options'   => ['width' => '120'],
         ], //<=====加入这句
 
         [
             'attribute' => 'gene',
             'label'     => '基因型', 
-            'headerOptions' => ['width' => '60'],
+            'headerOptions' => ['width' => '120'],
         ], 
         [
             'attribute' => 'linchuang',
             'label'         => '临床表型',
             'value'=>'pingjia.linchuang',
+            'options'   => ['width' => '150'],
         ],
         
         [
@@ -225,6 +227,7 @@ return $model->status =='finished' ? '<span class="bg-primary" style="padding:3p
         'template' => '{view} {000update} {000delete}',
         ],*/
         ['attribute' => '',
+        'options'   => ['width' => '120'],
             'format'     => 'raw',
             'value'      => function ($model) {
                 $urlreport = Yii::$app->urlManager->createUrl(
@@ -238,7 +241,10 @@ return $model->status =='finished' ? '<span class="bg-primary" style="padding:3p
                 $dataStatus       = $model->snpsqlite ? '' : 'disabled';
                 $dataStatuseText  = strpos($model->report_id, 'YD') !== false ? '无数据' : '查数据';
                 $html             = "<a href='$urlreport' class='btn btn-info $reportStatus'>$reportStatusText</a>";
-                $html .= "<a href='$urldata' class='btn btn-info  $dataStatus'>$dataStatuseText</a>";
+                 if(!Functions::ismobile()){
+                    $html .= "<a href='$urldata' class='btn btn-info  $dataStatus'>$dataStatuseText</a>";   
+                }
+
                 return $html;
             }],
 

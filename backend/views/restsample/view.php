@@ -7,23 +7,12 @@ use yii\widgets\DetailView;
 /* @var $model backend\models\RestSample */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Rest Samples', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '病人列表', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="rest-sample-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id'           => $model->sample_id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id'           => $model->sample_id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+    
 
     <?= DetailView::widget([
         'model' => $model,
@@ -31,9 +20,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'sample_id',
             'name',
             'type',
-            'ypkd_id',
-            'barcode',
-            'sex',
+            //'ypkd_id',
+            //'barcode',
+            ['attribute'=>'sex','value'=> $model->sex =='female' ? '女' : '男'],
             'birthday',
             'age',
             'tel1',
@@ -42,40 +31,45 @@ $this->params['breadcrumbs'][] = $this->title;
             'address',
             'symptom:ntext',
             'date',
-            'has_project',
-            'report_type',
-            'guanlian',
-            'pdf',
-            'has_symptom',
-            'relation',
-            'related_sid',
-            'xianzhengzhe',
-            'yangbenruku',
-            'heshuanruku',
-            'heshuanruku2',
-            'yangbenweizi',
-            'heshuanweizi',
-            'heshuanweizi2',
-            'note:ntext',
-            'doctor_id',
-            'family_id',
-            'sales_id',
-            'shenhe_status',
-            'clinic_no',
-            'nationality',
-            'patient_no',
+            //'has_project',
+            //'report_type',
+            //'guanlian',
+            //'pdf',
+           // 'has_symptom',
+            //'relation',
+            //'related_sid',
+            //'xianzhengzhe',
+            //'yangbenruku',
+            //'heshuanruku',
+            //'heshuanruku2',
+            //'yangbenweizi',
+            //'heshuanweizi',
+            //'heshuanweizi2',
+            //'note:ntext',
+            //'doctor_id',
+            //'family_id',
+            //'sales_id',
+            //'shenhe_status',
+            //'clinic_no',
+            //'nationality',
+            //'patient_no',
             'clinic_symptom:ntext',
-            'report_template',
-            'created',
-            'xiedai',
-            'updated',
-            'timestamp:ntext',
-            'dengji_note:ntext',
-            'express',
-            'express_no',
-            'shouyang_date',
-            'shouyanged',
+            //'report_template',
+            //'created',
+            //'xiedai',
+            //'updated',
+            //'timestamp:ntext',
+            //'dengji_note:ntext',
+            //'express',
+           // 'express_no',
+            //'shouyang_date',
+            //'shouyanged',
         ],
     ]) ?>
 
 </div>
+
+
+<style type="text/css">
+    .table{width: 60%}
+</style>

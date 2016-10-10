@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?= $form->field($model, 'username')->label('患者姓名') ?>
 
     <?= $form->field($model, 'report_id') ?>
 
@@ -28,11 +28,11 @@ use yii\widgets\ActiveForm;
     // $form->field($model, 'status') 
     ?>
 
-    <?php   echo $form->field($model, 'note') ?>
+   
 
     <?php // echo $form->field($model, 'assigner_id') ?>
 
-    <?php   echo $form->field($model, 'product_id') ?>
+    <?php  // echo $form->field($model, 'product_id') ?>
 
     <?php // echo $form->field($model, 'complete') ?>
 
@@ -66,7 +66,8 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'conclusion') ?>
 
-    <?php  echo $form->field($model, 'explain') ?>
+<?php  echo $form->field($model, 'product_name')->label('检测项目') ?>
+    <?php  echo $form->field($model, 'explain')->label('临床症状') ?>
 
     <?php // echo $form->field($model, 'jxyanzhen') ?>
 
@@ -94,7 +95,7 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'abiexported') ?>
 
-    <?php   echo $form->field($model, 'final_note') ?>
+    <?php   echo $form->field($model, 'final_note')->label('临床诊断')?>
 
     <?php // echo $form->field($model, 'assigner_note') ?>
 
@@ -114,9 +115,11 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'yidai_marked') ?>
 
+     <?php // echo $form->field($model, 'note') ?>
+
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton('  搜索  ', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton('重置', ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

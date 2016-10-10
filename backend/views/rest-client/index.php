@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
         //'sex',
         //'age',
         //'birthplace',
-        ['attribute' => 'hospital_id', 'label' => '医院', 'value' => function ($model) {
+        ['attribute' => 'hospitalname', 'label' => '医院', 'value' => function ($model) {
             return $model->hospital->name;
         }],
         'department',

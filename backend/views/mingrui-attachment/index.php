@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?=Html::a('新增 资料', ['create', 'reportid' => $_GET['reportid']], ['class' => 'btn btn-success'])?>
     </p>
    <?= Imglist::widget([
-        'dataProvider' => $dataProvider, 
+        'dataProvider' => $dataProvider,
+        'nullMessage' =>'请上传与该报告相关的完善资料的文档，图片',
     ]); ?>
 </div>

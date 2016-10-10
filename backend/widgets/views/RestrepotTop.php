@@ -1,14 +1,18 @@
 <?php
 use yii\helpers\Html;
 use backend\models\MingruiPingjia;
+use backend\components\Functions;
 
 $controllerID = Yii::$app->controller->id;
 $actionID     = Yii::$app->controller->action->id;
 
-$active = ['view' => '', 'show-report' => '', 'stats' => '', 'index' => '', 'analyze' => ''];
+$active = ['view' => '', 'show-report' => '', 'comments'=>'', 'stats' => '', 'index' => '', 'analyze' => ''];
 switch ($actionID) {
     case 'view':
         $activeid = 'view';
+        break;
+    case 'comments':
+        $activeid = 'comments';
         break;
     case 'show-report':
         $activeid = 'show-report';
@@ -28,23 +32,41 @@ switch ($actionID) {
 }
 $active[$activeid] = 'active';
 
-$pingjiaUrl = Yii::$app->urlManager->createUrl(['pingjia/save-xingji'])
+$pingjiaUrl = Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
 
 
+
+$styleboxtop = Functions::ismobile() ? '0px' : '150px';
 ?>
  <style type="text/css">
    .btn.active{
       box-shadow: inset 0 3px 5px rgba(0, 0, 0, .7);
     }
+
+@media screen and (min-width: 640px) {    
+  .summary.btn{display: none}
+}
+.summary.btn{
+   width: 70px;height: 70px;float: left;margin-right: 10px;box-shadow: 1px 1px 1px #000;
+}
+.summary.btn i{font-size: 50px;color: #FFFFFF;}
 </style>
 
 <p>
-<?=Html::a('报告详情', ['show-report', 'id' => $model_id], [
+
+ <?=Html::a('<i class=" fa fa-calendar-plus-o" ></i>', ['rest-report/view', 'id' => $model_id], [
+    'class' => 'summary btn btn-info ' . $active['view'],
+])?>
+
+
+
+
+<?=Html::a('报告详情', ['rest-report/show-report', 'id' => $model_id], [
     'class' => 'btn btn-success ' . $active['show-report'],
 ])?>
 
-<?=Html::a('意见反馈', ['rest-report/view', 'id' => $model_id, 'hidesummary'=>'yes'], [
-    'class' => 'btn btn-info ' . $active['view'],
+<?=Html::a('意见反馈', ['rest-report/comments', 'id' => $model_id], [
+    'class' => 'btn btn-info ' . $active['comments'],
 ])?>
 
 <?=Html::a('星级评价', '#', [
@@ -84,10 +106,10 @@ $pingjiaUrl = Yii::$app->urlManager->createUrl(['pingjia/save-xingji'])
 </style>
 <div class="example-modal" >
 <div class="modal modal-primary" id='xingjipingjiaBox'>
-  <div class="modal-dialog" style="margin-top: 150px;">
+  <div class="modal-dialog" style="margin-top: <?=$styleboxtop ?>">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="opacity:1;color:#fff">
           <span aria-hidden="true">&times;</span>
         </button>
         <h4 class="modal-title">星级评价</h4>
@@ -98,20 +120,28 @@ $pingjiaUrl = Yii::$app->urlManager->createUrl(['pingjia/save-xingji'])
          foreach (MingruiPingjia::$pingjiaText  as $key => $value) {
              $star = $value['key'];
              $label = $value['label'];
-             $desc = $value['description'];
+             $desc = Functions::ismobile() ? '' : $value['description'];
+             $staricon = $star;
+             $list = explode('|',  $star);
+             $listStr = '';
+             foreach ($list as $key => $one) {
+               $listStr .= "<i class='fa $one'></i> ";
+             }
+
              echo  " <p><input type=radio name='pingjia' value='$key'>
-                    <i class='tag'>$star</i> <i class='tag2'>$label</i> $desc 
+                    <i class='tag'>$listStr</i> <i class='tag2'>$label</i> $desc 
                    </p> ";        
 
           } 
        ?>
-             <p><input type=radio name='pingjia' value='6'><i class='tag' style="font-size:1em">自定义</i>
-                 <input type=text maxlength="16">   
+             <p><input type=radio name='pingjia' value='6'><i class='tag fa fa-edit' style=""></i>
+                 <input type=text maxlength="16" placeholder="自定义">   
              </p>  
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline pull-left cancel" data-dismiss="modal"  > 取 消 </button>
+        <span type="button" class="btn btn-outline pull-left close" data-dismiss="modal"  
+        style="font-weight: normal;font-size:1em;opacity: 1;text-shadow:none" > 取 消 </span>
         <button type="button" class="btn btn-outline" id='pingjisendBtn'> 确 定 </button>
       </div>
     </div>
@@ -127,7 +157,7 @@ $pingjiaUrl = Yii::$app->urlManager->createUrl(['pingjia/save-xingji'])
     function abc(){
        $('#xingjipingjiaBox').show();
     } 
-    $('.cancel').click(function(){
+    $('.close').click(function(){
        $('#xingjipingjiaBox').hide();
     });
     $('#pingjisendBtn').click(function(){
