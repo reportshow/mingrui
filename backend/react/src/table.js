@@ -520,15 +520,7 @@ export default class TableExampleComplex extends React.Component {
           <span className="fa fa-angle-right"></span>
         </a>
       </div>
-
-      <Table
-	 height={this.state.height}
-	 fixedHeader={this.state.fixedHeader}
-	 fixedFooter={this.state.fixedFooter}
-	 selectable={this.state.selectable}
-	 multiSelectable={this.state.multiSelectable}
-	 onRowHover = {this.handleRowHover}
-	 >
+      <table id="result" style={{backgroundColor: 'rgb(255, 255, 255)', padding: '0px 24px', width: '100%', borderCollapse: 'collapse', borderSpacing:'0px', tableLayout: 'fixed', fontFamily: 'Roboto, sans-serif'}}>
 	
 	<TableHeader
 	   displaySelectAll={this.state.showCheckboxes}
@@ -539,7 +531,7 @@ export default class TableExampleComplex extends React.Component {
 		<TableHeaderColumn colSpan="4" style={{verticalAlign: 'bottom', fontWeight:'bold', fontSize:'120%', overflow:'hidden'}} data-tip={"当前选择：" +this.state.queryResult.length +'/'+tableData.length+"(筛选/全部)"}>当前选择：{this.state.queryResult.length} /{tableData.length}(筛选/全部)
 	    </TableHeaderColumn>
 	    <TableHeaderColumn  colSpan="3" style={{verticalAlign: 'bottom', textAlign:'right'}}>
-		<a href="#" className="export_button" style={{color: 'blue', overflow:'hidden'}}>下载过滤结果</a>
+	      <a id='export' data-type="xls" href="javascript:;" style={{color: 'blue', overflow:'hidden'}}>下载过滤结果</a>
 	    </TableHeaderColumn>
 	  </TableRow>
 	  <TableRow>
@@ -561,16 +553,16 @@ export default class TableExampleComplex extends React.Component {
 	  {this.state.queryResult.map( (row, index) => (
 	  <TableRow key={index} selected={row.selected}>
 	    <TableRowColumn data-tip={row[0] +'(' + row[19] + ')'} style={{position:'relative'}}>{row[0] +'(' + row[19] + ')'}</TableRowColumn>//基因
-	    <TableRowColumn data-tip={row[25]} style={{position:'relative'}}>{row[25]}</TableRowColumn>//突变信息
+	    <TableRowColumn data-tip={row[25]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[25]}} />//突变信息
 	    <TableRowColumn data-tip={row[5]} style={{position:'relative'}}>{row[5]}</TableRowColumn>//突变类型
-	    <TableRowColumn data-tip={row[23]} style={{position:'relative'}}>{row[23]}</TableRowColumn>//疾病信息
+	    <TableRowColumn data-tip={row[23]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[23]}} />//疾病信息
 	    <TableRowColumn data-tip={row[28] + '<br/>' +row[26]} style={{position:'relative'}}>{row[28]}<br/>{row[26]}</TableRowColumn>//HET
-	    <TableRowColumn data-tip={row[22]} style={{position:'relative'}}>{row[22]}</TableRowColumn>//HGDM
+	    <TableRowColumn data-tip={row[22]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[22]}} />//HGDM
 	    <TableRowColumn data-tip={row[24]} style={{position:'relative'}}><a>详情</a></TableRowColumn>//功能预测
 	  </TableRow>
 	  ))}
 	</TableBody>
-      </Table>
+      </table>
     </div>
   </div>
 </MuiThemeProvider>

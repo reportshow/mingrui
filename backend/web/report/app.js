@@ -22459,15 +22459,8 @@
 								)
 							),
 							_react2.default.createElement(
-								_Table.Table,
-								{
-									height: this.state.height,
-									fixedHeader: this.state.fixedHeader,
-									fixedFooter: this.state.fixedFooter,
-									selectable: this.state.selectable,
-									multiSelectable: this.state.multiSelectable,
-									onRowHover: this.handleRowHover
-								},
+								'table',
+								{ id: 'result', style: { backgroundColor: 'rgb(255, 255, 255)', padding: '0px 24px', width: '100%', borderCollapse: 'collapse', borderSpacing: '0px', tableLayout: 'fixed', fontFamily: 'Roboto, sans-serif' } },
 								_react2.default.createElement(
 									_Table.TableHeader,
 									{
@@ -22492,7 +22485,7 @@
 											{ colSpan: '3', style: { verticalAlign: 'bottom', textAlign: 'right' } },
 											_react2.default.createElement(
 												'a',
-												{ href: '#', className: 'export_button', style: { color: 'blue', overflow: 'hidden' } },
+												{ id: 'export', 'data-type': 'xls', href: 'javascript:;', style: { color: 'blue', overflow: 'hidden' } },
 												'下载过滤结果'
 											)
 										)
@@ -22555,11 +22548,7 @@
 												row[0] + '(' + row[19] + ')'
 											),
 											'//基因',
-											_react2.default.createElement(
-												_Table.TableRowColumn,
-												{ 'data-tip': row[25], style: { position: 'relative' } },
-												row[25]
-											),
+											_react2.default.createElement(_Table.TableRowColumn, { 'data-tip': row[25], style: { position: 'relative' }, dangerouslySetInnerHTML: { __html: row[25] } }),
 											'//突变信息',
 											_react2.default.createElement(
 												_Table.TableRowColumn,
@@ -22567,11 +22556,7 @@
 												row[5]
 											),
 											'//突变类型',
-											_react2.default.createElement(
-												_Table.TableRowColumn,
-												{ 'data-tip': row[23], style: { position: 'relative' } },
-												row[23]
-											),
+											_react2.default.createElement(_Table.TableRowColumn, { 'data-tip': row[23], style: { position: 'relative' }, dangerouslySetInnerHTML: { __html: row[23] } }),
 											'//疾病信息',
 											_react2.default.createElement(
 												_Table.TableRowColumn,
@@ -22581,11 +22566,7 @@
 												row[26]
 											),
 											'//HET',
-											_react2.default.createElement(
-												_Table.TableRowColumn,
-												{ 'data-tip': row[22], style: { position: 'relative' } },
-												row[22]
-											),
+											_react2.default.createElement(_Table.TableRowColumn, { 'data-tip': row[22], style: { position: 'relative' }, dangerouslySetInnerHTML: { __html: row[22] } }),
 											'//HGDM',
 											_react2.default.createElement(
 												_Table.TableRowColumn,

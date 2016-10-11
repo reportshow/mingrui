@@ -60,7 +60,6 @@ AppAsset::register($this);
 
 <link type="text/css" href="css/multiselect.css" rel="stylesheet" />
 <script src="report/app.js"></script>
-<script src="report/export.js"></script>
 <script language="javascript" type="text/javascript">
     $(document).ready(function(){
 	$(".toolabsolute").hide();
@@ -76,3 +75,13 @@ window.onscroll = function(){
 }
 </script>
 
+<script src="report/tableExport.js"></script>
+<script>
+var $exportLink = document.getElementById('export');
+$exportLink.addEventListener('click', function(e) {
+    e.preventDefault();
+    if (e.target.nodeName === "A") {
+	tableExport('result', '基因检测诊断过滤结果', e.target.getAttribute('data-type'));
+    }
+}, false);
+</script>
