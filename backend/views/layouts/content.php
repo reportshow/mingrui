@@ -4,7 +4,7 @@ use yii\widgets\Breadcrumbs;
 use backend\components\Functions;
 
 ?>
-<div class="content-wrapper" style="min-height: 100%">
+<div class="content-wrapper" style="min-height:970px">
     <section class="content-header" >
         <?php if (0 && isset($this->blocks['content-header'])) {
           ?>

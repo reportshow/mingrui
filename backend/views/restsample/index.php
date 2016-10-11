@@ -2,6 +2,7 @@
 
 use yii\grid\GridView;
 use yii\helpers\Html;
+use backend\widgets\DateInput;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\RestSampleSearch */
@@ -49,6 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
          [
             'attribute' => 'birthday',
             'options'   => ['width' => 120],
+             'filter'    => DateInput::widget(['attribute' => 'birthday', 'model' => $searchModel]),
         ],
 
         // 'age',

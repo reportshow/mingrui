@@ -22,6 +22,12 @@ $menu[] = [
             'url'   => ['/rest-report-class/index'],
 
         ],
+              [
+            'label' => '报告搜索',
+            'icon'  => 'fa fa-search-plus',
+            'url'   => ['/rest-report/search'],
+
+        ],
         [
             'label' => '外源数据分析',
             'icon'  => 'fa fa-puzzle-piece',

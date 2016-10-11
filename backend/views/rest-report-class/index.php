@@ -1,9 +1,9 @@
 <?php
 
 use backend\components\Functions;
-use backend\models\MingruiPingjia;
+use backend\widgets\DateInput;
 use yii\grid\GridView;
-use yii\helpers\Html; 
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\RestReportSearch */
@@ -32,9 +32,6 @@ return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
             'options' => ['width' => '40px;'],
         ],
 
-       
-
-
 /*        [
 'attribute' => 'id',
 'options'   => ['width' => '60px;'],
@@ -51,6 +48,7 @@ return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
                 return $date->format('Y-m-d');
 
             },
+            'filter'    => DateInput::widget(['attribute' => 'created', 'model' => $searchModel]),
             'options'   => ['width' => '120px;'],
         ],
 
@@ -82,9 +80,9 @@ return $model->sample->age ? $model->sample->age : '-';
 ],*/
 
 /*        [
-            'attribute' => 'report_id',
-            'options'   => ['width' => '120px;'],
-        ],*/
+'attribute' => 'report_id',
+'options'   => ['width' => '120px;'],
+],*/
 
         [
             'label'     => '检测项目',
@@ -97,29 +95,28 @@ return $model->sample->age ? $model->sample->age : '-';
         ], //<=====加入这句
 
         [
-            'attribute' => 'gene',
-            'label'     => '基因型', 
+            'attribute'     => 'gene',
+            'label'         => '基因型',
             'headerOptions' => ['width' => '120'],
-        ], 
+        ],
         [
             'attribute' => 'linchuang',
-            'label'         => '临床表型',
-            'value'=>'pingjia.linchuang',
+            'label'     => '临床表型',
+            'value'     => 'pingjia.linchuang',
             'options'   => ['width' => '150'],
         ],
-        
+
         [
             'attribute'     => 'pingjia',
             'value'         => function ($model) {
                 $obj = $model->pingjia;
                 if ($obj) {
-                   // return MingruiPingjia::$pingjiaText[$obj->pingjia];
+                    // return MingruiPingjia::$pingjiaText[$obj->pingjia];
                 }
             },
             'label'         => '星级评价',
             'headerOptions' => ['width' => '80'],
         ],
-
 
         /*[
         'attribute' => 'testmethod',
@@ -227,7 +224,7 @@ return $model->status =='finished' ? '<span class="bg-primary" style="padding:3p
         'template' => '{view} {000update} {000delete}',
         ],*/
         ['attribute' => '',
-        'options'   => ['width' => '120'],
+            'options'    => ['width' => '120'],
             'format'     => 'raw',
             'value'      => function ($model) {
                 $urlreport = Yii::$app->urlManager->createUrl(
@@ -241,8 +238,8 @@ return $model->status =='finished' ? '<span class="bg-primary" style="padding:3p
                 $dataStatus       = $model->snpsqlite ? '' : 'disabled';
                 $dataStatuseText  = strpos($model->report_id, 'YD') !== false ? '无数据' : '查数据';
                 $html             = "<a href='$urlreport' class='btn btn-info $reportStatus'>$reportStatusText</a>";
-                 if(!Functions::ismobile()){
-                    $html .= "<a href='$urldata' class='btn btn-info  $dataStatus'>$dataStatuseText</a>";   
+                if (!Functions::ismobile()) {
+                    $html .= "<a href='$urldata' class='btn btn-info  $dataStatus'>$dataStatuseText</a>";
                 }
 
                 return $html;

@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use backend\widgets\DateInput;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\RestReportSearch */
@@ -19,7 +20,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'report_id') ?>
 
-    <?= $form->field($model, 'created') ?>
+    <?= $form->field($model, 'created')->widget(DateInput::classname(), ['size'=>'bg']) ?>
 
     <?php //$form->field($model, 'updated')
      ?>

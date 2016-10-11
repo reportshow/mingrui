@@ -79,7 +79,7 @@ class RestReportSearch extends RestReport
         // grid filtering conditions
         $query->andFilterWhere([
             'id'                 => $this->id,
-            'created'            => $this->created,
+            'DATE(rest_report.created)'            => $this->created,
             'updated'            => $this->updated,
             'assigner_id'        => $this->assigner_id,
             'product_id'         => $this->product_id,

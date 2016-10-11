@@ -65,7 +65,7 @@ class MingruiOrderSearch extends MingruiOrder
         $query->andFilterWhere([
             'id' => $this->id, 
             'doctor' => $this->doctor, 
-            'createtime' => $this->createtime, 
+            'Date(createtime)' => $this->createtime, 
         ]);
 
         $query->andFilterWhere(['like', 'status', $this->status])

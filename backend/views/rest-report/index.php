@@ -1,9 +1,11 @@
 <?php
 
 use backend\components\Functions;
+//use dosamigos\datepicker\DatePicker;
+use kartik\date\DatePicker;
 use yii\grid\GridView;
-use yii\helpers\Html; 
-use backend\widgets\WeixinMenubar;
+use yii\helpers\Html;
+use backend\widgets\DateInput;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\RestReportSearch */
@@ -27,32 +29,55 @@ $url = Yii::$app->urlManager->createUrl(['rest-report/view', 'id' => $model->id]
 return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
 },*/
     'columns'      => [
-        ['class' => 'yii\grid\SerialColumn',
-        'options'   => ['width' => '40px;'],],
+        ['class'  => 'yii\grid\SerialColumn',
+            'options' => ['width' => '40px;'],
+        ],
 
-/*        [
-'value'   => 'id',
-'headerOptions' => ['width' => '60']
-],*/
+        /*        [
+        'value'   => 'id',
+        'headerOptions' => ['width' => '60']
+        ],*/
 
-/*        [
-'attribute' => 'id',
-'options'   => ['width' => '60px;'],
-],*/
+        /*        [
+        'attribute' => 'id',
+        'options'   => ['width' => '60px;'],
+        ],*/
 
-/*
-['attribute' => 'created',
-'format' =>  ['date', 'php:Y-m-d h/i','currencyCode' => 'PRC',]
-],*/
+        /*
+        ['attribute' => 'created',
+        'format' =>  ['date', 'php:Y-m-d h/i','currencyCode' => 'PRC',]
+        ],*/
+
         [
             'attribute' => 'created',
             'value'     => function ($data) {
                 $date = new DateTime($data->created);
                 return $date->format('Y-m-d');
-
             },
-            'options'   => ['width' => '120px;'],
+            'filter'    => DateInput::widget(['attribute'=>'created','model'=>$searchModel]),
+            'options'   => ['width' => '100px;'],
         ],
+/*        [
+'attribute' => 'created',
+'value'     => function ($data) {
+$date = new DateTime($data->created);
+return $date->format('Y-m-d');
+
+},
+'filter'    => DatePicker::widget([
+'model'         => $searchModel,
+'attribute'     => 'created',
+'inline'        => true,
+'language'      => 'zh_cn',
+'clientOptions' => [
+'autoclose' => true,
+'format'    => 'yyyy-mm-dd',
+'language'  => 'zh-cn',
+],
+
+]),
+'options'   => ['width' => '120px;'],
+],*/
 
         [
             'label'     => '姓名',
@@ -73,7 +98,7 @@ return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
             'value'      => function ($model) {
                 return $model->sample->sex == 'female' ? '女' : '男';
             },
-            'options'   => ['width' => '60px;'],
+            'options'    => ['width' => '60px;'],
         ],
         [
             'attribute' => 'sample.age',
@@ -208,8 +233,8 @@ return $model->status =='finished' ? '<span class="bg-primary" style="padding:3p
         [
             'options'   => ['width' => '120'],
             'attribute' => '',
-            'format'     => 'raw',
-            'value'      => function ($model) {
+            'format'    => 'raw',
+            'value'     => function ($model) {
                 $urlreport = Yii::$app->urlManager->createUrl(
                     ['rest-report/view', 'id' => $model->id]
                 );
@@ -221,10 +246,10 @@ return $model->status =='finished' ? '<span class="bg-primary" style="padding:3p
                 $dataStatus       = $model->snpsqlite ? '' : 'disabled';
                 $dataStatuseText  = strpos($model->report_id, 'YD') !== false ? '无数据' : '查数据';
                 $html             = "<a href='$urlreport' class='btn btn-info $reportStatus'>$reportStatusText</a>";
-                if(!Functions::ismobile()){
-                    $html .= "<a href='$urldata' class='btn btn-info  $dataStatus'>$dataStatuseText</a>";   
+                if (!Functions::ismobile()) {
+                    $html .= "<a href='$urldata' class='btn btn-info  $dataStatus'>$dataStatuseText</a>";
                 }
-                
+
                 return $html;
             }],
 

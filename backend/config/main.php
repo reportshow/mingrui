@@ -9,6 +9,7 @@ $params = array_merge(
 return [
     'name'                => '明睿单病云管家',
     'id'                  => 'app-backend',
+    'language'            => 'zh-CN',
     'basePath'            => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap'           => ['log'],
@@ -25,8 +26,8 @@ return [
 
     ],
     'aliases'             => [
-        '@mdm/admin' => '@vendor/mdmsoft/yii2-admin', 
-        '@dosamigos/datepicker'=>'@vendor/2amigos/yii2-date-picker-widget/src/DatePicker',      
+        '@mdm/admin'            => '@vendor/mdmsoft/yii2-admin',
+        '@dosamigos/datepicker' => '@vendor/2amigos/yii2-date-picker-widget/src/DatePicker',
     ],
     'as access'           => [
         'class'        => 'mdm\admin\components\AccessControl',
@@ -53,8 +54,8 @@ return [
                     ],
                 ],
 /*                'dmstr\web\AdminLteAsset' => [
-                    'skin' => 'skin-black-light',
-                ],*/
+'skin' => 'skin-black-light',
+],*/
             ],
         ],
         'log'          => [
