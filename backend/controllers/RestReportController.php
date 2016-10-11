@@ -359,7 +359,7 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
         //1. find user's bad gene
         $userdata  = $this->findModel($id);
         $snp_array = json_decode($userdata->snpsave, true);
-
+        
         $user_snp_areas = [];
         foreach ($snp_array as $key => $data) {
             $user_snp_areas[$data[0]]['bad'][] = $data[1];
@@ -387,7 +387,9 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
         foreach ($user_snp_areas as $gene => $data) {
             foreach ($data['bad'] as $i => $bad) {
                 $temp = explode(' ', $bad);
-                $type = Genetypes::find()->where(['gene' => trim($gene), 'hgvs' => trim($temp[0])])->one();
+                $hgvs = str_replace('c.', '', trim($temp[0]));
+                print_r($hgvs);
+                $type = Genetypes::find()->where(['gene' => trim($gene), 'hgvs' =>$hgvs ])->one();
                 if ($type) {
                     foreach ($data['areas'] as $key => $area) {
                         if ($type->startcoord >= $area['start'] and $type->startcoord <= $area['end']) {
@@ -407,6 +409,7 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
         return $this->render('stats', [
             'data'  => json_encode($user_snp_areas),
             'model' => $this->findModel($id),
+            'assigner_note' => $userdata->assigner_note,
         ]);
     }
 

@@ -119,7 +119,12 @@ $pingjiaUrl= Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
     <!-- /.box-body -->
 <?php }?>
 <?php } else { ?>
-          <h1 style="text-align:center;">没有检测到异常基因!</h1>         
+<?php if(empty($assigner_note)) { ?>
+          <h1 style="text-align:center;">没有检测到异常基因!</h1>
+<?php } else { ?>
+               <h3 style="text-align:center;">以下为检测留言：</h3>
+                <br/><?= $assigner_note ?>
+<?php } ?>
 <?php } ?>
   </div>
   <!-- /.box-body -->
