@@ -10,15 +10,25 @@ class WeixinMenubar extends Widget
 
     public function run()
     {
-        if (Functions::ismobile() && Yii::$app->user->can('doctor')) {
+        if (!Functions::ismobile()) {
+            return;
+        }
+
+        if (Yii::$app->user->can('doctor')) {
 
             $menus = Yii::$app->params['wechat_doctor']['menu'];
 
             return $this->render('WeixinMenubar', ['menus' => $menus]);
+        } else if (Yii::$app->user->can('guest')) {
+
+            $menus = Yii::$app->params['wechat_sick']['menu'];
+
+            return $this->render('WeixinMenubar', ['menus' => $menus]);
+
         } else {
 
-            return '<!-- not mobile:  -->'  ;
+            return '<!-- not mobile:  -->';
         }
 
-    } 
+    }
 }

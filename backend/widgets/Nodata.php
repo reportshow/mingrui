@@ -13,7 +13,12 @@ class Nodata extends Widget
             $this->title = '抱歉';
         }
 
-        return $this->render('Nodata', ['message' => $this->message, 'title' => $this->title]);
+        $content = $this->render('Nodata', ['message' => $this->message, 'title' => $this->title]);
+
+        return $this->render(
+            '/normal/nodata',
+            ['content' => $content]
+        );
     }
 
 }

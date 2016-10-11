@@ -6,6 +6,7 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
+use backend\widgets\Nodata;
 
 /**
  * Site controller
@@ -93,4 +94,6 @@ class SiteController extends Controller
     {
         echo "OK";
     }
+
+ 
 }

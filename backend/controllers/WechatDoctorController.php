@@ -2,14 +2,13 @@
 namespace backend\controllers;
 
 use backend\models\WechatDoctorEvent;
+use backend\widgets\Nodata;
 use common\components\WechatMessage;
 use common\models\QrcodeSession;
 use common\models\User;
 use common\models\WechatUser;
 use Yii;
 use yii\web\Controller;
-use backend\widgets\Nodata;
-use backend\models\MingruiOrder;
 
 /**
  * Site controller
@@ -74,23 +73,27 @@ class WechatDoctorController extends Controller
         //$rlt =  $wechat->sendText($xml['FromUserName'], 'xxxx');
         //if($rlt){}
     }
+    public function show($url)
+    {
+        WechatUser::show([$url, 'role' => 'doctor'], 'doctor');
+    }
 
     public function actionReport()
     {
-        WechatUser::show(['rest-report/index', 'role' => 'doctor']);
+        self::show('rest-report/index');
     }
     public function actionSearch()
     {
-        WechatUser::show(['rest-report/search', 'role' => 'doctor']);
+        self::show('rest-report/search');
     }
     public function actionSicklist()
     {
-        WechatUser::show(['restsample/index', 'role' => 'doctor']);
+        self::show('restsample/index');
     }
 
     public function actionDoorder()
     {
-       WechatUser::show(['orders/wechatorder', 'role' => 'doctor']);
+        self::show('orders/wechatorder');
 
     }
 
@@ -121,16 +124,8 @@ class WechatDoctorController extends Controller
             $qs->save();
         }
 
-        $content = (' <div class="alert alert-info alert-dismissible" style="margin-top:100px">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-info"></i> 登录成功!</h4>
-                您已经成功登录到明睿系统
-              </div>');
+        echo Nodata::widget(['title' => '登录成功!', 'message' => '您已经成功登录到明睿系统']);
 
-        echo $this->render(
-            '/layouts/main-login',
-            ['content' => $content]
-        );
     }
 
     public function actionWebloginCheck($qr_session)

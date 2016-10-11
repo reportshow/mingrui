@@ -2,6 +2,7 @@
 namespace backend\controllers;
 
 use backend\models\WechatSickEvent;
+use backend\widgets\Nodata;
 use common\components\WechatMessage;
 use common\models\QrcodeSession;
 use common\models\User;
@@ -9,7 +10,6 @@ use common\models\WechatUser;
 use Yii;
 use yii\web\Controller;
 
-use mdm\admin\models\Assignment;
 /**
  * Site controller
  */
@@ -44,15 +44,14 @@ class WechatController extends Controller
 
     public function actionTalk()
     {
-       //exit($_GET["echostr"] ) ;
+        //exit($_GET["echostr"] ) ;
 
         $this->wechatInit();
         /*if ($wechat->checkSignature()) {
         echo $_GET["echostr"];
         }*/
         //$this->xml['Content']
-       // echo $this->reply->text(  json_encode($this->xml));
-     
+        // echo $this->reply->text(  json_encode($this->xml));
 
         if ($this->xml['MsgType'] == "event") {
             $ev = new WechatSickEvent($this->xml);
@@ -66,33 +65,35 @@ class WechatController extends Controller
 
     public function actionTest1()
     {
-        \common\components\SMS::sendSMS('13910136035', [123,789]);
-          
+        \common\components\SMS::sendSMS('13910136035', [123, 789]);
 
-
+    }
+    public function show($url)
+    {
+        WechatUser::show([$url ], 'sick');
     }
 
     public function actionMyReport()
     {
-        WechatUser::show(['rest-report/myreport' ]);
+        self::show('rest-report/myreport');
     }
 
     public function actionMyUpload()
     {
-        WechatUser::show(['mingrui-mypic/create']);
+        self::show('mingrui-mypic/create');
     }
     public function actionMyPic()
     {
-        WechatUser::show(['mingrui-mypic/index']);
+        self::show('mingrui-mypic/index');
     }
 
     public function actionNotesIndex()
     {
-        WechatUser::show(['mingrui-note/index']);
+        self::show('mingrui-note/index');
     }
     public function actionNotesNew()
     {
-        WechatUser::show(['mingrui-note/create']);
+        self::show('mingrui-note/create');
     }
     public function actionMenuinit()
     {
@@ -100,7 +101,7 @@ class WechatController extends Controller
 
         return Yii::$app->wechat->createMenu(Yii::$app->params['wechat_sick']['menu']);
     }
-  
+
     //
     //=========================================================
     //
@@ -121,16 +122,7 @@ class WechatController extends Controller
             $qs->save();
         }
 
-        $content = (' <div class="alert alert-info alert-dismissible" style="margin-top:100px">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-info"></i> 登录成功!</h4>
-                您已经成功登录到明睿系统
-              </div>');
-
-        echo $this->render(
-            '/layouts/main-login',
-            ['content' => $content]
-        );
+        echo Nodata::widget(['title' => '登录成功!', 'message' => '您已经成功登录到明睿系统']);
     }
 
     public function actionWebloginCheck($qr_session)

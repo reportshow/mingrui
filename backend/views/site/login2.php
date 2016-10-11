@@ -37,8 +37,8 @@ $fieldOptions2 = [
       }
     </style>
  
-<div class="login-logo" style="margin-top:7%;color:#fff;font-family: 'Microsoft Yahei'">
-   <b>明睿 </b> <span style="font-size:0.8em">单病云管家 </span>
+<div class="login-logo" style="margin-top:7%;font-family: 'Microsoft Yahei'">
+        <a href="#"><b>明睿</b>单病云管家</a>
 </div>
 
 <div class="login-box " style='margin-top:0%;width:480px'>
@@ -48,8 +48,8 @@ $fieldOptions2 = [
 
          <div class="nav-tabs-custom tab-info" style='margin-bottom: 0px; '>
             <ul class="nav nav-tabs pull-right">
-                <li ck-data='account' class='hide'><a data-toggle="tab" href="#tab_1-1">帐号</a></li>
-                <li class="activeXX" ck-data='sick'>
+                <li ck-data='account'><a data-toggle="tab" href="#tab_1-1">帐号</a></li>
+                <li class="active" ck-data='sick'>
                   <a data-toggle="tab" href="#tab_2-2"><i class="fa fa-qrcode"></i>患者</a>
                 </li>
                 <li  ck-data='doctor'>
@@ -59,7 +59,7 @@ $fieldOptions2 = [
                 <li  ck-data='sms' style=''>
                   <a data-toggle="tab" href="#tab_2-4"><i class="fa fa-envelope-o"></i> 短信登录</a>
                 </li>
-                <li class="accountentery pull-left header"> 登录</li>
+                <li class="pull-left header"> 登录</li>
             </ul>
             <div class="tab-content" style="padding:30px;">
                 <div class="tab-pane " id="tab_1-1">
@@ -160,12 +160,4 @@ $fieldOptions2 = [
             
         }
     });*/
-
-    var clickcount = 0;
-    $('.login-logo').click(function(){
-      clickcount++;
-      if(clickcount > 6){
-        $("li[ck-data='account']").removeClass('hide') ;
-      }
-    });
 </script>

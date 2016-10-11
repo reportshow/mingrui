@@ -125,11 +125,8 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
         $role = Yii::$app->user->Identity->role_text;
         if ($role == 'doctor') {
 
-            $content = Nodata::widget(['message' => '您是医生身份，无法查看自己的报告']);
-            return $this->render(
-                '/layouts/main-login',
-                ['content' => $content]
-            );
+            return Nodata::widget(['message' => '您是医生身份，无法查看自己的报告']);
+            
         }
         $mobile = Yii::$app->user->Identity->username;
 
@@ -137,11 +134,8 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
         $smp   = $query->one(); //有多个
         if (!$smp) {
             echo $query->createCommand()->getRawSql();
-            $content = Nodata::widget(['message' => '没有与您相关的报告记录' . $mobile]);
-            return $this->render(
-                '/layouts/main-login',
-                ['content' => $content]
-            );
+            return Nodata::widget(['message' => '没有与您相关的报告记录' . $mobile]);
+            
         }
         $reports = $smp->restReports; //多个报告
         if (is_array($reports) && count($reports) > 0) {

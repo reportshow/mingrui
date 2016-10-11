@@ -32,6 +32,11 @@ class OrdersController extends Controller
         ];
     }
 
+    public function actionTestnodata()
+    {
+        return Nodata::widget(['message' => '您是医生身份，无法查看自己的报告']);
+    }
+
     /**
      * Lists all MingruiOrder models.
      * @return mixed
@@ -82,18 +87,15 @@ class OrdersController extends Controller
             foreach ($mobileList as $key => $mobile) {
                 SMS::songjian($mobile, [$nickname, $doctorMobile]);
             }
-        }else{
+        } else {
             return "您的身份未查明。";
         }
 
         //SMS::landingCall($voice, $mobile);
 
         // $this->layout = '/layouts/main-login';
-        $content = Nodata::widget(['title' => '送检订单已经发送', 'message' => '您将通过此功能来通知销售来取样，我们的销售将与您联系约定取样时间、地点等细节。']);
-        return $this->render(
-            '/layouts/main-login',
-            ['content' => $content]
-        );
+        return Nodata::widget(['title' => '送检订单已经发送', 'message' => '您将通过此功能来通知销售来取样，我们的销售将与您联系约定取样时间、地点等细节。']);
+
     }
     /**
      * Creates a new MingruiOrder model.

@@ -3,6 +3,7 @@ namespace common\models;
 
 use backend\models\RestClient;
 use backend\models\RestSample;
+use backend\widgets\Nodata;
 use common\models\User;
 use Yii;
 use yii\base\Model;
@@ -78,20 +79,34 @@ class WechatUser extends Model
         }
 
         if ($erp_user) {
-            $model->role_text   = $role_text;
-            $model->role_tab_id = $userid;
-            $model->save();
-            $_SESSION['mobile'] = $mobile;
 
-            $this->initAfter1stLogin($model, $role_text);
-            return $model;
+            if ($_SESSION['wechat_entery'] != $role_text) {
+                $realRole  = $role_text;
+                $rolePlace = $_SESSION['wechat_entery'];
+                echo Nodata::widget([
+                    'title'   => '错误!',
+                    'message' => '您没有权限使用该公众号。您可能是进错了公众号<br>'
+                    . '您是:' . $realRole . ', 而这里是' . $rolePlace . '的入口',
+                ]);
+                return false;
+            } else {
+
+                $model->role_text   = $role_text;
+                $model->role_tab_id = $userid;
+                $model->save();
+                $_SESSION['mobile'] = $mobile;
+
+                $this->initAfter1stLogin($model, $role_text);
+                return $model;
+            }
+
         } else {
 
-            echo (' <div class="alert alert-info alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-info"></i> 该号码' . $mobile . '未被记录!</h4>
-                请联系客服/销售，将你的手机号录入系统中.
-              </div>');
+            echo Nodata::widget([
+                'title'   => '该号码' . $mobile . '未被记录!',
+                'message' => '请联系客服/销售，将你的手机号录入系统中.']);
+            return;
+
             return false;
             exit(10);
         }
@@ -166,10 +181,12 @@ class WechatUser extends Model
      * @param  [type] $url [description]
      * @return [type]      [description]
      */
-    public static function show($url)
+    public static function show($url, $entery = 'xxx')
     {
-        $_SESSION['entery_url'] = self::createUrl($url);
-        $user                   = self::oauth();
+        $_SESSION['wechat_entery'] = $entery;
+        $_SESSION['entery_url']    = self::createUrl($url);
+        $user                      = self::oauth();
+
         if ($user) {
 
             self::login($user);
@@ -184,15 +201,11 @@ class WechatUser extends Model
      */
     public static function login($user)
     {
-   /*     //判断一下是否进错了号
-        if ($user->role_text == 'doctor' && Yii::$app->controller->id == 'wechat-doctor') {
-            //OK
-        } else if ($user->role_text == 'guest' && Yii::$app->controller->id == 'wechat') {
-            //OK
-        } else {
-            echo "<h1>你没有权限访问该公众号</h1>";
-            exit;
-        }*/
+        if ($user->role_text != $_SESSION['wechat_entery']) {
+            //串号了
+            echo Nodata::widget(['title' => '错误!', 'message' => '您没有权限使用该公众号']);
+            return;
+        }
 
         Yii::$app->user->login($user, 0);
         if (Yii::$app->user->isGuest) {
@@ -202,14 +215,19 @@ class WechatUser extends Model
         header('Location: ' . $_SESSION['entery_url']);
         exit();
     }
+
+    public static function checkWechatEntery($entery)
+    {
+
+    }
     /**
      * 检查用户身份
      * @return [type] [description]
      */
     public static function oauth()
     {
-        
-        if (!empty($_SESSION['openid']) && !empty($_SESSION['mobile'])) {
+
+        if (!empty($_SESSION['openid'])) {
             $user = self::localUser($_SESSION['openid']);
             if ($user && $user->status != 0) {
                 return $user;
@@ -226,8 +244,9 @@ class WechatUser extends Model
 
     }
 
-    public static function checkUserExist(){
-        
+    public static function checkUserExist()
+    {
+
     }
 
     public static function newUser4wechat($info)
@@ -262,8 +281,6 @@ class WechatUser extends Model
 
     public static function switchWechat($switch = false)
     {
-        return;
-        //不再切换帐号了
         //
         if (!empty($_GET['role']) && $_GET['role'] == 'doctor') {
             $config = Yii::$app->params['wechat_doctor']['config'];
