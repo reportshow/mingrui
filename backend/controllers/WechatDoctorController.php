@@ -9,6 +9,7 @@ use common\models\WechatUser;
 use Yii;
 use yii\web\Controller;
 use backend\widgets\Nodata;
+use backend\models\MingruiOrder;
 
 /**
  * Site controller
@@ -89,14 +90,8 @@ class WechatDoctorController extends Controller
 
     public function actionDoorder()
     {
-       // $this->layout = '/layouts/main-login';
-        $content      = Nodata::widget(['title'=>'送检订单已经发送','message' => '您将通过此功能来通知销售来取样，我们的销售将与您联系约定取样时间、地点等细节。']);
-        return $this->render(
-            '/layouts/main-login',
-            ['content' => $content]
-        );
+       WechatUser::show(['orders/wechatorder', 'role' => 'doctor']);
 
-        // return  "消息已发出";
     }
 
     public function actionMenuinit()

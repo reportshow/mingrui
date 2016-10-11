@@ -43,8 +43,8 @@ class MingruiOrder extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'doctor', 'assigned'], 'required'],
-            [['id', 'doctor'], 'integer'],
+            [[  'doctor'], 'required'],
+            [[  'doctor'], 'integer'],
             [['createtime'], 'safe'],
             [['status', 'notes'], 'string'],
             [['assigned'], 'string', 'max' => 16],

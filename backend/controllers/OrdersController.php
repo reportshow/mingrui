@@ -2,13 +2,13 @@
 
 namespace backend\controllers;
 
-use Yii;
 use backend\models\MingruiOrder;
 use backend\models\MingruiOrderSearch;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-
+use backend\widgets\Nodata;
 /**
  * OrdersController implements the CRUD actions for MingruiOrder model.
  */
@@ -21,7 +21,7 @@ class OrdersController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class'   => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -35,11 +35,11 @@ class OrdersController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new MingruiOrderSearch();
+        $searchModel  = new MingruiOrderSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -56,6 +56,22 @@ class OrdersController extends Controller
         ]);
     }
 
+    public function actionWechatorder()
+    {
+        $order         = new MingruiOrder();
+        $order->doctor = Yii::$app->user->Identity->role_tab_id;
+        $order->status = 'init';
+        if(!$order->save()){
+            var_export($order->errors);exit;
+        }
+
+        // $this->layout = '/layouts/main-login';
+        $content = Nodata::widget(['title' => '送检订单已经发送', 'message' => '您将通过此功能来通知销售来取样，我们的销售将与您联系约定取样时间、地点等细节。']);
+        return $this->render(
+            '/layouts/main-login',
+            ['content' => $content]
+        );
+    }
     /**
      * Creates a new MingruiOrder model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -66,7 +82,7 @@ class OrdersController extends Controller
         $model = new MingruiOrder();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id'           => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -85,7 +101,7 @@ class OrdersController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id'           => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,

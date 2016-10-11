@@ -9,13 +9,15 @@ use backend\models\MingruiOrder;
 /* @var $this yii\web\View */
 /* @var $model backend\models\MingruiOrder */
 /* @var $form yii\widgets\ActiveForm */
+
+ 
 ?>
 
 <div class="mingrui-order-form">
-
+   
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'id')->textInput(['maxlength' => true,'class'=>'hide']) ?>
 
     <?= $form->field($model, 'doctor')->textInput(['maxlength' => true]) ?>
 
@@ -34,9 +36,7 @@ use backend\models\MingruiOrder;
                      
                 ]); ?>
 
-    <?php
-    //$form->field($model, 'status')->textInput(['maxlength' => true]) 
-    ?>
+    
     <?= $form->field($model, 'status')->dropDownList(MingruiOrder::$statutText); ?>
 
     <?= $form->field($model, 'assigned')->textInput(['maxlength' => true]) ?>

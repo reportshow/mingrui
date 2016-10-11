@@ -27,6 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ['attribute' => 'id', 'options' => ['width' => '60']],
         ['attribute' => 'docotr_name', 'label' => '医生姓名', 'value' => 'mydoctor.name'],
         ['attribute' => 'doctor_tel', 'label' => '联系方式', 'value' => 'mydoctor.tel'],
+        ['attribute'=>'doctor_area','label' => '医院','value' =>'mydoctor.hospital.name' ],
         'createtime',
         ['attribute' => 'status',
             'filter'     => MingruiOrder::$statutText,

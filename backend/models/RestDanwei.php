@@ -44,7 +44,7 @@ class RestDanwei extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => '姓名',
+            'name' => '医院',
             'sales_id' => '销售id',
         ];
     }
