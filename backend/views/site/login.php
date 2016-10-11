@@ -37,21 +37,29 @@ $fieldOptions2 = [
       }
     </style>
  
-<div class="login-logo" style="margin-top:7%;font-family: 'Microsoft Yahei'">
-        <a href="#"><b>明睿</b>单病云管家</a>
+<div class="login-logo" style="margin-top:7%;color:#fff;font-family: 'Microsoft Yahei'">
+   <b>明睿</b><span style="font-size:0.8em">单病云管家 </span>
 </div>
 
-<div class="login-box " style='margin-top:0%;'>
+<div class="login-box " style='margin-top:0%;width:480px'>
 
     <!-- /.login-logo -->
     <div class="login-box-body"  >
 
          <div class="nav-tabs-custom tab-info" style='margin-bottom: 0px; '>
             <ul class="nav nav-tabs pull-right">
-                <li ck-data='account'><a data-toggle="tab" href="#tab_1-1">帐号</a></li>
-                <li class="active" ck-data='sick'><a data-toggle="tab" href="#tab_2-2"><i class="fa fa-qrcode"></i> 二维码</a></li>
-                <li  ck-data='sms' style=''><a data-toggle="tab" href="#tab_2-3"><i class="fa fa-envelope-o"></i> 短信登录</a></li>
-                <li class="pull-left header"> 登录</li>
+                <li ck-data='account' class='hide'><a data-toggle="tab" href="#tab_1-1">帐号</a></li>
+                <li class="activeXX" ck-data='sick'>
+                  <a data-toggle="tab" href="#tab_2-2"><i class="fa fa-qrcode"></i>患者</a>
+                </li>
+                <li  ck-data='doctor'>
+                  <a data-toggle="tab" href="#tab_2-3"><i class="fa fa-qrcode"></i>医生</a>
+                </li>
+
+                <li  ck-data='sms' style=''>
+                  <a data-toggle="tab" href="#tab_2-4"><i class="fa fa-envelope-o"></i> 短信登录</a>
+                </li>
+                <li class="accountentery pull-left header"> 登录</li>
             </ul>
             <div class="tab-content" style="padding:30px;">
                 <div class="tab-pane " id="tab_1-1">
@@ -89,11 +97,22 @@ $fieldOptions2 = [
                 </div>
                 <!-- /.tab-pane -->
 
-                <div class="tab-pane " id="tab_2-3">
+
+               <div class="tab-pane" id="tab_2-3">
+                <center>
+                    <img src="<?=$model->QrLoginUrl('doctor')?>" style="width:200px"><br>微信扫一扫
+                </center>
+
+                </div>
+                <!-- /.tab-pane -->
+
+
+                <div class="tab-pane " id="tab_2-4">
                  <?php require 'login-sms.php'  ?>
 
                 </div>
                 <!-- /.tab-pane -->
+
 
 
             </div>
@@ -107,17 +126,18 @@ $fieldOptions2 = [
     <!-- /.login-box-body -->
 </div><!-- /.login-box -->
 <script type="text/javascript">
-    var check_doctor_url = '<?=$model->QrLoginCheckUrl('doctor')?>';
-    var check_sick_url = '<?=$model->QrLoginCheckUrl('sick')?>';
-    var checkUrl =check_sick_url;
+ 
+    var checkUrl = {'sick': '<?=$model->QrLoginCheckUrl('sick')?>',
+        'doctor': '<?=$model->QrLoginCheckUrl('doctor')?>'
+     };
 
     setInterval(function(){
         var datatype =  $('.nav-tabs li.active').attr('ck-data');
-        if(datatype!='sick') return;
+        if(datatype!='sick' && datatype!='doctor' ) return;
 
         $.ajax({
              type: "GET",
-             url: checkUrl ,
+             url: checkUrl[datatype] ,
              data: {mobile:$("#wechatuser-mobile").val() },
              dataType: "json",
              success: function(data){                 
@@ -140,4 +160,12 @@ $fieldOptions2 = [
             
         }
     });*/
+
+    var clickcount = 0;
+    $('.login-logo').click(function(){
+      clickcount++;
+      if(clickcount > 6){
+        $("li[ck-data='account']").removeClass('hide') ;
+      }
+    });
 </script>

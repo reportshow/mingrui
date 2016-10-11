@@ -4,11 +4,14 @@ namespace backend\controllers;
 
 use backend\models\MingruiOrder;
 use backend\models\MingruiOrderSearch;
+use backend\models\RestClient;
+use backend\widgets\Nodata;
+use common\components\SMS;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use backend\widgets\Nodata;
+
 /**
  * OrdersController implements the CRUD actions for MingruiOrder model.
  */
@@ -61,9 +64,29 @@ class OrdersController extends Controller
         $order         = new MingruiOrder();
         $order->doctor = Yii::$app->user->Identity->role_tab_id;
         $order->status = 'init';
-        if(!$order->save()){
+        if (!$order->save()) {
             var_export($order->errors);exit;
         }
+
+        $mobileList = Yii::$app->params['master_vcf_mobile'];
+        //$voice  = Yii::$app->params['master_vcf_voice'];
+        if (!$mobileList) {
+            return ('管理员电话未设置');
+        }
+        /*$doctorMobile = Yii::$app->user->Identity->username;
+        $nickname     = Yii::$app->user->Identity->nickname; //大夫的名字*/
+        $doctor = RestClient::findOne($order->doctor);
+        if ($doctor) {
+            $doctorMobile = $doctor->tel;
+            $nickname     = $doctor->name;
+            foreach ($mobileList as $key => $mobile) {
+                SMS::songjian($mobile, [$nickname, $doctorMobile]);
+            }
+        }else{
+            return "您的身份未查明。";
+        }
+
+        //SMS::landingCall($voice, $mobile);
 
         // $this->layout = '/layouts/main-login';
         $content = Nodata::widget(['title' => '送检订单已经发送', 'message' => '您将通过此功能来通知销售来取样，我们的销售将与您联系约定取样时间、地点等细节。']);
