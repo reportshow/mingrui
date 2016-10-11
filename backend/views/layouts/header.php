@@ -44,7 +44,8 @@ $orderUrl = Yii::$app->urlManager->createUrl(['/orders/']);
                         <span class="label label-danger"><?=$orderCount ?></span>
                     </a> 
                 </li>
-                  <? }
+                  <?php 
+              }
                   ?>
                <li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"  title="报告留言">
@@ -130,3 +131,5 @@ $orderUrl = Yii::$app->urlManager->createUrl(['/orders/']);
         </div>
     </nav>
 </header>
+
+

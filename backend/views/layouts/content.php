@@ -4,8 +4,8 @@ use yii\widgets\Breadcrumbs;
 use backend\components\Functions;
 
 ?>
-<div class="content-wrapper">
-    <section class="content-header">
+<div class="content-wrapper" style="min-height: 100%">
+    <section class="content-header" >
         <?php if (0 && isset($this->blocks['content-header'])) {
           ?>
             <h1><?=$this->blocks['content-header']?></h1>
@@ -27,12 +27,12 @@ use backend\components\Functions;
         <?php
         if(!Functions::ismobile()){
            if (Yii::$app->user->can('admin') || Yii::$app->user->can('doctor')) {
-            echo Breadcrumbs::widget([
+            
+           }
+        }
+       echo Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]);
-        }
-        }
-       
 
       ?>
     </section>

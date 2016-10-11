@@ -4,6 +4,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use dosamigos\datepicker\DatePicker;
+use backend\models\MingruiOrder;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\MingruiOrder */
@@ -33,7 +34,10 @@ use dosamigos\datepicker\DatePicker;
                      
                 ]); ?>
 
-    <?= $form->field($model, 'status')->textInput(['maxlength' => true]) ?>
+    <?php
+    //$form->field($model, 'status')->textInput(['maxlength' => true]) 
+    ?>
+    <?= $form->field($model, 'status')->dropDownList(MingruiOrder::$statutText); ?>
 
     <?= $form->field($model, 'assigned')->textInput(['maxlength' => true]) ?>
 
@@ -46,3 +50,7 @@ use dosamigos\datepicker\DatePicker;
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<style type="text/css">
+    .mingrui-order-form{width: 60%}
+</style>

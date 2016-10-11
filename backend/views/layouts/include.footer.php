@@ -3,14 +3,15 @@ use backend\widgets\WeixinMenubar;
 use backend\components\Functions;
 ?>
 <style type="text/css">
-    <?php
-if (!Functions::ismobile()) {
-    echo ".main-header {position:fixed;width:100%} ";
-    echo ".main-sidebar {position: fixed}";
-
+ 
+ @media(min-width:640px) {
+	 .main-header {position:fixed;width:100%}  
+     .main-sidebar {position: fixed} 
+     .content-wrapper{margin-top:50px;}
 }
+    
 
-?>
+ 
 </style>
 
 
