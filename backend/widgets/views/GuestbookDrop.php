@@ -28,7 +28,7 @@ foreach ($message as $k => $msg) {
         <li><!-- start message -->
             <a href="<?=$url?>">
                 <div class="pull-left">
-                    <img src="<?=$avatar?>" style='width:30px;height:30px' class="img-circle" alt="User Image"/>
+                    <img src="<?=$avatar?>" style='width:30px;height:30px' class="img-circle" alt="User Image"  onerror="this.src='images/user2.png';"  />
                 </div>
                 <h4 style="font-size: 0.9em">
                     <?=$name?>

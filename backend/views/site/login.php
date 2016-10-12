@@ -1,6 +1,8 @@
 <?php
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
+use backend\components\Functions;
+
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
@@ -49,10 +51,10 @@ $fieldOptions2 = [
          <div class="nav-tabs-custom tab-info" style='margin-bottom: 0px; '>
             <ul class="nav nav-tabs pull-right">
                 <li ck-data='account' class='hide'><a data-toggle="tab" href="#tab_1-1">帐号</a></li>
-                <li class="activeXX" ck-data='sick'>
+                <li  ck-data='sick'>
                   <a data-toggle="tab" href="#tab_2-2"><i class="fa fa-qrcode"></i>患者</a>
                 </li>
-                <li  ck-data='doctor'>
+                <li class="active" ck-data='doctor'>
                   <a data-toggle="tab" href="#tab_2-3"><i class="fa fa-qrcode"></i>医生</a>
                 </li>
 
@@ -89,7 +91,7 @@ $fieldOptions2 = [
                     <?php ActiveForm::end();?>
                 </div>
                 <!-- /.tab-pane -->
-                <div class="tab-pane active" id="tab_2-2">
+                <div class="tab-pane " id="tab_2-2">
                 <center>
                     <img src="<?=$model->QrLoginUrl('sick')?>" style="width:200px"><br>微信扫一扫
                 </center>
@@ -98,7 +100,7 @@ $fieldOptions2 = [
                 <!-- /.tab-pane -->
 
 
-               <div class="tab-pane" id="tab_2-3">
+               <div class="tab-pane active" id="tab_2-3">
                 <center>
                     <img src="<?=$model->QrLoginUrl('doctor')?>" style="width:200px"><br>微信扫一扫
                 </center>
@@ -169,3 +171,17 @@ $fieldOptions2 = [
       }
     });
 </script>
+
+
+
+<style type="text/css">
+  .nav-tabs-custom{ background: rgba(255,255,255,0.7);}
+  .nav-tabs-custom>.tab-content{ background: none;}
+  .nav-tabs-custom>.nav-tabs>li.active>a, .nav-tabs-custom>.nav-tabs>li.active:hover>a{ background: none;}
+</style> 
+<?php
+if(!Functions::ismobile() ){
+  include('Dna.html');
+}
+
+?>

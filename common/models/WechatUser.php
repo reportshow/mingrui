@@ -203,9 +203,9 @@ class WechatUser extends Model
     {
         if ($user->role_text != $_SESSION['wechat_entery']) {
             //串号了
-            echo Nodata::widget(['title' => '错误!', 'message' => '您没有权限使用该公众号']);
+            echo Nodata::widget(['title' => '错误!', 'message' => '您没有权限使用该公众号' . $user->role_text .  $_SESSION['wechat_entery']]);
             return;
-        }
+        } 
 
         Yii::$app->user->login($user, 0);
         if (Yii::$app->user->isGuest) {

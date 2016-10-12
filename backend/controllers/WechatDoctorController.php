@@ -114,7 +114,7 @@ class WechatDoctorController extends Controller
     public function actionWeblogin()
     {
         $_SESSION['qr_session'] = $_GET['qr_session'];
-        WechatUser::show(['wechat-doctor/weblogin-done']);
+        self::show('wechat-doctor/weblogin-done');
     }
     public function actionWebloginDone()
     {
@@ -128,12 +128,18 @@ class WechatDoctorController extends Controller
 
     }
 
+    /**
+     * 电脑 从这里得到结果
+     * @param  [type] $qr_session [description]
+     * @return [type]             [description]
+     */
     public function actionWebloginCheck($qr_session)
     {
         $qs = QrcodeSession::findOne($_GET['qr_session']);
         if ($qs && $qs->openid) {
             $user = User::find()->where(['wx_openid' => $qs->openid])->one();
             if ($user) {
+
                 Yii::$app->user->login($user, 0);
                 return json_encode(['code' => 1]);
             }

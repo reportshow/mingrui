@@ -34,7 +34,7 @@ $clearUrl = Yii::$app->urlManager->createUrl(['comment/clear-comments','report_i
     <!-- /.box-header -->
     <div class="box-body">
         <!-- Conversations are loaded here -->
-        <div class="direct-chat-messages" style=''>
+        <div class="direct-chat-messages" style='height: auto'>
             <?php
 foreach ($model->comments as $comment) {
     if ($comment) {
@@ -127,6 +127,12 @@ foreach ($model->comments as $comment) {
        $('#MingruiComments-content').val(JSON.stringify(voices) );
        $('#MingruiComments-content').hide();
        $('.voiceActionBtn').hide();
+       if($('form .input-group #addmorevoice').length  < 1){
+         var $vbt = $('#addmorevoice')[0];
+         $('#addmorevoice').remove();
+         $('form .input-group').append($vbt);
+       }
+      
     });
    
     $("#submitbtn").click(function(e){ 
@@ -169,5 +175,15 @@ foreach ($model->comments as $comment) {
 
     .left>.direct-chat-text{  
       margin-left: 10px;
+    }
+    .voicecontainer:after,.voicecontainer:before{
+      content:none;
+    }
+     .voicecontainer{padding-right: 0px;}   
+    .voiceplaybox.direct-chat-text:before{
+      border-right-color: #00C0EF;
+    }
+    .direct-chat-text:after{
+       content:none;
     }
 </style>

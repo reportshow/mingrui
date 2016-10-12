@@ -70,7 +70,7 @@ class WechatController extends Controller
     }
     public function show($url)
     {
-        WechatUser::show([$url ], 'sick');
+        WechatUser::show([$url ], 'guest');
     }
 
     public function actionMyReport()
@@ -84,7 +84,9 @@ class WechatController extends Controller
     }
     public function actionMyPic()
     {
-        self::show('mingrui-mypic/index');
+       // self::show('mingrui-mypic/index');
+       // 
+       self::show('mingrui-attachment/myattachment'); 
     }
 
     public function actionNotesIndex()
@@ -112,7 +114,7 @@ class WechatController extends Controller
     public function actionWeblogin()
     {
         $_SESSION['qr_session'] = $_GET['qr_session'];
-        WechatUser::show(['wechat/weblogin-done']);
+        self::show( 'wechat/weblogin-done' );
     }
     public function actionWebloginDone()
     {

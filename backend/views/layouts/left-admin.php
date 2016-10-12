@@ -71,8 +71,12 @@ $menu[]=[
             'url'   => ['/restsample/index'],
         ];
 
+//use backend\models\MingruiOrder;
+ //$orderCount = MingruiOrder::find()->where(['status'=>'init'])->count();
+
 $menu[]=[
             'label' => '订单管理',
+           // 'redcount'=> $orderCount, 
             'icon'  => 'fa   fa-dollar',
             'url'   => ['/orders/index'],
         ];

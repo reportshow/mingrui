@@ -4,7 +4,9 @@ namespace backend\controllers;
 
 use backend\models\MingruiAttachment;
 use backend\models\MingruiAttachmentSearch;
+use backend\models\RestReport;
 use backend\models\SaveImage;
+use backend\widgets\Nodata;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -28,6 +30,21 @@ class MingruiAttachmentController extends Controller
                 ],
             ],
         ];
+    }
+
+    public function actionMyattachment()
+    {
+        $sid = Yii::$app->user->Identity->role_tab_id;
+        //var_dump(Yii::$app->user->Identity);
+        //$mysample = RestSample::findOne($sid);
+        
+        $rp = RestReport::find()->where(['sample_id' => $sid])->one();
+        if ($rp) {
+            return $this->redirect(['index', 'reportid' => $rp->id]);
+        } else {
+            return Nodata::widget(['message' => '找不到你的报告']);
+        }
+
     }
 
     /**
@@ -81,7 +98,7 @@ class MingruiAttachmentController extends Controller
             }
             SaveImage::save($model, 'image');
 
-            return $this->redirect(['index','reportid'=>$model->report_id]);
+            return $this->redirect(['index', 'reportid' => $model->report_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,

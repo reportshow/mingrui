@@ -25,6 +25,7 @@
     .record_box .startbtn i{
       /*  border-right:1px solid rgba(255,255,255,0.5); */
     }
+    .voiceline .voicetext{padding-right:35px;}
 
     .voiceline>:last-child{
     position: absolute;
@@ -38,9 +39,11 @@
     border-left: 1px solid rgba(200,200,200,0.5);
     }
 
+
 </style>
 <div class='record_box '>
-  
+    <i class='fa fa-close pull-right' onclick='forceStop();'
+     style="width:20px;height:20px;line-height:20px;text-align:center"></i>
     <div class="innerbox">
        <input type="text" id='recordBar' class="knob" 
        data-readonly="true"        readonly='readonly' value="30"
@@ -56,7 +59,8 @@
      </div>
  </div>
 
- <button id='addmorevoice'  type="button" class='btn btn-warning hidden ' >增加语音</button>
+ <button id='addmorevoice'  type="button" class='btn btn-warning hidden '  
+ onclick="$('body').trigger('voice_init');"  >增加语音</button>
 
  <div id='record_list'>
           
@@ -65,9 +69,9 @@
  <textarea id='tpl_voice' style="display: none">
       
         <div class="direct-chat-text bg-aqua voicecontainer"  style="margin-left:0px" >
-            <div class='btn-social voiceline' style="height: 30px;line-height: 30px;" >
+            <div class='btn-social voiceline'  onclick="playme(this);" style="height: 30px;line-height: 30px;" >
                <i class='fa  fa-play-circle-o' style="cursor:pointer"></i> 
-               <span class='voicetext' onclick="playme(this);"></span>
+               <span class='voicetext'  ></span>
                <i class='fa fa-remove' onclick="removeVoice(this);" style="border-left:1px solid rgba(200,200,200,0.5);"></i>
              </div>
         </div>   
@@ -87,6 +91,10 @@
     }
     if(isWeixin()){
       wx.config(<?=$config ?>);
+
+      wx.ready(function(){
+          
+      });
       wx.onVoiceRecordEnd({
           // 录音时间超过一分钟没有停止的时候会执行 complete 回调
           complete: function (res) {
@@ -109,7 +117,11 @@
     });*/
 
  
-
+function forceStop(){
+  status  = 'going';
+  ActionSwitch();
+  recDone( 0);
+}
 $('.startbtn').click(function(){
     ActionSwitch();
 });
@@ -141,6 +153,8 @@ var allVoice = {}; //存储所有的声音数据
 var voiceCount = 1;
 function recDone(localId){
    $('.record_box').slideUp();
+   if(!localId)return;
+
    wx.playVoice({
         localId:  localId // 需要播放的音频的本地ID，由stopRecord接口获得
    });
@@ -193,10 +207,11 @@ function voiceTranslate(localId, resID){
 
   
 function playme(obj){
-   var localId = $(obj).parent().attr('localId');
+   var localId =$(obj).attr('localId') || $(obj).parent().attr('localId');
    wx.playVoice({
         localId:  localId // 需要播放的音频的本地ID，由stopRecord接口获得
    });
+   return true;
 }
 
 function removeVoice(obj){
@@ -239,9 +254,9 @@ function _uploadvoice( index, callback){
      });
 }
 
- $('#addmorevoice').click(function(){
-       $('body').trigger("voice_init");
- });
+/* $('#addmorevoice').click(function(){
+    //   $('body').trigger("voice_init");
+ });*/
  
 
  

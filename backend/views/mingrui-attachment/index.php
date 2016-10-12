@@ -1,10 +1,10 @@
 <?php
 
+ 
 use backend\models\RestReport;
-use yii\grid\GridView;
-use yii\helpers\Html;
 use backend\widgets\Imglist;
 use backend\widgets\RestrepotTop;
+use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\MingruiAttachmentSearch */
@@ -15,7 +15,9 @@ global $sick;
 $report = RestReport::findOne($id);
 $sick   = $report->sample->name;
 
-$this->title                   = '完善资料';
+$isSick = Yii::$app->user->Identity->role_text=='guest';
+
+$this->title                   = $isSick ? '上传 图片' : '完善资料';
 $this->params['breadcrumbs'][] = ['label' => '完善资料', 'url' => ['rest-report/index']];
 $this->params['breadcrumbs'][] = ['label' => "[{$sick}]报告", 'url' => ['rest-report/view', 'id' => $id]];
 $this->params['breadcrumbs'][] = $this->title;
@@ -25,13 +27,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-<?=RestrepotTop::widget(['model_id'=>$id]); ?>
+<?php
+if ($isSick) {
+    $newbtnText = '上传 图片';
+} else {
+    $newbtnText = '新增 资料';
+    echo RestrepotTop::widget(['model_id' => $id]);
+}
+
+?>
 
     <p>
-        <?=Html::a('新增 资料', ['create', 'reportid' => $_GET['reportid']], ['class' => 'btn btn-success'])?>
+        <?=Html::a($newbtnText, ['create', 'reportid' => $_GET['reportid']], ['class' => 'btn btn-success'])?>
     </p>
-   <?= Imglist::widget([
-        'dataProvider' => $dataProvider,
-        'nullMessage' =>'请上传与该报告相关的完善资料的文档，图片',
-    ]); ?>
+   <?=Imglist::widget([
+    'dataProvider' => $dataProvider,
+    'nullMessage'  => '请上传与该报告相关的完善资料的文档，图片',
+]);?>
 </div>
