@@ -73,9 +73,21 @@ export default class TableExampleComplex extends React.Component {
 	    	if (tableData[key][15].hasOwnProperty(prop)) {
 	    	    tableData[key].push(tableData[key][15][prop][0]);
 	    	}
-	    }		    	    
-	}
+	    }
 
+	    //正常人群携带率
+	    var qrjyz = parseFloat(tableData[key][6][0]);
+	    if(tableData[key][6][0] === null) {
+		qrjyz = '-';
+	    }
+	    var inhouse = parseFloat(tableData[key][6][2]);
+	    if(tableData[key][6][2] === null) {
+		inhouse = '-';
+	    }
+	    tableData[key].push(qrjyz + '<br/>' + inhouse);
+
+	}
+	    
 	this.filter();
     }
 
@@ -541,6 +553,7 @@ export default class TableExampleComplex extends React.Component {
 	    <TableHeaderColumn data-tip="基因疾病信息" style={{overflow:'hidden'}}>基因疾病信息</TableHeaderColumn>
 	    <TableHeaderColumn data-tip="测序深度和比例" style={{overflow:'hidden'}}>测序深度和比例</TableHeaderColumn>
 	    <TableHeaderColumn data-tip="HGMD信息" style={{overflow:'hidden'}}>HGMD</TableHeaderColumn>
+	    <TableHeaderColumn data-tip="正常人群携带率" style={{overflow:'hidden'}}>正常人群携带率</TableHeaderColumn>
 	    <TableHeaderColumn data-tip="功能预测" style={{overflow:'hidden'}}>功能预测</TableHeaderColumn>
 	  </TableRow>
 	</TableHeader>
@@ -558,6 +571,7 @@ export default class TableExampleComplex extends React.Component {
 	    <TableRowColumn data-tip={row[23]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[23]}} />//疾病信息
 	    <TableRowColumn data-tip={row[28] + '<br/>' +row[26]} style={{position:'relative'}}>{row[28]}<br/>{row[26]}</TableRowColumn>//HET
 	    <TableRowColumn data-tip={row[22]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[22]}} />//HGDM
+	    <TableRowColumn data-tip={row[23]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[29]}} />//正常人群携带率
 	    <TableRowColumn data-tip={row[24]} style={{position:'relative'}}><a>详情</a></TableRowColumn>//功能预测
 	  </TableRow>
 	  ))}
