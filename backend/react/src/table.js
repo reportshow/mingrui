@@ -89,6 +89,11 @@ export default class TableExampleComplex extends React.Component {
 	}
 	    
 	this.filter();
+	
+	$('#carousel-filter').on('slid.bs.carousel', () => {
+	    this.setState(this.getDefaultState(), this.filter);
+	});
+
     }
 
     getDefaultState() {
@@ -333,10 +338,6 @@ export default class TableExampleComplex extends React.Component {
     handleRowHover = (row) => {
 	ReactTooltip.rebuild();
     };
-
-    handleCarouselSlide = () => {
-	this.setState(this.getDefaultState(), this.filter);
-    };
     
     handleGeneClear = () => {
 	this.setState({gene_value:""}, this.filter);
@@ -351,7 +352,7 @@ export default class TableExampleComplex extends React.Component {
       <TextField name='gene' floatingLabelText="重点关注基因" value={this.state.gene_value} onChange={this.handle_gene_Change} style={{width:'80%'}}/>
       <FlatButton label="清除所有基因" primary={true} onClick={this.handleGeneClear}/>
     </div>
-    <div id="carousel-example-generic" className="carousel slide" data-ride="carousel" data-interval="false">
+    <div id="carousel-filter" className="carousel slide" data-ride="carousel" data-interval="false">
       <div className="carousel-inner">
         <div className="item active">
 	  <div className="carousel-caption" style={{top:'0px', bottom: 'auto', paddingTop:'0px', paddingBottom:'0px'}}>
@@ -515,11 +516,11 @@ export default class TableExampleComplex extends React.Component {
 	  </div>
         </div>
 
-        <a className="left carousel-control" style={{width:'5%'}} href="#carousel-example-generic" data-slide="prev" onClick={this.handleCarouselSlide}>
-          <span className="fa fa-angle-left"></span>
+        <a className="left carousel-control" style={{width:'5%'}} href="#carousel-filter" data-slide="prev">
+          <span className="fa fa-angle-left" style={{color:'#0000FF'}}></span>
         </a>
-        <a className="right carousel-control" style={{width:'5%'}} href="#carousel-example-generic" data-slide="next" onClick={this.handleCarouselSlide}>
-          <span className="fa fa-angle-right"></span>
+        <a className="right carousel-control" style={{width:'5%'}} href="#carousel-filter" data-slide="next">
+		<span className="fa fa-angle-right" style={{color:'#0000FF'}}></span>
         </a>
       </div>
       <table id="result" style={{backgroundColor: 'rgb(255, 255, 255)', padding: '0px 24px', width: '100%', borderCollapse: 'collapse', borderSpacing:'0px', tableLayout: 'fixed', fontFamily: 'Roboto, sans-serif'}}>

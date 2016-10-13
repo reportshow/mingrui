@@ -22076,10 +22076,6 @@
 				_reactTooltip2.default.rebuild();
 			};
 
-			_this.handleCarouselSlide = function () {
-				_this.setState(_this.getDefaultState(), _this.filter);
-			};
-
 			_this.handleGeneClear = function () {
 				_this.setState({ gene_value: "" }, _this.filter);
 			};
@@ -22091,6 +22087,8 @@
 		_createClass(TableExampleComplex, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
+				var _this2 = this;
+
 				for (var key in tableData) {
 					//疾病信息
 					var str = '';
@@ -22146,6 +22144,10 @@
 				}
 
 				this.filter();
+
+				$('#carousel-filter').on('slid.bs.carousel', function () {
+					_this2.setState(_this2.getDefaultState(), _this2.filter);
+				});
 			}
 		}, {
 			key: 'getDefaultState',
@@ -22191,7 +22193,7 @@
 						),
 						_react2.default.createElement(
 							'div',
-							{ id: 'carousel-example-generic', className: 'carousel slide', 'data-ride': 'carousel', 'data-interval': 'false' },
+							{ id: 'carousel-filter', className: 'carousel slide', 'data-ride': 'carousel', 'data-interval': 'false' },
 							_react2.default.createElement(
 								'div',
 								{ className: 'carousel-inner' },
@@ -22452,13 +22454,13 @@
 								),
 								_react2.default.createElement(
 									'a',
-									{ className: 'left carousel-control', style: { width: '5%' }, href: '#carousel-example-generic', 'data-slide': 'prev', onClick: this.handleCarouselSlide },
-									_react2.default.createElement('span', { className: 'fa fa-angle-left' })
+									{ className: 'left carousel-control', style: { width: '5%' }, href: '#carousel-filter', 'data-slide': 'prev' },
+									_react2.default.createElement('span', { className: 'fa fa-angle-left', style: { color: '#0000FF' } })
 								),
 								_react2.default.createElement(
 									'a',
-									{ className: 'right carousel-control', style: { width: '5%' }, href: '#carousel-example-generic', 'data-slide': 'next', onClick: this.handleCarouselSlide },
-									_react2.default.createElement('span', { className: 'fa fa-angle-right' })
+									{ className: 'right carousel-control', style: { width: '5%' }, href: '#carousel-filter', 'data-slide': 'next' },
+									_react2.default.createElement('span', { className: 'fa fa-angle-right', style: { color: '#0000FF' } })
 								)
 							),
 							_react2.default.createElement(
