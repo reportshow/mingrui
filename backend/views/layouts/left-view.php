@@ -1,20 +1,26 @@
+<?php
+use backend\components\Functions;
+ 
+?>
 <style type="text/css">
     .sidebar-menu .treeview-menu{padding-left: 15px}
+    .myavatar:hover{border:0px solid #fff;border-radius:32px;-webkit-box-shadow: 0 0 15px #fff;}
+
 </style>
 <aside class="main-sidebar">
 
     <section class="sidebar">
 
         <!-- Sidebar user panel -->
-        <div class="user-panel">
-            <div class="pull-left image">
-                <img src="<?= Yii::$app->user->identity->avatar ?>" class="img-circle" 
+        <div class="user-panel" >
+            <a class="pull-left image" href='<?=Functions::url('profile/show')?>' title='修改个人资料'>
+                <img src="<?= Yii::$app->user->identity->avatar ?>" class="img-circle myavatar" 
                 onerror="this.src='images/user2.png';" alt="User Image"/>
-            </div>
+            </a>
             <div class="pull-left info">
                 <p><?=$user->nickname;?></p>
 
-                <a href="#"><i class="fa fa-circle text-success"></i>积分: 0</a>
+                <a href="#" title='查看积分'><i class="fa fa-circle text-success"></i>积分: 0</a>
             </div>
         </div>
 

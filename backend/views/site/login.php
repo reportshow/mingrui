@@ -39,7 +39,7 @@ $fieldOptions2 = [
       }
     </style>
  
-<div class="login-logo" style="margin-top:7%;color:#fff;font-family: 'Microsoft Yahei'">
+<div class="login-logo" style="margin-top:7%;color:#fff;font-family: 'Microsoft Yahei';cursor: default">
    <b>明睿 </b> <span style="font-size:0.8em">单病云管家 </span>
 </div>
 
