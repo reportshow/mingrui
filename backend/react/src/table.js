@@ -384,9 +384,8 @@ export default class TableExampleComplex extends React.Component {
 		<ListItem primaryText={"stopgain"} value="stopgain" />
 		<ListItem primaryText={"splicing"} value="splicing" />
 		<ListItem primaryText={"stoploss"} value="stoploss" />
-		<ListItem primaryText={""} value="ph" />
-		<ListItem primaryText={"nonsynonymous"} value="nonsynonymous" />
 		<ListItem primaryText={""} value="br" />
+		<ListItem primaryText={"nonsynonymous"} value="nonsynonymous" />
 		<ListItem primaryText={"nonframeshift"} value="nonframeshift" />
 		<ListItem primaryText={"synonymous"} value="synonymous" />
 		<ListItem primaryText={"unknown"} value="unknown" />
