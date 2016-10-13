@@ -22386,13 +22386,13 @@
 											_react2.default.createElement(
 												_multiselecttab2.default,
 												{ fullWidth: true, value: this.state.ycfs_values, floatingLabelText: '遗传方式', onChange: this.handle_ycfs_Change },
-												_react2.default.createElement(_List2.default, { primaryText: "AR", value: 'AR' }),
+												_react2.default.createElement(_List2.default, { primaryText: "AR", value: 'AR', border: "green_border" }),
 												_react2.default.createElement(_List2.default, { primaryText: "AD", value: 'AD' }),
 												_react2.default.createElement(_List2.default, { primaryText: "XR", value: 'XR' }),
 												_react2.default.createElement(_List2.default, { primaryText: "XD", value: 'XD' }),
 												_react2.default.createElement(_List2.default, { primaryText: "X-LINKED", value: 'X-LINKED' }),
 												_react2.default.createElement(_List2.default, { primaryText: "不明", value: '不明' }),
-												_react2.default.createElement(_List2.default, { primaryText: "不筛选", value: '' })
+												_react2.default.createElement(_List2.default, { primaryText: "不筛选", value: '', border: 'green_border' })
 											)
 										),
 										_react2.default.createElement(
@@ -38790,7 +38790,7 @@
 											{ key: i, className: value.indexOf(item.props.value) >= 0 ? 'selected' : '' },
 											_react2.default.createElement(
 												'a',
-												{ href: 'javascript:;', onClick: function onClick(event) {
+												{ key: 'item' + i, href: 'javascript:;', className: item.props.border === undefined ? "undefined" : "green_border", onClick: function onClick(event) {
 														var index = value.indexOf(item.props.value);
 														if (index < 0) {
 															if (item.props.value === '') {

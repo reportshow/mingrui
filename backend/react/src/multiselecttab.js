@@ -33,8 +33,8 @@ class MultiSelect extends React.Component {
 	}
 	else {
 	    var marginleft = 'auto'
-	}
-	
+}
+
 	return (
 <div style={{width: "100%"}}>
   <div className="sys_item_spec">
@@ -46,7 +46,7 @@ class MultiSelect extends React.Component {
 		    children.map((item, i) => {
 			return (
 		    		<li key={i} className={value.indexOf(item.props.value) >= 0 ? 'selected': ''}>
-		    		  <a href="javascript:;" onClick={(event) =>{
+		    		<a key={'item' + i} href="javascript:;" className={item.props.border===undefined?"undefined":"green_border"} onClick={(event) =>{
 				      const index = value.indexOf(item.props.value);
 				      if(index < 0) {
 					  if(item.props.value ==='') {
@@ -66,7 +66,7 @@ class MultiSelect extends React.Component {
 				      }
 				  }				     
 								 }
-				     >
+				    >
 				  {item.props.primaryText}</a>
 		    		<i></i>
 		    		</li>

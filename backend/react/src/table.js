@@ -469,13 +469,13 @@ export default class TableExampleComplex extends React.Component {
 	    </div>
 	    <div>
 	      <MultiSelect fullWidth={true} value={this.state.ycfs_values} floatingLabelText="遗传方式" onChange={this.handle_ycfs_Change}>
-		<ListItem primaryText={"AR"} value="AR" />
+		<ListItem primaryText={"AR"} value="AR" border={"green_border"}/>
 		<ListItem primaryText={"AD"} value="AD" />
 		<ListItem primaryText={"XR"} value="XR" />
 		<ListItem primaryText={"XD"} value="XD" />
 		<ListItem primaryText={"X-LINKED"} value="X-LINKED" />
 		<ListItem primaryText={"不明"} value="不明" />
-		<ListItem primaryText={"不筛选"} value="" />
+		<ListItem primaryText={"不筛选"} value="" border="green_border"/>
 	      </MultiSelect>
 	    </div>
 	    <div>
