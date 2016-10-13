@@ -20,7 +20,10 @@
         "yiisoft/yii2-swiftmailer": "*",
         "mdmsoft/yii2-admin": "^3.2",
         "dmstr/yii2-adminlte-asset": "2.*",
-        "almasaeed2010/adminlte": "~2.0"
+        "almasaeed2010/adminlte": "~2.0",
+        "kartik-v/yii2-widgets": "*",
+        "2amigos/yii2-date-picker-widget": "*",
+        "callmez/yii2-wechat-sdk": "^0.3.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

@@ -37,7 +37,7 @@ $clearUrl = Yii::$app->urlManager->createUrl(['comment/clear-comments','report_i
         <div class="direct-chat-messages" style='height: auto'>
             <?php
 foreach ($model->comments as $comment) {
-    if ($comment) {
+    if ($comment) { 
         echo $this->render('CommentsLine', ['model' => $comment]);
     }
 

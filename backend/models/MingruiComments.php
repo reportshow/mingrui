@@ -61,7 +61,7 @@ class MingruiComments extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'uid']);
     }
 
-     public function getTouser()
+    public function getTouser()
     {
         return $this->hasOne(User::className(), ['id' => 'to_uid']);
     }
@@ -71,8 +71,9 @@ class MingruiComments extends \yii\db\ActiveRecord
         //  var_export(  Yii::$app->authManager->getRoles(  $this->creator->id) );
 
         // exit ("/////");
+        $isadmin = Yii::$app->authManager->checkAccess($this->creator->id, 'admin');
 
-        if (Yii::$app->authManager->checkAccess($this->creator->id, 'admin')) {
+        if ($isadmin) {
             return 'right';
         } else {
             return 'left';

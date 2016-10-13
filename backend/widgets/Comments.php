@@ -17,7 +17,7 @@ class Comments extends Widget
         
         if(count($this->comments) < 1){
             $this->comments = MingruiComments::getOnegroup($this->id);
-        }
+        } 
         return $this->render('Comments', ['model' => $this]);
     }
 

@@ -18,6 +18,7 @@ if (!function_exists('commentLineShowTxt')) {
     }
 }
 
+
 if ($model['position'] != 'right') {
 
     ?>
