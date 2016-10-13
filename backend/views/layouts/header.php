@@ -159,9 +159,9 @@ $orderUrl = Yii::$app->urlManager->createUrl(['/orders/']);
              data: {},
              dataType: "json",
              success: function(status){
-                $('#ordercount').html(status.orders.count+100);
-                $('#reportcount').html(status.reportMessage.length+100);
-                $('#guestbookcount').html(status.message.length+100);
+                $('#ordercount').html(status.orders.count+0);
+                $('#reportcount').html(status.reportMessage.length+0);
+                $('#guestbookcount').html(status.message.length+0);
                 makedroplist($('.reportdropbox'), status.reportMessage);
                 makedroplist($('.guestbookdropbox'), status.message);
              }
