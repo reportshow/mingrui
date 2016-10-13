@@ -564,7 +564,7 @@ export default class TableExampleComplex extends React.Component {
 	    <TableRowColumn data-tip={row[23]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[23]}} />//疾病信息
 	    <TableRowColumn data-tip={row[28] + '<br/>' +row[26]} style={{position:'relative'}}>{row[28]}<br/>{row[26]}</TableRowColumn>//HET
 	    <TableRowColumn data-tip={row[22]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[22]}} />//HGDM
-	    <TableRowColumn data-tip={row[23]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[29]}} />//正常人群携带率
+	    <TableRowColumn data-tip={row[29]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[29]}} />//正常人群携带率
 	    <TableRowColumn data-tip={row[24]} style={{position:'relative'}}><a>详情</a></TableRowColumn>//功能预测
 	  </TableRow>
 	  ))}

@@ -22575,7 +22575,7 @@
 											'//HET',
 											_react2.default.createElement(_Table.TableRowColumn, { 'data-tip': row[22], style: { position: 'relative' }, dangerouslySetInnerHTML: { __html: row[22] } }),
 											'//HGDM',
-											_react2.default.createElement(_Table.TableRowColumn, { 'data-tip': row[23], style: { position: 'relative' }, dangerouslySetInnerHTML: { __html: row[29] } }),
+											_react2.default.createElement(_Table.TableRowColumn, { 'data-tip': row[29], style: { position: 'relative' }, dangerouslySetInnerHTML: { __html: row[29] } }),
 											'//正常人群携带率',
 											_react2.default.createElement(
 												_Table.TableRowColumn,
