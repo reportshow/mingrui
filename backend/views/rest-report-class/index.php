@@ -4,6 +4,7 @@ use backend\components\Functions;
 use backend\widgets\DateInput;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use backend\models\MingruiPingjia;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\RestReportSearch */
@@ -108,6 +109,8 @@ return $model->sample->age ? $model->sample->age : '-';
 
         [
             'attribute'     => 'pingjia',
+           // 'filter' => Html::activeDropDownList($searchModel, 'sex',['1'=>'男','0'=>'女'], ['prompt'=>'全部'] ),
+           'filter'=>MingruiPingjia::getSimpleArray(),
             'value'         => function ($model) {
                 $obj = $model->pingjia;
                 if ($obj) {

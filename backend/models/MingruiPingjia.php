@@ -26,7 +26,7 @@ class MingruiPingjia extends \yii\db\ActiveRecord
         3 => ['key' => 'fa-plus-circle|fa-thumbs-o-up', 'label' => '阳性+好案例', 'description' => '罕见病例；出乎意料'],
         4 => ['key' => 'fa-minus-circle', 'label' => '阴性', 'description' => '基因无发现'],
         5 => ['key' => 'fa-minus-circle|fa-thumbs-o-up', 'label' => '阴性+特殊案例', 'description' => '临床诊断明确，基因无突变'],
-        //6 =>['key'=>' x', 'label'=>'x'],
+        6 =>['key'=>' x', 'label'=>'自定义'],
     ];
     /**
      * @inheritdoc
@@ -50,7 +50,8 @@ class MingruiPingjia extends \yii\db\ActiveRecord
     {
         $text = [];
         foreach (self::$pingjiaText as $key => $value) {
-            $text[$key] = $value['key'] . ' ' . $value['label'] . ' ';
+            $icon = "<i class='fa ".$value['key']."'></i>";
+            $text[$key] =  $icon . $value['label'] . ' ';
         }
         return $text;
     }

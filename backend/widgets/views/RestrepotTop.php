@@ -117,7 +117,9 @@ $styleboxtop = Functions::ismobile() ? '0px' : '150px';
       <div class="modal-body">
         <div class='pingjia' >
         <?php
-         foreach (MingruiPingjia::$pingjiaText  as $key => $value) {
+        $count = count(MingruiPingjia::$pingjiaText);
+         foreach ($index =0; $index < $count; as $index++) {
+             $value = MingruiPingjia::$pingjiaText[$index];
              $star = $value['key'];
              $label = $value['label'];
              $desc = Functions::ismobile() ? '' : $value['description'];
@@ -128,7 +130,7 @@ $styleboxtop = Functions::ismobile() ? '0px' : '150px';
                $listStr .= "<i class='fa $one'></i> ";
              }
 
-             echo  " <p><input type=radio name='pingjia' value='$key'>
+             echo  "<p><input type=radio name='pingjia' value='$index'>
                     <i class='tag'>$listStr</i> <i class='tag2'>$label</i> $desc 
                    </p> ";        
 
