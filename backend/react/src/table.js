@@ -394,13 +394,13 @@ export default class TableExampleComplex extends React.Component {
 	    </div>
 	    <div>
 	      <MultiSelect fullWidth={true} value={this.state.ycfs_values} floatingLabelText="遗传方式" onChange={this.handle_ycfs_Change}>
-		<ListItem primaryText={"AR"} value="AR" />
-		<ListItem primaryText={"AD"} value="AD" />
-		<ListItem primaryText={"XR"} value="XR" />
-		<ListItem primaryText={"XD"} value="XD" />
-		<ListItem primaryText={"X-LINKED"} value="X-LINKED" />
-		<ListItem primaryText={"不明"} value="不明" />
-		<ListItem primaryText={"不筛选"} value="" />
+		<ListItem primaryText={"AR"} value="AR" className={"green_border"}/>
+		<ListItem primaryText={"AD"} value="AD" className={"yellow_border"}/>
+		<ListItem primaryText={"XR"} value="XR" className={"blue_border"}/>
+		<ListItem primaryText={"XD"} value="XD" className={"blue_border"}/>
+		<ListItem primaryText={"X-LINKED"} value="X-LINKED" className={"blue_border"}/>
+		<ListItem primaryText={"不明"} value="不明" className={"purple_border"}/>
+		<ListItem primaryText={"不筛选"} value=""/>
 	      </MultiSelect>
 	    </div>
 	    <div>
@@ -444,12 +444,13 @@ export default class TableExampleComplex extends React.Component {
 	    自选过滤
 	  </div>
 	  <div style={{width:'80%', marginLeft:'auto', marginRight:'auto', paddingTop:'20px', overflow:'hidden'}}>
+
 	    <div>
-		<MultiSelect fullWidth={true} value={this.state.dm_values} www={"dmdmetc."} floatingLabelText="HGMD" onChange={this.handle_dm_Change}>
-		<ListItem primaryText={"DM"} value="DM" dataTip="1"/>
-		<ListItem primaryText={"DM?"} value="DM?" dataTip="1"/>
-		<ListItem primaryText={"[Similar]DM"} value="[Similar]DM" dataTip="1"/>
-		<ListItem primaryText={"不筛选"} value="" dataTip="1"/>
+	      <MultiSelect fullWidth={true} value={this.state.dm_values} floatingLabelText="HGMD" onChange={this.handle_dm_Change}>
+		<ListItem primaryText={"DM"} value="DM" />
+		<ListItem primaryText={"DM?"} value="DM?" />
+		<ListItem primaryText={"[Similar]DM"} value="[Similar]DM" />
+		<ListItem primaryText={"不筛选"} value="" />
 	      </MultiSelect>
 	    </div>
 	    <div>
@@ -458,9 +459,8 @@ export default class TableExampleComplex extends React.Component {
 		<ListItem primaryText={"stopgain"} value="stopgain" />
 		<ListItem primaryText={"splicing"} value="splicing" />
 		<ListItem primaryText={"stoploss"} value="stoploss" />
-		<ListItem primaryText={""} value="ph" />
-		<ListItem primaryText={"nonsynonymous"} value="nonsynonymous" />
 		<ListItem primaryText={""} value="br" />
+		<ListItem primaryText={"nonsynonymous"} value="nonsynonymous" />
 		<ListItem primaryText={"nonframeshift"} value="nonframeshift" />
 		<ListItem primaryText={"synonymous"} value="synonymous" />
 		<ListItem primaryText={"unknown"} value="unknown" />
@@ -469,13 +469,13 @@ export default class TableExampleComplex extends React.Component {
 	    </div>
 	    <div>
 	      <MultiSelect fullWidth={true} value={this.state.ycfs_values} floatingLabelText="遗传方式" onChange={this.handle_ycfs_Change}>
-		<ListItem primaryText={"AR"} value="AR" border={"green_border"}/>
-		<ListItem primaryText={"AD"} value="AD" />
-		<ListItem primaryText={"XR"} value="XR" />
-		<ListItem primaryText={"XD"} value="XD" />
-		<ListItem primaryText={"X-LINKED"} value="X-LINKED" />
-		<ListItem primaryText={"不明"} value="不明" />
-		<ListItem primaryText={"不筛选"} value="" border="green_border"/>
+		<ListItem primaryText={"AR"} value="AR" className={"green_border"}/>
+		<ListItem primaryText={"AD"} value="AD" className={"yellow_border"}/>
+		<ListItem primaryText={"XR"} value="XR" className={"blue_border"}/>
+		<ListItem primaryText={"XD"} value="XD" className={"blue_border"}/>
+		<ListItem primaryText={"X-LINKED"} value="X-LINKED" className={"blue_border"}/>
+		<ListItem primaryText={"不明"} value="不明" className={"purple_border"}/>
+		<ListItem primaryText={"不筛选"} value=""/>
 	      </MultiSelect>
 	    </div>
 	    <div>
@@ -507,10 +507,7 @@ export default class TableExampleComplex extends React.Component {
 	    <div>
 	      <MultiSelect fullWidth={true} value={this.state.tbbl_values} floatingLabelText="突变比例" onChange={this.handle_tbbl_Change}>
 		<ListItem primaryText={"0.9-1"} value="0.9-1" />
-		<ListItem primaryText={"0.75-0.9"} value="0.75-0.9" />
-		<ListItem primaryText={"0.65-0.75"} value="0.65-0.75" />
-		<ListItem primaryText={"0.35-0.65"} value="0.35-0.65" />
-		<ListItem primaryText={"0.2-0.35"} value="0.2-0.35" />
+		<ListItem primaryText={"0.2-0.9"} value="0.2-0.9" />
 		<ListItem primaryText={"0-0.2"} value="0-0.2" />
 	      </MultiSelect>
 	    </div>

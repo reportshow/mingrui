@@ -83,8 +83,12 @@ class MultiSelectTBLX extends React.Component {
 				      	  value.push(item.props.value);
 				      	  if(this.props.onChange) this.props.onChange(event, value);
 				      } else if(index >= 0) {
-				      	  value.splice(index, 1);
-				      	  if(this.props.onChange) this.props.onChange(event, value);
+					  if(item.props.value ==='') {;
+					  }
+					  else {
+					      value.splice(index, 1);
+					      if(this.props.onChange) this.props.onChange(event, value);
+					  }
 				      }
 				  }				     
 								 }
@@ -126,8 +130,13 @@ class MultiSelectTBLX extends React.Component {
 				      	value.push(item.props.value);
 				      	if(this.props.onChange) this.props.onChange(event, value);
 				    } else if(index >= 0) {
-				      	value.splice(index, 1);
-				      	if(this.props.onChange) this.props.onChange(event, value);
+					if(item.props.value ==='') {
+					    ;
+					}
+					else {
+					    value.splice(index, 1);
+					    if(this.props.onChange) this.props.onChange(event, value);
+					}
 				    }
 				}				     
 							       }
