@@ -2,10 +2,9 @@
 
 use backend\components\Functions;
 //use dosamigos\datepicker\DatePicker;
-use kartik\date\DatePicker;
+use backend\widgets\DateInput;
 use yii\grid\GridView;
 use yii\helpers\Html;
-use backend\widgets\DateInput;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\RestReportSearch */
@@ -54,7 +53,7 @@ return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
                 $date = new DateTime($data->created);
                 return $date->format('Y-m-d');
             },
-            'filter'    => DateInput::widget(['attribute'=>'created','model'=>$searchModel]),
+            'filter'    => DateInput::widget(['attribute' => 'created', 'model' => $searchModel]),
             'options'   => ['width' => '100px;'],
         ],
 /*        [
@@ -94,11 +93,14 @@ return $date->format('Y-m-d');
             'options'   => ['width' => '100px;'],
         ], //<=====加入这句,
 
-        ['attribute' => 'sample.sex',
-            'value'      => function ($model) {
+        [
+            'attribute' => 'sample.sex',
+            'filter'    => ['male' => '男', 'female' => '女'],
+            'format' =>'raw',
+            'value'     => function ($model) {
                 return $model->sample->sex == 'female' ? '女' : '男';
             },
-            'options'    => ['width' => '60px;'],
+            'options'   => ['width' => '60px;'],
         ],
         [
             'attribute' => 'sample.age',
@@ -194,7 +196,7 @@ return $model->status =='finished' ? '<span class="bg-primary" style="padding:3p
         // 'sample_id',
         // 'pdf',
         // 'conclusion',
-        /*        ['label'        => '结论',
+              /*  ['label'        => '结论',
         'attribute'     => 'conclusion',
         'filter'        => ['阴性' => '阴性', '疑似阳性' => '疑似阳性', '阳性' => '阳性'],
         'format'        => 'raw',

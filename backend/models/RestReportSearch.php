@@ -133,8 +133,8 @@ class RestReportSearch extends RestReport
             ->andFilterWhere(['like', 'rest_sample.name', $this->username])//<=====加入这句
             ->andFilterWhere(['like', 'rest_sample.tel', $this->tel])
 
-            ->andFilterWhere(['like', 'pingjia.pingjia', $this->pingjia]) //<=====加入这句
-            ->andFilterWhere(['like', 'pingjia.linchuang', $this->linchuang])//<=====加入这句
+            ->andFilterWhere(['like', 'mingrui_pingjia.pingjia', $this->pingjia]) //<=====加入这句
+            ->andFilterWhere(['like', 'mingrui_pingjia.linchuang', $this->linchuang])//<=====加入这句
             ->andFilterWhere(['like', 'snpsave', $this->gene])       
             ; 
 

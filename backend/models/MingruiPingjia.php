@@ -54,6 +54,14 @@ class MingruiPingjia extends \yii\db\ActiveRecord
         }
         return $text;
     }
+    public static function getSimpleArray()
+    {
+        $text = [];
+        foreach (self::$pingjiaText as $key => $value) {
+            $text[$key] =  $value['label'] . ' ';
+        }
+        return $text;
+    }
     public function getPingjaX()
     {
         return self::$pingjiaText[$this->pingjia];

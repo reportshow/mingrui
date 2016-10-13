@@ -4,7 +4,24 @@ use yii\widgets\Breadcrumbs;
 use backend\components\Functions;
 
 ?>
+<style type="text/css">
+  @media (max-width: 767px){
+    .sidebar-open .menuRightcover{
+     display:block;
+    }
+  }
+  .menuRightcover{
+    /* background:red; */
+    height:100%;width:100%;
+    position: absolute;
+    z-index: 10000;
+    display: none;
+  }
+  
+</style>
 <div class="content-wrapper" style="min-height:970px">
+<div class="menuRightcover"> </div>
+
     <section class="content-header" >
         <?php if (0 && isset($this->blocks['content-header'])) {
           ?>

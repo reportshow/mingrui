@@ -1,8 +1,9 @@
 <?php
 
+use backend\widgets\DateInput;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use backend\widgets\DateInput;
+use backend\models\MingruiPingjia;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\RestReportSearch */
@@ -12,28 +13,28 @@ use backend\widgets\DateInput;
 <div class="rest-report-search">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['index'],
-        'method' => 'get',
-    ]); ?>
+    'action' => ['index'],
+    'method' => 'get',
+]);?>
 
-    <?= $form->field($model, 'username')->label('患者姓名') ?>
+    <?=$form->field($model, 'username')->label('患者姓名')?>
 
-    <?= $form->field($model, 'report_id') ?>
+    <?=$form->field($model, 'report_id')?>
 
-    <?= $form->field($model, 'created')->widget(DateInput::classname(), ['size'=>'bg']) ?>
+    <?=$form->field($model, 'created')->widget(DateInput::classname(), ['size' => 'bg'])?>
 
     <?php //$form->field($model, 'updated')
-     ?>
+?>
 
     <?php
-    // $form->field($model, 'status') 
-    ?>
+// $form->field($model, 'status')
+?>
 
-   
+
 
     <?php // echo $form->field($model, 'assigner_id') ?>
 
-    <?php  // echo $form->field($model, 'product_id') ?>
+    <?php // echo $form->field($model, 'product_id') ?>
 
     <?php // echo $form->field($model, 'complete') ?>
 
@@ -67,8 +68,8 @@ use backend\widgets\DateInput;
 
     <?php // echo $form->field($model, 'conclusion') ?>
 
-<?php  echo $form->field($model, 'product_name')->label('检测项目') ?>
-    <?php  echo $form->field($model, 'explain')->label('临床症状') ?>
+<?php echo $form->field($model, 'product_name')->label('检测项目') ?>
+    <?php echo $form->field($model, 'explain')->label('临床症状') ?>
 
     <?php // echo $form->field($model, 'jxyanzhen') ?>
 
@@ -96,7 +97,7 @@ use backend\widgets\DateInput;
 
     <?php // echo $form->field($model, 'abiexported') ?>
 
-    <?php   echo $form->field($model, 'final_note')->label('临床诊断')?>
+    <?php echo $form->field($model, 'final_note')->label('临床诊断') ?>
 
     <?php // echo $form->field($model, 'assigner_note') ?>
 
@@ -118,11 +119,18 @@ use backend\widgets\DateInput;
 
      <?php // echo $form->field($model, 'note') ?>
 
+     <?= $form->field($model, 'pingjia')->dropDownList(    
+         MingruiPingjia::getSimpleArray(), ['style' => 'width:240px;']
+         )->label('星级评价');
+     ?>
+
+
+
     <div class="form-group">
-        <?= Html::submitButton('  搜索  ', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('重置', ['class' => 'btn btn-default']) ?>
+        <?=Html::submitButton('  搜索  ', ['class' => 'btn btn-primary'])?>
+        <?=Html::resetButton('重置', ['class' => 'btn btn-default'])?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <?php ActiveForm::end();?>
 
 </div>

@@ -43,3 +43,9 @@ echo dmstr\widgets\Menu::widget([
 
 
 </aside>
+<script type="text/javascript">
+   if(location.href.indexOf('=rest-report') > 0){
+     $('.sidebar-menu ul').eq(0).addClass('menu-open').show();
+   }
+    
+</script>
