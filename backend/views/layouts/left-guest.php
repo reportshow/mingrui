@@ -32,7 +32,7 @@ $menu[] = [
             'url'   => ['/mingrui-note/index'],
         ],
         [
-            'label' => '检测流程',
+            'label' => '常见问题',
             'icon'  => 'fa fa-stack-overflow',
             'url'   => ['/'],
         ],

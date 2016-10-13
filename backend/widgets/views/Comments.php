@@ -14,18 +14,18 @@ $clearUrl = Yii::$app->urlManager->createUrl(['comment/clear-comments','report_i
             意见与点评
         </h3>
         <div class="box-tools pull-right">
-            <span class="badge bg-light-blue" data-toggle="tooltip" title="3 New Messages">
+            <span class="badge bg-light-blue hide" data-toggle="tooltip" title="3 New Messages">
                 
             </span>
             <button class="btn btn-box-tool" data-widget="collapse" type="button">
                 <i class="fa fa-minus">
                 </i>
             </button>
-            <button class="btn btn-box-tool" data-toggle="tooltip" data-widget="chat-pane-toggle" title="Contacts" type="button">
+            <button class="btn btn-box-tool hide" data-toggle="tooltip" data-widget="chat-pane-toggle" title="Contacts" type="button">
                 <i class="fa fa-comments">
                 </i>
             </button>
-            <button class="btn btn-box-tool" data-widget="remove" type="button">
+            <button class="btn btn-box-tool hide" data-widget="remove" type="button">
                 <i class="fa fa-times">
                 </i>
             </button>

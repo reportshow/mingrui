@@ -47,7 +47,7 @@ $wechat['menu'] = [
 
     [
         "type" => "click",
-        "name" => "检查流程",
+        "name" => "常见问题",
         "key"  => "WORK-FLOW",
         'url'=>'javascript:;',
     ],

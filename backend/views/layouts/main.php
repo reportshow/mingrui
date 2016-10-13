@@ -37,7 +37,8 @@ if (Yii::$app->controller->action->id === 'login') {
     <html lang="<?= Yii::$app->language ?>">
     <head>
         <meta charset="<?= Yii::$app->charset ?>"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1,  maximum-scale=2.0">
+        <meta name="viewport" 
+        content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=2.0, user-scalable=1">
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <?php 

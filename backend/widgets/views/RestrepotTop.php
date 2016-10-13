@@ -118,7 +118,8 @@ $styleboxtop = Functions::ismobile() ? '0px' : '150px';
         <div class='pingjia' >
         <?php
         $count = count(MingruiPingjia::$pingjiaText);
-         foreach ($index =0; $index < $count; as $index++) {
+     
+         for($index =1; $index < $count;   $index++) {
              $value = MingruiPingjia::$pingjiaText[$index];
              $star = $value['key'];
              $label = $value['label'];
