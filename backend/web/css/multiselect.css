@@ -21,6 +21,7 @@ li{ list-style:none;}
 .sys_spec_text li{ float:left; height:28px; position:relative; margin:2px 10px 2px 0; outline:none;}
 .sys_spec_text li a{ height:24px; padding:1px 6px; border:1px solid #ccc; background:#fff; display:inline-block; line-height:24px;}
 .sys_spec_text li a:hover{ border:2px solid #e4393c; padding:0 5px; text-decoration:none;}
+.green_border{border:1px solid #00ff00 !important;}
 .sys_spec_text li i{ position:absolute; width:10px; height:10px; font-size:0; line-height:0; right:1px; bottom:5px; background:url(../images/sys_item_selected.gif) no-repeat right bottom; z-index:99; display:none;}
 .sys_spec_text li.selected a{ border:2px solid #e4393c; padding:0 5px;}
 .sys_spec_text li.selected i{ display:block;}

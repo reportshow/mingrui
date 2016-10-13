@@ -30,28 +30,6 @@ AppAsset::register($this);
   return;
 }//ismobile
 ?>
-
-<style type="text/css">
-
-.toolabsolute{
-    width:200px;
-    text-align:left;
-    margin-left:auto;
-    border:1px solid #eb6100;
-    background:#FFF;
-    position:fixed;
-    left: 800px;
-    z-index:10000;
-}
-
-</style>
-
-<div class="toolabsolute">
-  <?= $this->title?>
-  <br/>
-  病人的信息
-</div>
-
   
 <div id="app"></div>
 <script>
@@ -60,20 +38,6 @@ AppAsset::register($this);
 
 <link type="text/css" href="css/multiselect.css" rel="stylesheet" />
 <script src="report/app.js"></script>
-<script language="javascript" type="text/javascript">
-    $(document).ready(function(){
-	$(".toolabsolute").hide();
-    })
-
-function hideInfo() {
-    $(".toolabsolute").hide();
-}
-
-window.onscroll = function(){
-    $(".toolabsolute").show();
-    //window.setTimeout(hideInfo, 2000);
-}
-</script>
 
 <script src="report/tableExport.js"></script>
 <script>

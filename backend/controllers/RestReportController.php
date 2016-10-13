@@ -398,13 +398,15 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
             }
         }
 
+        $explain = json_decode($userdata->explain, true)['cnv'];
+        
         /* //for debug of multiple bad gene */
         /* $user_snp_areas['ABC'] = $user_snp_areas['CBS']; */
 
         return $this->render('stats', [
             'data'  => json_encode($user_snp_areas),
             'model' => $this->findModel($id),
-            'assigner_note' => $userdata->assigner_note,
+            'explain' => $explain,
         ]);
     }
 
