@@ -22160,7 +22160,7 @@
 					height: '500px',
 					gene_value: "",
 					tblx_values: ["frameshift", "nonframeshift", "nonsynonymous", "splicing", "stopgain", "synonymous", "stoploss", "unknown"],
-					tbbl_values: ["0.9-1", "0.75-0.9", "0.65-0.75", "0.35-0.65", "0.2-0.35"],
+					tbbl_values: ["0.9-1", "0.2-0.9"],
 					ycfs_values: ["AR", "AD", "XR", "XD", "X-LINKED", "不明"],
 					cxsd_values: ["10-20", "20+"],
 					dm_values: ["DM", "DM?", "[Similar]DM"],
@@ -22333,10 +22333,7 @@
 												_multiselecttab2.default,
 												{ fullWidth: true, value: this.state.tbbl_values, floatingLabelText: '突变比例', onChange: this.handle_tbbl_Change },
 												_react2.default.createElement(_List2.default, { primaryText: "0.9-1", value: '0.9-1' }),
-												_react2.default.createElement(_List2.default, { primaryText: "0.75-0.9", value: '0.75-0.9' }),
-												_react2.default.createElement(_List2.default, { primaryText: "0.65-0.75", value: '0.65-0.75' }),
-												_react2.default.createElement(_List2.default, { primaryText: "0.35-0.65", value: '0.35-0.65' }),
-												_react2.default.createElement(_List2.default, { primaryText: "0.2-0.35", value: '0.2-0.35' }),
+												_react2.default.createElement(_List2.default, { primaryText: "0.2-0.9", value: '0.2-0.9' }),
 												_react2.default.createElement(_List2.default, { primaryText: "0-0.2", value: '0-0.2' })
 											)
 										)
