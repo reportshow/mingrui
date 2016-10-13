@@ -41,16 +41,16 @@ $orderUrl = Yii::$app->urlManager->createUrl(['/orders/']);
                  <li class="dropdown messages-menu">
                     <a href="<?=$orderUrl  ?>"    title="订单">
                         <i class="fa fa-dollar"></i>&nbsp; 
-                        <span class="label label-danger"><?=$orderCount ?></span>
+                        <span id='ordercount' class="label label-danger"><?=$orderCount ?></span>
                     </a> 
                 </li>
                   <?php 
               }
                   ?>
-               <li class="dropdown messages-menu">
+               <li class="dropdown messages-menu reportdropbox">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"  title="报告留言">
                         <i class="fa fa-files-o"></i>
-                        <span class="label label-warning"><?=count($reportMessage ) ?></span>
+                        <span id='reportcount' class="label label-warning"><?=count($reportMessage ) ?></span>
                     </a>
                       <ul class="dropdown-menu">
                         <?=GuestbookDrop::widget(['message'=>$reportMessage ]);?>
@@ -59,10 +59,10 @@ $orderUrl = Yii::$app->urlManager->createUrl(['/orders/']);
 
 
                 <!-- Messages: style can be found in dropdown.less-->
-                <li class="dropdown messages-menu">
+                <li class="dropdown messages-menu guestbookdropbox">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"   title="互动留言">
                         <i class="fa fa-envelope-o"></i>
-                        <span class="label label-success"><?=count($message) ?></span>
+                        <span id='guestbookcount' class="label label-success"><?=count($message) ?></span>
                     </a>
                       <ul class="dropdown-menu">
                         <?=GuestbookDrop::widget(['message'=>$message]);?>
@@ -133,3 +133,55 @@ $orderUrl = Yii::$app->urlManager->createUrl(['/orders/']);
 </header>
 
 
+
+<textarea id='tpl_droplist' style="display: none">
+         <li><!-- start message -->
+            <a href="{$url}">
+                <div class="pull-left">
+                    <img src="{$avatar}" style='width:30px;height:30px' class="img-circle" alt="User Image"  onerror="this.src='images/user2.png';"  />
+                </div>
+                <h4 style="font-size: 0.9em">
+                    {$name}
+                    <small><i class="fa fa-clock-o"></i> {$createtime}</small>
+                </h4>
+                <p> {$content}</p>
+            </a>
+        </li>
+</textarea>
+
+<script type="text/javascript">
+    var statusUrl = '<?= Yii::$app->urlManager->createUrl(['/status/status']); ?>';
+
+    function getstatus(){
+          $.ajax({
+             type: "GET",
+             url: statusUrl,
+             data: {},
+             dataType: "json",
+             success: function(status){
+                $('#ordercount').html(status.orders.count+100);
+                $('#reportcount').html(status.reportMessage.length+100);
+                $('#guestbookcount').html(status.message.length+100);
+                makedroplist($('.reportdropbox'), status.reportMessage);
+                makedroplist($('.guestbookdropbox'), status.message);
+             }
+         });
+    }
+    setInterval(getstatus, 5000);
+
+    function makedroplist($box, $list){
+        var listhtml = '';
+        for(i in $list){
+            var item = $list[i];
+            var html = $('#tpl_droplist').val();
+             html =html.replace('{$url}',item.url);
+             html =html.replace('{$content}',item.content);
+             html =html.replace('{$name}',item.name);
+             html =html.replace('{$avatar}',item.avatar);
+             html =html.replace('{$createtime}',item.createtime);
+            listhtml +=html;
+        }
+        
+        $box.find('.dropdown-menu .menu').html(listhtml);
+    }
+</script>

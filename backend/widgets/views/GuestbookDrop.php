@@ -1,6 +1,5 @@
 <?php
-
-//use Yii;
+use backend\models\userMessage;
 
 ?>
 <li class="header">你有 <?=count($message)?> 条新消息</li>
@@ -8,21 +7,15 @@
     <!-- inner menu: contains the actual data -->
     <ul class="menu">
     <?php
+
+$message = userMessage::format4web($message);
 foreach ($message as $k => $msg) {
 
-    $name = '';
-    if ($msg->creator) {
-        $name   = $msg->creator->nickname;
-        $avatar = $msg->creator->avatar;
-    }
-    $report_id = $msg->report_id;
-
-    if (is_numeric($report_id)) {
-        $url = Yii::$app->urlManager->createUrl(['/rest-report/view', 'id' => $report_id]);
-    } else {
-        //留言板
-        $url = Yii::$app->urlManager->createUrl(['/guestbook/view', 'id' => $report_id]);
-    }
+    $name   = $msg['name'];
+    $avatar = $msg['avatar'];
+    $content = $msg['content'];
+    $createtime = $msg['createtime'];
+    $url = $msg['url'];
 
     ?>
         <li><!-- start message -->
@@ -32,9 +25,9 @@ foreach ($message as $k => $msg) {
                 </div>
                 <h4 style="font-size: 0.9em">
                     <?=$name?>
-                    <small><i class="fa fa-clock-o"></i> <?=date('Y-m-d H:i', $msg->createtime)?></small>
+                    <small><i class="fa fa-clock-o"></i> <?=$createtime ?></small>
                 </h4>
-                <p> <?=$msg->content?></p>
+                <p> <?=$content?></p>
             </a>
         </li>
        <?php
