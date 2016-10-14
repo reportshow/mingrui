@@ -68,7 +68,7 @@ class MingruiVcf extends \yii\db\ActiveRecord
     {
          if($this->task_id >= 0) {
               $vcf_url = Yii::$app->params['vcfservice'] . '/api/task/status/' . $this->task_id;
-              return file_get_contents($vcf_url);
+              return @file_get_contents($vcf_url);
          }
     }
     

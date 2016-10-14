@@ -30,6 +30,7 @@ return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
     'columns'      => [
         ['class'  => 'yii\grid\SerialColumn',
             'options' => ['width' => '40px;'],
+            
         ],
 
         /*        [
@@ -94,16 +95,17 @@ return $date->format('Y-m-d');
         ], //<=====加入这句,
 
         [
-            'attribute' => 'sample.sex',
+            'attribute' => 'sex',
             'filter'    => ['male' => '男', 'female' => '女'],
             'format' =>'raw',
             'value'     => function ($model) {
                 return $model->sample->sex == 'female' ? '女' : '男';
             },
             'options'   => ['width' => '60px;'],
+            'label'=>'性别',
         ],
         [
-            'attribute' => 'sample.age',
+            'attribute' => 'age',
             'label'     => '年龄',
             'value'     => function ($model) {
                 return $model->sample->age ? $model->sample->age : '-';
@@ -127,9 +129,15 @@ return $date->format('Y-m-d');
         ], //<=====加入这句
 
         [
-            'attribute' => 'testmethod',
+            'attribute' => 'method',
             'label'     => '方法',
-            'options'   => ['width' => '80px;'],
+            'filter'    => Html::activeTextInput($searchModel, 'product_name', [
+                'class' => 'form-control',
+                'readonly'=>'readonly',
+                'style'=>'background:#fff',
+            ]),
+
+            'options'   => ['width' => '80px;','readonly'=>'readonly'],
             'value'     => function ($model) {
                 if (strpos($model->report_id, 'NG') !== false) {
                     return 'NGS';
@@ -234,7 +242,7 @@ return $model->status =='finished' ? '<span class="bg-primary" style="padding:3p
         ],*/
         [
             'options'   => ['width' => '120'],
-            'attribute' => '',
+            'label' => '操作',
             'format'    => 'raw',
             'value'     => function ($model) {
                 $urlreport = Yii::$app->urlManager->createUrl(

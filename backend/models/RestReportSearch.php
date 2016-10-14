@@ -14,12 +14,15 @@ class RestReportSearch extends RestReport
     public $product_name;
     public $username;
     public $tel;
+    public $sex;
+    public $age;
 
     public $pingjia;
     public $gene;
     public $linchuang;
 
-    
+    public $method;
+
     /**
      * @inheritdoc
      */
@@ -27,9 +30,10 @@ class RestReportSearch extends RestReport
     {
         return [
             [['id', 'assigner_id', 'product_id', 'complete', 'analysis_id', 'yidai_complete', 'jxyanzhen', 'star', 'abiexported', 'locked', 'express_sent', 'sale_marked', 'yidai_marked'], 'integer'],
-            [['username', 'product_name', 'tel', //新增的几个
-            'gene','pingjia','linchuang',//再增加几个
-            'report_id',  'created', 'updated', 'status', 'note', 'cnvsqlite', 'snpsqlite', 'cnvsave', 'snpsave', 'finish', 'xiafa', 'url', 'yidai_note', 'express', 'express_no', 'sample_id', 'pdf', 'conclusion', 'explain', 'mut_type', 'template', 'type', 'gene_template', 'ptype', 'csupload', 'family_id', 'date', 'abiresult', 'snpexplain', 'final_note', 'assigner_note', 'shenhe_date', 'time_stamp', 'yidaifinished_date', 'kyupload'], 'safe'],
+            [['username', 'product_name', 'tel', 'sex', 'age', //新增的几个
+                'gene', 'pingjia', 'linchuang', //再增加几个
+                'method', //增加
+                'report_id', 'created', 'updated', 'status', 'note', 'cnvsqlite', 'snpsqlite', 'cnvsave', 'snpsave', 'finish', 'xiafa', 'url', 'yidai_note', 'express', 'express_no', 'sample_id', 'pdf', 'conclusion', 'explain', 'mut_type', 'template', 'type', 'gene_template', 'ptype', 'csupload', 'family_id', 'date', 'abiresult', 'snpexplain', 'final_note', 'assigner_note', 'shenhe_date', 'time_stamp', 'yidaifinished_date', 'kyupload'], 'safe'],
         ];
     }
 
@@ -78,26 +82,28 @@ class RestReportSearch extends RestReport
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id'                 => $this->id,
-            'DATE(rest_report.created)'            => $this->created,
-            'updated'            => $this->updated,
-            'assigner_id'        => $this->assigner_id,
-            'product_id'         => $this->product_id,
-            'complete'           => $this->complete,
-            'finish'             => $this->finish,
-            'xiafa'              => $this->xiafa,
-            'analysis_id'        => $this->analysis_id,
-            'yidai_complete'     => $this->yidai_complete,
-            'jxyanzhen'          => $this->jxyanzhen,
-            'star'               => $this->star,
-            'date'               => $this->date,
-            'abiexported'        => $this->abiexported,
-            'shenhe_date'        => $this->shenhe_date,
-            'locked'             => $this->locked,
-            'express_sent'       => $this->express_sent,
-            'sale_marked'        => $this->sale_marked,
-            'yidaifinished_date' => $this->yidaifinished_date,
-            'yidai_marked'       => $this->yidai_marked,
+            'id'                        => $this->id,
+            'DATE(rest_report.created)' => $this->created,
+            'updated'                   => $this->updated,
+            'assigner_id'               => $this->assigner_id,
+            'product_id'                => $this->product_id,
+            'complete'                  => $this->complete,
+            'finish'                    => $this->finish,
+            'xiafa'                     => $this->xiafa,
+            'analysis_id'               => $this->analysis_id,
+            'yidai_complete'            => $this->yidai_complete,
+            'jxyanzhen'                 => $this->jxyanzhen,
+            'star'                      => $this->star,
+            'date'                      => $this->date,
+            'abiexported'               => $this->abiexported,
+            'shenhe_date'               => $this->shenhe_date,
+            'locked'                    => $this->locked,
+            'express_sent'              => $this->express_sent,
+            'sale_marked'               => $this->sale_marked,
+            'yidaifinished_date'        => $this->yidaifinished_date,
+            'yidai_marked'              => $this->yidai_marked,
+            'rest_sample.sex'           => $this->sex,
+            'ceil(rest_sample.age)'     => $this->age,
         ]);
 
         $query->andFilterWhere(['like', 'rest_report.report_id', $this->report_id])
@@ -130,14 +136,14 @@ class RestReportSearch extends RestReport
             ->andFilterWhere(['like', 'kyupload', $this->kyupload])
 
             ->andFilterWhere(['like', 'rest_product.name', $this->product_name]) //<=====加入这句
-            ->andFilterWhere(['like', 'rest_sample.name', $this->username])//<=====加入这句
+            ->andFilterWhere(['like', 'rest_sample.name', $this->username]) //<=====加入这句
             ->andFilterWhere(['like', 'rest_sample.tel', $this->tel])
 
             ->andFilterWhere(['like', 'mingrui_pingjia.pingjia', $this->pingjia]) //<=====加入这句
-            ->andFilterWhere(['like', 'mingrui_pingjia.linchuang', $this->linchuang])//<=====加入这句
-            ->andFilterWhere(['like', 'snpsave', $this->gene])       
-            ; 
-
+            ->andFilterWhere(['like', 'mingrui_pingjia.linchuang', $this->linchuang]) //<=====加入这句
+            ->andFilterWhere(['like', 'snpsave', $this->gene])
+            ->andFilterWhere(['like', 'rest_report.report_id', $this->method])
+        ;
 
         return $dataProvider;
     }

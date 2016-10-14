@@ -226,7 +226,7 @@ return $model->status =='finished' ? '<span class="bg-primary" style="padding:3p
         /* ['class'   => 'yii\grid\ActionColumn',
         'template' => '{view} {000update} {000delete}',
         ],*/
-        ['attribute' => '',
+        [   'label' => '操作',
             'options'    => ['width' => '120'],
             'format'     => 'raw',
             'value'      => function ($model) {
