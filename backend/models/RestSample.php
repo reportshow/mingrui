@@ -159,6 +159,9 @@ class RestSample extends \yii\db\ActiveRecord
      
     public $name ='保密';
      
+    public function getRealname(){
+      return  $this->__get('name');
+    }
     /**
      * @return \yii\db\ActiveQuery
      */

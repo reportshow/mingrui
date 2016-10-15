@@ -5,7 +5,7 @@ class Functions
 {
     public static function url($url)
     {
-        return Yii::$app->urlManager->createUrl([$url]);
+        return Yii::$app->urlManager->createUrl($url);
     }
 
     public static function ismobile()

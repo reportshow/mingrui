@@ -3,6 +3,7 @@ use backend\assets\AppAsset;
 use backend\models\RestReport;
 use backend\widgets\PdfShow;
 use backend\widgets\RestrepotTop;
+use backend\widgets\ReadPdf;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\RestReport */
@@ -39,3 +40,4 @@ if ($model->pdfurl) {
 
 echo PdfShow::widget(['pdfurl' => $pdfurl]);
 ?>
+ 

@@ -33,6 +33,11 @@ $pingjiaUrl= Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
   }
 
   tr:nth-child(even){background-color: #f2f2f2}
+
+  input::-webkit-input-placeholder { /* WebKit browsers */
+　　color:#f99;
+　　}
+ 
 </style>
 
 
@@ -48,11 +53,11 @@ $pingjiaUrl= Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
         </div>
         <!-- /.box-header -->
         <!-- form start --> 
-            <div> 临床诊断/特异表型</div>
+            <div> </div>
 
             <div class="input-group col-md-6" style="margin-bottom: 15px;">
                   <input type="text" id="linchuang" class="form-control" name="linchuang" 
-                  placeholder=""> 
+                  placeholder="请输入临床诊断/特异表型"> 
                   <span class='input-group-btn'>
                     <button id='linchuangpingjia' ctype='button' class='btn btn-info btn-flat'
                     style='border-top-left-radius: 0;border-bottom-left-radius: 0;'>
