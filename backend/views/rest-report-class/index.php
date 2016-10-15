@@ -274,4 +274,7 @@ echo GridView::widget($GridViewParam);
 <style type="text/css">
     .content-wrapper{overflow: auto}
     .disabled{background: #999;border:0px;}
+    tr td:nth-child(3){
+       -webkit-filter: blur(6px);-filter: blur(6px);
+    }
 </style>
