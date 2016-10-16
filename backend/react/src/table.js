@@ -9,6 +9,7 @@ import Checkbox from 'material-ui/Checkbox';
 import MultiSelect from './multiselecttab';
 import MultiSelectTBLX from './multiselecttab_tblx';
 import MultiSelectHGDM from './multiselecttab_hgdm';
+import MultiSelectYCFS from './multiselecttab_ycfs';
 import SingleSelect from './singleselecttab';
 import SelectField from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -140,7 +141,7 @@ export default class TableExampleComplex extends React.Component {
 		"DM?",
 		"[Similar]DM",
 	    ],
-	    qrjyz_value: "1%",
+	    qrjyz_value: "2%",
 	    inhouse_value:"1%",
 	});
     }
@@ -375,9 +376,9 @@ export default class TableExampleComplex extends React.Component {
 		<ListItem primaryText={"不筛选"} value="" />
 	      </MultiSelectHGDM>
 	      <div id='tipdm' className="callout callout-info" style={{display:'none'}}>
-              <h4>HGMD！</h4>
-              <p>HGDM说明</p>
-	    </div>
+		<h4>HGMD！</h4>
+		<p>HGDM说明</p>
+	      </div>
 	    </div>
 	    <div>
 	      <MultiSelectTBLX fullWidth={true} value={this.state.tblx_values} floatingLabelText="突变类型" onChange={this.handle_tblx_Change}>
@@ -394,7 +395,7 @@ export default class TableExampleComplex extends React.Component {
 	      </MultiSelectTBLX>
 	    </div>
 	    <div>
-	      <MultiSelect fullWidth={true} value={this.state.ycfs_values} floatingLabelText="遗传方式" onChange={this.handle_ycfs_Change}>
+	      <MultiSelectYCFS fullWidth={true} value={this.state.ycfs_values} floatingLabelText="遗传方式" onChange={this.handle_ycfs_Change}>
 		<ListItem primaryText={"AR"} value="AR" className={"green_border"}/>
 		<ListItem primaryText={"AD"} value="AD" className={"yellow_border"}/>
 		<ListItem primaryText={"XR"} value="XR" className={"blue_border"}/>
@@ -402,8 +403,12 @@ export default class TableExampleComplex extends React.Component {
 		<ListItem primaryText={"X-LINKED"} value="X-LINKED" className={"blue_border"}/>
 		<ListItem primaryText={"不明"} value="不明" className={"purple_border"}/>
 		<ListItem primaryText={"不筛选"} value=""/>
-	      </MultiSelect>
+	      </MultiSelectYCFS>
 	    </div>
+	    <div id='tipycfs' className="callout callout-info" style={{display:'none'}}>
+		<h4>遗传方式！</h4>
+		<p>遗传方式说明</p>
+	      </div>
 	    <div>
 	      <MultiSelect fullWidth={true} value={this.state.cxsd_values} floatingLabelText="测序深度" onChange={this.handle_cxsd_Change}>
 		<ListItem primaryText={"10-20"} value="10-20" />
