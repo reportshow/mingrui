@@ -181,21 +181,26 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
         foreach ($snp_array as $key => $data) {
             $user_snp_genes[] = $data[0];
         }
-
-        $gene_omims = [];
+        $user_snp_genes = array_unique($user_snp_genes);
+             
+        $omims = [];
         foreach ($user_snp_genes as $gene) {
             $str_omim = "数据库中未找到";
             $omim     = Omims::find()->where(['gene' => trim($gene)])->one();
             if ($omim) {
-                $str_omim = $omim->disease_id;
+                 if($omim->synopsis == '')//cache the synopsis to db
+                 {
+                      $omim->synopsis = $this->getSynopsis($omim->omim_id);
+                      $omim->save();
+                 }
+                 $omims[] = $omim;
             }
-            $gene_omims[] = [$gene => $str_omim];
         }
 
         return $this->render($viewname, [
             'model'    => $userdata,
             'comments' => $this->getComments($id),
-            'omims'    => $gene_omims,
+            'omims'    => $omims,
         ]);
     }
 
@@ -553,6 +558,44 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
     /*      echo "OK" . $count; */
     /* } */
 
+    public function actionSynopsis()
+    {
+         /* $omims = Omims::find()->where(['=', 'synopsis', 'Hello'])->all(); */
+
+         /* $count = 0; */
+         /* foreach($omims as $omim) { */
+         /*      $omim->synopsis = $this->getSynopsis($omim->omim_id); */
+         /*      $omim->save(); */
+         /*      $count++; */
+         /* } */
+         
+         /* print_r($count); */
+
+         echo "OK";
+         exit;
+    }
+
+    protected function getSynopsis($omim_id)
+    {
+         $url="http://www.omim.org/entry/$omim_id";
+         $ch = curl_init();
+         curl_setopt($ch, CURLOPT_URL, $url);
+         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+         curl_setopt($ch,CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+         $html = curl_exec($ch);
+         curl_close($ch);
+
+         $html=str_replace("\n", '', $html);
+         preg_match('@<tr><td class="title text-font lookup">(.*?)</td>@',
+                    $html,
+                    $matches
+              );
+
+         echo $matches[1];
+         
+         return trim($matches[1]);
+    }
+    
     // public function
     /**
      * Finds the RestReport model based on its primary key value.

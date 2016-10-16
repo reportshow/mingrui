@@ -53,16 +53,16 @@ use yii\helpers\Html;
            if(Yii::$app->user->can('doctor') ||Yii::$app->user->can('admin')){
           ?>
          <li>
-          <a href="#">OMIM描述：<br/>
-	    <?php
-               foreach($omims as $gene_omim){
-                    foreach($gene_omim as $gene=>$disease_id){
-                         echo $gene . ":" . $disease_id;
-                    }
-                    echo "<br/>";
-               }
-	    ?>
-	  </a>
+          <a href="#">OMIM描述:</a><br/>
+	  <?php
+          foreach($omims as $omim){
+               echo $omim->gene . ":" .
+               "<a target=\"_blank\" href=\"http://www.omim.org/clinicalSynopsis/$omim->omim_id\">" .
+               "<span style=\"color: blue !important; text-decoration: underline !important;\">" . $omim->synopsis . "</span>" .
+               "</a>";
+               echo "<br/>";
+          }
+	  ?>
 	 </li>
 	 <?php  
             }

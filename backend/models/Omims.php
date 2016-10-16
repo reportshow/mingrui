@@ -9,8 +9,8 @@ use Yii;
  *
  * @property integer $id
  * @property integer $omim_id
- * @property string $disease_id
  * @property string $gene
+ * @property string $synopsis
  */
 class Omims extends \yii\db\ActiveRecord
 {
@@ -28,9 +28,9 @@ class Omims extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['omim_id'], 'integer'],
-            [['disease_id'], 'string', 'max' => 255],
+             [['omim_id'], 'integer'],
             [['gene'], 'string', 'max' => 20],
+            [['synopsis'], 'string', 'max' => 2048],
         ];
     }
 
@@ -42,8 +42,8 @@ class Omims extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'omim_id' => 'Omim ID',
-            'disease_id' => 'Disease ID',
             'gene' => 'Gene',
+            'synopsis' => 'Synopsis',
         ];
     }
 }
