@@ -11,6 +11,7 @@ import MultiSelectTBLX from './multiselecttab_tblx';
 import MultiSelectHGDM from './multiselecttab_hgdm';
 import MultiSelectYCFS from './multiselecttab_ycfs';
 import SingleSelect from './singleselecttab';
+import SingleSelectHGDM from './singleselecttab_hgdm';
 import SelectField from 'material-ui/SelectField';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
@@ -136,11 +137,7 @@ export default class TableExampleComplex extends React.Component {
 		"10-20",
 		"20+"
 	    ],
-	    dm_values: [
-		"DM",
-		"DM?",
-		"[Similar]DM",
-	    ],
+	    dm_values: "1",
 	    qrjyz_value: "2%",
 	    inhouse_value:"1%",
 	});
@@ -148,10 +145,10 @@ export default class TableExampleComplex extends React.Component {
     
     rqpl_items = [
 	    <ListItem key={1} value={"0"} primaryText="0" />,
-	    <ListItem key={1} value={"1%"} primaryText="1%" />,
-	    <ListItem key={2} value={"2%"} primaryText="2%" />,
-	    <ListItem key={3} value={"5%"} primaryText="5%" />,
-	    <ListItem key={3} value={"100%"} primaryText="不筛选" />,
+	    <ListItem key={2} value={"1%"} primaryText="1%" />,
+	    <ListItem key={3} value={"2%"} primaryText="2%" />,
+	    <ListItem key={4} value={"5%"} primaryText="5%" />,
+	    <ListItem key={5} value={"100%"} primaryText="不筛选" />,
     ];
 
     filter_gene = (data, value) => {
@@ -235,11 +232,18 @@ export default class TableExampleComplex extends React.Component {
     }  
 
     filter_dm = (data, value) => {
-	for(var i in this.state.dm_values){
-	    if((data[2].toLowerCase() === this.state.dm_values[i].toLowerCase() && data[2].toLowerCase()!='') || this.state.dm_values[i].toLowerCase() === '') {
-		return true
-	    }
+	if(this.state.dm_values === "3") {
+	    return true
 	}
+	if(this.state.dm_values === "1" && data[2].length > 0)
+	{
+	    return true;
+	}
+	if(this.state.dm_values === "2" && data[2].length == 0)
+	{
+	    return true;
+	}
+	
 
 	return false;
     }  
@@ -369,12 +373,11 @@ export default class TableExampleComplex extends React.Component {
 	    </div>
 	      
 	    <div>
-	      <MultiSelectHGDM fullWidth={true} value={this.state.dm_values} floatingLabelText="HGMD" onChange={this.handle_dm_Change}>
-		<ListItem primaryText={"DM"} value="DM" />
-		<ListItem primaryText={"DM?"} value="DM?" />
-		<ListItem primaryText={"[Similar]DM"} value="[Similar]DM" />
-		<ListItem primaryText={"不筛选"} value="" />
-	      </MultiSelectHGDM>
+	      <SingleSelectHGDM fullWidth={true} value={this.state.dm_values} floatingLabelText="HGMD" onChange={this.handle_dm_Change}>
+		<ListItem primaryText={"已报导"} value="1" />
+		<ListItem primaryText={"未报导"} value="2" />
+		<ListItem primaryText={"不筛选"} value="3" />
+	      </SingleSelectHGDM>
 	      <div id='tipdm' className="callout callout-info" style={{display:'none'}}>
 		<h4>HGMD！</h4>
 		<p>HGDM说明</p>
