@@ -42,7 +42,7 @@ return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
 ['attribute' => 'created',
 'format' =>  ['date', 'php:Y-m-d h/i','currencyCode' => 'PRC',]
 ],*/
-        [
+/*        [
             'attribute' => 'created',
             'value'     => function ($data) {
                 $date = new DateTime($data->created);
@@ -51,7 +51,7 @@ return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
             },
             'filter'    => DateInput::widget(['attribute' => 'created', 'model' => $searchModel]),
             'options'   => ['width' => '120px;'],
-        ],
+        ],*/
 
         [
             'label'     => '姓名',
@@ -65,20 +65,27 @@ return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
             'filter'    => Html::activeTextInput($searchModel, 'username', [
                 'class' => 'form-control',
             ]),
-            'options'   => ['width' => '120px;'],
+            'options'   => ['width' => '100px;'],
         ], //<=====加入这句,
 
-        /*  ['attribute' => 'sample.sex',
-        'value'      => function ($model) {
-        return $model->sample->sex == 'female' ? '女' : '男';
-        }],*/
-/*        [
-'attribute' => 'sample.age',
-'label'     => '年龄',
-'value'     => function ($model) {
-return $model->sample->age ? $model->sample->age : '-';
-},
-],*/
+        [
+            'attribute' => 'sex',
+            'filter'    => ['male' => '男', 'female' => '女'],
+            'format' =>'raw',
+            'value'     => function ($model) {
+                return $model->sample->sex == 'female' ? '女' : '男';
+            },
+            'options'   => ['width' => '60px;'],
+            'label'=>'性别',
+        ],
+        [
+            'attribute' => 'age',
+            'label'     => '年龄',
+            'value'     => function ($model) {
+                return $model->sample->age ? $model->sample->age : '-';
+            },
+            'options'   => ['width' => '80px;'],
+        ],
 
 /*        [
 'attribute' => 'report_id',
@@ -267,4 +274,7 @@ echo GridView::widget($GridViewParam);
 <style type="text/css">
     .content-wrapper{overflow: auto}
     .disabled{background: #999;border:0px;}
+    tr td:nth-child(3){
+       -webkit-filter: blur(6px);-filter: blur(6px);
+    }
 </style>

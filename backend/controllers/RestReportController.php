@@ -18,6 +18,7 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use backend\widgets\Pdf2html;
 
 /**
  * RestReportController implements the CRUD actions for RestReport model.
@@ -120,7 +121,6 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
             'dataProvider' => $dataProvider,
         ]);
     }
-
     public function actionMyreport()
     {
         $role = Yii::$app->user->Identity->role_text;
@@ -251,11 +251,17 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
      */
     public function actionShowReport($id)
     {
-        return $this->render('showreport', [
+        return $this->render('showreport2', [
             'model' => $this->findModel($id),
         ]);
     }
 
+    public function actionPdf2html($id){
+        $this->layout= false;
+        echo  Pdf2html::widget([
+            'report' => $this->findModel($id),
+        ]);
+    }
     /**
      * Creates a new RestReport model.
      * If creation is successful, the browser will be redirected to the 'view' page.
