@@ -409,7 +409,10 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
             }
         }
 
-        $explain = json_decode($userdata->explain, true)['cnv'];
+        $explain = json_decode($userdata->explain, true);
+        if(!empty($explain)) {
+             $explain = $explain['cnv'];
+        }
         
         /* //for debug of multiple bad gene */
         /* $user_snp_areas['ABC'] = $user_snp_areas['CBS']; */
