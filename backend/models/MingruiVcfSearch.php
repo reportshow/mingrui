@@ -19,8 +19,11 @@ class MingruiVcfSearch extends MingruiVcf
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['title', 'notes', 'vcf','creator_name','status'], 'safe'],
+            [['id', 'uid', 'createtime', 'task_id'], 'integer'],
+            
+            [['creator_name',
+	    'sick', 'sex', 'vcf', 'status', 'tel', 'product', 'diagnose', 'gene'], 'safe'],
+            [['age'], 'number'],
         ];
     }
 
@@ -64,10 +67,21 @@ class MingruiVcfSearch extends MingruiVcf
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id, 
+           // 'uid' => $this->uid, 
+            'age' => $this->age, 
+          //  'createtime' => $this->createtime, 
+            'task_id' => $this->task_id, 
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'notes', $this->notes])
+        $query->andFilterWhere(['like', 'sick', $this->sick])
+            ->andFilterWhere(['like', 'sex', $this->sex])
+            ->andFilterWhere(['like', 'vcf', $this->vcf])
+            ->andFilterWhere(['like', 'status', $this->status])
+            ->andFilterWhere(['like', 'tel', $this->tel])
+            ->andFilterWhere(['like', 'product', $this->product])
+            ->andFilterWhere(['like', 'diagnose', $this->diagnose])
+            ->andFilterWhere(['like', 'gene', $this->gene])
+	    
             ->andFilterWhere(['like', 'user.nickname', $this->creator_name]);
 
         return $dataProvider;

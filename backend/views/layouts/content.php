@@ -64,11 +64,11 @@ use backend\components\Functions;
 
 
 
-<footer class="main-footer">
+<footer class="main-footer" style="font-size: 0.9em">
     <div class="pull-right hidden-xs">
         <b>Version</b> 1.0
     </div>
-     <strong><a href="#" style="font-size: 1em">明睿单病云管家</a>
+     <strong><a href="#">明睿单病云管家</a>
        Copyright &copy; 2014-2016
       </strong>    All rights    reserved.
 </footer>

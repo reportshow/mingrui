@@ -31,7 +31,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'diagnose:ntext',
         'gene',
         ['attribute' => 'pingjia',
-            'filter'     => MingruiPingjia::getSimpleArray()],
+            'filter'     => MingruiPingjia::getSimpleArray(),
+         'value'=>function($model){
+            return $model->pingjia ? $model->pingjia : '-';
+         }],
         // 'attachements:ntext',
         // 'createtime',
 

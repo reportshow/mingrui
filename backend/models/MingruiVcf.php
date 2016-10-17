@@ -11,9 +11,18 @@ use yii\web\UploadedFile;
  * This is the model class for table "mingrui_vcf".
  *
  * @property string $id
- * @property string $title
- * @property string $notes
+ * @property string $uid
+ * @property string $sick
+ * @property integer $age
+ * @property string $sex
  * @property string $vcf
+ * @property string $status
+ * @property string $tel
+ * @property string $product
+ * @property string $diagnose
+ * @property string $gene
+ * @property string $createtime
+ * @property string $task_id
  */
 class MingruiVcf extends \yii\db\ActiveRecord
 {
@@ -41,9 +50,16 @@ class MingruiVcf extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'uid'], 'required'],
-            [['createtime','status'], 'safe'],
-            [['title', 'notes', 'vcf'], 'string', 'max' => 255],
+            [['uid', 'sick', 'product', 'diagnose', 'sex'], 'required'],
+            [['uid', 'createtime', 'task_id'], 'integer'],
+            [['sex', 'diagnose'], 'string'],
+            [['age'], 'number'],
+            [['sick'], 'string', 'max' => 16],
+            [['vcf'], 'string', 'max' => 255],
+            [['status'], 'string', 'max' => 8],
+            [['sick'], 'string', 'max' => 16],
+            [['tel', 'gene'], 'string', 'max' => 32],
+            [['product'], 'string', 'max' => 128],
         ];
     }
     public function getCreator()
@@ -57,10 +73,18 @@ class MingruiVcf extends \yii\db\ActiveRecord
     {
         return [
             'id'    => 'ID',
-            'title' => '标题',
-            'notes' => '说明',
+            'uid' => '医生id',
+            'sick' => '患者姓名',
+            'age' => '年龄',
+            'sex' => '性别',
             'vcf'   => 'VCF文件',
-            'status'=>'状态'
+            'status'=>'状态',
+            'tel' => '联系电话',
+            'product' => '检测项目',
+            'diagnose' => '临床诊断',
+            'gene' => '异常基因',
+            'createtime' => 'Createtime',
+            'task_id' => 'Task ID',
         ];
     }
 

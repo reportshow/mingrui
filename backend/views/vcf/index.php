@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $searchModel backend\models\MingruiVcfSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title                   = 'VCF外源数据';
+$this->title                   = 'VCF外源数据分析';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mingrui-vcf-index">
@@ -22,30 +22,49 @@ $this->params['breadcrumbs'][] = $this->title;
     $columns = [
         ['attribute' => 'id', 'options' => ['width' => '60px;']],
 
-        'title',
-        'notes',
-
+       
         ['attribute' => 'creator_name', 'label' => '上传者', 'options' => ['width' => '100px;'],
             'value'      => function ($model) {
                 return $model->creator->nickname;
-            }],
+         }],
+	    
+	    
+        'sick', //患者姓名
+         ['attribute'=>'age','options' => ['width' => '60']],
+         ['attribute'=>'sex',
+         'filter'=>['male'=>'男','female'=>'女'],
+         'options' => ['width' => '60']
+         ],
+        'tel',
+        'product',
+        'diagnose:ntext',
+        'gene',
+	    
 
-        ['attribute' => '', 'format' => 'raw', 'options' => ['width' => '60px;'],
+
+        ['attribute' => 'vcf', 
+	 'format' => 'raw',
+	 'options' => ['width' => '90px;'],
+	 'label'=>'vcf文件',
             'value'      => function ($model) {
                 return Html::a('下载VCF', ['vcf/download', 'id' => $model->id], ['class' => 'btn btn-info']);
             }],
 
-        ['attribute' => 'status',  'format' => 'raw', 'options' => ['width' => '60px;'],
-            'value'      => function ($model) {
+        ['attribute' => 'status', 
+	 'format' => 'raw', 
+	 'options' => ['width' => '90px;'],
+           'label'=>'vcf状态',
+	    'value'      => function ($model) {
                 $status = $model->getTaskStatus()=='complete' ? '完成':'处理中..';
                 return  "<button class='btn'>$status</button>";
             }],
                 
-        ['class' => 'yii\grid\ActionColumn'],
+		
+        ['class' => 'yii\grid\ActionColumn' ],
     ];
 
     if (!Yii::$app->user->can('admin')) {
-        array_splice($columns,3,1);
+        array_splice($columns,1,1);
     }
 
     echo GridView::widget([

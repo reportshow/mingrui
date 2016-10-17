@@ -102,7 +102,7 @@ $styleboxtop = Functions::ismobile() ? '0px' : '150px';
     .pingjia .tag2{display: inline-block; width:120px;  }
     .pingjia .tagtxt{display: inline-block; width:50px;}
     .pingjia input{color:#222;}
-    .pingjia input[type=radio]{margin-right:20px; width: 18px; height: 18px;}
+    .pingjia input[type=checkbox]{margin-right:20px; width: 18px; height: 18px;}
 </style>
 <div class="example-modal" >
 <div class="modal modal-primary" id='xingjipingjiaBox'>
@@ -131,14 +131,14 @@ $styleboxtop = Functions::ismobile() ? '0px' : '150px';
                $listStr .= "<i class='fa $one'></i> ";
              }
 
-             echo  "<p><input type=radio name='pingjia' value='$index'>
+             echo  "<p><input type=checkbox name='pingjia' value='$index'>
                     <i class='tag'>$listStr</i> <i class='tag2'>$label</i> $desc 
                    </p> ";        
 
           } 
        ?>
-             <p><input type=radio name='pingjia' value='6'><i class='tag fa fa-edit' style=""></i>
-                 <input type=text maxlength="16" placeholder="自定义">   
+             <p><input type=checkbox name='pingjia' value='6'><i class='tag fa fa-edit' style=""></i>
+                 <input type=text maxlength="16" placeholder="自定义" style='width:120px'>   
              </p>  
         </div>
       </div>
@@ -179,7 +179,17 @@ $styleboxtop = Functions::ismobile() ? '0px' : '150px';
          });
     });
 
-  
+  $('#xingjipingjiaBox input[name="pingjia"]').click(function(){
+     var obj =$(this);
+     var ck = $(this).is(':checked');
+     $('#xingjipingjiaBox input[name="pingjia"]').each(function(){
+        if(obj.val()!=$(this).val()){
+          $(this).attr('checked', false);
+        } 
+     });
+     //obj.attr('checked', !ck);
+     
+  });
     
 </script>
 

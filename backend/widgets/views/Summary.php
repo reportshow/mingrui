@@ -52,15 +52,14 @@ use yii\helpers\Html;
          <?php  
            if(Yii::$app->user->can('doctor') ||Yii::$app->user->can('admin')){
           ?>
-         <li>
-          <a href="#">OMIM描述:</a><br/>
+         <li class="omim">
+          OMIM描述:<br/>
 	  <?php
           foreach($omims as $omim){
                echo $omim->gene . ":" .
-               "<a target=\"_blank\" href=\"http://www.omim.org/clinicalSynopsis/$omim->omim_id\">" .
-               "<span style=\"color: blue !important; text-decoration: underline !important;\">" . $omim->synopsis . "</span>" .
-               "</a>";
-               echo "<br/>";
+               "<a target='_blank' href='http://www.omim.org/clinicalSynopsis/{$omim->omim_id}'>" 
+                . $omim->synopsis . 
+               "</a><br/>";               
           }
 	  ?>
 	 </li>
@@ -71,4 +70,22 @@ use yii\helpers\Html;
     </div>
   </div>
   <!-- /.widget-user -->
-       
+
+<style type="text/css">
+  li.omim{
+    padding:10px 15px;
+        white-space: nowrap !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: keep-all;
+  }
+  li.omim a{display: inline;
+   color: blue !important; 
+   padding-left:5px;
+ }
+ .nav>li.omim>a:hover{
+  text-decoration:underline !important;
+  background:none !important;
+}
+</style>
+

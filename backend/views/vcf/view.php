@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\MingruiVcf */
 
-$this->title = $model->title;
+$this->title = $model->sick;
 $this->params['breadcrumbs'][] = ['label' => 'VCF外源数据', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -28,8 +28,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'title',
-            'notes',
+            'sick',
+            'age',
+            'sex',
+ 
+            'status',
+            'tel',
+            'product',
+            'diagnose:ntext',
+            'gene',
+	    'createtime',
             ['attribute'=>'vcf', 'format'=>'raw',
              'value'=>    Html::a('下载VCF', ['vcf/download','id'=>$model->id], ['class' => 'btn btn-info'])],
             ['attribute'=>'上传者', 'value'=>$model->creator->nickname],

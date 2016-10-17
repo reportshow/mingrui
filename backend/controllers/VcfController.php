@@ -142,7 +142,7 @@ class VcfController extends Controller
         $mobile = Yii::$app->params['master_vcf_mobile'];
         $voice  = Yii::$app->params['master_vcf_voice'];
 
-        SMS::landingCall($voice, $mobile);
+       //  SMS::landingCall($voice, $mobile);
     }
     /**
      * Updates an existing MingruiVcf model.

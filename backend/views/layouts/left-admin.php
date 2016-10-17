@@ -18,7 +18,7 @@ $menu[] = [
         ],
        [
             'label' => '报告分类',
-            'icon'  => 'fa fa-calendar-plus-o',
+            'icon'  => 'fa fa-pie-chart',
             'url'   => ['/rest-report-class/index'],
 
         ],
@@ -38,7 +38,7 @@ $menu[] = [
         ],
         [
             'label' => '外源报告',
-            'icon'  => 'fa fa-puzzle-piece',
+            'icon'  => 'fa fa-ioxhost',
             'url'   => ['reportstore/'],
             'items' => [
 
