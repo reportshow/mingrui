@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'product',
             'diagnose:ntext',
             'gene',
-	    'createtime',
+            ['attribute'=>	    'createtime','value'=>date('Y-m-d H:i',$model->createtime)],
             ['attribute'=>'vcf', 'format'=>'raw',
              'value'=>    Html::a('下载VCF', ['vcf/download','id'=>$model->id], ['class' => 'btn btn-info'])],
             ['attribute'=>'上传者', 'value'=>$model->creator->nickname],
@@ -56,4 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <style type="text/css">
     .content-wrapper{overflow: auto}
     .disabled{background: #999;border:0px;}
+    .detail-view tr th{
+        width: 20%
+    }
 </style>

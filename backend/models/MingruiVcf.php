@@ -83,7 +83,7 @@ class MingruiVcf extends \yii\db\ActiveRecord
             'product' => '检测项目',
             'diagnose' => '临床诊断',
             'gene' => '异常基因',
-            'createtime' => 'Createtime',
+            'createtime' => '上传时间',
             'task_id' => 'Task ID',
         ];
     }

@@ -56,7 +56,7 @@ class VcfController extends Controller
     {
          $model = $this->findModel($id);
          $datas='';
-         if($model->task_id >= 0) {
+         if(!empty($model->task_id )  ) {
               $vcf_url = Yii::$app->params['vcfservice'] . '/api/task/result/' . $model->task_id;
               $datas = file_get_contents($vcf_url);
          }
