@@ -49,11 +49,14 @@ if ($model->doc) {
                 </div>
                 <!-- /.user-block -->
                 <div class="box-tools ">
-                    <button class="btn btn-box-tool" data-widget="collapse" type="button">
+                    <?= Html::a('详情/评论', ['mingrui-doc/view', 'id' => $model->id], [
+                        'class' => 'btn btn-info',                         
+                    ]) ?>
+                    <button class="btn btn-box-tool hide" data-widget="collapse" type="button">
                         <i class="fa fa-minus">
                         </i>
                     </button>
-                    <button class="btn btn-box-tool" data-widget="remove" type="button">
+                    <button class="btn btn-box-tool hide" data-widget="remove" type="button">
                         <i class="fa fa-times">
                         </i>
                     </button>

@@ -26,7 +26,7 @@ $menu[] = [
         [
             'label' => '外源数据分析',
             'icon'  => 'fa fa-puzzle-piece',
-            'url'   => ['vcf/'],
+            'url'   => ['vcf/index'],
             'items' => [
 
             ],
@@ -34,7 +34,7 @@ $menu[] = [
         [
             'label' => '外源报告',
             'icon'  => 'fa fa-ioxhost',
-            'url'   => ['reportstore/'],
+            'url'   => ['reportstore/index'],
             'items' => [
 
             ],

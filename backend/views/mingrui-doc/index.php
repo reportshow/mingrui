@@ -19,6 +19,8 @@ $newBtnText = '新建 ' . $doctype;
         <?php
 if (Yii::$app->user->can('admin')) {
     echo Html::a($newBtnText, ['create', 'type' => $_GET['type']], ['class' => 'btn btn-success']);
+}else  if(Yii::$app->user->can('doctor')) {
+	echo Html::a('新建案例', ['create', 'type' => 'article'], ['class' => 'btn btn-success']);
 }
 
 ?>

@@ -139,3 +139,4 @@ td{    white-space: nowrap !important;
 }
 
 th a{color:#333;}
+thead td select{padding:5px !important;}

@@ -1,11 +1,20 @@
 <?php
 use backend\components\Functions;
  
+$roletxt = '';
+if (Yii::$app->user->can('admin')) {
+  $roletxt = '管理员';
+}else  if(Yii::$app->user->can('doctor')) {
+  $roletxt = '医生';
+}else if(Yii::$app->user->can('guest')) {
+  $roletxt = '受检者';
+}
+
 ?>
 <style type="text/css">
     .sidebar-menu .treeview-menu{padding-left: 15px}
     .myavatar:hover{border:0px solid #fff;border-radius:32px;-webkit-box-shadow: 0 0 15px #fff;}
-
+    .user-panel .info .roletxt{    font-style: normal;    color: #4489A9;    padding-left: 5px;}
 </style>
 <aside class="main-sidebar">
 
@@ -18,7 +27,7 @@ use backend\components\Functions;
                 onerror="this.src='images/user2.png';" alt="User Image"/>
             </a>
             <div class="pull-left info">
-                <p><?=$user->nickname;?></p>
+            <p><?=$user->nickname;?><span class=roletxt>(<?=$roletxt ?>)</span></p>
 
                 <a href="#" title='查看积分'><i class="fa fa-circle text-success"></i>积分: 0</a>
             </div>

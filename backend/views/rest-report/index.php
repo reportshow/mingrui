@@ -24,6 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
     tr td:nth-child(3){
        -webkit-filter: blur(6px);-filter: blur(6px);
     }
+    thead td select{padding:5px !important;}
 </style>
 
 
@@ -109,7 +110,7 @@ return $date->format('Y-m-d');
             'value'     => function ($model) {
                 return $model->sample->sex == 'female' ? '女' : '男';
             },
-            'options'   => ['width' => '60px;'],
+            'options'   => ['width' => '60'],
             'label'=>'性别',
         ],
         [
