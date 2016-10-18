@@ -29,7 +29,7 @@
 <!-- /.box -->
 
 
-<script src="https://cdn.ckeditor.com/4.5.7/standard/ckeditor.js">
+<script src="js/ckeditor/ckeditor.js">
 </script>
 <script>
     $(function () {
