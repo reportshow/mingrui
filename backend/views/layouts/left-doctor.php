@@ -1,3 +1,8 @@
+<style type="text/css"> 
+</style>
+    <div  style='position:fixed;bottom:0px;color:#333;z-index:3333;left:40px'>
+        <img src='images/pdf-logo.png' height=32>
+    </div>
 <?php
 
 $menu =[];
@@ -17,12 +22,12 @@ $menu[] = [
             'url'   => ['/rest-report/index'],
 
         ],
-       [
+/*       [
             'label' => '报告分类',
             'icon'  => 'fa fa-pie-chart',
             'url'   => ['/rest-report-class/index'],
 
-        ],
+        ],*/
         [
             'label' => '外源数据分析',
             'icon'  => 'fa fa-puzzle-piece',

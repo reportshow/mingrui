@@ -140,3 +140,9 @@ td{    white-space: nowrap !important;
 
 th a{color:#333;}
 thead td select{padding:5px !important;}
+
+
+@media screen and (max-width:1370px) {
+    aside.main-sidebar{width:200px;}
+   .wrapper .content-wrapper{margin-left: 200px}
+}

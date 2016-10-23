@@ -20,20 +20,21 @@ $this->registerCssFile('@web/css/ionicons.min.css',['depends'=>['backend\assets\
 
       <!-- Small boxes (Stat box) -->
       <div class="row">        
-         
-          <div class="col-lg-3 col-xs-6">
-            <?= NumberBox::widget( ['tag'=>'医生', 'number'=>347, 'bgcolor'=>'aqua','icon'=>'fa fa-user-md']);  ?>
-          </div> 
-          <div class="col-lg-3 col-xs-6">
-            <?= NumberBox::widget( ['tag'=>'患者', 'number'=>2752,'bgcolor'=>'green','icon'=>'person']);  ?>
-          </div> 
-          <div class="col-lg-3 col-xs-6">
-            <?= NumberBox::widget( ['tag'=>'已报告', 'number'=>9643, 'bgcolor'=>'yellow','icon'=>'stats-bars']);  ?>
-          </div>
-          <div class="col-lg-3 col-xs-6">
-            <?= NumberBox::widget( ['tag'=>'分析中', 'number'=>25, 'bgcolor'=>'red','icon'=>'android-time']);  ?>
-          </div>
-        
+        <div class="col-lg-9" style="height:420px;overflow:hidden;">
+           <?php include('index-guest-flow.php');?>
+
+        </div>
+        <div class="col-lg-3">        
+            <div  >
+            <?= NumberBox::widget( ['tag'=>'上次登录时间', 'number'=>'<h4>'.date('Y-m-d H:i:s',time()-1000).'</h4>', 'bgcolor'=>'aqua','icon'=>'fa fa-user-md']);  ?>
+            </div> 
+            <div  >
+              <?= NumberBox::widget( ['tag'=>'已报告', 'number'=>9643, 'bgcolor'=>'yellow','icon'=>'stats-bars']);  ?>
+            </div>
+            <div >
+              <?= NumberBox::widget( ['tag'=>'分析中', 'number'=>25, 'bgcolor'=>'red','icon'=>'android-time']);  ?>
+            </div>
+        </div>
       </div>
       <!-- /.row -->
 
@@ -47,10 +48,10 @@ $this->registerCssFile('@web/css/ionicons.min.css',['depends'=>['backend\assets\
           <div class="nav-tabs-custom">
             <!-- Tabs within a box -->
             <ul class="nav nav-tabs pull-right">
-              <li class="active"><a href="#revenue-chart" data-toggle="tab">趋势</a></li>
-              <li><a href="#sales-chart" data-toggle="tab">分布</a></li>
+              <li class="active"><a href="#revenue-chart" data-toggle="tab">动态</a></li>
+              <li><a href="#sales-chart" data-toggle="tab">资料</a></li>
               <li class="pull-left header" style='font-weight: normal;font-size: 12pt'>
-                <i class="fa fa-users"></i> 用户
+                新闻资讯
               </li>
             </ul>
             <div class="tab-content no-padding">

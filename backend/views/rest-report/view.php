@@ -2,7 +2,7 @@
 
 use backend\components\Functions;
 use backend\widgets\Comments;
-use backend\widgets\RestrepotTop;
+use backend\widgets\RestrepotTop2;
 use backend\widgets\Summary;
 
 /* @var $this yii\web\View */
@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="rest-report-view">
 
-<?=RestrepotTop::widget(['model_id' => $model->id]);?>
+<?=RestrepotTop2::widget(['model_id' => $model->id]);?>
 
 <style type="text/css">
   .hidesummary{

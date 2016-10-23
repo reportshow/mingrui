@@ -2,7 +2,7 @@
 use backend\assets\AppAsset;
 use backend\models\RestReport;
 use backend\widgets\PdfShow;
-use backend\widgets\RestrepotTop;
+use backend\widgets\RestrepotTop2;
 use backend\widgets\ReadPdf;
 
 /* @var $this yii\web\View */
@@ -24,7 +24,7 @@ AppAsset::register($this);
 ?>
 
 
-<?=RestrepotTop::widget(['model_id' => $model->id]);?>
+<?=RestrepotTop2::widget(['model_id' => $model->id]);?>
 
 
 

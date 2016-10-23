@@ -1,7 +1,7 @@
 <?php
 use backend\assets\AppAsset;
 use yii\helpers\Html;
-use backend\widgets\RestrepotTop;
+use backend\widgets\RestrepotTop2;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\RestReport */
@@ -18,7 +18,7 @@ $pingjiaUrl= Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
 
 
 ?>
-<?=RestrepotTop::widget(['model_id'=>$model->id]); ?>
+<?=RestrepotTop2::widget(['model_id'=>$model->id]); ?>
 
 
 <style>

@@ -1,7 +1,7 @@
 <style type="text/css">
     .sidebar-menu ul.treeview-menu{display: block !important;}
 </style>
-    <div style='position:fixed;bottom:0px;color:#8AA4AF;z-index:3333'>
+    <div  style='position:fixed;bottom:0px;color:#333;z-index:3333'>
         &nbsp;客服电话: 010-53396195
     </div>
 <?php

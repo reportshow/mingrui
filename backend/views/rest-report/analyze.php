@@ -1,7 +1,7 @@
 <?php
 use backend\assets\AppAsset;
 use yii\helpers\Html;
-use backend\widgets\RestrepotTop;
+use backend\widgets\RestrepotTop2;
 use backend\components\Functions;
 
 /* @var $this yii\web\View */
@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title . '      数据自分析';
 
 AppAsset::register($this); 
 ?>
-<?=RestrepotTop::widget(['model_id'=>$model->id]); ?>
+<?=RestrepotTop2::widget(['model_id'=>$model->id]); ?>
 
 <?php
 

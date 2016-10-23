@@ -3,7 +3,7 @@
  
 use backend\models\RestReport;
 use backend\widgets\Imglist;
-use backend\widgets\RestrepotTop;
+use backend\widgets\RestrepotTop2;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
@@ -32,7 +32,7 @@ if ($isSick) {
     $newbtnText = '上传 图片';
 } else {
     $newbtnText = '新增 资料';
-    echo RestrepotTop::widget(['model_id' => $id]);
+    echo RestrepotTop2::widget(['model_id' => $id]);
 }
 
 ?>
