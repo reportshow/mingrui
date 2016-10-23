@@ -5,6 +5,7 @@ use backend\components\Functions;
 use backend\widgets\DateInput;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use backend\models\MingruiPingjia;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\RestReportSearch */
@@ -64,7 +65,7 @@ return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
                 return $date->format('Y-m-d');
             },
             'filter'    => DateInput::widget(['attribute' => 'created', 'model' => $searchModel]),
-            'options'   => ['width' => '100px;'],
+            'options'   => ['width' => '80px;'],
         ],
 /*        [
 'attribute' => 'created',
@@ -100,7 +101,7 @@ return $date->format('Y-m-d');
             'filter'    => Html::activeTextInput($searchModel, 'username', [
                 'class' => 'form-control',
             ]),
-            'options'   => ['width' => '100px;'],
+            'options'   => ['width' => '80px;'],
         ], //<=====加入这句,
 
         [
@@ -110,7 +111,7 @@ return $date->format('Y-m-d');
             'value'     => function ($model) {
                 return $model->sample->sex == 'female' ? '女' : '男';
             },
-            'options'   => ['width' => '60'],
+            'options'   => ['width' => '56'],
             'label'=>'性别',
         ],
         [
@@ -119,12 +120,12 @@ return $date->format('Y-m-d');
             'value'     => function ($model) {
                 return $model->sample->age ? $model->sample->age : '-';
             },
-            'options'   => ['width' => '80px;'],
+            'options'   => ['width' => '60px;'],
         ],
 
         [
             'attribute' => 'report_id',
-            'options'   => ['width' => '120px;'],
+            'options'   => ['width' => '100;'],
         ],
 
         [
@@ -136,8 +137,8 @@ return $date->format('Y-m-d');
             ]),
             'options'   => ['width' => '120'],
         ], //<=====加入这句
-
-        [
+	
+	        [
             'attribute' => 'method',
             'label'     => '方法',
             'filter'    => Html::activeTextInput($searchModel, 'product_name', [
@@ -146,7 +147,7 @@ return $date->format('Y-m-d');
                 'style'=>'background:#fff',
             ]),
 
-            'options'   => ['width' => '80px;','readonly'=>'readonly'],
+            'options'   => ['width' => '46','readonly'=>'readonly'],
             'value'     => function ($model) {
                 if (strpos($model->report_id, 'NG') !== false) {
                     return 'NGS';
@@ -165,6 +166,36 @@ return $date->format('Y-m-d');
 
             },
         ],
+////////////////////////////////////////////////////////	
+        [
+            'attribute'     => 'gene',
+            'label'         => '基因型',
+            'headerOptions' => ['width' => '60'],
+        ],
+
+        [
+            'attribute' => 'linchuang',
+            'label'     => '临床表型',
+            'value'     => 'pingjia.linchuang',
+            'options'   => ['width' => '80'],
+        ],
+	
+	
+        [
+            'attribute'     => 'pingjia',
+           // 'filter' => Html::activeDropDownList($searchModel, 'sex',['1'=>'男','0'=>'女'], ['prompt'=>'全部'] ),
+           'filter'=>MingruiPingjia::getSimpleArray(),
+            'value'         => function ($model) {
+                $obj = $model->pingjia;
+                if ($obj) {
+                    // return MingruiPingjia::$pingjiaText[$obj->pingjia];
+                }
+            },
+            'label'         => '星级评价',
+            'headerOptions' => ['width' => '80'],
+        ],
+/////////////////////////////////////////////////	
+
 
 /*        [
 'attribute' => 'tel1',

@@ -66,7 +66,7 @@ class MingruiVcfSearch extends MingruiVcf
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id, 
+            'mingrui_vcf.id' => $this->id, 
            // 'uid' => $this->uid, 
             'age' => $this->age, 
           //  'createtime' => $this->createtime, 

@@ -178,10 +178,11 @@ $fieldOptions2 = [
   .nav-tabs-custom{ background: rgba(255,255,255,0.7);}
   .nav-tabs-custom>.tab-content{ background: none;}
   .nav-tabs-custom>.nav-tabs>li.active>a, .nav-tabs-custom>.nav-tabs>li.active:hover>a{ background: none;}
+  
 </style> 
 <?php
 if(!Functions::ismobile() ){
-  include('Dna.html');
+  include('colorbg.html');
 }
 
 ?>
