@@ -1,8 +1,8 @@
 <?php
 return [
     'adminEmail'        => 'admin@example.com',
-    'videoserver'       => 'http://42.96.138.136:2020',
-    'vcfservice'        => 'http://42.96.138.136:9880',
+    'videoserver'       => 'http://112.126.88.56:3000',
+    'vcfservice'        => 'http://112.126.88.56:2000',
     'erp_url'           => 'http://shanghaijinzhun.com/',
     'wechat_sick'       => require 'wechat.sick.php',
     'wechat_doctor'     => require 'wechat.doctor.php',
