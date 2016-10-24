@@ -141,8 +141,14 @@ td{    white-space: nowrap !important;
 th a{color:#333;}
 thead td select{padding:5px !important;}
 
-
+.logo-lg{
+    font-size: 1.8rem;
+    font-family: 'Microsoft Yahei';
+}
 @media screen and (max-width:1370px) and (min-width:800px) {
     aside.main-sidebar{width:200px;}
+    .sidebar-mini .main-header .logo{width:200px;}
+    .sidebar-collapse .main-header .logo{width:50px;}
+    .main-header .navbar.navbar-static-top{margin-left: 200px}
    .wrapper .content-wrapper{margin-left: 200px}
 }

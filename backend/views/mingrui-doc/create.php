@@ -1,13 +1,13 @@
 <?php
 
-use yii\helpers\Html;
-
+use yii\helpers\Html; 
+use backend\models\MingruiDoc;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\MingruiDoc */
-
-$this->title = '新建案例';
-$this->params['breadcrumbs'][] = ['label' => '案例分享', 'url' => ['index']];
+$type = $_GET['type'];
+$name = MingruiDoc::$TYPES[$type ];
+$this->params['breadcrumbs'][] = ['label' => '分享'.$name, 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mingrui-doc-create">

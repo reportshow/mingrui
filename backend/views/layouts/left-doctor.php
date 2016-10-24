@@ -1,7 +1,7 @@
 <style type="text/css"> 
 </style>
-    <div  style='position:fixed;bottom:0px;color:#333;z-index:811;left:40px'>
-        <img src='images/pdf-logo.png' height=32>
+    <div  style='position:fixed;bottom:30px;color:#333;z-index:811;left:40px'>
+        <a href='http://precisionmdx.com/index.html' target="_blank"><img src='images/pdf-logo.png' height=32></a>
     </div>
 <?php
 
@@ -69,7 +69,7 @@ $menu[] = [
 $menu[]=[
             'label' => '我的病人',
             'icon'  => 'fa   fa-heartbeat',
-            'url'   => ['/restsample/index'],
+            'url'   => ['/restsample/index','RestSampleSearch[name]'=>''],
         ];
         
 $menu[]= [

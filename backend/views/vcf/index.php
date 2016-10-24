@@ -2,6 +2,8 @@
 
 use yii\grid\GridView;
 use yii\helpers\Html;
+use backend\models\MingruiPingjia;
+
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\MingruiVcfSearch */
@@ -30,17 +32,24 @@ $this->params['breadcrumbs'][] = $this->title;
 	    
 	    
         'sick', //患者姓名
-         ['attribute'=>'age','options' => ['width' => '60']],
+        
          ['attribute'=>'sex',
          'filter'=>['male'=>'男','female'=>'女'],
          'options' => ['width' => '60']
-         ],
+         ], 
+         ['attribute'=>'age','options' => ['width' => '60']],
+
         'tel',
         'product',
         'diagnose:ntext',
         'gene',
 	    
-
+         ['attribute' => 'tel',
+         'label'=>'星级评价',
+            'filter'     => MingruiPingjia::getSimpleArray(),
+         'value'=>function($model){
+            //return $model->pingjia ? $model->pingjia : '-';
+         }],
 
         ['attribute' => 'vcf', 
 	 'format' => 'raw',

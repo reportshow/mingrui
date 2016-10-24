@@ -18,6 +18,8 @@ use backend\models\RestClient;
  */
 class MingruiDoc extends \yii\db\ActiveRecord
 {
+    
+    public static $TYPES=['article'=>'案例', 'doc'=>'文档','news'=>'新闻','guide'=>'应用指南'];
     /**
      * @inheritdoc
      */
@@ -42,7 +44,7 @@ class MingruiDoc extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title','uid' ], 'required'],
+            [['title','uid','type' ], 'required'],
             [['description'], 'string'],
             [['createtime'], 'integer'],
             [['title', 'doc'], 'string', 'max' => 1024],
@@ -61,6 +63,7 @@ class MingruiDoc extends \yii\db\ActiveRecord
                }
         }
     }
+
     /**
      * @inheritdoc
      */
@@ -71,6 +74,7 @@ class MingruiDoc extends \yii\db\ActiveRecord
             'title' => '标题',
             'description' => '内容',
             'doc' => '文档',
+            'type'=>'类型',
             'createtime' => 'Createtime',
         ];
     }

@@ -23,7 +23,7 @@ use yii\helpers\Html;
          <li style="padding:10px 0px 10px 16px;">
         项目编号：<?=$model->report_id?>
         <?=Html::a('上传图片', ['mingrui-attachment/', 'reportid' => $model->id], [
-            'class' => 'pull-right badge bg-green', 'style' => "padding:8px",
+            'class' => 'pull-right badge bg-green uploadimg', 'style' => "padding:8px",
           ])?>
          </li>
           <li><a href="#">报告日期：<?=$model->created?></a></li>

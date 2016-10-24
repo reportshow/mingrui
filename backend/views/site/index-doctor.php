@@ -9,44 +9,71 @@ use backend\widgets\NumberBox;
 use backend\widgets\NavTabs;
 use backend\models\RestReport;
 use backend\components\Functions;
+use backend\models\Sitepage;
+
 
 AppAsset::register($this); 
 //$this->registerJsFile('@web/js/chart.min.js',['depends'=>['backend\assets\AppAsset']]);  
 $this->registerCssFile('@web/css/ionicons.min.css',['depends'=>['backend\assets\AppAsset']]); 
 
-$query = RestReport::find();
-$query = $query->where(['<>', 'ptype', 'yidai']); 
-$query = $query->joinWith(['sample']);
-$doctor_id = Yii::$app->user->Identity->role_tab_id;
-$query = $query->where(['rest_sample.doctor_id' => $doctor_id]);
 
-$total = $query->count();
-$done = $query->andWhere(['rest_report.status' => 'finished'])->count();
+$tongji = Sitepage::doctorTongji();
+$news = Sitepage::docContent('news');
+$newsContent = '';
+foreach ($news as $key => $new) {
+  $newsContent .="<li><a href=''>".$new->title."</a></li>";
+}
+
+$ziliao = Sitepage::docContent('doc');
+$ziliaoContent = '';
+foreach ($ziliao as $key => $liao) {
+  $ziliaoContent .="<li><a href=''>".$liao->title."</a></li>";
+} 
+
+$guides = Sitepage::docContent('guide');
+$guidesContent = '';
+foreach ($guides as $key => $guide) {
+  $guidesContent .="<li><a href=''>".$guide->title."</a></li>";
+} 
 
 ?>
 
     <!-- Main content -->
-    <section class="content">
+    <section class="content " id='homepage'>
 
 
       <!-- Small boxes (Stat box) -->
       <div class="row">        
-        <div class="col-lg-9" style="height:420px;overflow:hidden;">
+        <div class="col-lg-10" style="overflow:hidden;">
            <?php include('index-guest-flow.php');?>
 
-        </div>
-        <div class="col-lg-3">        
+        </div> 
+        <div class="col-lg-2">        
             <div  >
-            <?= NumberBox::widget( ['tag'=>'上次登录时间', 'number'=>'<h4>'.date('Y-m-d H:i:s',time()-1000).'</h4>', 'bgcolor'=>'aqua','icon'=>'fa fa-user-md']);  ?>
+            <?php   echo NumberBox::widget( [
+               'tag'=>'上次登录时间', 'number'=>'<h4>'.date('Y-m-d H:i:s',time()-1000).'</h4>', 
+               'bgcolor'=>'aqua','icon'=>'fa fa-user-md',
+              'link'=>['上次登录时间'=>'']
+              ]); 
+              ?>
             </div> 
+
             <div  >
-              <?= NumberBox::widget( ['tag'=>'已报告', 'number'=>$done,
-               'bgcolor'=>'yellow','icon'=>'stats-bars','link'=>Functions::url(['rest-report/index']) 
+              <?= NumberBox::widget( [
+                'tag'=>'已报告', 'number'=>$tongji['done'],
+               'bgcolor'=>'yellow','icon'=>'stats-bars',
+               'link'=>['已报告'=>Functions::url(['rest-report/index'])] 
                ]);  ?>
             </div>
             <div >
-              <?= NumberBox::widget( ['tag'=>'分析中', 'number'=>$total-$done, 'bgcolor'=>'red','icon'=>'android-time','link'=>Functions::url(['rest-report/index']) ]);  ?>
+              <?= NumberBox::widget( [
+                'tag'=>'分析中', 'number'=>$tongji['ongoing'], 'bgcolor'=>'red','icon'=>'android-time',
+                'link'=>['分析中'=>Functions::url(['rest-report/index']) ],
+                ]);  ?>
             </div>
+
+
+
         </div>
       </div>
       <!-- /.row -->
@@ -65,8 +92,8 @@ $done = $query->andWhere(['rest_report.status' => 'finished'])->count();
           'header'=>'最新资讯',
           'position'=>'right',
           'data'=> [
-                  'news' => ['icon' => 'th', 'active'=>true ,'name'=>'新闻','content' => '新闻'],
-                  'news2' => ['icon' => 'th', 'name'=>'资料','content' => '资料'],
+                  'news' => ['icon' => 'th', 'active'=>true ,'name'=>'新闻','content' => $newsContent],
+                  'news2' => ['icon' => 'th', 'name'=>'资料','content' => $ziliaoContent],
                   ]
         ])?>
         
@@ -84,7 +111,7 @@ $done = $query->andWhere(['rest_report.status' => 'finished'])->count();
             </div>
             <!-- /.box-header -->
             <div class="box-body" style="height:300px">
-                
+                <?=$guidesContent ?>
             </div>
             <!-- /.box-body -->
           </div>

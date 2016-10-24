@@ -25,9 +25,14 @@ $orderUrl = Yii::$app->urlManager->createUrl(['/orders/']);
 
     <nav class="navbar navbar-static-top" role="navigation">
 
+        <a href="./" class="sidebar-home"  'title'='主页' role="button">
+            <span class="fa fa-home"></span>
+        </a>
+
         <a href="#" class="sidebar-toggle <?=$hideMenuToggle ?>" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
         </a>
+
         <a class="btn <?=$showMenuToggleBtn ?>" 
         style='position: absolute;line-height: 50px;line-height: 35px;height: 100%;color:#fff' data-toggle="offcanvas" role="button">
         <i class='fa fa-list-ul'></i> 菜单

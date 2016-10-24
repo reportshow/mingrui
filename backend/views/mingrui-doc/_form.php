@@ -7,6 +7,11 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model backend\models\MingruiDoc */
 /* @var $form yii\widgets\ActiveForm */
+
+$type = $_GET['type'];
+if(Yii::$app->user->Identity->role_text=='guest'){
+    $type = 'article';
+}
 ?>
 
 <div class="mingrui-doc-form">
@@ -14,7 +19,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data', 'class' => 'upload']]);?>
 
     <?=$form->field($model, 'title')->textInput(['maxlength' => true])?>
-
+    <?=$form->field($model, 'type')->hiddenInput(['value' => $type ])->label(false)?>
     <?php
 //=$form->field($model, 'description')->textarea(['rows' => 6])
 ?>
@@ -22,7 +27,7 @@ use yii\widgets\ActiveForm;
 
      <?php
         $type = $_GET['type'];
-        if ($type == 'article') {
+        if ($type != 'doc') {
             echo CKeditor::widget(['name' => 'MingruiDoc[description]', 'title' => '内容']);
         } else if ($type == 'doc') {
             echo $form->field($model, 'doc[]')->widget(FileInput::classname(), [

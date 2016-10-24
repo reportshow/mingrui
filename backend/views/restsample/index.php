@@ -35,13 +35,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
         [
             'attribute' => 'name',
-            'options'   => ['width' => 150],
+            'options'   => ['width' => 100],
         ],
         //'type',
         //'ypkd_id',
         //'barcode',
         [
             'attribute' => 'sex',
+            'filter'=>['male'=>'男','female'=>'女'],
             'options'   => ['width' => 60],
             'value'     => function ($model) {
                 return $model->sex == 'female' ? '女' : '男';

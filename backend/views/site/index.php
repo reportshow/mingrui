@@ -12,6 +12,7 @@ if (Yii::$app->user->can('admin')) {
     $role = "guest";
 }
 
+$abc =100;
 
   require "index-{$role}.php";
 

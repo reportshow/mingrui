@@ -110,6 +110,22 @@ $menu[] = [
 
             ],
         ],
+      [
+            'label' => '新闻资料',
+            'icon'  => 'fa fa-file-powerpoint-o',
+            'url'   => ['/mingrui-doc/index','type'=>'news'],
+            'items' => [
+
+            ],
+        ],
+      [
+            'label' => '应用指南',
+            'icon'  => 'fa fa-file-powerpoint-o',
+            'url'   => ['/mingrui-doc/index','type'=>'guide'],
+            'items' => [
+
+            ],
+        ], 
 /*        [
             'label' => '检测目录',
             'icon'  => 'fa fa-file-powerpoint-o',
