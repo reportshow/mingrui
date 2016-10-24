@@ -41,14 +41,12 @@ class MingruiDocController extends Controller
         $params      = Yii::$app->request->queryParams;
 
         $query = MingruiDoc::find();
-        if($type=='article'){
-            $query = $query->where(['doc'=>'']);
-        }else if($type=='doc'){
-             $query = $query->where(['<>','doc', '']);
-        }
+
+        $query = $query->where(['doc' => $type]);
+
         $query = $query
             ->orderBy('id DESC');
-  //echo $query->createCommand()->getRawSql(); exit;
+        //echo $query->createCommand()->getRawSql(); exit;
 
         $dataProvider = $searchModel->search($params, $query);
 

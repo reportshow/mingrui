@@ -50,7 +50,7 @@
       }
       .nav4 ul{
         position:fixed;
-        z-index:200;
+        z-index:99999;
         bottom:0;
         left:0;
         width:100%
@@ -94,7 +94,7 @@
       .nav4 dl{
         display:none;
         position:absolute;
-        z-index:220;
+        z-index:999999;
         bottom:58px;
         left:50%;
         width:100px;
@@ -115,7 +115,7 @@
         content:"";
         display:inline-block;
         position:absolute;
-        z-index:240;
+        z-index:999999;
         bottom:-10px;
         left:50%;
         width: 0;
@@ -160,7 +160,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        z-index: 180;
+        z-index: 9999;
         background: rgba(0,0,0,0);
       }
       .nav4 .masklayer_div.on{display: block;}

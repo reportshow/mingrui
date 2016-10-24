@@ -157,7 +157,7 @@ class RestSample extends \yii\db\ActiveRecord
     }
 
      
-    public $name ='姓名保密';
+    public $name ='赵钱孙李';
      
     public function getRealname(){
       return  $this->__get('name');

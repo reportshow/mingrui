@@ -1,6 +1,6 @@
 <style type="text/css"> 
 </style>
-    <div  style='position:fixed;bottom:0px;color:#333;z-index:3333;left:40px'>
+    <div  style='position:fixed;bottom:0px;color:#333;z-index:811;left:40px'>
         <img src='images/pdf-logo.png' height=32>
     </div>
 <?php

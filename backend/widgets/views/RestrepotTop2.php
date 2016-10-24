@@ -3,7 +3,7 @@ use backend\components\Functions;
 
 $pingjiaUrl = Functions::url(['pingjia/save-xingji']);
 
-?><div class="nav-tabs-custom" style="">
+?><div class="nav-tabs-custom" id="reportTop">
   <ul class="nav nav-tabs">
 
     <li class="<?=$active['view']?>"><a href="<?=Functions::url(['rest-report/view', 'id' => $model_id])?>">报告摘要</a></li>
@@ -29,7 +29,7 @@ $pingjiaUrl = Functions::url(['pingjia/save-xingji']);
     </li>
     <li class="pull-right hide"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
   </ul>
-  <div class="tab-content"></div>
+  <div class="tab-content hide"></div>
 </div>
 
 

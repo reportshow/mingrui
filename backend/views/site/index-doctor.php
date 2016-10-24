@@ -6,11 +6,22 @@ use backend\assets\AppAsset;
 use backend\widgets\ChartLine;
 use backend\widgets\ChartLine2;
 use backend\widgets\NumberBox;
-
+use backend\widgets\NavTabs;
+use backend\models\RestReport;
+use backend\components\Functions;
 
 AppAsset::register($this); 
 //$this->registerJsFile('@web/js/chart.min.js',['depends'=>['backend\assets\AppAsset']]);  
 $this->registerCssFile('@web/css/ionicons.min.css',['depends'=>['backend\assets\AppAsset']]); 
+
+$query = RestReport::find();
+$query = $query->where(['<>', 'ptype', 'yidai']); 
+$query = $query->joinWith(['sample']);
+$doctor_id = Yii::$app->user->Identity->role_tab_id;
+$query = $query->where(['rest_sample.doctor_id' => $doctor_id]);
+
+$total = $query->count();
+$done = $query->andWhere(['rest_report.status' => 'finished'])->count();
 
 ?>
 
@@ -29,10 +40,12 @@ $this->registerCssFile('@web/css/ionicons.min.css',['depends'=>['backend\assets\
             <?= NumberBox::widget( ['tag'=>'上次登录时间', 'number'=>'<h4>'.date('Y-m-d H:i:s',time()-1000).'</h4>', 'bgcolor'=>'aqua','icon'=>'fa fa-user-md']);  ?>
             </div> 
             <div  >
-              <?= NumberBox::widget( ['tag'=>'已报告', 'number'=>9643, 'bgcolor'=>'yellow','icon'=>'stats-bars']);  ?>
+              <?= NumberBox::widget( ['tag'=>'已报告', 'number'=>$done,
+               'bgcolor'=>'yellow','icon'=>'stats-bars','link'=>Functions::url(['rest-report/index']) 
+               ]);  ?>
             </div>
             <div >
-              <?= NumberBox::widget( ['tag'=>'分析中', 'number'=>25, 'bgcolor'=>'red','icon'=>'android-time']);  ?>
+              <?= NumberBox::widget( ['tag'=>'分析中', 'number'=>$total-$done, 'bgcolor'=>'red','icon'=>'android-time','link'=>Functions::url(['rest-report/index']) ]);  ?>
             </div>
         </div>
       </div>
@@ -43,82 +56,39 @@ $this->registerCssFile('@web/css/ionicons.min.css',['depends'=>['backend\assets\
         <!-- Left col -->
         <section class="col-lg-7 connectedSortable">
 
-
-          <!-- Custom tabs (Charts with tabs)-->
-          <div class="nav-tabs-custom">
-            <!-- Tabs within a box -->
-            <ul class="nav nav-tabs pull-right">
-              <li class="active"><a href="#revenue-chart" data-toggle="tab">动态</a></li>
-              <li><a href="#sales-chart" data-toggle="tab">资料</a></li>
-              <li class="pull-left header" style='font-weight: normal;font-size: 12pt'>
-                新闻资讯
-              </li>
-            </ul>
-            <div class="tab-content no-padding">
-              <!-- Morris chart - Sales -->
-              <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
-              <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
-            </div>
-          </div>
-          <!-- /.nav-tabs-custom -->
-
-    
- 
-
+         <style type="text/css">
+           .tab-content{height:300px;}
+           .content-header{display: none}
+         </style> 
+        <?=NavTabs::widget([
+          'icon'=>'chrome',  
+          'header'=>'最新资讯',
+          'position'=>'right',
+          'data'=> [
+                  'news' => ['icon' => 'th', 'active'=>true ,'name'=>'新闻','content' => '新闻'],
+                  'news2' => ['icon' => 'th', 'name'=>'资料','content' => '资料'],
+                  ]
+        ])?>
+        
     
         </section>
         <!-- /.Left col -->
         <!-- right col (We are only adding the ID to make the widgets sortable)-->
         <section class="col-lg-5 connectedSortable">
+ 
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <i class="fa fa-street-view"></i>
 
-        
-
-          <!-- solid sales graph -->
-          <div class="box box-solid bg-teal-active">
-            <div class="box-header">
-              <i class="fa fa-th"></i>
-
-              <h3 class="box-title">报告</h3>
-
-              <div class="box-tools pull-right">
-                <button type="button" class="btn bg-teal btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn bg-teal btn-sm" data-widget="remove"><i class="fa fa-times"></i>
-                </button>
-              </div>
+              <h3 class="box-title">应用指南</h3>
             </div>
-            <div class="box-body border-radius-none">
-              <div class="chart" id="line-chart" style="height: 250px;"></div>
+            <!-- /.box-header -->
+            <div class="box-body" style="height:300px">
+                
             </div>
             <!-- /.box-body -->
-            <div class="box-footer no-border">
-              <div class="row">
-                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                  <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60" data-fgColor="#39CCCC">
-
-                  <div class="knob-label">Mail-Orders</div>
-                </div>
-                <!-- ./col -->
-                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                  <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60" data-fgColor="#39CCCC">
-
-                  <div class="knob-label">Online</div>
-                </div>
-                <!-- ./col -->
-                <div class="col-xs-4 text-center">
-                  <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60" data-fgColor="#39CCCC">
-
-                  <div class="knob-label">In-Store</div>
-                </div>
-                <!-- ./col -->
-              </div>
-              <!-- /.row -->
-            </div>
-            <!-- /.box-footer -->
           </div>
-          <!-- /.box -->
-
-           
+          <!-- /.box --> 
 
         </section>
         <!-- right col -->
