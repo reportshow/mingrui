@@ -1,24 +1,22 @@
 <?php
 use backend\assets\AppAsset;
-use yii\helpers\Html;
 use backend\widgets\RestrepotTop2;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\RestReport */
 
-$this->title                   = '报告:' . $model->sample->name;
-$this->params['breadcrumbs'][] = ['label' => '报告列表', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id'=>$model->id]];
-$this->params['breadcrumbs'][] = $this->title . ' 数据分类';
+$this->title                   = $model->sample->name;
+$this->params['breadcrumbs'][] = ['label' => '报告管理', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = '报告归类';
 
 AppAsset::register($this);
 
-$report_id = $model->id;
-$pingjiaUrl= Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
-
+$report_id  = $model->id;
+$pingjiaUrl = Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
 
 ?>
-<?=RestrepotTop2::widget(['model_id'=>$model->id]); ?>
+<?=RestrepotTop2::widget(['model_id' => $model->id]);?>
 
 
 <style>
@@ -37,7 +35,7 @@ $pingjiaUrl= Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
   input::-webkit-input-placeholder { /* WebKit browsers */
 　　color:#f99;
 　　}
- 
+
 </style>
 
 
@@ -52,25 +50,25 @@ $pingjiaUrl= Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
           <h3>临床表型(phepotype)</h3>
         </div>
         <!-- /.box-header -->
-        <!-- form start --> 
+        <!-- form start -->
             <div> </div>
 
             <div class="input-group col-md-6" style="margin-bottom: 15px;">
-                  <input type="text" id="linchuang" class="form-control" name="linchuang" 
-                  placeholder="请输入临床诊断/特异表型"> 
+                  <input type="text" id="linchuang" class="form-control" name="linchuang"
+                  placeholder="请输入临床诊断/特异表型">
                   <span class='input-group-btn'>
                     <button id='linchuangpingjia' ctype='button' class='btn btn-info btn-flat'
                     style='border-top-left-radius: 0;border-bottom-left-radius: 0;'>
-                    <i class='fa  fa-check'></i> <span>确定</span>
+                    <i class='fa  fa-check hide'></i> <span>确定</span>
                     </button>
                   </span>
 
                   <p class="help-block help-block-error"></p>
-            </div>             
-          <!-- /.box-body -->               
-      <script type="text/javascript">         
+            </div>
+          <!-- /.box-body -->
+      <script type="text/javascript">
           $('#linchuangpingjia').click(function(){
-              var url = "<?=$pingjiaUrl ?>";
+              var url = "<?=$pingjiaUrl?>";
               var val = $('#linchuang').val();
               $.ajax({
                    type: "POST",
@@ -83,7 +81,7 @@ $pingjiaUrl= Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
                         }
                    }
                });
-          }); 
+          });
       </script>
 
 </div>
@@ -93,12 +91,12 @@ $pingjiaUrl= Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
 
 
 
-<?php if(strcmp($data, '[]')) {?>
-<?php foreach(json_decode($data, true) as $gene=>$gene_data) {?>
+<?php if (strcmp($data, '[]')) {?>
+<?php foreach (json_decode($data, true) as $gene => $gene_data) {?>
           <div class="box-header ">
            <!--  <h3>基因型(genetype):</h3> -->
-<?php foreach($gene_data['genetype_str'] as $str) {?>
-       <?= $str?><br/>
+<?php foreach ($gene_data['genetype_str'] as $str) {?>
+       <?=$str?><br/>
 <?php }?>
        </div>
     <p style="text-align:center;">外显子分布及病人突变外显子</p>
@@ -123,14 +121,14 @@ $pingjiaUrl= Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
     </div>
     <!-- /.box-body -->
 <?php }?>
-<?php } else { ?>
-<?php if(empty($explain)) { ?>
+<?php } else {?>
+<?php if (empty($explain)) {?>
           <h1 style="text-align:center;">没有检测到异常基因!</h1>
-<?php } else { ?>
+<?php } else {?>
           <h5 style="text-align:center;">外显子（Exon）CNV检测结果：</h5>
-          <div style="text-align: center;"><?= $explain ?></div>
-<?php } ?>
-<?php } ?>
+          <div style="text-align: center;"><?=$explain?></div>
+<?php }?>
+<?php }?>
   </div>
   <!-- /.box-body -->
 </div>
@@ -170,7 +168,7 @@ for(var gene in data) {
           $('#table_'+gene).find('tbody').append(row);
      }
 
-     
+
      countmax = areas[0][2];
      countmin = areas[0][2];
      for(var i=0; i<areas.length; i++) {
@@ -222,7 +220,7 @@ for(var gene in data) {
                drawLine(context, areas[i][0]+areas[i][1]/2, startY-20, areas[i][0]+areas[i][1]/2, startY+height+20, '#ff0000');
           }
      }
-     
+
 }
 
 

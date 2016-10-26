@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\MingruiQaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '问题列表';
+$this->title = '常见QA';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mingrui-qa-index">

@@ -9,7 +9,7 @@ use backend\widgets\PdfShow;
 /* @var $model backend\models\RestReport */
 
 $this->title                   = '报告:' . $model->sample->name;
-$this->params['breadcrumbs'][] = ['label' => '报告列表', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '报告管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 echo $this->render('/site/index-guest-top'); 

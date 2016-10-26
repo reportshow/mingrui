@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\MingruiVideoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '视频分享';
+$this->title = '共享视频';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 

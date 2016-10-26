@@ -23,6 +23,9 @@ $newsContent = '';
 foreach ($news as $key => $new) {
   $newsContent .="<li><a href=''>".$new->title."</a></li>";
 }
+//http://news.baidu.com/ns?word=%E5%9F%BA%E5%9B%A0&tn=newsfcu&from=news&cl=2&rn=10&ct=0
+//
+
 
 $ziliao = Sitepage::docContent('doc');
 $ziliaoContent = '';
@@ -39,7 +42,7 @@ foreach ($guides as $key => $guide) {
 ?>
 
     <!-- Main content -->
-    <section class="content " id='homepage'>
+<div id='homepage' style="max-width: 1100px">
 
 
       <!-- Small boxes (Stat box) -->
@@ -49,23 +52,26 @@ foreach ($guides as $key => $guide) {
 
         </div> 
         <div class="col-lg-2">        
-            <div  >
-            <?php   echo NumberBox::widget( [
-               'tag'=>'上次登录时间', 'number'=>'<h4>'.date('Y-m-d H:i:s',time()-1000).'</h4>', 
+            <div  class='col-lg-12 col-xs-4'>
+            <?php   
+              $time = "<div style='font-size:2rem'>". date('H:i:s',time()-1000) ."</div>";
+              $date = "<div style='font-size:1.5rem'>".date('Y-m-d',time()) ."</div>";
+              echo NumberBox::widget( [
+               'tag'=>'上次登录时间', 'number'=>" $date  $time ", 
                'bgcolor'=>'aqua','icon'=>'fa fa-user-md',
               'link'=>['上次登录时间'=>'']
               ]); 
               ?>
             </div> 
 
-            <div  >
+            <div    class='col-lg-12 col-xs-4'>
               <?= NumberBox::widget( [
                 'tag'=>'已报告', 'number'=>$tongji['done'],
                'bgcolor'=>'yellow','icon'=>'stats-bars',
                'link'=>['已报告'=>Functions::url(['rest-report/index'])] 
                ]);  ?>
             </div>
-            <div >
+            <div    class='col-lg-12 col-xs-4'>
               <?= NumberBox::widget( [
                 'tag'=>'分析中', 'number'=>$tongji['ongoing'], 'bgcolor'=>'red','icon'=>'android-time',
                 'link'=>['分析中'=>Functions::url(['rest-report/index']) ],
@@ -79,12 +85,12 @@ foreach ($guides as $key => $guide) {
       <!-- /.row -->
 
       <!-- Main row -->
-      <div class="row">
+      <div class="row" style="margin-top:0px">
         <!-- Left col -->
         <section class="col-lg-7 connectedSortable">
 
          <style type="text/css">
-           .tab-content{height:300px;}
+           .tab-content{height:200px;}
            .content-header{display: none}
          </style> 
         <?=NavTabs::widget([
@@ -104,13 +110,11 @@ foreach ($guides as $key => $guide) {
         <section class="col-lg-5 connectedSortable">
  
           <div class="box box-solid">
-            <div class="box-header with-border">
-              <i class="fa fa-street-view"></i>
-
-              <h3 class="box-title">应用指南</h3>
+            <div class="box-header with-border"  >
+              <i class="fa fa-gg"></i><h3 class="box-title">应用指南</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body" style="height:300px">
+            <div class="box-body" style="height:200px">
                 <?=$guidesContent ?>
             </div>
             <!-- /.box-body -->
@@ -122,4 +126,4 @@ foreach ($guides as $key => $guide) {
       </div>
       <!-- /.row (main row) -->
 
-    </section>
+</div>

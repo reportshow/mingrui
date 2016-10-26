@@ -15,6 +15,10 @@ if (Yii::$app->user->can('admin')) {
     .sidebar-menu .treeview-menu{padding-left: 15px}
     .myavatar:hover{border:0px solid #fff;border-radius:32px;-webkit-box-shadow: 0 0 15px #fff;}
     .user-panel .info .roletxt{    font-style: normal;    color: #4489A9;    padding-left: 5px;}
+    .siderbar-spliter{position: absolute;top:50%;right:-13px; transform: translateY(-50%); cursor:pointer; transition-duration:0.4s;}
+    
+
+     
 </style>
 <aside class="main-sidebar">
 
@@ -22,7 +26,7 @@ if (Yii::$app->user->can('admin')) {
 
         <!-- Sidebar user panel -->
         <div class="user-panel" >
-            <a class="pull-left image" href='<?=Functions::url('profile/show')?>' title='修改个人资料'>
+            <a class="pull-left image" href='<?=Functions::url('profile/show')?>' title=''>
                 <img src="<?= Yii::$app->user->identity->avatar ?>" class="img-circle myavatar" 
                 onerror="this.src='images/user2.png';" alt="User Image"/>
             </a>
@@ -45,6 +49,7 @@ if (Yii::$app->user->can('admin')) {
         </form>
         <!-- /.search form -->
 
+        <div class='siderbar-spliter' data-toggle="offcanvas" title=''><img src='images/siderbar.png'></div>
  <?php
 
 echo dmstr\widgets\Menu::widget([
@@ -53,6 +58,28 @@ echo dmstr\widgets\Menu::widget([
 ]);
 
 ?>
+
+
+    <style type="text/css"> 
+    .fixedlogo{position:absolute;bottom:50px;color:#333;left:0px;text-align: center;}
+    .fixedlogo{transition-delay:0.3s}
+    .sidebar-collapse .fixedlogo{ transition-delay: 0s;opacity: 0;}
+    @media screen and (max-width:1370px) and (min-width:800px) {
+    .fixedlogo{width:200px}
+    }
+    @media screen and (min-width:1370px) {
+    .fixedlogo{width:230px}
+    }
+    @media screen and (max-width:800px) {
+    .fixedlogo{    opacity: 0;}
+    .sidebar-open .fixedlogo{width:230px; display: block}
+    }
+
+    </style>
+    <div  class='fixedlogo'>
+        <a href='http://precisionmdx.com/index.html' target="_blank"><img src='images/pdf-logo.png' height=32></a>
+    </div>
+
 
     </section>
 

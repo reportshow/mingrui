@@ -1,19 +1,20 @@
 <?php
 
+use backend\models\MingruiPingjia;
 use yii\grid\GridView;
 use yii\helpers\Html;
-use backend\models\MingruiPingjia;
-
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\MingruiVcfSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title                   = 'VCF外源数据分析';
+$this->title                   = '外源数据分析';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mingrui-vcf-index">
-
+<style type="text/css">
+    .content-wrapper{overflow: auto}
+</style>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
@@ -21,66 +22,87 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
     <?php
 
-    $columns = [
-        ['attribute' => 'id', 'options' => ['width' => '60px;']],
+$columns = [
+    ['class'  => 'yii\grid\SerialColumn',
+        'options' => ['width' => '40px;'],
 
-       
-        ['attribute' => 'creator_name', 'label' => '上传者', 'options' => ['width' => '100px;'],
-            'value'      => function ($model) {
-                return $model->creator->nickname;
-         }],
-	    
-	    
-        'sick', //患者姓名
-        
-         ['attribute'=>'sex',
-         'filter'=>['male'=>'男','female'=>'女'],
-         'options' => ['width' => '60']
-         ], 
-         ['attribute'=>'age','options' => ['width' => '60']],
+    ],
+    /*['attribute' => 'id', 'options' => ['width' => '60px;']],*/
 
-        'tel',
-        'product',
-        'diagnose:ntext',
-        'gene',
-	    
-         ['attribute' => 'tel',
-         'label'=>'星级评价',
-            'filter'     => MingruiPingjia::getSimpleArray(),
-         'value'=>function($model){
+    ['attribute' => 'creator_name', 'label' => '上传者', 'options' => ['width' => '100px;'],
+        'value'      => function ($model) {
+            return $model->creator->nickname;
+        }],
+
+    'sick', //患者姓名
+
+    ['attribute' => 'sex',
+        'filter'     => ['male' => '男', 'female' => '女'],
+        'options'    => ['width' => '60'],
+    ],
+    ['attribute' => 'age', 'options' => ['width' => '60']],
+
+    'tel',
+    'product',
+    'diagnose:ntext',
+    'gene',
+
+    ['attribute' => 'tel',
+        'label'      => '星级评价',
+        'filter'     => MingruiPingjia::getSimpleArray(),
+        'value'      => function ($model) {
             //return $model->pingjia ? $model->pingjia : '-';
-         }],
+        }],
 
-        ['attribute' => 'vcf', 
-	 'format' => 'raw',
-	 'options' => ['width' => '90px;'],
-	 'label'=>'vcf文件',
-            'value'      => function ($model) {
-                return Html::a('下载VCF', ['vcf/download', 'id' => $model->id], ['class' => 'btn btn-info']);
-            }],
+/*    ['attribute' => 'vcf',
+'format'     => 'raw',
+'options'    => ['width' => '90px;'],
+'label'      => 'vcf文件',
+'value'      => function ($model) {
+return Html::a('下载VCF', ['vcf/download', 'id' => $model->id], ['class' => 'btn btn-info']);
+}],
 
-        ['attribute' => 'status', 
-	 'format' => 'raw', 
-	 'options' => ['width' => '90px;'],
-           'label'=>'vcf状态',
-	    'value'      => function ($model) {
-                $status = $model->getTaskStatus()=='complete' ? '完成':'处理中..';
-                return  "<button class='btn'>$status</button>";
-            }],
-                
-		
-        ['class' => 'yii\grid\ActionColumn' ],
-    ];
+['attribute' => 'status',
+'format'     => 'raw',
+'options'    => ['width' => '90px;'],
+'label'      => 'vcf状态',
+'value'      => function ($model) {
+$status = $model->getTaskStatus() == 'complete' ? '完成' : '处理中..';
+return "<button class='btn'>$status</button>";
+}],*/
 
-    if (!Yii::$app->user->can('admin')) {
-        array_splice($columns,1,1);
-    }
+    [
+        'attribute' => 'vcf',
+        'format'    => 'raw',
+        'filter'    => '',
+         'options'   => ['width' => '150px;'],
+        'label'     => '操作',
+        'value'     => function ($model) {
+            $html = Html::a('下 载', ['vcf/download', 'id' => $model->id], ['class' => 'btn btn-info']);
+            if ($model->getTaskStatus() == 'complete') {
+                $status = '完成';
+                $disable = '';
+            } else {
+                $status = '处理中';
+                 $disable = 'disabled';
+            }
+            $html .= "<a class='btn btn-info $disable'>$status</a>";
+            return $html;
+        },
+    ],
 
-    echo GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel'  => $searchModel,
-        'columns'      => $columns,
-    ]);
+    ['class' => 'yii\grid\ActionColumn'],
+];
+
+if (!Yii::$app->user->can('admin')) {
+    array_splice($columns, 1, 1);
+}
+
+echo GridView::widget([
+    'dataProvider' => $dataProvider,
+    'filterModel'  => $searchModel,
+    'columns'      => $columns,
+]);
 
 ?>
 </div>

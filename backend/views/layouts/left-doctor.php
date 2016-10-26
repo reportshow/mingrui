@@ -1,8 +1,4 @@
-<style type="text/css"> 
-</style>
-    <div  style='position:fixed;bottom:30px;color:#333;z-index:811;left:40px'>
-        <a href='http://precisionmdx.com/index.html' target="_blank"><img src='images/pdf-logo.png' height=32></a>
-    </div>
+
 <?php
 
 $menu =[];
@@ -119,7 +115,7 @@ $menu[] = ['label' => '互动平台',
         [
             'label' => '常见QA',
             'icon'  => 'fa fa-pie-chart',
-            'url'   => ['/mingrui-qa'],
+            'url'   => ['/mingrui-qa/index'],
         ],
         [
             'label' => '在线留言',

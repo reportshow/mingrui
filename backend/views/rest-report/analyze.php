@@ -7,10 +7,10 @@ use backend\components\Functions;
 /* @var $this yii\web\View */
 /* @var $model backend\models\RestReport */
 
-$this->title                   = '报告:' . $model->sample->name; 
-$this->params['breadcrumbs'][] = ['label' => '报告列表', 'url' => ['index']];
+$this->title                   =  $model->sample->name; 
+$this->params['breadcrumbs'][] = ['label' => '报告管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id'=>$model->id]];
-$this->params['breadcrumbs'][] = $this->title . '      数据自分析';
+$this->params['breadcrumbs'][] = '数据分析';
 
 AppAsset::register($this); 
 ?>

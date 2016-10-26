@@ -2,16 +2,16 @@
 
 use backend\components\Functions;
 //use dosamigos\datepicker\DatePicker;
+use backend\models\MingruiPingjia;
 use backend\widgets\DateInput;
 use yii\grid\GridView;
 use yii\helpers\Html;
-use backend\models\MingruiPingjia;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\RestReportSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 $unfinished                    = Yii::$app->request->get('unfinished');
-$this->title                   = '报告检索'; //$unfinished ? '未出报告' : '已出报告';
+$this->title                   = '报告管理'; //$unfinished ? '未出报告' : '已出报告';
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -21,7 +21,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <style type="text/css">
     .content-wrapper{overflow: auto}
-    .disabled{background: #999;border:0px;}
     tr td:nth-child(3){
        -webkit-filter: blur(6px);-filter: blur(6px);
     }
@@ -40,7 +39,7 @@ return ['onclick' => "location.href='$url';", 'style'=>'cursor:pointer'];
     'columns'      => [
         ['class'  => 'yii\grid\SerialColumn',
             'options' => ['width' => '40px;'],
-            
+
         ],
 
         /*        [
@@ -107,12 +106,12 @@ return $date->format('Y-m-d');
         [
             'attribute' => 'sex',
             'filter'    => ['male' => '男', 'female' => '女'],
-            'format' =>'raw',
+            'format'    => 'raw',
             'value'     => function ($model) {
                 return $model->sample->sex == 'female' ? '女' : '男';
             },
             'options'   => ['width' => '56'],
-            'label'=>'性别',
+            'label'     => '性别',
         ],
         [
             'attribute' => 'age',
@@ -137,17 +136,17 @@ return $date->format('Y-m-d');
             ]),
             'options'   => ['width' => '120'],
         ], //<=====加入这句
-	
-	        [
+
+        [
             'attribute' => 'method',
             'label'     => '方法',
             'filter'    => Html::activeTextInput($searchModel, 'product_name', [
-                'class' => 'form-control',
-                'readonly'=>'readonly',
-                'style'=>'background:#fff',
+                'class'    => 'form-control',
+                'readonly' => 'readonly',
+                'style'    => 'background:#fff',
             ]),
 
-            'options'   => ['width' => '46','readonly'=>'readonly'],
+            'options'   => ['width' => '46', 'readonly' => 'readonly'],
             'value'     => function ($model) {
                 if (strpos($model->report_id, 'NG') !== false) {
                     return 'NGS';
@@ -166,7 +165,7 @@ return $date->format('Y-m-d');
 
             },
         ],
-////////////////////////////////////////////////////////	
+////////////////////////////////////////////////////////
         [
             'attribute'     => 'gene',
             'label'         => '基因型',
@@ -179,12 +178,11 @@ return $date->format('Y-m-d');
             'value'     => 'pingjia.linchuang',
             'options'   => ['width' => '80'],
         ],
-	
-	
+
         [
             'attribute'     => 'pingjia',
-           // 'filter' => Html::activeDropDownList($searchModel, 'sex',['1'=>'男','0'=>'女'], ['prompt'=>'全部'] ),
-           'filter'=>MingruiPingjia::getSimpleArray(),
+            // 'filter' => Html::activeDropDownList($searchModel, 'sex',['1'=>'男','0'=>'女'], ['prompt'=>'全部'] ),
+            'filter'        => MingruiPingjia::getSimpleArray(),
             'value'         => function ($model) {
                 $obj = $model->pingjia;
                 if ($obj) {
@@ -194,8 +192,7 @@ return $date->format('Y-m-d');
             'label'         => '星级评价',
             'headerOptions' => ['width' => '80'],
         ],
-/////////////////////////////////////////////////	
-
+/////////////////////////////////////////////////
 
 /*        [
 'attribute' => 'tel1',
@@ -244,7 +241,7 @@ return $model->status =='finished' ? '<span class="bg-primary" style="padding:3p
         // 'sample_id',
         // 'pdf',
         // 'conclusion',
-              /*  ['label'        => '结论',
+        /*  ['label'        => '结论',
         'attribute'     => 'conclusion',
         'filter'        => ['阴性' => '阴性', '疑似阳性' => '疑似阳性', '阳性' => '阳性'],
         'format'        => 'raw',
@@ -281,14 +278,19 @@ return $model->status =='finished' ? '<span class="bg-primary" style="padding:3p
         'template' => '{view} {000update} {000delete}',
         ],*/
         [
-            'options'   => ['width' => '120'],
-            'label' => '操作',
-            'format'    => 'raw',
-            'value'     => function ($model) {
-                $urlreport = Yii::$app->urlManager->createUrl(
+            'options' => ['width' => '120'],
+            'label'   => '操作',
+            'format'  => 'raw',
+            'value'   => function ($model) {
+                $urlreport = Functions::url(
                     ['rest-report/view', 'id' => $model->id]
                 );
-                $urldata = Yii::$app->urlManager->createUrl(
+                if (!Functions::ismobile()) {
+                    $urlreport = Functions::url(
+                        ['rest-report/comments', 'id' => $model->id]
+                    );
+                }
+                $urldata = Functions::url(
                     ['rest-report/analyze', 'id' => $model->id]
                 );
                 $reportStatus     = $model->status == 'finished' ? '' : 'disabled';

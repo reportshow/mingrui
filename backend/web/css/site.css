@@ -138,6 +138,9 @@ td{    white-space: nowrap !important;
     border-radius: 5px;
 }
 
+
+.disabled{background-color: #999 !important;border:0px;cursor:not-allowed;border:1px solid  #777  !important;}
+
 th a{color:#333;}
 thead td select{padding:5px !important;}
 
@@ -151,4 +154,5 @@ thead td select{padding:5px !important;}
     .sidebar-collapse .main-header .logo{width:50px;}
     .main-header .navbar.navbar-static-top{margin-left: 200px}
    .wrapper .content-wrapper{margin-left: 200px}
+    footer.main-footer{margin-left: 200px}
 }

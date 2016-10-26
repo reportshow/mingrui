@@ -8,7 +8,7 @@ use backend\components\Functions;
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model \common\models\LoginForm */
 
-$this->title = 'Sign In';
+$this->title = '登录';
 
 $fieldOptions1 = [
     'options'       => ['class' => 'form-group has-feedback'],
@@ -37,10 +37,14 @@ $fieldOptions2 = [
       .tab-content{
 
       }
+      .nav-tabs-custom>.nav-tabs>li>a{color:#111;}
+      .nav-tabs-custom>.nav-tabs>li.active>a, .nav-tabs-custom>.nav-tabs>li.active:hover>a{
+        color:#111;
+      }
     </style>
  
 <div class="login-logo" style="margin-top:7%;color:#fff;font-family: 'Microsoft Yahei';cursor: default">
-   <b>明睿 </b> <span style="font-size:0.8em">单病云管家 </span>
+   <img src='logo.png' height=50> <span style="font-size:0.8em">明睿单病云管家 </span>
 </div>
 
 <div class="login-box " style='margin-top:0%;width:480px'>
@@ -48,7 +52,7 @@ $fieldOptions2 = [
     <!-- /.login-logo -->
     <div class="login-box-body"  >
 
-         <div class="nav-tabs-custom tab-info" style='margin-bottom: 0px; '>
+         <div class="nav-tabs-custom tab-info" style='margin-bottom: 0px;color:#111 !important; '>
             <ul class="nav nav-tabs pull-right">
                 <li ck-data='account' class='hide'><a data-toggle="tab" href="#tab_1-1">帐号</a></li>
                 <li  ck-data='sick'>
@@ -63,7 +67,7 @@ $fieldOptions2 = [
                 </li>
                 <li class="accountentery pull-left header"> 登录</li>
             </ul>
-            <div class="tab-content" style="padding:30px;">
+            <div class="tab-content" style="padding:30px;height:290px">
                 <div class="tab-pane " id="tab_1-1">
                     <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]);?>
 
@@ -122,8 +126,8 @@ $fieldOptions2 = [
         </div>
         <!-- nav-tabs-custom -->
 
-
-
+        <div style="text-align: center;color:#fff;margin-top: 50px;">北京金准基因科技有限责任公司</div>
+        <div style="text-align: center;color:#fff;margin-top: 10px;">金准医学检验所</div>
     </div>
     <!-- /.login-box-body -->
 </div><!-- /.login-box -->

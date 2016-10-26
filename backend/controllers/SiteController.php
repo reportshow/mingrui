@@ -6,7 +6,6 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
-use backend\widgets\Nodata;
 
 /**
  * Site controller
@@ -84,9 +83,12 @@ class SiteController extends Controller
     }
 
     public function actionLogout()
-    {
+    {   //var_dump($_SESSION); 
         Yii::$app->user->logout();
-
+        
+        unset($_SESSION['openid']);
+        unset($_SESSION['wechat_entery']);
+        unset($_SESSION);//exit;
         return $this->goHome();
     }
 
@@ -95,5 +97,4 @@ class SiteController extends Controller
         echo "OK";
     }
 
- 
 }

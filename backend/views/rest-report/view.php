@@ -10,11 +10,10 @@ use backend\widgets\Summary;
 
 $this->title = $model->sample->name;
 
-$this->params['breadcrumbs'][] = ['label' => '报告列表', 'url' => ['index']];
-
-$this->params['breadcrumbs'][] = $this->title;
-
+$this->params['breadcrumbs'][] = ['label' => '报告管理', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id' => $model->id]];
  
+$this->params['breadcrumbs'][] = '报告摘要';
 
 ?>
 <div class="rest-report-view">

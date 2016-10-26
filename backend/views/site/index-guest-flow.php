@@ -4,7 +4,7 @@ $this->params['breadcrumbs']  = '' ;
  
 
 
-?><div class="box box-solid fullhight"  height="100%">
+?><div class="box box-solid fullhight" id='sliderbox' height="100%">
     <!-- /.box-header -->
     <div class="box-body fullhight"  style="padding:0px;">
         <div class="carousel slide fullhight" data-ride="carousel" id="carousel-example-generic">

@@ -13,15 +13,15 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'sample_id')->textInput(['maxlength' => true]) ?>
+    <?php  //= $form->field($model, 'sample_id')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?php  //= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'type')->textInput(['maxlength' => true]) ?>
+    <?php  //= $form->field($model, 'type')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'ypkd_id')->textInput(['maxlength' => true]) ?>
+    <?php  //= $form->field($model, 'ypkd_id')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'barcode')->textInput(['maxlength' => true]) ?>
+    <?php //= $form->field($model, 'barcode')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'sex')->textInput(['maxlength' => true]) ?>
 

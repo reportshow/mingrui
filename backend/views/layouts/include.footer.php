@@ -6,10 +6,10 @@ use backend\components\Functions;
  
  @media(min-width:640px) {
 	 .main-header {position:fixed;width:100%}  
-     .main-sidebar {position: fixed} 
+     
      .content-wrapper{margin-top:50px;}
 }
-    
+    .main-sidebar {position: fixed} 
 
  
 </style>

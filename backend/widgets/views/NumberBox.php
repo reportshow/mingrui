@@ -13,7 +13,7 @@
      ?>
         <a href='<?=$link  ?>' style='color:#fff'><?=$k?>
           <i class="fa fa-arrow-circle-right">        </i>
-        </a>&nbsp;&nbsp;
+        </a>
     <?php
         }
     ?>

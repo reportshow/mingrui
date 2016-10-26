@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\MingruiQa */
 
-$this->title = '联系我们';
-$this->params['breadcrumbs'][] = ['label' => 'Mingrui Qas', 'url' => ['index']];
+$this->title = '联系方式';
+//$this->params['breadcrumbs'][] = ['label' => '', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mingrui-qa-view">

@@ -8,15 +8,20 @@ use backend\widgets\DateInput;
 /* @var $searchModel backend\models\RestSampleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title                   = '患者资料';
+$this->title                   = '我的病人';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<style type="text/css">
+     tr td:nth-child(2){
+       -webkit-filter: blur(6px);-filter: blur(6px);
+    }
+</style>
 <div class="rest-sample-index">
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?=Html::a('新建患者资料', ['create'], ['class' => 'btn btn-success'])?>
+        <?php  //=Html::a('新建患者资料', ['create'], ['class' => 'btn btn-success'])?>
     </p>
     <?=GridView::widget([
     'dataProvider' => $dataProvider,
@@ -25,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         $url = Yii::$app->urlManager->createUrl(['restsample/view', 'id' => $model->sample_id]);
         return ['onclick' => "location.href='$url';", 'style' => 'cursor:pointer'];
     },
-    'emptyCell'    => '搜索',
+    'emptyCell'    => '',
     'columns'      => [
         [
             'class'   => 'yii\grid\SerialColumn',
@@ -114,7 +119,7 @@ $this->params['breadcrumbs'][] = $this->title;
         // 'shouyang_date',
         // 'shouyanged',
 
-        ['class' => 'yii\grid\ActionColumn','options'   => ['width' => 80],],
+        ['class' => 'yii\grid\ActionColumn','options' => ['width' => 80],],
     ],
 ]);?>
 </div>

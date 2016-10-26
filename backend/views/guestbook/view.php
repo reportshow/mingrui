@@ -7,7 +7,7 @@ use backend\widgets\Summary;
 /* @var $this yii\web\View */
 /* @var $model backend\models\RestReport */
 
-$this->title                   = '在线留言:'  ; 
+$this->title                   = '在线留言'  ; 
 $this->params['breadcrumbs'][] = $this->title;
 ?>
  

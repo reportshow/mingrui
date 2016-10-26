@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\MingruiDocSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-$doctype                       = $_GET['type'] == 'article' ? '案例' : '文档';
-$this->title                   = $doctype . '分享';
+$doctype                       = $_GET['type'] == 'article' ? '案例分享' : '文档资料';
+$this->title                   = $doctype  ;
 $this->params['breadcrumbs'][] = $this->title;
 
 $newBtnText = '新建 ' . $doctype;

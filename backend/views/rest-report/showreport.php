@@ -13,9 +13,9 @@ $report = RestReport::findOne($id);
 $sick   = $report->sample->name;
 
 $this->title                   = '报告:' . $model->sample->name;
-$this->params['breadcrumbs'][] = ['label' => '报告列表', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '报告管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $sick, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = '报告详情';
 
 AppAsset::register($this);
 //$this->registerJsFile('@web/js/pdfobject.min.js',['position' => POS_HEAD,'depends'=>['backend\assets\AppAsset']]);

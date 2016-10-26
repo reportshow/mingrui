@@ -107,7 +107,7 @@ class RestSample extends \yii\db\ActiveRecord
     {
         return [
             'sample_id'       => '样本ID',
-            'name'            => '用户名',
+            'name'            => '姓名',
             'type'            => '样本类型',
             'ypkd_id'         => 'Ypkd ID',
             'barcode'         => 'Barcode',

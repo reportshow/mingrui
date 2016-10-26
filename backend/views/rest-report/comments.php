@@ -8,11 +8,11 @@ use backend\widgets\Summary;
 /* @var $this yii\web\View */
 /* @var $model backend\models\RestReport */
 
-$this->title = '报告:' . $model->sample->name;
-
-$this->params['breadcrumbs'][] = ['label' => '报告列表', 'url' => ['index']];
-
-$this->params['breadcrumbs'][] = $this->title;
+$this->title =  $model->sample->name;
+$this->params['breadcrumbs'][] = ['label' => '报告管理', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id' => $model->id]];
+ 
+$this->params['breadcrumbs'][] = '意见反馈';
 
  
 

@@ -18,8 +18,8 @@ $sick   = $report->sample->name;
 $isSick = Yii::$app->user->Identity->role_text=='guest';
 
 $this->title                   = $isSick ? '上传 图片' : '完善资料';
-$this->params['breadcrumbs'][] = ['label' => '完善资料', 'url' => ['rest-report/index']];
-$this->params['breadcrumbs'][] = ['label' => "[{$sick}]报告", 'url' => ['rest-report/view', 'id' => $id]];
+$this->params['breadcrumbs'][] = ['label' => '报告管理', 'url' => ['rest-report/index']];
+$this->params['breadcrumbs'][] = ['label' => $sick, 'url' => ['rest-report/view', 'id' => $id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mingrui-attachment-index">

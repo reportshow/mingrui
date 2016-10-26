@@ -1,5 +1,7 @@
 <?php
 namespace backend\widgets;
+
+use backend\components\Functions;
 use Yii;
 use yii\base\Widget;
 
@@ -37,8 +39,14 @@ class RestrepotTop2 extends Widget
                 break;
         }
         $active[$activeid] = 'active';
+        if (!Functions::ismobile()) {
+            if ($active['view'] == 'active') {
+                $active['comments'] = 'active';
+            }
+            $active['view'] = 'hide';
+        }
 
-        return $this->render('RestrepotTop2', ['model_id' => $this->model_id,'active'=>$active]);
+        return $this->render('RestrepotTop2', ['model_id' => $this->model_id, 'active' => $active]);
     }
 
 }
