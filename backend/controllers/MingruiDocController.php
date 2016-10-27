@@ -42,11 +42,11 @@ class MingruiDocController extends Controller
 
         $query = MingruiDoc::find();
 
-        $query = $query->where(['doc' => $type]);
+        $query = $query->where(['type' => $type]);
 
         $query = $query
             ->orderBy('id DESC');
-        //echo $query->createCommand()->getRawSql(); exit;
+         
 
         $dataProvider = $searchModel->search($params, $query);
 
@@ -86,7 +86,7 @@ class MingruiDocController extends Controller
             //var_export($model);exit;
 
             SaveImage::save($model, 'doc');
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index', 'type' => $model->type]);
         } else {
             return $this->render('create', [
                 'model' => $model,

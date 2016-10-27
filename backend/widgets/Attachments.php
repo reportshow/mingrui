@@ -7,18 +7,16 @@ class Attachments extends Widget
 {
     public $model             = [];
     public $field             = null; //取模型的这个字段
-    public static $hasbegined = false;
-    public static function begin($config = [])
-    {
-        if (static::$hasbegined) {
+    public static $instance = null;
+    public  static function begin($config = [])
+    { 
+        if (static::$instance) {
             return;
         }
 
-        static::$hasbegined = true;
+        static::$instance =  new Attachments();
 
-        $tmp = new Attachments();
-
-        return $tmp->render('Attachments', ['init' => true]);
+        return static::$instance->render('Attachments', ['init' => true]);
     }
     public function run()
     {

@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <style type="text/css">
     .content-wrapper{overflow: auto}
-    tr td:nth-child(3){
+   .content tr td:nth-child(3){
        -webkit-filter: blur(6px);-filter: blur(6px);
     }
     thead td select{padding:5px !important;}
@@ -93,7 +93,11 @@ return $date->format('Y-m-d');
             'attribute' => 'username',
             'value'     => function ($model) {
                 $sample = $model->sample;
-                $name   = $sample->name;
+                if (!$sample) {
+                   //var_dump($model); exit();
+                    return "异常";
+                }
+                $name = $sample->name;
                 return $name;
                 return mb_strlen($name) > 9 ? mb_substr($name, 0, 9) . '..' : $name;
             },
@@ -108,7 +112,9 @@ return $date->format('Y-m-d');
             'filter'    => ['male' => '男', 'female' => '女'],
             'format'    => 'raw',
             'value'     => function ($model) {
-                return $model->sample->sex == 'female' ? '女' : '男';
+                $sample = $model->sample;
+                if(!$sample) return "x";
+                return $sample->sex == 'female' ? '女' : '男';
             },
             'options'   => ['width' => '56'],
             'label'     => '性别',
@@ -117,7 +123,9 @@ return $date->format('Y-m-d');
             'attribute' => 'age',
             'label'     => '年龄',
             'value'     => function ($model) {
-                return $model->sample->age ? $model->sample->age : '-';
+                $sample = $model->sample;
+                if(!$sample) return "x";
+                return $sample->age ? $model->sample->age : '-';
             },
             'options'   => ['width' => '60px;'],
         ],
@@ -280,6 +288,9 @@ return $model->status =='finished' ? '<span class="bg-primary" style="padding:3p
         [
             'options' => ['width' => '120'],
             'label'   => '操作',
+            'filter'=> Html::submitButton('搜索', ['class' => 'btn btn-primary']) 
+            .Html::resetButton('恢复', ['class' => 'btn btn-default rest']) ,
+            //Html::a('搜索', '#', ['class' => 'btn btn-success']),
             'format'  => 'raw',
             'value'   => function ($model) {
                 $urlreport = Functions::url(

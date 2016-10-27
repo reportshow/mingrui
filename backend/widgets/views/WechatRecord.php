@@ -80,7 +80,7 @@
  </textarea>
 
  <script type="text/javascript">
-
+  var wechatIsReady=false;
      function isWeixin(){
         var ua = navigator.userAgent.toLowerCase();
         if(ua.match(/MicroMessenger/i)=="micromessenger") {
@@ -93,7 +93,7 @@
       wx.config(<?=$config ?>);
 
       wx.ready(function(){
-          
+          wechatIsReady = true;
       });
       wx.onVoiceRecordEnd({
           // 录音时间超过一分钟没有停止的时候会执行 complete 回调
@@ -337,6 +337,9 @@ wx.uploadVoice({
    }
 
    $('body').bind("voice_init", function(e, data){
+      if(!wechatIsReady){
+          alert('没有获得微信录音权限,请稍后重试');
+      }
       if(typeof(data) != "undefined")
       if(typeof(data.multi) != "undefined" && !data.multi){
          //$('#addmorevoice').hide();

@@ -1,8 +1,8 @@
 <?php
 
+use backend\widgets\DateInput;
 use yii\grid\GridView;
 use yii\helpers\Html;
-use backend\widgets\DateInput;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\RestSampleSearch */
@@ -12,18 +12,18 @@ $this->title                   = '我的病人';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style type="text/css">
-     tr td:nth-child(2){
+     .content tr td:nth-child(2){
        -webkit-filter: blur(6px);-filter: blur(6px);
     }
 </style>
 <div class="rest-sample-index">
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); 
-    ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]);
+?>
 
     <p>
-        <?php  //=Html::a('新建患者资料', ['create'], ['class' => 'btn btn-success'])
-        ?>
+        <?php //=Html::a('新建患者资料', ['create'], ['class' => 'btn btn-success'])
+?>
     </p>
     <?=GridView::widget([
     'dataProvider' => $dataProvider,
@@ -49,16 +49,16 @@ $this->params['breadcrumbs'][] = $this->title;
         //'barcode',
         [
             'attribute' => 'sex',
-            'filter'=>['male'=>'男','female'=>'女'],
+            'filter'    => ['male' => '男', 'female' => '女'],
             'options'   => ['width' => 60],
             'value'     => function ($model) {
                 return $model->sex == 'female' ? '女' : '男';
             },
         ],
-         [
+        [
             'attribute' => 'birthday',
             'options'   => ['width' => 120],
-             'filter'    => DateInput::widget(['attribute' => 'birthday', 'model' => $searchModel]),
+            'filter'    => DateInput::widget(['attribute' => 'birthday', 'model' => $searchModel]),
         ],
 
         // 'age',
@@ -72,8 +72,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 //return str_replace(' ', '', $list[0]) . (count($list) > 1 ? '-等' : '');
                 $tels = str_replace(' ', '', $tels);
                 $tels = str_replace('-', '', $tels);
-               /* if (strlen($tels) > 11) {
-                    $tels = substr($tels, 0, 11) . '...';
+                /* if (strlen($tels) > 11) {
+                $tels = substr($tels, 0, 11) . '...';
                 }*/
                 return $tels;
             },
@@ -83,8 +83,8 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         // 'tel2',
         // 'email:email',
-        ['attribute'=>'address','options'   => ['width' => 120],],
-       
+        ['attribute' => 'address', 'options' => ['width' => 120]],
+
         // 'symptom:ntext',
         // 'date',
         // 'has_project',
@@ -121,7 +121,13 @@ $this->params['breadcrumbs'][] = $this->title;
         // 'shouyang_date',
         // 'shouyanged',
 
-        ['class' => 'yii\grid\ActionColumn','options' => ['width' => 80],],
+        ['class'        => 'yii\grid\ActionColumn',
+            'header'        => '操作',
+            'filterOptions' => ['data-toggle' => 'gridviewoprator'],
+            'options'       => [
+                'width' => 80,
+            ],
+        ],
     ],
 ]);?>
 </div>

@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use backend\widgets\Attachments;
 
+echo Attachments::begin( );
 
 if (!function_exists('delScript')) {
     function delScript($string)

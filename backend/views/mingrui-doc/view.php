@@ -10,12 +10,12 @@ use backend\widgets\Comments;
 /* @var $model backend\models\MingruiDoc */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => '案例分享', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '案例分享', 'url' => ['index','type'=>$model->type]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mingrui-doc-view">
  
-    <p>
+    <p class='hide'>
         <?= Html::a('修改', ['update', 'id'           => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('删除', ['delete', 'id'           => $model->id], [
             'class' => 'btn btn-danger',

@@ -63,7 +63,8 @@ class WechatUser extends Model
     {
         //设置医生或用户的id
 
-        $erp_user = RestClient::find()->where(['tel' => $mobile])->one();
+        //$erp_user = RestClient::find()->where(['tel' => $mobile])->one();
+        $erp_user = RestClient::find()->where(['like', "REPLACE(tel,' ','')", $mobile])->one();
         if ($erp_user) {
             $role_text = 'doctor';
             $userid    = $erp_user->id;
@@ -203,7 +204,9 @@ class WechatUser extends Model
     {
         if ($user->role_text != $_SESSION['wechat_entery']) {
             //串号了
-            echo Nodata::widget(['title' => '错误!', 'message' => '您没有权限使用该公众号' . $user->role_text .  $_SESSION['wechat_entery']]);
+            echo Nodata::widget(['title' => '错误!', 
+                'message' => '您没有权限使用该公众号[' . $user->role_text .'/'.  $_SESSION['wechat_entery'].']'
+                ]);
             return;
         } 
 

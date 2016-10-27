@@ -15,4 +15,10 @@
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
-<link rel="stylesheet" href="css/green.css">	 
+<?php
+$role = Yii::$app->user->Identity->role_text;
+if(!empty($role) && $role='doctor'){
+  echo "<link rel='stylesheet' href='css/green.css'>";
+}
+
+?>

@@ -140,11 +140,14 @@ class RestReportSearch extends RestReport
             ->andFilterWhere(['like', 'rest_sample.tel', $this->tel])
 
             ->andFilterWhere(['like', 'mingrui_pingjia.pingjia', $this->pingjia]) //<=====加入这句
-            ->andFilterWhere(['like', 'mingrui_pingjia.linchuang', $this->linchuang]) //<=====加入这句
-            ->andFilterWhere(['like', 'snpsave', $this->gene])
+            ->andFilterWhere(['like', 'mingrui_pingjia.linchuang', $this->linchuang]) //<=====加入这句            
             ->andFilterWhere(['like', 'rest_report.report_id', $this->method])
         ;
-
+        if($this->gene){
+            $like = '": ["%'.$this->gene.'%",';
+            $query->andFilterWhere(['like', 'snpsave', "%{$like}%", false]);
+        }
+       // echo $query->createCommand()->getRawSql(); exit;
         return $dataProvider;
     }
 }

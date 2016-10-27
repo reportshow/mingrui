@@ -41,6 +41,7 @@ $fieldOptions2 = [
       .nav-tabs-custom>.nav-tabs>li.active>a, .nav-tabs-custom>.nav-tabs>li.active:hover>a{
         color:#111;
       }
+      .tab-pane .qrcode{height: 200px;}
     </style>
  
 <div class="login-logo" style="margin-top:7%;color:#fff;font-family: 'Microsoft Yahei';cursor: default">
@@ -67,7 +68,7 @@ $fieldOptions2 = [
                 </li>
                 <li class="accountentery pull-left header"> 登录</li>
             </ul>
-            <div class="tab-content" style="padding:30px;height:290px">
+            <div class="tab-content" style="padding:30px;">
                 <div class="tab-pane " id="tab_1-1">
                     <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]);?>
 
@@ -97,7 +98,7 @@ $fieldOptions2 = [
                 <!-- /.tab-pane -->
                 <div class="tab-pane " id="tab_2-2">
                 <center>
-                    <img src="<?=$model->QrLoginUrl('sick')?>" style="width:200px"><br>微信扫一扫
+                    <img src="<?=$model->QrLoginUrl('sick')?>" class='qrcode' ><br>微信扫一扫
                 </center>
 
                 </div>
@@ -106,7 +107,7 @@ $fieldOptions2 = [
 
                <div class="tab-pane active" id="tab_2-3">
                 <center>
-                    <img src="<?=$model->QrLoginUrl('doctor')?>" style="width:200px"><br>微信扫一扫
+                    <img src="<?=$model->QrLoginUrl('doctor')?>"  class='qrcode' ><br>微信扫一扫
                 </center>
 
                 </div>

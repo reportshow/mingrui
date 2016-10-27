@@ -39,7 +39,9 @@ $this->params['breadcrumbs'][] = $this->title;
         // 'attachements:ntext',
         // 'createtime',
 
-        ['class' => 'yii\grid\ActionColumn'],
+        ['class' => 'yii\grid\ActionColumn',
+        'filterOptions'=>['data-toggle'=>'gridviewoprator'],
+        ],
     ],
 ]);?>
 </div>

@@ -99,14 +99,13 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
 }*/
 
         if (Yii::$app->user->can('doctor')) {
-            $mobile = Yii::$app->user->Identity->username;
-            $doctor = RestClient::find()->where(['tel' => $mobile])->one();
-            if (!$doctor) {
-                return "医生资料未找到";
-            }
+            $doctor_id = Yii::$app->user->Identity->role_tab_id;
+           // $doctor = RestClient::find()->where(['tel' => $mobile])->one();
+           //  var_dump(Yii::$app->user->Identity);exit;
+
             $query = $query->joinWith(['sample']);
 
-            $query = $query->where(['rest_sample.doctor_id' => $doctor->id]);
+            $query = $query->where(['rest_sample.doctor_id' => $doctor_id]);
             //echo $query->createCommand()->getRawSql(); exit;
         } else if (Yii::$app->user->can('admin')) {
 

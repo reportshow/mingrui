@@ -1,4 +1,6 @@
  <?php
+
+ use yii\helpers\Html;
 use backend\widgets\WeixinMenubar;
 use backend\components\Functions;
 ?>
@@ -47,7 +49,7 @@ use backend\components\Functions;
 <!-- AdminLTE App -->
 <!--script src="<?=$directoryAsset?>/js/app.min.js"></script-->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="<?=$directoryAsset?>/js/pages/dashboard.js"></script>
+<!-- <script src="<?=$directoryAsset?>/js/pages/dashboard.js"></script> -->
 <!-- AdminLTE for demo purposes -->
 <script src="<?=$directoryAsset?>/js/demo.js"></script>
 
@@ -58,3 +60,19 @@ use backend\components\Functions;
 
 
 <?=WeixinMenubar::widget();?>
+
+<script type="text/javascript">
+    
+    $(function(){
+    	<?php
+    	  $html =  Html::submitButton('搜索', ['class' => 'btn btn-primary']) 
+            .Html::resetButton('恢复', ['class' => 'btn btn-default rest']) ;
+    	?>
+    	$("[data-toggle='gridviewoprator']").html('<?=$html?>');
+
+    	$('.rest').click(function(){
+	        $('.form-control').val('') ;
+	        $('.table .form-control').eq(0).change();
+	    });
+   });
+</script>

@@ -226,7 +226,7 @@ padding: 11px 10px;
 .bg-aqua .small-box-footer{background:#FECA7F;}
 .bg-yellow .small-box-footer{background: #6ED9F9}
 .bg-red .small-box-footer{background: #FDB2C7}
-section.content{padding:30px 30px 10px 30px}
+#homepage section.content{padding:30px 30px 10px 30px}
 .inner h3,.inner h4{text-align: center;color:#888;}
 
 .summarybox  .widget-user-image{display: none}
