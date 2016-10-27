@@ -13,7 +13,8 @@ $newBtnText = '新建 ' . $doctype;
 
 ?>
 <div class="mingrui-doc-index">
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    ?>
 
     <p>
         <?php

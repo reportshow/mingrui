@@ -18,10 +18,12 @@ $this->params['breadcrumbs'][] = $this->title;
 </style>
 <div class="rest-sample-index">
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    ?>
 
     <p>
-        <?php  //=Html::a('新建患者资料', ['create'], ['class' => 'btn btn-success'])?>
+        <?php  //=Html::a('新建患者资料', ['create'], ['class' => 'btn btn-success'])
+        ?>
     </p>
     <?=GridView::widget([
     'dataProvider' => $dataProvider,

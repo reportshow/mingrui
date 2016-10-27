@@ -25,7 +25,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="mingrui-attachment-index">
 
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    ?>
 
 <?php
 if ($isSick) {

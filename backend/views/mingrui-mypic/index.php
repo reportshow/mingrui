@@ -12,7 +12,8 @@ $this->title = '';
 ?>
 <div class="mingrui-mypic-index">
  
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    ?>
 
     <p>
         <?= Html::a('上传图片', ['create'], ['class' => 'btn btn-success']) ?>

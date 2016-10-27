@@ -13,7 +13,8 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="mingrui-qa-index">
 
     
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]);
+     ?>
 
     <p>
         <?= Html::a('新建问题', ['create'], ['class' => 'btn btn-success']) ?>

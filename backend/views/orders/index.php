@@ -14,7 +14,8 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mingrui-order-index">
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]);
+     ?>
 
     <p>
         <?=Html::a('新建订单', ['create'], ['class' => 'btn btn-success'])?>

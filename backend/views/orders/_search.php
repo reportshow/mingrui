@@ -25,7 +25,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'assigned') ?>
 
-    <?php // echo $form->field($model, 'notes') ?>
+    <?php // echo $form->field($model, 'notes') 
+    ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

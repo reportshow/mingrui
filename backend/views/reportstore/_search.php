@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?= $form->field($model, 'id'); ?>
 
     <?= $form->field($model, 'uid') ?>
 
@@ -25,15 +25,20 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'tel') ?>
 
-    <?php // echo $form->field($model, 'diagnose') ?>
+    <?php // echo $form->field($model, 'diagnose')
+     ?>
 
-    <?php // echo $form->field($model, 'gene') ?>
+    <?php // echo $form->field($model, 'gene')
+     ?>
 
-    <?php // echo $form->field($model, 'pingjia') ?>
+    <?php // echo $form->field($model, 'pingjia') 
+    ?>
 
-    <?php // echo $form->field($model, 'attachements') ?>
+    <?php // echo $form->field($model, 'attachements')
+     ?>
 
-    <?php // echo $form->field($model, 'createtime') ?>
+    <?php // echo $form->field($model, 'createtime') 
+    ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
