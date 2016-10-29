@@ -60,31 +60,10 @@ class VcfController extends Controller
               $vcf_url = Yii::$app->params['vcfservice'] . '/api/task/result/' . $model->task_id;
               $datas = file_get_contents($vcf_url);
          }
-
-         $datas = json_decode($datas, true);
-         if($datas == NULL) {
-              $datas= [];
-         }
-             
-        foreach ($datas as $key => $data) {
-            $str = $datas[$key][2];
-            $ret = preg_match('/.*-([0-9]+).*/', $data[1], $matches);
-            if ($ret) {
-                $types = Genetypes::find()->where(['startcoord' => $matches[1]])->one();
-                if ($types) {
-                    $datas[$key][] = $str . '<br/>' . $types->disease . '<br/>' . $types->descr;
-                } else {
-                    $datas[$key][] = $str;
-                }
-            } else {
-                $datas[$key][] = $str;
-            }
-        }
-        $data = json_encode($datas);
-        
+         
         return $this->render('view', [
                                    'model' => $model,
-                                   'data'  => $data
+                                   'data'  => $datas
                                    ]);
     }
 
