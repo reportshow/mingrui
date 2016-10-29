@@ -51,8 +51,8 @@ $this->params['breadcrumbs'][] = $this->title;
 </script>
 
 <link type="text/css" href="css/multiselect.css" rel="stylesheet" />
-<script src="report/app.js"></script>
-<script src="report/export.js"></script>
+<script src="report/app_external.js"></script>
+<script src="report/tableExport.js"></script>
 <style type="text/css">
     .content-wrapper{overflow: auto}
     .disabled{background: #999;border:0px;}
