@@ -19,7 +19,9 @@ use kartik\file\FileInput;
 		echo $form->field($model, 'vcf[]')->widget(FileInput::classname(), [
 		    'options'       => ['multiple' => true, 'accept' => '*/*'],
 		    'pluginOptions' => [
-		        'showUpload' => false,
+		        'showUpload' => true,
+                'showPreview' => false,
+                'previewFileType'=>'none'
 		    ],
 		])->label('选择vcf文件');
 	?>

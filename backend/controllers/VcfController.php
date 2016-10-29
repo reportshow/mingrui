@@ -16,6 +16,8 @@ use yii\web\NotFoundHttpException;
  */
 class VcfController extends Controller
 {
+    public $enableCsrfValidation = false;
+    
     /**
      * @inheritdoc
      */
