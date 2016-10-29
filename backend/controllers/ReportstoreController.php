@@ -2,12 +2,13 @@
 
 namespace backend\controllers;
 
-use Yii;
 use backend\models\MingruiReportstore;
 use backend\models\MingruiReportstoreResearch;
+use backend\models\SaveImage;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * ReportstoreController implements the CRUD actions for MingruiReportstore model.
@@ -21,7 +22,7 @@ class ReportstoreController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class'   => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -36,10 +37,15 @@ class ReportstoreController extends Controller
     public function actionIndex()
     {
         $searchModel = new MingruiReportstoreResearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $params      = Yii::$app->request->queryParams;
+        $query       = MingruiReportstore::find();
+        if (!Yii::$app->user->can('admin')) {
+            $query = $query->where(['uid' => Yii::$app->user->id]);
+        }
+        $dataProvider = $searchModel->search($params, $query);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel'  => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -65,15 +71,15 @@ class ReportstoreController extends Controller
     {
         $model = new MingruiReportstore();
 
-        if ($model->load(Yii::$app->request->post())  ) {
-            $model->uid = Yii::$app->user->id;
+        if ($model->load(Yii::$app->request->post())) {
+            $model->uid          = Yii::$app->user->id;
             $model->attachements = '';
             if (!$model->save()) {
                 var_export($model->errors);
             }
             SaveImage::save($model, 'attachements');
 
-            return $this->redirect(['index', 'id'           => $model->id]);
+            return $this->redirect(['index', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -92,7 +98,7 @@ class ReportstoreController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id'           => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
                 'model' => $model,

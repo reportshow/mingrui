@@ -65,8 +65,8 @@ use backend\components\Functions;
     
     $(function(){
     	<?php
-    	  $html =  Html::submitButton('搜索', ['class' => 'btn btn-primary']) 
-            .Html::resetButton('清空', ['class' => 'btn btn-default rest']) ;
+    	  $html =  Html::submitButton('搜 &nbsp;索', ['class' => 'btn btn-info']) 
+            .Html::resetButton('清 &nbsp;空', ['class' => 'btn btn-default rest']) ;
     	?>
     	$("[data-toggle='gridviewoprator']").html('<?=$html?>');
 

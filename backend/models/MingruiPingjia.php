@@ -57,7 +57,7 @@ class MingruiPingjia extends \yii\db\ActiveRecord
     }
     public static function getSimpleArray()
     {
-        $text = [];
+        $text = [''=>'全部'];
         foreach (self::$pingjiaText as $key => $value) {
             $text[$key] =  $value['label'] . ' ';
         }

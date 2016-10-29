@@ -98,7 +98,8 @@ class PingjiaController extends Controller
         }
 
         if ($linchuang) {
-            $model->linchuang = $linchuang;
+            $val              = $linchuang == 'null' ? '' : $linchuang;
+            $model->linchuang = $val;
         }
 
         if ($model->save()) {

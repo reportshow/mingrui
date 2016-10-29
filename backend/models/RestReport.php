@@ -232,7 +232,7 @@ class RestReport extends \yii\db\ActiveRecord
         foreach ($snp_array as $key => $data) {
             $user_snp_genes[] = $data[0];
         }
-        return empty($user_snp_genes) ? null : join($user_snp_genes,',');
+        return empty($user_snp_genes) ? null : join(',', $user_snp_genes);
 
     }
 

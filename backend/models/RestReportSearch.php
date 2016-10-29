@@ -147,7 +147,7 @@ class RestReportSearch extends RestReport
             $like = '": ["%'.$this->gene.'%",';
             $query->andFilterWhere(['like', 'snpsave', "%{$like}%", false]);
         }
-       // echo $query->createCommand()->getRawSql(); exit;
+     // echo $query->createCommand()->getRawSql(); exit;
         return $dataProvider;
     }
 }

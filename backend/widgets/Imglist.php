@@ -12,7 +12,7 @@ class Imglist extends Widget
         $modelS    = $this->dataProvider->getModels();
         
         if (count($modelS) < 1) {
-        	 return $this->render('Nodata', ['message' => $this->nullMessage ]);
+        	 return $this->render('Nodata', ['message' => $this->nullMessage,'background'=>'#aaa' ]);
         }
 
         return $this->render('Imglist', ['models' => $modelS]);
