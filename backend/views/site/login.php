@@ -180,7 +180,7 @@ $fieldOptions2 = [
 
 
 <style type="text/css">
-  .nav-tabs-custom{ background: rgba(255,255,255,0.7);}
+  .nav-tabs-custom{ background: rgba(255,255,255,0.6);}
   .nav-tabs-custom>.tab-content{ background: none;}
   .nav-tabs-custom>.nav-tabs>li.active>a, .nav-tabs-custom>.nav-tabs>li.active:hover>a{ background: none;}
   

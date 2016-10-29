@@ -304,8 +304,8 @@ return $model->status =='finished' ? '<span class="bg-primary" style="padding:3p
                 $urldata = Functions::url(
                     ['rest-report/analyze', 'id' => $model->id]
                 );
-                $reportStatus     = $model->status == 'finished' ? '' : 'disabled';
-                $reportStatusText = $model->status == 'finished' ? '查报告' : '检测中';
+                $reportStatus     = $model->pdfurl  ? '' : 'disabled';
+                $reportStatusText = $reportStatus == 'disabled' ?  '检测中':'查报告' ;
                 $dataStatus       = $model->snpsqlite ? '' : 'disabled';
                 $dataStatuseText  = strpos($model->report_id, 'YD') !== false ? '无数据' : '查数据';
                 $html             = "<a href='$urlreport' class='btn btn-info $reportStatus'>$reportStatusText</a>";
@@ -328,9 +328,12 @@ if (Functions::ismobile()) {
 }
 
 echo GridView::widget($GridViewParam);
-
+ 
 ?>
 </div>
+<script type="text/javascript">
+    var totalPage = <?=$dataProvider->totalCount ?>;
+</script>
 
 
 

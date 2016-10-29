@@ -139,7 +139,8 @@ td{    white-space: nowrap !important;
 }
 
 
-.disabled{background-color: #999 !important;border:0px;cursor:not-allowed;border:1px solid  #777  !important;}
+.disabled{background-color: #999 !important;border:0px;cursor:not-allowed;}
+.btn-info.disabled{border:1px solid #888;}
 
 th a{color:#333;}
 thead td select{padding:5px !important;}

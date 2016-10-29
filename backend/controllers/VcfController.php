@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\Genetypes;
 use backend\models\MingruiVcf;
 use backend\models\MingruiVcfSearch;
 use backend\models\SaveImage;
@@ -9,8 +10,6 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use common\components\SMS;
-use backend\models\Genetypes;
 
 /**
  * VcfController implements the CRUD actions for MingruiVcf model.
@@ -38,8 +37,14 @@ class VcfController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel  = new MingruiVcfSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel = new MingruiVcfSearch();
+        $params      = Yii::$app->request->queryParams;
+        $query       = MingruiVcf::find();
+        if (!Yii::$app->user->can('admin')) {
+            $query = $query->where(['uid' => Yii::$app->user->id]);
+        }
+
+        $dataProvider = $searchModel->search($params, $query);
 
         return $this->render('index', [
             'searchModel'  => $searchModel,
@@ -54,18 +59,18 @@ class VcfController extends Controller
      */
     public function actionView($id)
     {
-         $model = $this->findModel($id);
-         $datas='';
-         if(!empty($model->task_id )  ) {
-              $vcf_url = Yii::$app->params['vcfservice'] . '/api/task/result/' . $model->task_id;
-              $datas = file_get_contents($vcf_url);
-         }
+        $model = $this->findModel($id);
+        $datas = '';
+        if (!empty($model->task_id)) {
+            $vcf_url = Yii::$app->params['vcfservice'] . '/api/task/result/' . $model->task_id;
+            $datas   = file_get_contents($vcf_url);
+        }
 
-         $datas = json_decode($datas, true);
-         if($datas == NULL) {
-              $datas= [];
-         }
-             
+        $datas = json_decode($datas, true);
+        if ($datas == null) {
+            $datas = [];
+        }
+
         foreach ($datas as $key => $data) {
             $str = $datas[$key][2];
             $ret = preg_match('/.*-([0-9]+).*/', $data[1], $matches);
@@ -81,11 +86,11 @@ class VcfController extends Controller
             }
         }
         $data = json_encode($datas);
-        
+
         return $this->render('view', [
-                                   'model' => $model,
-                                   'data'  => $data
-                                   ]);
+            'model' => $model,
+            'data'  => $data,
+        ]);
     }
 
     public function actionDownload($id)
@@ -115,18 +120,17 @@ class VcfController extends Controller
                 var_export($model->errors);exit;
             }
             SaveImage::save($model, 'vcf');
-            
+
             //create annotate task on remote server
-            $vcf_url = Yii::$app->params['vcfservice'] . '/api/task/new';
-            $file = json_decode($model->vcf, true)[0];
+            $vcf_url                  = Yii::$app->params['vcfservice'] . '/api/task/new';
+            $file                     = json_decode($model->vcf, true)[0];
             $file_name_with_full_path = realpath(getcwd() . '/' . $file['path']);
-            $task_id = $this->postFile($vcf_url, 'file', $file['name'], $file_name_with_full_path);
-            if(strcmp($task_id, 'error')){
-                 $model->task_id = $task_id;
-                 $model->save();
+            $task_id                  = $this->postFile($vcf_url, 'file', $file['name'], $file_name_with_full_path);
+            if (strcmp($task_id, 'error')) {
+                $model->task_id = $task_id;
+                $model->save();
             }
 
-            
             $this->sendNotice();
 
             return $this->redirect(['view', 'id' => $model->id]);
@@ -142,7 +146,7 @@ class VcfController extends Controller
         $mobile = Yii::$app->params['master_vcf_mobile'];
         $voice  = Yii::$app->params['master_vcf_voice'];
 
-       //  SMS::landingCall($voice, $mobile);
+        //  SMS::landingCall($voice, $mobile);
     }
     /**
      * Updates an existing MingruiVcf model.
@@ -193,31 +197,31 @@ class VcfController extends Controller
     }
 
     private function postFile($url, $key, $file_name, $file)
-    {    
-         $eol = "\r\n"; //default line-break for mime type
-         $BOUNDARY = md5(time());
-         $BODY="";
-         $BODY.= '--'.$BOUNDARY. $eol;
-         $BODY.= 'Content-Disposition: form-data; name="'.$key.'"; filename="'.$file_name.'"'. $eol ;
-         $BODY.= 'Content-Type: application/octet-stream' . $eol;
-         $BODY.= 'Content-Transfer-Encoding: base64' . $eol . $eol;
-         $BODY.= chunk_split(base64_encode(file_get_contents($file))) . $eol;
-         $BODY.= '--'.$BOUNDARY .'--' . $eol. $eol;
+    {
+        $eol      = "\r\n"; //default line-break for mime type
+        $BOUNDARY = md5(time());
+        $BODY     = "";
+        $BODY .= '--' . $BOUNDARY . $eol;
+        $BODY .= 'Content-Disposition: form-data; name="' . $key . '"; filename="' . $file_name . '"' . $eol;
+        $BODY .= 'Content-Type: application/octet-stream' . $eol;
+        $BODY .= 'Content-Transfer-Encoding: base64' . $eol . $eol;
+        $BODY .= chunk_split(base64_encode(file_get_contents($file))) . $eol;
+        $BODY .= '--' . $BOUNDARY . '--' . $eol . $eol;
 
-         $ch = curl_init();
-         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-                          "Content-Type: multipart/form-data; boundary=".$BOUNDARY)
-              );
-         curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/1.0 (Windows NT 6.1; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0');
-         curl_setopt($ch, CURLOPT_URL, $url);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+            "Content-Type: multipart/form-data; boundary=" . $BOUNDARY)
+        );
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/1.0 (Windows NT 6.1; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0');
+        curl_setopt($ch, CURLOPT_URL, $url);
 
-         curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1); // call return content
-         curl_setopt ($ch, CURLOPT_FOLLOWLOCATION, 1);
-         curl_setopt($ch, CURLOPT_POST, true); //set as post
-         curl_setopt($ch, CURLOPT_POSTFIELDS, $BODY); // set our $BODY
-         $response = curl_exec($ch); // start curl navigation
-         
-         return $response;
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // call return content
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_POST, true); //set as post
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $BODY); // set our $BODY
+        $response = curl_exec($ch); // start curl navigation
+
+        return $response;
     }
-         
+
 }
