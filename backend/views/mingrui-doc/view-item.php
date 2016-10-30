@@ -50,9 +50,28 @@ if ($model->doc) {
                 </div>
                 <!-- /.user-block -->
                 <div class="box-tools ">
-                    <?= Html::a('详情/评论', ['mingrui-doc/view', 'id' => $model->id], [
+                    <?php
+
+                    if(Yii::$app->user->can('admin')){
+
+                       echo Html::a('修改', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ;
+                       echo  Html::a('删除', ['delete', 'id' => $model->id], [
+                            'class' => 'btn btn-danger',
+                            'data' => [
+                                'confirm' => '您确定要删除这条记录吗?',
+                                'method' => 'post',
+                            ],
+                        ]);
+                    }
+
+                   if($actname=='index')
+                   { 
+                    echo Html::a('详情/评论', ['mingrui-doc/view', 'id' => $model->id], [
                         'class' => 'btn btn-info',                         
-                    ]) ?>
+                        ]);
+                    }  
+                 ?>
+
                     <button class="btn btn-box-tool hide" data-widget="collapse" type="button">
                         <i class="fa fa-minus">
                         </i>

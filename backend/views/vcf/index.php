@@ -75,6 +75,7 @@ return "<button class='btn'>$status</button>";
         'attribute' => 'vcf',
         'format'    => 'raw',
         'filter'    => '',
+       'filterOptions'=>['data-toggle'=>'gridviewoprator'],
          'options'   => ['width' => '150px;'],
         'label'     => '操作',
         'value'     => function ($model) {
@@ -93,7 +94,6 @@ return "<button class='btn'>$status</button>";
 
     ['class' => 'yii\grid\ActionColumn',
        'header' =>'操作',
-       'filterOptions'=>['data-toggle'=>'gridviewoprator'],
       /*'filter'=>Html::submitButton('搜索', ['class' => 'btn btn-primary']) 
             .Html::resetButton('恢复', ['class' => 'btn btn-default rest']) ,
         */    

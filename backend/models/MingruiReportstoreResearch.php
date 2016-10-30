@@ -39,9 +39,9 @@ class MingruiReportstoreResearch extends MingruiReportstore
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $query='')
     {
-        $query = MingruiReportstore::find();
+        if(!$query) $query = MingruiReportstore::find();
 
         // add conditions that should always apply here
 

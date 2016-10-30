@@ -65,8 +65,8 @@ use backend\components\Functions;
     
     $(function(){
     	<?php
-    	  $html =  Html::submitButton('搜索', ['class' => 'btn btn-primary']) 
-            .Html::resetButton('恢复', ['class' => 'btn btn-default rest']) ;
+    	  $html =  Html::submitButton('搜 &nbsp;索', ['class' => 'btn btn-info']) 
+            .Html::resetButton('清 &nbsp;空', ['class' => 'btn btn-default rest']) ;
     	?>
     	$("[data-toggle='gridviewoprator']").html('<?=$html?>');
 
@@ -74,5 +74,16 @@ use backend\components\Functions;
 	        $('.form-control').val('') ;
 	        $('.table .form-control').eq(0).change();
 	    });
+
+	    if($('.pagination').length > 0){
+	    	var url = location.href+'&page=1';
+	    	$html = '<li class="prev"><a href="'+url+'" data-page="0">|&lt;</a></li>';
+	    	$('.pagination').prepend($html);
+
+	    	var url = location.href+'&page='+totalPage;
+	    	$html = '<li class="prev"><a href="'+url+'" data-page="0">&gt;|</a></li>';
+	    	$('.pagination').append($html);
+
+	    }
    });
 </script>

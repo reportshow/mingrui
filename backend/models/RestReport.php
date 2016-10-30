@@ -223,14 +223,16 @@ class RestReport extends \yii\db\ActiveRecord
 
     public function getGene()
     {
-
+        if(!$this->pdfurl){
+            return '..';
+        }
         $snp_array = json_decode($this->snpsave, true);
 
         $user_snp_genes = [];
         foreach ($snp_array as $key => $data) {
             $user_snp_genes[] = $data[0];
         }
-        return empty($user_snp_genes) ? null : $user_snp_genes[0];
+        return empty($user_snp_genes) ? null : join(',', $user_snp_genes);
 
     }
 

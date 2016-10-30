@@ -109,7 +109,7 @@ return $date->format('Y-m-d');
 
         [
             'attribute' => 'sex',
-            'filter'    => ['male' => '男', 'female' => '女'],
+            'filter'    => [''=>'全部','male' => '男', 'female' => '女'],
             'format'    => 'raw',
             'value'     => function ($model) {
                 $sample = $model->sample;
@@ -148,7 +148,7 @@ return $date->format('Y-m-d');
         [
             'attribute' => 'method',
             'label'     => '方法',
-            'filter'    => Html::activeTextInput($searchModel, 'product_name', [
+            'filter'    => Html::activeTextInput($searchModel, 'method', [
                 'class'    => 'form-control',
                 'readonly' => 'readonly',
                 'style'    => 'background:#fff',
@@ -288,8 +288,8 @@ return $model->status =='finished' ? '<span class="bg-primary" style="padding:3p
         [
             'options' => ['width' => '120'],
             'label'   => '操作',
-            'filter'=> Html::submitButton('搜索', ['class' => 'btn btn-primary']) 
-            .Html::resetButton('恢复', ['class' => 'btn btn-default rest']) ,
+            'filter'=> Html::submitButton('搜 &nbsp; 索', ['class' => 'btn btn-info']) 
+            .Html::resetButton('恢 &nbsp;  复', ['class' => 'btn btn-default rest']) ,
             //Html::a('搜索', '#', ['class' => 'btn btn-success']),
             'format'  => 'raw',
             'value'   => function ($model) {
@@ -304,8 +304,8 @@ return $model->status =='finished' ? '<span class="bg-primary" style="padding:3p
                 $urldata = Functions::url(
                     ['rest-report/analyze', 'id' => $model->id]
                 );
-                $reportStatus     = $model->status == 'finished' ? '' : 'disabled';
-                $reportStatusText = $model->status == 'finished' ? '查报告' : '检测中';
+                $reportStatus     = $model->pdfurl  ? '' : 'disabled';
+                $reportStatusText = $reportStatus == 'disabled' ?  '检测中':'查报告' ;
                 $dataStatus       = $model->snpsqlite ? '' : 'disabled';
                 $dataStatuseText  = strpos($model->report_id, 'YD') !== false ? '无数据' : '查数据';
                 $html             = "<a href='$urlreport' class='btn btn-info $reportStatus'>$reportStatusText</a>";
@@ -328,9 +328,12 @@ if (Functions::ismobile()) {
 }
 
 echo GridView::widget($GridViewParam);
-
+ 
 ?>
 </div>
+<script type="text/javascript">
+    var totalPage = <?=$dataProvider->totalCount ?>;
+</script>
 
 
 

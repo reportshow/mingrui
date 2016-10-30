@@ -112,7 +112,7 @@ $menu[] = [
         ],
       [
             'label' => '新闻资料',
-            'icon'  => 'fa fa-file-powerpoint-o',
+            'icon'  => 'fa fa-chrome',
             'url'   => ['/mingrui-doc/index','type'=>'news'],
             'items' => [
 
@@ -120,7 +120,7 @@ $menu[] = [
         ],
       [
             'label' => '应用指南',
-            'icon'  => 'fa fa-file-powerpoint-o',
+            'icon'  => 'fa fa-hand-o-right',
             'url'   => ['/mingrui-doc/index','type'=>'guide'],
             'items' => [
 

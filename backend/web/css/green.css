@@ -127,7 +127,7 @@ section.content{clear: both}
 }
 
 .summarybox .bg-yellow{
-    background-color: #999 !important;
+    background-color: #aaa !important;
 }
 
 
@@ -199,9 +199,11 @@ padding: 11px 10px;
        margin-right: 0px;
 }
 
-#homepage .col-lg-7 .tab-content{border-radius: 10px;font-size:1.2rem;}
+
 #homepage .col-lg-7  .nav-tabs-custom>.nav-tabs>li{line-height: 30px}
 #homepage .col-lg-7  .nav-tabs-custom>.nav-tabs>li a{line-height: 10px}
+#homepage .col-lg-7 .tab-content{border-radius: 10px;font-size:1.2rem;}
+#homepage .col-lg-7 .tab-content li{font-size:1.3rem;line-height:2rem;}
 #homepage .col-lg-5 .box-header{ }
 #homepage .col-lg-5 .box-solid{margin-bottom:0px;border-radius: 10px;box-shadow: 1px 1px 1px rgba(0,0,0,0.2); }
 #homepage .col-lg-5{  padding-right: 0px;

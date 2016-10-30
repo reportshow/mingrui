@@ -11,7 +11,7 @@ if (!empty($files) && is_array($files)) {
             $icon     = $val->icon;
             $url      = $val->url;
             $filename = $val->filename;
-            echo " <a class='file' >
+            echo " <a class='file' href='$url'>
                      <img src='$icon'> <br><span>$filename</span>
                      </a>";
         }

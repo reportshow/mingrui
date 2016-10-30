@@ -53,14 +53,15 @@ $pingjiaUrl = Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
         <!-- form start -->
             <div> </div>
 
-            <div class="input-group col-md-6" style="margin-bottom: 15px;">
+            <div class="input-group col-md-5" style="margin-bottom: 15px;">
                   <input type="text" id="linchuang" class="form-control" name="linchuang"
-                  placeholder="请输入临床诊断/特异表型">
+                  placeholder="请输入临床诊断/特异表型" value="<?=$model->pingjia->linchuang?>">
                   <span class='input-group-btn'>
                     <button id='linchuangpingjia' ctype='button' class='btn btn-info btn-flat'
                     style='border-top-left-radius: 0;border-bottom-left-radius: 0;'>
                     <i class='fa  fa-check hide'></i> <span>确定</span>
                     </button>
+                    <button id='rest' class='btn btn-default'>清空</button>
                   </span>
 
                   <p class="help-block help-block-error"></p>
@@ -68,8 +69,17 @@ $pingjiaUrl = Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
           <!-- /.box-body -->
       <script type="text/javascript">
           $('#linchuangpingjia').click(function(){
-              var url = "<?=$pingjiaUrl?>";
-              var val = $('#linchuang').val();
+             var val = $('#linchuang').val();
+             setLinchuang(val);
+          });
+
+           $('#rest').click(function(){
+            $('#linchuang').val('');
+             setLinchuang('null');
+          });
+          function setLinchuang(val){
+             var url = "<?=$pingjiaUrl?>";
+              
               $.ajax({
                    type: "POST",
                    url:  url,
@@ -78,14 +88,16 @@ $pingjiaUrl = Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
                    success: function(d){
                         if(d.code==1){
                            alert('设置成功');
+
                         }
                    }
                });
-          });
+          }
+
       </script>
 
 </div>
-<div class="box box-info">
+<div class="box box-info" style="min-height: 400px">
     <h3 style="padding-left:10px">基因型(genotype)</h3>
 
 
