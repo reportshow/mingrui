@@ -567,13 +567,13 @@ export default class TableExampleComplex extends React.Component {
 	  {this.state.queryResult.map( (row, index) => (
 	  <TableRow key={index} selected={row.selected}>
 	    <TableRowColumn data-tip={row[0]} style={{position:'relative'}}>{row[0]}</TableRowColumn>//基因
-	    <TableRowColumn data-tip={row[20]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[20]}} />//突变信息
+	    <TableRowColumn data-tip={row[21]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[21]}} />//突变信息
 	    <TableRowColumn data-tip={row[6]} style={{position:'relative'}}>{row[6]}</TableRowColumn>//突变类型
-	    <TableRowColumn data-tip={row[18]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[18]}} />//疾病信息
-	    <TableRowColumn data-tip={row[21]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[21]}} />//HET
-	    <TableRowColumn data-tip={row[23]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[23]}} />//HGDM
-	    <TableRowColumn data-tip={row[22]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[22]}} />//正常人群携带率
-	    <TableRowColumn data-tip={row[19]} style={{position:'relative'}}><a>详情</a></TableRowColumn>//功能预测
+	    <TableRowColumn data-tip={row[19]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[19]}} />//疾病信息
+	    <TableRowColumn data-tip={row[22]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[22]}} />//HET
+	    <TableRowColumn data-tip={row[24]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[24]}} />//HGDM
+	    <TableRowColumn data-tip={row[23]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[23]}} />//正常人群携带率
+	    <TableRowColumn data-tip={row[20]} style={{position:'relative'}}><a>详情</a></TableRowColumn>//功能预测
 	  </TableRow>
 	  ))}
 	</TableBody>

@@ -22585,7 +22585,7 @@
 												row[0]
 											),
 											'//基因',
-											_react2.default.createElement(_Table.TableRowColumn, { 'data-tip': row[20], style: { position: 'relative' }, dangerouslySetInnerHTML: { __html: row[20] } }),
+											_react2.default.createElement(_Table.TableRowColumn, { 'data-tip': row[21], style: { position: 'relative' }, dangerouslySetInnerHTML: { __html: row[21] } }),
 											'//突变信息',
 											_react2.default.createElement(
 												_Table.TableRowColumn,
@@ -22593,17 +22593,17 @@
 												row[6]
 											),
 											'//突变类型',
-											_react2.default.createElement(_Table.TableRowColumn, { 'data-tip': row[18], style: { position: 'relative' }, dangerouslySetInnerHTML: { __html: row[18] } }),
+											_react2.default.createElement(_Table.TableRowColumn, { 'data-tip': row[19], style: { position: 'relative' }, dangerouslySetInnerHTML: { __html: row[19] } }),
 											'//疾病信息',
-											_react2.default.createElement(_Table.TableRowColumn, { 'data-tip': row[21], style: { position: 'relative' }, dangerouslySetInnerHTML: { __html: row[21] } }),
-											'//HET',
-											_react2.default.createElement(_Table.TableRowColumn, { 'data-tip': row[23], style: { position: 'relative' }, dangerouslySetInnerHTML: { __html: row[23] } }),
-											'//HGDM',
 											_react2.default.createElement(_Table.TableRowColumn, { 'data-tip': row[22], style: { position: 'relative' }, dangerouslySetInnerHTML: { __html: row[22] } }),
+											'//HET',
+											_react2.default.createElement(_Table.TableRowColumn, { 'data-tip': row[24], style: { position: 'relative' }, dangerouslySetInnerHTML: { __html: row[24] } }),
+											'//HGDM',
+											_react2.default.createElement(_Table.TableRowColumn, { 'data-tip': row[23], style: { position: 'relative' }, dangerouslySetInnerHTML: { __html: row[23] } }),
 											'//正常人群携带率',
 											_react2.default.createElement(
 												_Table.TableRowColumn,
-												{ 'data-tip': row[19], style: { position: 'relative' } },
+												{ 'data-tip': row[20], style: { position: 'relative' } },
 												_react2.default.createElement(
 													'a',
 													null,
