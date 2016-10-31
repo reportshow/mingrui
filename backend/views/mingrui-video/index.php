@@ -19,37 +19,33 @@ $this->params['breadcrumbs'][] = $this->title;
   display: block
   }
 </style>
-
-<?php $count = 0; foreach($videos as $video) { ?>
-<?php if(($count%3)==0) { ?>
-<div class="row">
-<?php } ?>
-  <div class="col-md-4">
-    <div class="box box-widget">
-      <div class="box-header with-border bg-light-blue">
-	<?php echo $video->title ?>
-      </div>
-      <!-- /.box-header -->
-      <div class="box-body bg-black">
-	<video  class="video-js vjs-default-skin vjs-big-play-centered center" poster="<?php echo $video->thumb_picture_url?>" preload controls>
-	  <source src="<?php echo $video->video_url . '/index.m3u8' ?>" type="application/vnd.apple.mpegurl">
-	</video>
-      </div>
-      <!-- /.box-body -->
-      <div class="box-header bg-black text-center">
-	<p><?php echo $video->description ?></p>
-      </div>
+<table>
+<?php foreach($videos as $video) { ?>
+<tr>
+  <td valign="top" style="padding-bottom:30px !important;padding-left:50px !important;">
+    <div class="box-body bg-black">
+      <video  class="video-js vjs-default-skin vjs-big-play-centered center" poster="<?php echo $video->thumb_picture_url?>" preload controls>
+	<source src="<?php echo $video->video_url . '/index.m3u8' ?>" type="application/vnd.apple.mpegurl">
+      </video>
     </div>
-  </div>
-  <!-- /.col -->
-
-<?php if(($count%3)==2) { ?>              
-</div>
-<!-- /.row -->
-<?php } ?>
-<?php $count++; }?>
-
-
+  </td>
+  <td valign="top" style="padding-left:30px !important;padding-bottom:30px !important;">
+    <table style="table-layout:fixed;background-color:rgb(230, 230, 230);">
+      <thead>
+	<tr>
+	  <td style="border-bottom:1pt solid black;"><span style="font-weight:bold"><?php echo $video->title ?></span><span style="padding-left: 15px;font-size:70% !important;"><?php echo $video->created_at ?></span></td>
+	<tr>
+      </thead>
+      <tbody>
+	<tr>
+	  <td style="word-break:break-all !important;white-space: pre-wrap !important;width:800px;height:133px" ><?php echo $video->description ?></td>
+	<tr>
+      </tbody>
+    </table>
+  </td>
+</tr>
+<?php }?>
+</table>
 <!-- Video Player -->
 <script src="player/video.js"></script>
 <script src="player/videojs-ie8.min.js"></script>
@@ -59,8 +55,9 @@ $this->params['breadcrumbs'][] = $this->title;
 function resizeVideoJS(player){
     id = player.id();
     // Make up an aspect ratio
-    var aspectRatio = 264/640;
-    var width = document.getElementById(id).parentElement.offsetWidth*0.9;
+    var aspectRatio = 400/600;
+    // var width = document.getElementById(id).parentElement.offsetWidth*0.9;
+    var width = 200;
     player.width(width).height( width * aspectRatio );
 }    
 
