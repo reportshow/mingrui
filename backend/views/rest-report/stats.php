@@ -15,6 +15,12 @@ AppAsset::register($this);
 $report_id  = $model->id;
 $pingjiaUrl = Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
 
+$linchuang = '';
+$pingjia   = $model->pingjia;
+if ($pingjia) {
+    $linchuang = $pingjia->linchuang;
+}
+
 ?>
 <?=RestrepotTop2::widget(['model_id' => $model->id]);?>
 
@@ -55,7 +61,7 @@ $pingjiaUrl = Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
 
             <div class="input-group col-md-5" style="margin-bottom: 15px;">
                   <input type="text" id="linchuang" class="form-control" name="linchuang"
-                  placeholder="请输入临床诊断/特异表型" value="<?=$model->pingjia->linchuang?>">
+                  placeholder="请输入临床诊断/特异表型" value="<?=$linchuang ?>">
                   <span class='input-group-btn'>
                     <button id='linchuangpingjia' ctype='button' class='btn btn-info btn-flat'
                     style='border-top-left-radius: 0;border-bottom-left-radius: 0;'>
@@ -79,7 +85,7 @@ $pingjiaUrl = Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
           });
           function setLinchuang(val){
              var url = "<?=$pingjiaUrl?>";
-              
+
               $.ajax({
                    type: "POST",
                    url:  url,
