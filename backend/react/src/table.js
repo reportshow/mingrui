@@ -472,7 +472,7 @@ export default class TableExampleComplex extends React.Component {
         </div>
 
         <div className="item">
-	  <div className="carousel-caption" style={{top:'0px', bottom: 'auto', paddingTop:'0px'}}>
+	  <div className="carousel-caption" style={{top:'0px', bottom: 'auto', paddingTop:'0px', paddingBottom:'0px'}}>
 	    自选过滤
 	  </div>
 	  <div style={{width:'80%', marginLeft:'auto', marginRight:'auto', paddingTop:'20px', overflow:'hidden'}}>

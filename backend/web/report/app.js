@@ -22431,7 +22431,7 @@
 									{ className: 'item' },
 									_react2.default.createElement(
 										'div',
-										{ className: 'carousel-caption', style: { top: '0px', bottom: 'auto', paddingTop: '0px' } },
+										{ className: 'carousel-caption', style: { top: '0px', bottom: 'auto', paddingTop: '0px', paddingBottom: '0px' } },
 										'自选过滤'
 									),
 									_react2.default.createElement(
