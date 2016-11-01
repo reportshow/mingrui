@@ -350,7 +350,7 @@ export default class TableExampleComplex extends React.Component {
   <div>
     <ReactTooltip type="info" effect="float" multiline={true} />
     <div style={{width:'80%', marginLeft:'auto', marginRight:'auto'}}>
-      <TextField name='gene' floatingLabelText="重点关注基因" value={this.state.gene_value} onChange={this.handle_gene_Change} style={{width:'80%'}}/>
+      <input type="text" placeholder="可输入重点关注基因"  value={this.state.gene_value} onChange={this.handle_gene_Change} style={{width:'80%'}}/>
       <FlatButton label="清除所有基因" primary={true} onClick={this.handleGeneClear}/>
     </div>
     <div id="carousel-filter" className="carousel slide" data-ride="carousel" data-interval="false">
