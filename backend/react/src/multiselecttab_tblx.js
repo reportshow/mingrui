@@ -147,6 +147,10 @@ class MultiSelectTBLX extends React.Component {
 			);
 		    })
 		}
+		<i onMouseEnter={()=>{$('#tiptblx').show();}}
+		  onMouseLeave={()=>{$('#tiptblx').hide();}}
+		  onTouchStart={()=>{$('#tiptblx').show();}}
+		  className="fa fa-fw fa-question" />	
 	</ul>
       </dd>
     </dl>

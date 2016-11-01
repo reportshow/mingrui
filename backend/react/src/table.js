@@ -115,13 +115,9 @@ export default class TableExampleComplex extends React.Component {
 	    gene_value: "",
 	    tblx_values: [
 		"frameshift",
-		"nonframeshift",
-		"nonsynonymous",
 		"splicing",
 		"stopgain",
-		"synonymous",
-		"stoploss",
-		"unknown"],
+		"stoploss"],
 	    tbbl_values: [
 		"0.9-1",
 		"0.2-0.9",],
@@ -369,7 +365,17 @@ export default class TableExampleComplex extends React.Component {
 	  <div style={{width:'80%', marginLeft:'auto', marginRight:'auto', paddingTop:'20px', overflow:'hidden'}}>
 	    <div id='tip' className="callout callout-info" style={{display:'none'}}>
               <h4>精准推荐过滤说明！</h4>
-              <p>每个指标都是精心挑选的，只要按照这个顺序来挑选就能得到我们预期的结果</p>
+              <p>优选1：筛选HGMD数据库已报道的突变点，是否有与临床表型相关基因突变<br/>
+		优选2: 筛选四种通常会严重影响蛋白功能（LOF）的特殊突变类型<br/>
+		★  经优选1和优选1筛选未发现疾病相关突变，则进入常规分析流程。<br/>
+		方 案 一：按照遗传方式筛选；适用案例：适用于缺乏特异或典型临床表型的案例分析<br/>
+		Step1：根据临床表型和家族史等，推测遗传方式（线粒体遗传除外），注意携带率的筛选<br/>
+		Step2：在上述筛选过滤后的突变点中，综合基因疾病信息和功能预测综合筛选疑似突变点<br/>
+		方 案 二：关联临床表型相关基因群，即临床表型驱动分析；<br/>
+		适用案例：适用于患者存在有特异或典型症状体征<br/>
+		Step1：关联临床诊断相关基因群（建议使用明鉴），并将基因群输入重点关注基因<br/>
+		Step2：在重点关注基因范围内，参照方案一的筛选模式进行。<br/>
+	      </p>
 	    </div>
 	      
 	    <div>
@@ -380,7 +386,14 @@ export default class TableExampleComplex extends React.Component {
 	      </SingleSelectHGDM>
 	      <div id='tipdm' className="callout callout-info" style={{display:'none'}}>
 		<h4>HGMD！</h4>
-		<p>HGDM说明</p>
+		<p>HGMD:  Human Gene Mutation Database，人类基因突变数据库<br/>
+		  DM：文献报道过的致病突变。<br/>
+		  DM？：表示致病性不肯定。<br/>
+		  [Similar]DM: 与所报道的突变点的染色体位置一致，但突变类型与文献报道的不同。<br/>
+		  DP：疾病相关的多态性，但没有直接证据证实此突变致病。<br/>
+		  DFP：疾病相关的多态性，有直接证据证明此突变与蛋白功能有关。<br/>
+		  FP：功能型多态性，被报道能影响蛋白结构，功能或基因表达，但无致病报道。<br/>
+		</p>
 	      </div>
 	    </div>
 	    <div>
@@ -396,6 +409,14 @@ export default class TableExampleComplex extends React.Component {
 		<ListItem primaryText={"unknown"} value="unknown" />
 		<ListItem primaryText={"不筛选"} value="" />
 	      </MultiSelectTBLX>
+	      <div id='tiptblx' className="callout callout-info" style={{display:'none'}}>
+		<h4>突变类型！</h4>
+		<p>1.stopgain：无义突变；splicing: 剪切突变；frameshift: 移码突变；stoploss: 终止密码突变<br/>
+		  2.nonsynonymous: 错义突变；nonframshift: 非移码突变<br/>
+		  3.synonymous: 同义突变；unknown: 不确定（此类型通常位于非外显子编码区）<br/>
+		  建议：通常关注第一类包含的四种突变类型；第二类是最常见突变类型；第三类通常不查看<br/>
+		</p>
+	      </div>
 	    </div>
 	    <div>
 	      <MultiSelectYCFS fullWidth={true} value={this.state.ycfs_values} floatingLabelText="遗传方式" onChange={this.handle_ycfs_Change}>
@@ -410,7 +431,9 @@ export default class TableExampleComplex extends React.Component {
 	    </div>
 	    <div id='tipycfs' className="callout callout-info" style={{display:'none'}}>
 		<h4>遗传方式！</h4>
-		<p>遗传方式说明</p>
+		<p>AD: 常染色体显性遗传；AR：常染色体隐性遗传；<br/>
+		  XD：X染色体显性遗传；XR：X染色体隐性遗传；X-Link：X染色体连锁；<br/>
+		</p>
 	      </div>
 	    <div>
 	      <MultiSelect fullWidth={true} value={this.state.cxsd_values} floatingLabelText="测序深度" onChange={this.handle_cxsd_Change}>
@@ -455,12 +478,11 @@ export default class TableExampleComplex extends React.Component {
 	  <div style={{width:'80%', marginLeft:'auto', marginRight:'auto', paddingTop:'20px', overflow:'hidden'}}>
 
 	    <div>
-	      <MultiSelect fullWidth={true} value={this.state.dm_values} floatingLabelText="HGMD" onChange={this.handle_dm_Change}>
-		<ListItem primaryText={"DM"} value="DM" />
-		<ListItem primaryText={"DM?"} value="DM?" />
-		<ListItem primaryText={"[Similar]DM"} value="[Similar]DM" />
-		<ListItem primaryText={"不筛选"} value="" />
-	      </MultiSelect>
+	      <SingleSelectHGDM fullWidth={true} value={this.state.dm_values} floatingLabelText="HGMD" onChange={this.handle_dm_Change}>
+		<ListItem primaryText={"已报导"} value="1" />
+		<ListItem primaryText={"未报导"} value="2" />
+		<ListItem primaryText={"不筛选"} value="3" />
+	      </SingleSelectHGDM>
 	    </div>
 	    <div>
 	      <MultiSelectTBLX fullWidth={true} value={this.state.tblx_values} floatingLabelText="突变类型" onChange={this.handle_tblx_Change}>
