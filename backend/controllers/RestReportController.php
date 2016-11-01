@@ -369,7 +369,7 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
         //1. find user's bad gene
         $userdata  = $this->findModel($id);
         $snp_array = json_decode($userdata->snpsave, true);
-        
+
         $user_snp_areas = [];
         foreach ($snp_array as $key => $data) {
             $user_snp_areas[$data[0]]['bad'][] = $data[1];
@@ -397,18 +397,21 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
         foreach ($user_snp_areas as $gene => $data) {
             foreach ($data['bad'] as $i => $bad) {
                 $temp = explode(' ', $bad);
-                $hgvs = str_replace('c.', '', trim($temp[0]));
-                print_r($hgvs);
-                $type = Genetypes::find()->where(['gene' => trim($gene), 'hgvs' =>$hgvs ])->one();
-                if ($type) {
+                /* $hgvs = str_replace('c.', '', trim($temp[0])); */
+                /* $type = Genetypes::find()->where(['gene' => trim($gene), 'hgvs' =>$hgvs ])->one(); */
+                $start = explode('-', $temp[1])[1];
+                if ($start) {
+                     $find = false;
                     foreach ($data['areas'] as $key => $area) {
-                        if ($type->startcoord >= $area['start'] and $type->startcoord <= $area['end']) {
+                        if ($start >= $area['start'] and $start <= $area['end']) {
                             $user_snp_areas[$gene]['areas'][$key]['bad'] = true;
-                            $user_snp_areas[$gene]['genetype_str'][$i]   = $gene . '--E' . $key . '--' . $bad;
+                            $user_snp_areas[$gene]['genetype_str'][$i]   = $gene . '--E' . ($key + 1) . '--' . $bad;
+                            $find = true;
                         }
                     }
-                } else {
-                    $user_snp_areas[$gene]['genetype_str'][$i] = $gene . '--____' . '--' . $bad;
+                }
+                if(!$find) {
+                     $user_snp_areas[$gene]['genetype_str'][$i] = $gene . '--____' . '--' . $bad;
                 }
             }
         }
