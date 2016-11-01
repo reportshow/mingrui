@@ -4,7 +4,12 @@ $this->params['breadcrumbs']  = '' ;
  
 
 
-?><div class="box box-solid fullhight" id='sliderbox' height="100%">
+?>
+<style type="text/css">
+    .slidepic{background-size: cover;background-position: center;}
+
+</style>
+<div class="box box-solid fullhight" id='sliderbox' height="100%">
     <!-- /.box-header -->
     <div class="box-body fullhight"  style="padding:0px;">
         <div class="carousel slide fullhight" data-ride="carousel" id="carousel-example-generic">
@@ -18,21 +23,21 @@ $this->params['breadcrumbs']  = '' ;
             </ol>
             <div class="carousel-inner fullhight">
                 <div class="item active fullhight">
-                    <div alt="First slide " class=" slidepic fullhight" src="images/1.png" >
+                    <div alt="First slide " class=" slidepic fullhight" src="images/1.jpg" >
                         <div class="carousel-caption">
                             First Slide
                         </div>
                     </div>
                 </div>
                 <div class="item fullhight">
-                    <div  alt="Second slide" class=" slidepic fullhight" src="images/2.png"  >
+                    <div  alt="Second slide" class=" slidepic fullhight" src="images/2.jpg"  >
                         <div class="carousel-caption">
                             Second Slide
                         </div>
                     </div>
                 </div>
                 <div class="item fullhight">
-                    <div alt="Third slide" class="slidepic fullhight" src="images/3.png">
+                    <div alt="Third slide" class="slidepic fullhight" src="images/3.jpg">
                         <div class="carousel-caption">
                             Third Slide
                         </div>
@@ -53,9 +58,7 @@ $this->params['breadcrumbs']  = '' ;
 </div>
 <!-- /.box -->
 
-<style type="text/css">
-    .slidepic{background-size: cover}
-</style>
+
 <script type="text/javascript">
     $('.slidepic').each(function(){
         $(this).css('background-image', "url("+$(this).attr('src')+")");

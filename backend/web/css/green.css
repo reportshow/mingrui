@@ -200,7 +200,7 @@ padding: 11px 10px;
 }
 
 
-#homepage .col-lg-7  .nav-tabs-custom>.nav-tabs>li{line-height: 30px}
+#homepage .col-lg-7  .nav-tabs-custom>.nav-tabs>li{line-height: 30px;font-size:1.3rem}
 #homepage .col-lg-7  .nav-tabs-custom>.nav-tabs>li a{line-height: 10px}
 #homepage .col-lg-7 .tab-content{border-radius: 10px;font-size:1.2rem;}
 #homepage .col-lg-7 .tab-content li{font-size:1.3rem;line-height:2rem;}
@@ -236,16 +236,18 @@ padding: 11px 10px;
 .summarybox  .nav-stacked  li  a.uploadimg:hover{background:#FECA7F}
 /***********/
 
+#homepage .col-lg-7 .tab-content li{list-style: none}
  @media screen and   (min-width:1600px) {
    #homepage{
       zoom:1.4;
       padding-right: 40px;
    }
-
+   #homepage .col-lg-7 .tab-content li{font-size:1.1rem;line-height:2.2rem;}
    /*  #homepage .col-lg-10 {
     height: 480px;
     border-radius: 10px;
       }   */
+}
 
 }
 
