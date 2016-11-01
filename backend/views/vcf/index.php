@@ -34,25 +34,32 @@ $columns = [
             return $model->creator->nickname;
         }],
 
-    'sick', //患者姓名
+    ['attribute' =>'sick',
+    'options' => ['width' => '90']
+    ], //患者姓名
 
     ['attribute' => 'sex',
         'filter'     => ['male' => '男', 'female' => '女'],
         'options'    => ['width' => '60'],
     ],
     ['attribute' => 'age', 'options' => ['width' => '60']],
+    ['attribute' => 'tel', 'options' => ['width' => '120']],
+    ['attribute' => 'product', 'options' => ['width' => '100']],
+    ['attribute' => 'diagnose', 'options' => ['width' => '100']],
+    ['attribute' => 'gene', 'options' => ['width' => '90']],
+    
 
-    'tel',
-    'product',
-    'diagnose:ntext',
-    'gene',
-
-    ['attribute' => 'tel',
+    ['attribute' => 'pingjia',
         'label'      => '星级评价',
         'filter'     => MingruiPingjia::getSimpleArray(),
+        'options' => ['width' => '90'],
         'value'      => function ($model) {
-            //return $model->pingjia ? $model->pingjia : '-';
-        }],
+           $pingjiaList = MingruiPingjia::getSimpleArray();
+            $index= $model->pingjia  ;
+            if($index=='')return "";
+            return $pingjiaList[$index];
+        }
+    ],
 
 /*    ['attribute' => 'vcf',
 'format'     => 'raw',
@@ -79,7 +86,7 @@ return "<button class='btn'>$status</button>";
          'options'   => ['width' => '150px;'],
         'label'     => '操作',
         'value'     => function ($model) {
-            $html = Html::a('下 载', ['vcf/download', 'id' => $model->id], ['class' => 'btn btn-info']);
+            $html ='';//. Html::a('下 载', ['vcf/download', 'id' => $model->id], ['class' => 'btn btn-info']);
             if ($model->getTaskStatus() == 'complete') {
                 $status = '完成';
                 $disable = '';
@@ -94,6 +101,9 @@ return "<button class='btn'>$status</button>";
 
     ['class' => 'yii\grid\ActionColumn',
        'header' =>'操作',
+       'options'       => [
+                'width' => 80,
+            ],
       /*'filter'=>Html::submitButton('搜索', ['class' => 'btn btn-primary']) 
             .Html::resetButton('恢复', ['class' => 'btn btn-default rest']) ,
         */    
@@ -112,3 +122,8 @@ echo GridView::widget([
 
 ?>
 </div>
+
+<style type="text/css">
+    .content-wrapper{overflow: auto}
+    .disabled{background: #999;border:0px;}
+</style>

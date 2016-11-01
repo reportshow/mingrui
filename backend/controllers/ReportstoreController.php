@@ -73,7 +73,7 @@ class ReportstoreController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->uid          = Yii::$app->user->id;
-            $model->attachements = '';
+            $model->attachements = '[]';
             if (!$model->save()) {
                 var_export($model->errors);
             }
@@ -97,8 +97,17 @@ class ReportstoreController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            // $model->uid          = Yii::$app->user->id;
+            $model->attachements = '[]';
+            if (!$model->save()) {
+                var_export($model->errors);
+            }
+            SaveImage::save($model, 'attachements');
+
+            return $this->redirect(['index', 'id' => $model->id]);
+
         } else {
             return $this->render('update', [
                 'model' => $model,

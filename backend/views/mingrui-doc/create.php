@@ -7,7 +7,7 @@ use backend\models\MingruiDoc;
 /* @var $model backend\models\MingruiDoc */
 $type = $_GET['type'];
 $name = MingruiDoc::$TYPES[$type ];
-$this->params['breadcrumbs'][] = ['label' => '分享'.$name, 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '新'.$name, 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mingrui-doc-create">

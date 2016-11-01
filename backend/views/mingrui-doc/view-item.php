@@ -85,7 +85,7 @@ if ($model->doc) {
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <a style="font-family: 'Microsoft Yahei';font-size: 1.5em;color: #333; line-height: 2em;"
+                <a style="font-family: 'Microsoft Yahei';font-size: 1.5rem;color: #333; line-height: 2rem;"
                  href="<?=$url?>">
                     <?=$model->title?>
                 </a><br>

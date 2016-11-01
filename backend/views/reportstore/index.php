@@ -24,18 +24,34 @@ $this->params['breadcrumbs'][] = $this->title;
     'columns'      => [
         ['class' => 'yii\grid\SerialColumn', 'options' => ['width' => '40']],
 
-        'id',
-        'uid',
-        'sick',
-        'product',
-        'tel',
-        'diagnose:ntext',
-        'gene',
+       // 'id',
+        //'uid',
+      
+        ['attribute' =>'sick',
+    'options' => ['width' => '90']
+    ], 
+    ['attribute' =>'product',
+    'options' => ['width' => '90']
+    ],  
+       ['attribute' =>'tel',
+    'options' => ['width' => '120']
+    ],  
+      ['attribute' =>'diagnose',
+    'options' => ['width' => '120']
+    ],    
+      ['attribute' =>'gene',
+    'options' => ['width' => '120']
+    ],   
         ['attribute' => 'pingjia',
-            'filter'     => MingruiPingjia::getSimpleArray(),
+        'options' => ['width' => '100'],
+         'filter'     => MingruiPingjia::getSimpleArray(),
          'value'=>function($model){
-            return $model->pingjia ? $model->pingjia : '-';
-         }],
+            $pingjiaList = MingruiPingjia::getSimpleArray();
+            $index= $model->pingjia  ;
+            if($index=='')return "";
+            return $pingjiaList[$index];
+         }
+         ],
         // 'attachements:ntext',
         // 'createtime',
 

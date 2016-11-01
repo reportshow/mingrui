@@ -24,21 +24,21 @@ $this->params['breadcrumbs']  = '' ;
             <div class="carousel-inner fullhight">
                 <div class="item active fullhight">
                     <div alt="First slide " class=" slidepic fullhight" src="images/1.jpg" >
-                        <div class="carousel-caption">
+                        <div class="carousel-caption hide">
                             First Slide
                         </div>
                     </div>
                 </div>
                 <div class="item fullhight">
                     <div  alt="Second slide" class=" slidepic fullhight" src="images/2.jpg"  >
-                        <div class="carousel-caption">
+                        <div class="carousel-caption hide">
                             Second Slide
                         </div>
                     </div>
                 </div>
                 <div class="item fullhight">
                     <div alt="Third slide" class="slidepic fullhight" src="images/3.jpg">
-                        <div class="carousel-caption">
+                        <div class="carousel-caption hide">
                             Third Slide
                         </div>
                     </div>

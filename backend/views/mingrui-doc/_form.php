@@ -27,9 +27,10 @@ if(Yii::$app->user->Identity->role_text=='guest'){
 
      <?php
         $type = $_GET['type'];
-        if ($type != 'doc') {
+        if (1 || $type != 'doc') {
             echo CKeditor::widget(['name' => 'MingruiDoc[description]', 'title' => '内容']);
-        } else if ($type == 'doc') {
+        } 
+        if ($type == 'doc') {
             echo $form->field($model, 'doc[]')->widget(FileInput::classname(), [
                 'options'       => ['multiple' => true, 'accept' => '*/*'],
                 'pluginOptions' => [

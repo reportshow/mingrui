@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\MingruiReportstore */
 
-$this->title = 'Update Mingrui Reportstore: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Mingrui Reportstores', 'url' => ['index']];
+$this->title = '外源报告 ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => '外源报告', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id'           => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = '更新';
 ?>
 <div class="mingrui-reportstore-update">
 

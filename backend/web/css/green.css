@@ -237,6 +237,7 @@ padding: 11px 10px;
 /***********/
 
 #homepage .col-lg-7 .tab-content li{list-style: none}
+#homepage .col-lg-5  li{list-style: none}
  @media screen and   (min-width:1600px) {
    #homepage{
       zoom:1.4;

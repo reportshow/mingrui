@@ -2,14 +2,19 @@
 
 use yii\helpers\Html;
 
+use backend\models\MingruiDoc;
+
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\MingruiDocSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+$type = $_GET['type'];
+$name = MingruiDoc::$TYPES[$type ];
+
 $doctype                       = $_GET['type'] == 'article' ? '案例分享' : '文档资料';
-$this->title                   = $doctype  ;
+$this->title                   =  $name ; 
 $this->params['breadcrumbs'][] = $this->title;
 
-$newBtnText = '新建 ' . $doctype;
+$newBtnText = '新建 ' .$name;
 
 ?>
 <div class="mingrui-doc-index">
@@ -21,7 +26,7 @@ $newBtnText = '新建 ' . $doctype;
 if (Yii::$app->user->can('admin')) {
     echo Html::a($newBtnText, ['create', 'type' => $_GET['type']], ['class' => 'btn btn-success']);
 }else  if(Yii::$app->user->can('doctor') && $_GET['type']=='article') {
-	echo Html::a('新建案例', ['create', 'type' => 'article'], ['class' => 'btn btn-success']);
+	echo Html::a('新建 ' .$name, ['create', 'type' => 'article'], ['class' => 'btn btn-success']);
 }
 
 ?>

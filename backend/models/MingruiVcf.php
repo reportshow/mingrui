@@ -65,6 +65,10 @@ class MingruiVcf extends \yii\db\ActiveRecord
     public function getCreator()
     {
         return $this->hasOne(User::className(), ['id' => 'uid']);
+    }    
+    public function getPingjia()
+    {
+        return $this->hasOne(MingruiPingjia::className(), ['report_id' => 'id']);
     }
     /**
      * @inheritdoc

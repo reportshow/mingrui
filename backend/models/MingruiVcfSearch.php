@@ -13,6 +13,8 @@ use backend\models\MingruiVcf;
 class MingruiVcfSearch extends MingruiVcf
 {
      public $creator_name;
+     public $pingjia;
+     public $linchuang;
       /**
      * @inheritdoc
      */
@@ -21,7 +23,7 @@ class MingruiVcfSearch extends MingruiVcf
         return [
             [['id', 'uid', 'createtime', 'task_id'], 'integer'],
             
-            [['creator_name',
+            [['creator_name','pingjia','linchuang',
 	    'sick', 'sex', 'vcf', 'status', 'tel', 'product', 'diagnose', 'gene'], 'safe'],
             [['age'], 'number'],
         ];
@@ -50,6 +52,7 @@ class MingruiVcfSearch extends MingruiVcf
         } 
         $query =$query->orderBy('id DESC');
         $query = $query->joinWith(['creator']);
+        $query = $query->joinWith(['pingjia']);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -81,7 +84,8 @@ class MingruiVcfSearch extends MingruiVcf
             ->andFilterWhere(['like', 'product', $this->product])
             ->andFilterWhere(['like', 'diagnose', $this->diagnose])
             ->andFilterWhere(['like', 'gene', $this->gene])
-	    
+	                ->andFilterWhere(['like', 'mingrui_pingjia.pingjia', $this->pingjia]) //<=====加入这句
+                  ->andFilterWhere(['like', 'mingrui_pingjia.linchuang', $this->linchuang]) //<=====加入这句    
             ->andFilterWhere(['like', 'user.nickname', $this->creator_name]);
 
         return $dataProvider;
