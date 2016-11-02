@@ -22088,6 +22088,39 @@
 				_this.setState({ gene_value: "" }, _this.filter);
 			};
 
+			_this.handleRowSelect = function (rows) {
+				var temp = [];
+				if (rows === 'all') {
+					for (var key in _this.state.queryResult) {
+						tableData[_this.state.queryResult[key][30]][31] = true;
+						_this.state.queryResult[key][31] = true;
+					}
+					_this.setState({ selected: _this.state.queryResult }, _this.filter);
+					return;
+				}
+				if (rows === 'none') {
+					for (var key in _this.state.queryResult) {
+						tableData[_this.state.queryResult[key][30]][31] = false;
+						_this.state.queryResult[key][31] = false;
+					}
+					_this.setState({ selected: [] }, _this.filter);
+					return;
+				}
+
+				for (var i in tableData) {
+					tableData[i][31] = false;
+				}
+				for (var i in _this.state.queryResult) {
+					_this.state.queryResult[i][31] = false;
+				}
+				for (var i in rows) {
+					tableData[_this.state.queryResult[rows[i]][30]][31] = true;
+					_this.state.queryResult[rows[i]][31] = true;
+					temp.push(_this.state.queryResult[rows[i]]);
+				}
+				_this.setState({ selected: temp }, _this.filter);
+			};
+
 			_this.state = _this.getDefaultState();
 			return _this;
 		}
@@ -22149,16 +22182,16 @@
 						inhouse = '-';
 					}
 					tableData[key].push(qrjyz + '<br/>' + inhouse);
+					tableData[key].push(key);
+					tableData[key].push(false);
 				}
 
 				this.filter();
 
 				$('#carousel-filter').on('slid.bs.carousel', function () {
 					if (_this2.state.jingzhun) {
-						console.log(_this2.state.jingzhun);
 						_this2.setState(_this2.getFreeState(), _this2.filter);
 					} else {
-						console.log(_this2.state.jingzhun);
 						_this2.setState(_this2.getDefaultState(), _this2.filter);
 					}
 				});
@@ -22172,12 +22205,12 @@
 					fixedFooter: true,
 					stripedRows: true,
 					showRowHover: true,
-					selectable: false,
-					multiSelectable: false,
-					enableSelectAll: false,
-					deselectOnClickaway: true,
-					showCheckboxes: false,
-					adjustForCheckboxes: false,
+					selectable: true,
+					multiSelectable: true,
+					enableSelectAll: true,
+					deselectOnClickaway: false,
+					showCheckboxes: true,
+					adjustForCheckboxes: true,
 					height: '500px',
 					gene_value: "",
 					tblx_values: ["frameshift", "splicing", "stopgain", "stoploss"],
@@ -22187,7 +22220,8 @@
 					dm_values: "1",
 					qrjyz_value: "2%",
 					inhouse_value: "1%",
-					jingzhun: true
+					jingzhun: true,
+					selected: []
 				};
 			}
 		}, {
@@ -22199,12 +22233,12 @@
 					fixedFooter: true,
 					stripedRows: true,
 					showRowHover: true,
-					selectable: false,
-					multiSelectable: false,
-					enableSelectAll: false,
-					deselectOnClickaway: true,
-					showCheckboxes: false,
-					adjustForCheckboxes: false,
+					selectable: true,
+					multiSelectable: true,
+					enableSelectAll: true,
+					deselectOnClickaway: false,
+					showCheckboxes: true,
+					adjustForCheckboxes: true,
 					height: '500px',
 					gene_value: "",
 					tblx_values: [""],
@@ -22214,12 +22248,14 @@
 					dm_values: "3",
 					qrjyz_value: "100%",
 					inhouse_value: "100%",
-					jingzhun: false
+					jingzhun: false,
+					selected: []
 				};
 			}
 		}, {
 			key: 'render',
 			value: function render() {
+
 				return _react2.default.createElement(
 					_MuiThemeProvider2.default,
 					{ muiTheme: muiTheme },
@@ -22574,8 +22610,142 @@
 								)
 							),
 							_react2.default.createElement(
-								'table',
-								{ id: 'result', style: { backgroundColor: 'rgb(255, 255, 255)', padding: '0px 24px', width: '100%', borderCollapse: 'collapse', borderSpacing: '0px', tableLayout: 'fixed', fontFamily: 'Roboto, sans-serif' } },
+								_Table.Table,
+								{
+									fixedHeader: true,
+									fixedFooter: this.state.fixedFooter,
+									selectable: false,
+									multiSelectable: false,
+									style: { backgroundColor: "lightblue" }
+								},
+								_react2.default.createElement(
+									_Table.TableHeader,
+									{
+										displaySelectAll: false,
+										adjustForCheckbox: false,
+										enableSelectAll: false
+									},
+									_react2.default.createElement(
+										_Table.TableRow,
+										null,
+										_react2.default.createElement(
+											_Table.TableHeaderColumn,
+											{ colSpan: '8', style: { verticalAlign: 'bottom', fontWeight: 'bold', fontSize: '120%', overflow: 'hidden' } },
+											'\u6211\u7684\u9009\u70B9(\u76EE\u524D\u9009\u4E2D: ',
+											this.state.selected.length,
+											' \u4E2A)'
+										)
+									),
+									_react2.default.createElement(
+										_Table.TableRow,
+										null,
+										_react2.default.createElement(
+											_Table.TableHeaderColumn,
+											{ 'data-tip': '\u57FA\u56E0(\u5927\u5C0F)', style: { overflow: 'hidden' } },
+											'\u57FA\u56E0(\u5927\u5C0F)'
+										),
+										_react2.default.createElement(
+											_Table.TableHeaderColumn,
+											{ 'data-tip': '\u7A81\u53D8\u4FE1\u606F', style: { overflow: 'hidden' } },
+											'\u7A81\u53D8\u4FE1\u606F'
+										),
+										_react2.default.createElement(
+											_Table.TableHeaderColumn,
+											{ 'data-tip': '\u7A81\u53D8\u7C7B\u578B', style: { overflow: 'hidden' } },
+											'\u7A81\u53D8\u7C7B\u578B'
+										),
+										_react2.default.createElement(
+											_Table.TableHeaderColumn,
+											{ 'data-tip': '\u57FA\u56E0\u75BE\u75C5\u4FE1\u606F', style: { overflow: 'hidden' } },
+											'\u57FA\u56E0\u75BE\u75C5\u4FE1\u606F'
+										),
+										_react2.default.createElement(
+											_Table.TableHeaderColumn,
+											{ 'data-tip': '\u6D4B\u5E8F\u6DF1\u5EA6\u548C\u6BD4\u4F8B', style: { overflow: 'hidden' } },
+											'\u6D4B\u5E8F\u6DF1\u5EA6\u548C\u6BD4\u4F8B'
+										),
+										_react2.default.createElement(
+											_Table.TableHeaderColumn,
+											{ 'data-tip': 'HGMD\u4FE1\u606F', style: { overflow: 'hidden' } },
+											'HGMD'
+										),
+										_react2.default.createElement(
+											_Table.TableHeaderColumn,
+											{ 'data-tip': '\u6B63\u5E38\u4EBA\u7FA4\u643A\u5E26\u7387', style: { overflow: 'hidden' } },
+											'\u6B63\u5E38\u4EBA\u7FA4\u643A\u5E26\u7387'
+										),
+										_react2.default.createElement(
+											_Table.TableHeaderColumn,
+											{ 'data-tip': '\u529F\u80FD\u9884\u6D4B', style: { overflow: 'hidden' } },
+											'\u529F\u80FD\u9884\u6D4B'
+										)
+									)
+								),
+								_react2.default.createElement(
+									_Table.TableBody,
+									{
+										displayRowCheckbox: false,
+										deselectOnClickaway: false,
+										showRowHover: this.state.showRowHover,
+										stripedRows: this.state.stripedRows
+									},
+									this.state.selected.map(function (row, index) {
+										return _react2.default.createElement(
+											_Table.TableRow,
+											{ key: index },
+											_react2.default.createElement(
+												_Table.TableRowColumn,
+												{ 'data-tip': row[0] + '(' + row[19] + ')', style: { position: 'relative' } },
+												row[0] + '(' + row[19] + ')'
+											),
+											'//\u57FA\u56E0',
+											_react2.default.createElement(_Table.TableRowColumn, { 'data-tip': row[25], style: { position: 'relative' }, dangerouslySetInnerHTML: { __html: row[25] } }),
+											'//\u7A81\u53D8\u4FE1\u606F',
+											_react2.default.createElement(
+												_Table.TableRowColumn,
+												{ 'data-tip': row[5], style: { position: 'relative' } },
+												row[5]
+											),
+											'//\u7A81\u53D8\u7C7B\u578B',
+											_react2.default.createElement(_Table.TableRowColumn, { 'data-tip': row[23], style: { position: 'relative' }, dangerouslySetInnerHTML: { __html: row[23] } }),
+											'//\u75BE\u75C5\u4FE1\u606F',
+											_react2.default.createElement(
+												_Table.TableRowColumn,
+												{ 'data-tip': row[28] + '<br/>' + row[26], style: { position: 'relative' } },
+												row[28],
+												_react2.default.createElement('br', null),
+												row[26]
+											),
+											'//HET',
+											_react2.default.createElement(_Table.TableRowColumn, { 'data-tip': row[22], style: { position: 'relative' }, dangerouslySetInnerHTML: { __html: row[22] } }),
+											'//HGDM',
+											_react2.default.createElement(_Table.TableRowColumn, { 'data-tip': row[29], style: { position: 'relative' }, dangerouslySetInnerHTML: { __html: row[29] } }),
+											'//\u6B63\u5E38\u4EBA\u7FA4\u643A\u5E26\u7387',
+											_react2.default.createElement(
+												_Table.TableRowColumn,
+												{ 'data-tip': row[24], style: { position: 'relative' } },
+												_react2.default.createElement(
+													'a',
+													null,
+													'\u8BE6\u60C5'
+												)
+											),
+											'//\u529F\u80FD\u9884\u6D4B'
+										);
+									})
+								)
+							),
+							_react2.default.createElement(
+								_Table.Table,
+								{
+									height: this.state.height,
+									fixedHeader: this.state.fixedHeader,
+									fixedFooter: this.state.fixedFooter,
+									selectable: this.state.selectable,
+									multiSelectable: this.state.multiSelectable,
+									onRowSelection: this.handleRowSelect,
+									className: 'result'
+								},
 								_react2.default.createElement(
 									_Table.TableHeader,
 									{
@@ -22597,7 +22767,7 @@
 										),
 										_react2.default.createElement(
 											_Table.TableHeaderColumn,
-											{ colSpan: '3', style: { verticalAlign: 'bottom', textAlign: 'right' } },
+											{ colSpan: '4', style: { verticalAlign: 'bottom', textAlign: 'right' } },
 											_react2.default.createElement(
 												'a',
 												{ id: 'export', 'data-type': 'xls', href: 'javascript:;', style: { color: 'blue', overflow: 'hidden' } },
@@ -22661,7 +22831,7 @@
 									this.state.queryResult.map(function (row, index) {
 										return _react2.default.createElement(
 											_Table.TableRow,
-											{ key: index, selected: row.selected },
+											{ key: index, selected: row[31] },
 											_react2.default.createElement(
 												_Table.TableRowColumn,
 												{ 'data-tip': row[0] + '(' + row[19] + ')', style: { position: 'relative' } },
@@ -22960,7 +23130,7 @@
 	          { style: prepareStyles((0, _simpleAssign2.default)({}, headerStyle)) },
 	          _react2.default.createElement(
 	            'table',
-	            { className: className, style: mergedTableStyle },
+	              { className: className, style: mergedTableStyle, id: className },
 	            tHead
 	          )
 	        );
@@ -23114,6 +23284,7 @@
 	  muiTheme: _react.PropTypes.object.isRequired
 	};
 	exports.default = Table;
+
 
 /***/ },
 /* 181 */
