@@ -93,7 +93,15 @@ export default class TableExampleComplex extends React.Component {
 	this.filter();
 	
 	$('#carousel-filter').on('slid.bs.carousel', () => {
-	    this.setState(this.getDefaultState(), this.filter);
+	    if(this.state.jingzhun) {
+		console.log(this.state.jingzhun);
+		this.setState(this.getFreeState(), this.filter);
+	    }
+	    else
+	    {
+		console.log(this.state.jingzhun);
+		this.setState(this.getDefaultState(), this.filter);
+	    }
 	});
 
     }
@@ -136,6 +144,38 @@ export default class TableExampleComplex extends React.Component {
 	    dm_values: "1",
 	    qrjyz_value: "2%",
 	    inhouse_value:"1%",
+	    jingzhun: true,
+	});
+    }
+
+    getFreeState() {
+	return ({
+	    queryResult: tableData,
+	    fixedHeader: true,
+	    fixedFooter: true,
+	    stripedRows: true,
+	    showRowHover: true,
+	    selectable: false,
+	    multiSelectable: false,
+	    enableSelectAll: false,
+	    deselectOnClickaway: true,
+	    showCheckboxes: false,
+	    adjustForCheckboxes: false,
+	    height: '500px',
+	    gene_value: "",
+	    tblx_values: [""],
+	    tbbl_values: [
+		"0.9-1",
+		"0.2-0.9",],
+	    ycfs_values: [""],
+	    cxsd_values: [
+		"10-20",
+		"20+"
+	    ],
+	    dm_values: "3",
+	    qrjyz_value: "100%",
+	    inhouse_value:"100%",
+	    jingzhun: false,
 	});
     }
     
