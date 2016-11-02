@@ -83,15 +83,21 @@ export default class TableExampleComplex extends React.Component {
 	    var str = '';
 	    str = tableData[key][7] + '<br/>' + tableData[key][8] + '<br/>' + tableData[key][9];
 	    tableData[key].push(str);
-
+	    tableData[key].push(key);
+	    tableData[key].push(false);
 	}
 	    
 	this.filter();
-	
-	$('#carousel-filter').on('slid.bs.carousel', () => {
-	    this.setState(this.getDefaultState(), this.filter);
-	});
 
+	$('#carousel-filter').on('slid.bs.carousel', () => {
+	    if(this.state.jingzhun) {
+		this.setState(this.getFreeState(), this.filter);
+	    }
+	    else
+	    {
+		this.setState(this.getDefaultState(), this.filter);
+	    }
+	});
     }
 
     getDefaultState() {
@@ -101,23 +107,19 @@ export default class TableExampleComplex extends React.Component {
 	    fixedFooter: true,
 	    stripedRows: true,
 	    showRowHover: true,
-	    selectable: false,
-	    multiSelectable: false,
-	    enableSelectAll: false,
+	    selectable: true,
+	    multiSelectable: true,
+	    enableSelectAll: true,
 	    deselectOnClickaway: true,
-	    showCheckboxes: false,
-	    adjustForCheckboxes: false,
+	    showCheckboxes: true,
+	    adjustForCheckboxes: true,
 	    height: '500px',
 	    gene_value: "",
 	    tblx_values: [
 		"frameshift",
-		"nonframeshift",
-		"nonsynonymous",
 		"splicing",
 		"stopgain",
-		"synonymous",
-		"stoploss",
-		"unknown"],
+		"stoploss"],
 	    tbbl_values: [
 		"0.9-1",
 		"0.2-0.9",],
@@ -136,6 +138,40 @@ export default class TableExampleComplex extends React.Component {
 	    dm_values: "1",
 	    qrjyz_value: "2%",
 	    inhouse_value:"1%",
+	    jingzhun: true,
+	    selected: [],
+	});
+    }
+
+    getFreeState() {
+	return ({
+	    queryResult: tableData,
+	    fixedHeader: true,
+	    fixedFooter: true,
+	    stripedRows: true,
+	    showRowHover: true,
+	    selectable: true,
+	    multiSelectable: true,
+	    enableSelectAll: true,
+	    deselectOnClickaway: false,
+	    showCheckboxes: true,
+	    adjustForCheckboxes: true,
+	    height: '500px',
+	    gene_value: "",
+	    tblx_values: [""],
+	    tbbl_values: [
+		"0.9-1",
+		"0.2-0.9",],
+	    ycfs_values: [""],
+	    cxsd_values: [
+		"10-20",
+		"20+"
+	    ],
+	    dm_values: "3",
+	    qrjyz_value: "100%",
+	    inhouse_value:"100%",
+	    jingzhun: false,
+	    selected: [],
 	});
     }
     
@@ -350,13 +386,48 @@ export default class TableExampleComplex extends React.Component {
 	this.setState({gene_value:""}, this.filter);
     };
 
+    handleRowSelect = (rows) => {
+	var temp = [];
+	if(rows ==='all') {
+	    for(var key in this.state.queryResult)
+	    {
+		tableData[this.state.queryResult[key][25]][26] = true;
+		this.state.queryResult[key][26] = true;
+	    }
+	    this.setState({selected:this.state.queryResult}, this.filter);
+	    return;
+	}
+	if(rows ==='none') {
+	    for(var key in this.state.queryResult)
+	    {
+		tableData[this.state.queryResult[key][25]][26] = false;
+		this.state.queryResult[key][26] = false;
+	    }
+	    this.setState({selected:[]}, this.filter);
+	    return;
+	}
+
+	for(var i in tableData) {
+	    tableData[i][26] = false;
+	}
+	for(var i in this.state.queryResult) {
+	    this.state.queryResult[i][26] = false;
+	}
+	for(var i in rows) {
+	    tableData[this.state.queryResult[rows[i]][25]][26] = true;
+	    this.state.queryResult[rows[i]][26] = true;
+	    temp.push(this.state.queryResult[rows[i]]);
+	}
+	this.setState({selected:temp}, this.filter);
+    };
+
     render() {
 	return (
 <MuiThemeProvider muiTheme={muiTheme}>
   <div>
     <ReactTooltip type="info" effect="float" multiline={true} />
     <div style={{width:'80%', marginLeft:'auto', marginRight:'auto'}}>
-      <TextField name='gene' floatingLabelText="重点关注基因" value={this.state.gene_value} onChange={this.handle_gene_Change} style={{width:'80%'}}/>
+      <input type="text" placeholder="可输入重点关注基因"  value={this.state.gene_value} onChange={this.handle_gene_Change} style={{width:'80%'}}/>
       <FlatButton label="清除所有基因" primary={true} onClick={this.handleGeneClear}/>
     </div>
     <div id="carousel-filter" className="carousel slide" data-ride="carousel" data-interval="false">
@@ -371,7 +442,17 @@ export default class TableExampleComplex extends React.Component {
 	  <div style={{width:'80%', marginLeft:'auto', marginRight:'auto', paddingTop:'20px', overflow:'hidden'}}>
 	    <div id='tip' className="callout callout-info" style={{display:'none'}}>
               <h4>精准推荐过滤说明！</h4>
-              <p>每个指标都是精心挑选的，只要按照这个顺序来挑选就能得到我们预期的结果</p>
+              <p>优选1：筛选HGMD数据库已报道的突变点，是否有与临床表型相关基因突变<br/>
+		优选2: 筛选四种通常会严重影响蛋白功能（LOF）的特殊突变类型<br/>
+		★  经优选1和优选1筛选未发现疾病相关突变，则进入常规分析流程。<br/>
+		方 案 一：按照遗传方式筛选；适用案例：适用于缺乏特异或典型临床表型的案例分析<br/>
+		Step1：根据临床表型和家族史等，推测遗传方式（线粒体遗传除外），注意携带率的筛选<br/>
+		Step2：在上述筛选过滤后的突变点中，综合基因疾病信息和功能预测综合筛选疑似突变点<br/>
+		方 案 二：关联临床表型相关基因群，即临床表型驱动分析；<br/>
+		适用案例：适用于患者存在有特异或典型症状体征<br/>
+		Step1：关联临床诊断相关基因群（建议使用明鉴），并将基因群输入重点关注基因<br/>
+		Step2：在重点关注基因范围内，参照方案一的筛选模式进行。<br/>
+	      </p>
 	    </div>
 	      
 	    <div>
@@ -382,7 +463,14 @@ export default class TableExampleComplex extends React.Component {
 	      </SingleSelectHGDM>
 	      <div id='tipdm' className="callout callout-info" style={{display:'none'}}>
 		<h4>HGMD！</h4>
-		<p>HGDM说明</p>
+		<p>HGMD:  Human Gene Mutation Database，人类基因突变数据库<br/>
+		  DM：文献报道过的致病突变。<br/>
+		  DM？：表示致病性不肯定。<br/>
+		  [Similar]DM: 与所报道的突变点的染色体位置一致，但突变类型与文献报道的不同。<br/>
+		  DP：疾病相关的多态性，但没有直接证据证实此突变致病。<br/>
+		  DFP：疾病相关的多态性，有直接证据证明此突变与蛋白功能有关。<br/>
+		  FP：功能型多态性，被报道能影响蛋白结构，功能或基因表达，但无致病报道。<br/>
+		</p>
 	      </div>
 	    </div>
 	    <div>
@@ -398,6 +486,14 @@ export default class TableExampleComplex extends React.Component {
 		<ListItem primaryText={"unknown"} value="unknown" />
 		<ListItem primaryText={"不筛选"} value="" />
 	      </MultiSelectTBLX>
+	      <div id='tiptblx' className="callout callout-info" style={{display:'none'}}>
+		<h4>突变类型！</h4>
+		<p>1.stopgain：无义突变；splicing: 剪切突变；frameshift: 移码突变；stoploss: 终止密码突变<br/>
+		  2.nonsynonymous: 错义突变；nonframshift: 非移码突变<br/>
+		  3.synonymous: 同义突变；unknown: 不确定（此类型通常位于非外显子编码区）<br/>
+		  建议：通常关注第一类包含的四种突变类型；第二类是最常见突变类型；第三类通常不查看<br/>
+		</p>
+	      </div>
 	    </div>
 	    <div>
 	      <MultiSelectYCFS fullWidth={true} value={this.state.ycfs_values} floatingLabelText="遗传方式" onChange={this.handle_ycfs_Change}>
@@ -409,11 +505,13 @@ export default class TableExampleComplex extends React.Component {
 		<ListItem primaryText={"不明"} value="不明" className={"purple_border"}/>
 		<ListItem primaryText={"不筛选"} value=""/>
 	      </MultiSelectYCFS>
-	    </div>
-	    <div id='tipycfs' className="callout callout-info" style={{display:'none'}}>
+	      <div id='tipycfs' className="callout callout-info" style={{display:'none'}}>
 		<h4>遗传方式！</h4>
-		<p>遗传方式说明</p>
+		<p>AD: 常染色体显性遗传；AR：常染色体隐性遗传；<br/>
+		  XD：X染色体显性遗传；XR：X染色体隐性遗传；X-Link：X染色体连锁；<br/>
+		</p>
 	      </div>
+	    </div>
 	    <div>
 	      <MultiSelect fullWidth={true} value={this.state.cxsd_values} floatingLabelText="测序深度" onChange={this.handle_cxsd_Change}>
 		<ListItem primaryText={"10-20"} value="10-20" />
@@ -451,18 +549,28 @@ export default class TableExampleComplex extends React.Component {
         </div>
 
         <div className="item">
-	  <div className="carousel-caption" style={{top:'0px', bottom: 'auto', paddingTop:'0px'}}>
+	  <div className="carousel-caption" style={{top:'0px', bottom: 'auto', paddingTop:'0px', paddingBottom:'0px'}}>
 	    自选过滤
 	  </div>
 	  <div style={{width:'80%', marginLeft:'auto', marginRight:'auto', paddingTop:'20px', overflow:'hidden'}}>
 
 	    <div>
-	      <MultiSelect fullWidth={true} value={this.state.dm_values} floatingLabelText="HGMD" onChange={this.handle_dm_Change}>
-		<ListItem primaryText={"DM"} value="DM" />
-		<ListItem primaryText={"DM?"} value="DM?" />
-		<ListItem primaryText={"[Similar]DM"} value="[Similar]DM" />
-		<ListItem primaryText={"不筛选"} value="" />
-	      </MultiSelect>
+	      <SingleSelectHGDM fullWidth={true} value={this.state.dm_values} floatingLabelText="HGMD" onChange={this.handle_dm_Change}>
+		<ListItem primaryText={"已报导"} value="1" />
+		<ListItem primaryText={"未报导"} value="2" />
+		<ListItem primaryText={"不筛选"} value="3" />
+	      </SingleSelectHGDM>
+	      <div id='tipdm' className="callout callout-info" style={{display:'none'}}>
+		<h4>HGMD！</h4>
+		<p>HGMD:  Human Gene Mutation Database，人类基因突变数据库<br/>
+		  DM：文献报道过的致病突变。<br/>
+		  DM？：表示致病性不肯定。<br/>
+		  [Similar]DM: 与所报道的突变点的染色体位置一致，但突变类型与文献报道的不同。<br/>
+		  DP：疾病相关的多态性，但没有直接证据证实此突变致病。<br/>
+		  DFP：疾病相关的多态性，有直接证据证明此突变与蛋白功能有关。<br/>
+		  FP：功能型多态性，被报道能影响蛋白结构，功能或基因表达，但无致病报道。<br/>
+		</p>
+	      </div>
 	    </div>
 	    <div>
 	      <MultiSelectTBLX fullWidth={true} value={this.state.tblx_values} floatingLabelText="突变类型" onChange={this.handle_tblx_Change}>
@@ -477,9 +585,17 @@ export default class TableExampleComplex extends React.Component {
 		<ListItem primaryText={"unknown"} value="unknown" />
 		<ListItem primaryText={"不筛选"} value="" />
 	      </MultiSelectTBLX>
+	      <div id='tiptblx' className="callout callout-info" style={{display:'none'}}>
+		<h4>突变类型！</h4>
+		<p>1.stopgain：无义突变；splicing: 剪切突变；frameshift: 移码突变；stoploss: 终止密码突变<br/>
+		  2.nonsynonymous: 错义突变；nonframshift: 非移码突变<br/>
+		  3.synonymous: 同义突变；unknown: 不确定（此类型通常位于非外显子编码区）<br/>
+		  建议：通常关注第一类包含的四种突变类型；第二类是最常见突变类型；第三类通常不查看<br/>
+		</p>
+	      </div>
 	    </div>
 	    <div>
-	      <MultiSelect fullWidth={true} value={this.state.ycfs_values} floatingLabelText="遗传方式" onChange={this.handle_ycfs_Change}>
+	      <MultiSelectYCFS fullWidth={true} value={this.state.ycfs_values} floatingLabelText="遗传方式" onChange={this.handle_ycfs_Change}>
 		<ListItem primaryText={"AR"} value="AR" className={"green_border"}/>
 		<ListItem primaryText={"AD"} value="AD" className={"yellow_border"}/>
 		<ListItem primaryText={"XR"} value="XR" className={"blue_border"}/>
@@ -487,7 +603,13 @@ export default class TableExampleComplex extends React.Component {
 		<ListItem primaryText={"X-LINKED"} value="X-LINKED" className={"blue_border"}/>
 		<ListItem primaryText={"不明"} value="不明" className={"purple_border"}/>
 		<ListItem primaryText={"不筛选"} value=""/>
-	      </MultiSelect>
+	      </MultiSelectYCFS>
+	      <div id='tipycfs' className="callout callout-info" style={{display:'none'}}>
+		<h4>遗传方式！</h4>
+		<p>AD: 常染色体显性遗传；AR：常染色体隐性遗传；<br/>
+		  XD：X染色体显性遗传；XR：X染色体隐性遗传；X-Link：X染色体连锁；<br/>
+		</p>
+	      </div>
 	    </div>
 	    <div>
 	      <MultiSelect fullWidth={true} value={this.state.cxsd_values} floatingLabelText="测序深度" onChange={this.handle_cxsd_Change}>
@@ -533,8 +655,64 @@ export default class TableExampleComplex extends React.Component {
 		<span className="fa fa-angle-right" style={{color:'#0000FF'}}></span>
         </a>
       </div>
-      <table id="result" style={{backgroundColor: 'rgb(255, 255, 255)', padding: '0px 24px', width: '100%', borderCollapse: 'collapse', borderSpacing:'0px', tableLayout: 'fixed', fontFamily: 'Roboto, sans-serif'}}>
-	
+      <Table
+	 fixedHeader={true}
+	 fixedFooter={this.state.fixedFooter}
+	 selectable={false}
+	 multiSelectable={false}
+	 style={{backgroundColor:"lightblue"}}
+	 >	
+	<TableHeader
+	   displaySelectAll={false}
+	   adjustForCheckbox={false}
+	   enableSelectAll={false}
+	   >
+	  <TableRow>
+	    <TableHeaderColumn colSpan="8" style={{verticalAlign: 'bottom', fontWeight:'bold', fontSize:'120%', overflow:'hidden'}}>
+	      我的选点(目前选中: {this.state.selected.length} 个)
+	    </TableHeaderColumn>
+	  </TableRow>
+	  <TableRow>
+	    <TableHeaderColumn data-tip="基因" style={{overflow:'hidden'}}>基因</TableHeaderColumn>
+	    <TableHeaderColumn data-tip="突变信息" style={{overflow:'hidden'}}>突变信息</TableHeaderColumn>
+	    <TableHeaderColumn data-tip="突变类型" style={{overflow:'hidden'}}>突变类型</TableHeaderColumn>
+	    <TableHeaderColumn data-tip="基因疾病信息" style={{overflow:'hidden'}}>基因疾病信息</TableHeaderColumn>
+	    <TableHeaderColumn data-tip="测序深度和比例" style={{overflow:'hidden'}}>测序深度和比例</TableHeaderColumn>
+	    <TableHeaderColumn data-tip="HGMD信息" style={{overflow:'hidden'}}>HGMD</TableHeaderColumn>
+	    <TableHeaderColumn data-tip="正常人群携带率" style={{overflow:'hidden'}}>正常人群携带率</TableHeaderColumn>
+	    <TableHeaderColumn data-tip="功能预测" style={{overflow:'hidden'}}>功能预测</TableHeaderColumn>
+	  </TableRow>
+	</TableHeader>
+	<TableBody
+	   displayRowCheckbox={false}
+	   deselectOnClickaway={false}
+	   showRowHover={this.state.showRowHover}
+	   stripedRows={this.state.stripedRows}
+	   >
+	  {this.state.selected.map( (row, index) => (
+	  <TableRow key={index}>
+	    <TableRowColumn data-tip={row[0]} style={{position:'relative'}}>{row[0]}</TableRowColumn>//基因
+	    <TableRowColumn data-tip={row[21]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[21]}} />//突变信息
+	    <TableRowColumn data-tip={row[6]} style={{position:'relative'}}>{row[6]}</TableRowColumn>//突变类型
+	    <TableRowColumn data-tip={row[19]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[19]}} />//疾病信息
+	    <TableRowColumn data-tip={row[22]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[22]}} />//HET
+	    <TableRowColumn data-tip={row[24]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[24]}} />//HGDM
+	    <TableRowColumn data-tip={row[23]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[23]}} />//正常人群携带率
+	    <TableRowColumn data-tip={row[20]} style={{position:'relative'}}><a>详情</a></TableRowColumn>//功能预测
+	  </TableRow>
+	  ))}
+	</TableBody>
+      </Table>
+      
+      <Table
+	 height={this.state.height}
+	 fixedHeader={this.state.fixedHeader}
+	 fixedFooter={this.state.fixedFooter}
+	 selectable={this.state.selectable}
+	 multiSelectable={this.state.multiSelectable}
+	 onRowSelection={this.handleRowSelect}
+	 className="result"
+	 >	
 	<TableHeader
 	   displaySelectAll={this.state.showCheckboxes}
 	   adjustForCheckbox={this.state.adjustForCheckboxes}
@@ -548,7 +726,7 @@ export default class TableExampleComplex extends React.Component {
 	    </TableHeaderColumn>
 	  </TableRow>
 	  <TableRow>
-	    <TableHeaderColumn data-tip="基因" style={{overflow:'hidden'}}>基因(大小)</TableHeaderColumn>
+	    <TableHeaderColumn data-tip="基因" style={{overflow:'hidden'}}>基因</TableHeaderColumn>
 	    <TableHeaderColumn data-tip="突变信息" style={{overflow:'hidden'}}>突变信息</TableHeaderColumn>
 	    <TableHeaderColumn data-tip="突变类型" style={{overflow:'hidden'}}>突变类型</TableHeaderColumn>
 	    <TableHeaderColumn data-tip="基因疾病信息" style={{overflow:'hidden'}}>基因疾病信息</TableHeaderColumn>
@@ -565,7 +743,7 @@ export default class TableExampleComplex extends React.Component {
 	   stripedRows={this.state.stripedRows}
 	   >
 	  {this.state.queryResult.map( (row, index) => (
-	  <TableRow key={index} selected={row.selected}>
+	  <TableRow key={index} selected={row[26]}>
 	    <TableRowColumn data-tip={row[0]} style={{position:'relative'}}>{row[0]}</TableRowColumn>//基因
 	    <TableRowColumn data-tip={row[21]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[21]}} />//突变信息
 	    <TableRowColumn data-tip={row[6]} style={{position:'relative'}}>{row[6]}</TableRowColumn>//突变类型
@@ -577,7 +755,7 @@ export default class TableExampleComplex extends React.Component {
 	  </TableRow>
 	  ))}
 	</TableBody>
-      </table>
+      </Table>
     </div>
   </div>
 </MuiThemeProvider>

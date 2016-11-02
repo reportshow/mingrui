@@ -576,7 +576,7 @@ export default class TableExampleComplex extends React.Component {
 	      </MultiSelectTBLX>
 	    </div>
 	    <div>
-	      <MultiSelect fullWidth={true} value={this.state.ycfs_values} floatingLabelText="遗传方式" onChange={this.handle_ycfs_Change}>
+	      <MultiSelectYCFS fullWidth={true} value={this.state.ycfs_values} floatingLabelText="遗传方式" onChange={this.handle_ycfs_Change}>
 		<ListItem primaryText={"AR"} value="AR" className={"green_border"}/>
 		<ListItem primaryText={"AD"} value="AD" className={"yellow_border"}/>
 		<ListItem primaryText={"XR"} value="XR" className={"blue_border"}/>
@@ -584,7 +584,7 @@ export default class TableExampleComplex extends React.Component {
 		<ListItem primaryText={"X-LINKED"} value="X-LINKED" className={"blue_border"}/>
 		<ListItem primaryText={"不明"} value="不明" className={"purple_border"}/>
 		<ListItem primaryText={"不筛选"} value=""/>
-	      </MultiSelect>
+	      </MultiSelectYCFS>
 	    </div>
 	    <div>
 	      <MultiSelect fullWidth={true} value={this.state.cxsd_values} floatingLabelText="测序深度" onChange={this.handle_cxsd_Change}>
@@ -689,8 +689,7 @@ export default class TableExampleComplex extends React.Component {
 	 multiSelectable={this.state.multiSelectable}
 	 onRowSelection={this.handleRowSelect}
 	 className="result"
-	 >
-	
+	 >	
 	<TableHeader
 	   displaySelectAll={this.state.showCheckboxes}
 	   adjustForCheckbox={this.state.adjustForCheckboxes}
