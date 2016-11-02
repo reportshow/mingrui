@@ -6,7 +6,7 @@ if (!empty($files) && is_array($files)) {
     foreach ($files as $k => $val) {
         if ($val->type == 'image') {
             $url = $val->url;
-            echo "<img src='{$url}'   class='margin' style='cursor:pointer;width:120px'>";
+            echo "<img src='{$url}'   class='previewimg margin' style='cursor:pointer;width:120px'>";
         } else if ($val->type == 'file') {
             $icon     = $val->icon;
             $url      = $val->url;
@@ -50,7 +50,7 @@ if (empty($init)) {
  }
   .previewbox{     position: absolute;   -webkit-transition:all 1s;
    -webkit-transform:scale(0);    width: 100%;
-    height: 100%;
+    height: 100%; overflow: auto;
   }
   .previewbox img{width: 100%; top: 50%;      position: absolute;  transform: translateY(-50%);}
   .zoomIn .previewbox{
@@ -67,7 +67,7 @@ if (empty($init)) {
 </div>
 <script type="text/javascript">
 $(function(){
-    $('.timeline-body img').click(function(){
+    $('.previewimg').click(function(){
        var imgurl = $(this).attr('src');
        $('.previewbg').fadeIn();
           $('.previewbg .previewbox img').attr('src',imgurl);
