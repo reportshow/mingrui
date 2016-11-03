@@ -87,13 +87,20 @@ export default class TableExampleComplex extends React.Component {
 		inhouse = '-';
 	    }
 	    tableData[key].push(qrjyz + '<br/>' + inhouse);
-
+	    tableData[key].push(key);
+	    tableData[key].push(false);
 	}
 	    
 	this.filter();
 	
 	$('#carousel-filter').on('slid.bs.carousel', () => {
-	    this.setState(this.getDefaultState(), this.filter);
+	    if(this.state.jingzhun) {
+		this.setState(this.getFreeState(), this.filter);
+	    }
+	    else
+	    {
+		this.setState(this.getDefaultState(), this.filter);
+	    }
 	});
 
     }
@@ -105,12 +112,12 @@ export default class TableExampleComplex extends React.Component {
 	    fixedFooter: true,
 	    stripedRows: true,
 	    showRowHover: true,
-	    selectable: false,
-	    multiSelectable: false,
-	    enableSelectAll: false,
-	    deselectOnClickaway: true,
-	    showCheckboxes: false,
-	    adjustForCheckboxes: false,
+	    selectable: true,
+	    multiSelectable: true,
+	    enableSelectAll: true,
+	    deselectOnClickaway: false,
+	    showCheckboxes: true,
+	    adjustForCheckboxes: true,
 	    height: '500px',
 	    gene_value: "",
 	    tblx_values: [
@@ -136,6 +143,40 @@ export default class TableExampleComplex extends React.Component {
 	    dm_values: "1",
 	    qrjyz_value: "2%",
 	    inhouse_value:"1%",
+	    jingzhun: true,
+	    selected: [],
+	});
+    }
+
+    getFreeState() {
+	return ({
+	    queryResult: tableData,
+	    fixedHeader: true,
+	    fixedFooter: true,
+	    stripedRows: true,
+	    showRowHover: true,
+	    selectable: true,
+	    multiSelectable: true,
+	    enableSelectAll: true,
+	    deselectOnClickaway: false,
+	    showCheckboxes: true,
+	    adjustForCheckboxes: true,
+	    height: '500px',
+	    gene_value: "",
+	    tblx_values: [""],
+	    tbbl_values: [
+		"0.9-1",
+		"0.2-0.9",],
+	    ycfs_values: [""],
+	    cxsd_values: [
+		"10-20",
+		"20+"
+	    ],
+	    dm_values: "3",
+	    qrjyz_value: "100%",
+	    inhouse_value:"100%",
+	    jingzhun: false,
+	    selected: [],
 	});
     }
     
@@ -344,7 +385,43 @@ export default class TableExampleComplex extends React.Component {
 	this.setState({gene_value:""}, this.filter);
     };
 
+    handleRowSelect = (rows) => {
+	var temp = [];
+	if(rows ==='all') {
+	    for(var key in this.state.queryResult)
+	    {
+		tableData[this.state.queryResult[key][30]][31] = true;
+		this.state.queryResult[key][31] = true;
+	    }
+	    this.setState({selected:this.state.queryResult}, this.filter);
+	    return;
+	}
+	if(rows ==='none') {
+	    for(var key in this.state.queryResult)
+	    {
+		tableData[this.state.queryResult[key][30]][31] = false;
+		this.state.queryResult[key][31] = false;
+	    }
+	    this.setState({selected:[]}, this.filter);
+	    return;
+	}
+
+	for(var i in tableData) {
+	    tableData[i][31] = false;
+	}
+	for(var i in this.state.queryResult) {
+	    this.state.queryResult[i][31] = false;
+	}
+	for(var i in rows) {
+	    tableData[this.state.queryResult[rows[i]][30]][31] = true;
+	    this.state.queryResult[rows[i]][31] = true;
+	    temp.push(this.state.queryResult[rows[i]]);
+	}
+	this.setState({selected:temp}, this.filter);
+    };
+
     render() {
+	
 	return (
 <MuiThemeProvider muiTheme={muiTheme}>
   <div>
@@ -499,7 +576,7 @@ export default class TableExampleComplex extends React.Component {
 	      </MultiSelectTBLX>
 	    </div>
 	    <div>
-	      <MultiSelect fullWidth={true} value={this.state.ycfs_values} floatingLabelText="遗传方式" onChange={this.handle_ycfs_Change}>
+	      <MultiSelectYCFS fullWidth={true} value={this.state.ycfs_values} floatingLabelText="遗传方式" onChange={this.handle_ycfs_Change}>
 		<ListItem primaryText={"AR"} value="AR" className={"green_border"}/>
 		<ListItem primaryText={"AD"} value="AD" className={"yellow_border"}/>
 		<ListItem primaryText={"XR"} value="XR" className={"blue_border"}/>
@@ -507,7 +584,7 @@ export default class TableExampleComplex extends React.Component {
 		<ListItem primaryText={"X-LINKED"} value="X-LINKED" className={"blue_border"}/>
 		<ListItem primaryText={"不明"} value="不明" className={"purple_border"}/>
 		<ListItem primaryText={"不筛选"} value=""/>
-	      </MultiSelect>
+	      </MultiSelectYCFS>
 	    </div>
 	    <div>
 	      <MultiSelect fullWidth={true} value={this.state.cxsd_values} floatingLabelText="测序深度" onChange={this.handle_cxsd_Change}>
@@ -553,17 +630,75 @@ export default class TableExampleComplex extends React.Component {
 		<span className="fa fa-angle-right" style={{color:'#0000FF'}}></span>
         </a>
       </div>
-      <table id="result" style={{backgroundColor: 'rgb(255, 255, 255)', padding: '0px 24px', width: '100%', borderCollapse: 'collapse', borderSpacing:'0px', tableLayout: 'fixed', fontFamily: 'Roboto, sans-serif'}}>
+
+      <Table
+	 fixedHeader={true}
+	 fixedFooter={this.state.fixedFooter}
+	 selectable={false}
+	 multiSelectable={false}
+	 style={{backgroundColor:"lightblue"}}
+	 >
 	
+	<TableHeader
+	   displaySelectAll={false}
+	   adjustForCheckbox={false}
+	   enableSelectAll={false}
+	   >
+	  <TableRow>
+	    <TableHeaderColumn colSpan="8" style={{verticalAlign: 'bottom', fontWeight:'bold', fontSize:'120%', overflow:'hidden'}}>
+	      我的选点(目前选中: {this.state.selected.length} 个)
+	    </TableHeaderColumn>
+	  </TableRow>
+	  <TableRow>
+	    <TableHeaderColumn data-tip="基因(大小)" style={{overflow:'hidden'}}>基因(大小)</TableHeaderColumn>
+	    <TableHeaderColumn data-tip="突变信息" style={{overflow:'hidden'}}>突变信息</TableHeaderColumn>
+	    <TableHeaderColumn data-tip="突变类型" style={{overflow:'hidden'}}>突变类型</TableHeaderColumn>
+	    <TableHeaderColumn data-tip="基因疾病信息" style={{overflow:'hidden'}}>基因疾病信息</TableHeaderColumn>
+	    <TableHeaderColumn data-tip="测序深度和比例" style={{overflow:'hidden'}}>测序深度和比例</TableHeaderColumn>
+	    <TableHeaderColumn data-tip="HGMD信息" style={{overflow:'hidden'}}>HGMD</TableHeaderColumn>
+	    <TableHeaderColumn data-tip="正常人群携带率" style={{overflow:'hidden'}}>正常人群携带率</TableHeaderColumn>
+	    <TableHeaderColumn data-tip="功能预测" style={{overflow:'hidden'}}>功能预测</TableHeaderColumn>
+	  </TableRow>
+	</TableHeader>
+	<TableBody
+	   displayRowCheckbox={false}
+	   deselectOnClickaway={false}
+	   showRowHover={this.state.showRowHover}
+	   stripedRows={this.state.stripedRows}
+	   >
+	  {this.state.selected.map( (row, index) => (
+	  <TableRow key={index}>
+	    <TableRowColumn data-tip={row[0] +'(' + row[19] + ')'} style={{position:'relative'}}>{row[0] +'(' + row[19] + ')'}</TableRowColumn>//基因
+	    <TableRowColumn data-tip={row[25]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[25]}} />//突变信息
+	    <TableRowColumn data-tip={row[5]} style={{position:'relative'}}>{row[5]}</TableRowColumn>//突变类型
+	    <TableRowColumn data-tip={row[23]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[23]}} />//疾病信息
+	    <TableRowColumn data-tip={row[28] + '<br/>' +row[26]} style={{position:'relative'}}>{row[28]}<br/>{row[26]}</TableRowColumn>//HET
+	    <TableRowColumn data-tip={row[22]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[22]}} />//HGDM
+	    <TableRowColumn data-tip={row[29]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[29]}} />//正常人群携带率
+	    <TableRowColumn data-tip={row[24]} style={{position:'relative'}}><a>详情</a></TableRowColumn>//功能预测
+	  </TableRow>
+	  ))}
+	</TableBody>
+      </Table>
+      
+      <Table
+	 height={this.state.height}
+	 fixedHeader={this.state.fixedHeader}
+	 fixedFooter={this.state.fixedFooter}
+	 selectable={this.state.selectable}
+	 multiSelectable={this.state.multiSelectable}
+	 onRowSelection={this.handleRowSelect}
+	 className="result"
+	 >	
 	<TableHeader
 	   displaySelectAll={this.state.showCheckboxes}
 	   adjustForCheckbox={this.state.adjustForCheckboxes}
 	   enableSelectAll={this.state.enableSelectAll}
 	   >
 	  <TableRow>
-		<TableHeaderColumn colSpan="4" style={{verticalAlign: 'bottom', fontWeight:'bold', fontSize:'120%', overflow:'hidden'}} data-tip={"当前选择：" +this.state.queryResult.length +'/'+tableData.length+"(筛选/全部)"}>当前选择：{this.state.queryResult.length} /{tableData.length}(筛选/全部)
+	    <TableHeaderColumn colSpan="4" style={{verticalAlign: 'bottom', fontWeight:'bold', fontSize:'120%', overflow:'hidden'}} data-tip={"当前选择：" +this.state.queryResult.length +'/'+tableData.length+"(筛选/全部)"}>当前选择：{this.state.queryResult.length} /{tableData.length}(筛选/全部)
 	    </TableHeaderColumn>
-	    <TableHeaderColumn  colSpan="3" style={{verticalAlign: 'bottom', textAlign:'right'}}>
+	    <TableHeaderColumn  colSpan="4" style={{verticalAlign: 'bottom', textAlign:'right'}}>
 	      <a id='export' data-type="xls" href="javascript:;" style={{color: 'blue', overflow:'hidden'}}>下载过滤结果</a>
 	    </TableHeaderColumn>
 	  </TableRow>
@@ -585,7 +720,7 @@ export default class TableExampleComplex extends React.Component {
 	   stripedRows={this.state.stripedRows}
 	   >
 	  {this.state.queryResult.map( (row, index) => (
-	  <TableRow key={index} selected={row.selected}>
+	  <TableRow key={index} selected={row[31]}>
 	    <TableRowColumn data-tip={row[0] +'(' + row[19] + ')'} style={{position:'relative'}}>{row[0] +'(' + row[19] + ')'}</TableRowColumn>//基因
 	    <TableRowColumn data-tip={row[25]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[25]}} />//突变信息
 	    <TableRowColumn data-tip={row[5]} style={{position:'relative'}}>{row[5]}</TableRowColumn>//突变类型
@@ -597,7 +732,7 @@ export default class TableExampleComplex extends React.Component {
 	  </TableRow>
 	  ))}
 	</TableBody>
-      </table>
+      </Table>
     </div>
   </div>
 </MuiThemeProvider>
