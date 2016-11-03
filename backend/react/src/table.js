@@ -108,8 +108,8 @@ export default class TableExampleComplex extends React.Component {
     getDefaultState() {
 	return ({
 	    queryResult: tableData,
-	    fixedHeader: true,
-	    fixedFooter: true,
+	    fixedHeader: false,
+	    fixedFooter: false,
 	    stripedRows: true,
 	    showRowHover: true,
 	    selectable: true,

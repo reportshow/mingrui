@@ -22203,8 +22203,8 @@
 			value: function getDefaultState() {
 				return {
 					queryResult: tableData,
-					fixedHeader: true,
-					fixedFooter: true,
+					fixedHeader: false,
+					fixedFooter: false,
 					stripedRows: true,
 					showRowHover: true,
 					selectable: true,
@@ -22231,8 +22231,8 @@
 			value: function getFreeState() {
 				return {
 					queryResult: tableData,
-					fixedHeader: true,
-					fixedFooter: true,
+					fixedHeader: false,
+					fixedFooter: false,
 					stripedRows: true,
 					showRowHover: true,
 					selectable: true,
@@ -23184,7 +23184,7 @@
 	          { style: prepareStyles((0, _simpleAssign2.default)({}, headerStyle)) },
 	          _react2.default.createElement(
 	            'table',
-	              { className: className, style: mergedTableStyle, id: className },
+	              { className: className, style: mergedTableStyle },
 	            tHead
 	          )
 	        );
@@ -23217,7 +23217,7 @@
 	          { style: prepareStyles((0, _simpleAssign2.default)(styles.bodyTable, bodyStyle)), ref: 'tableDiv' },
 	          _react2.default.createElement(
 	            'table',
-	            { className: className, style: mergedTableStyle, ref: 'tableBody' },
+	            { className: className, style: mergedTableStyle, ref: 'tableBody', id: className },
 	            inlineHeader,
 	            inlineFooter,
 	            tBody
