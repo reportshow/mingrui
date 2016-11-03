@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use backend\widgets\LoadingPage;
 /* @var $this yii\web\View */
 /* @var $model backend\models\MingruiVcf */
 
@@ -12,19 +12,25 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mingrui-vcf-view">
  
-    <p>
+  <?=LoadingPage::widget()?>
+
+
+
+    <p> 
         <?php //= Html::a('修改', ['update', 'id'           => $model->id], ['class' => 'btn btn-primary']) 
         ?>
-        <?= Html::a('删除', ['delete', 'id'           => $model->id], [
+        <?php
+        /* echo Html::a('删除', ['delete', 'id'           => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
             ],
-        ]) ?>
+        ])*/ ?>
     </p>
 
-    <?= DetailView::widget([
+    <?php 
+    /*echo DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
@@ -42,7 +48,9 @@ $this->params['breadcrumbs'][] = $this->title;
              'value'=>    Html::a('下载VCF', ['vcf/download','id'=>$model->id], ['class' => 'btn btn-info'])],
             ['attribute'=>'上传者', 'value'=>$model->creator->nickname],
         ],
-    ]) ?>
+    ]);*/
+
+     ?>
 
 </div>
 <div id="app"></div>

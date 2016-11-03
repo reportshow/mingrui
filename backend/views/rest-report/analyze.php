@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use backend\widgets\RestrepotTop2;
 use backend\components\Functions;
 
+use backend\widgets\LoadingPage;
+
 /* @var $this yii\web\View */
 /* @var $model backend\models\RestReport */
 
@@ -30,6 +32,7 @@ AppAsset::register($this);
   return;
 }//ismobile
 ?>
+<?=LoadingPage::widget()?>
   
 <div id="app"></div>
 <script>

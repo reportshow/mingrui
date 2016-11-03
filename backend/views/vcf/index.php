@@ -78,7 +78,7 @@ $status = $model->getTaskStatus() == 'complete' ? '完成' : '处理中..';
 return "<button class='btn'>$status</button>";
 }],*/
 
-    [
+/*    [
         'attribute' => 'vcf',
         'format'    => 'raw',
         'filter'    => '',
@@ -86,21 +86,32 @@ return "<button class='btn'>$status</button>";
          'options'   => ['width' => '150px;'],
         'label'     => '操作',
         'value'     => function ($model) {
-            $html ='';//. Html::a('下 载', ['vcf/download', 'id' => $model->id], ['class' => 'btn btn-info']);
-            if ($model->getTaskStatus() == 'complete') {
-                $status = '完成';
-                $disable = '';
-            } else {
-                $status = '处理中';
-                 $disable = 'disabled';
-            }
-            $html .= "<a class='btn btn-info $disable'>$status</a>";
-            return $html;
+            
         },
-    ],
+    ],*/
 
     ['class' => 'yii\grid\ActionColumn',
        'header' =>'操作',
+       'template' => '{viewvcf} {update} {delete}',
+       'buttons' => [
+            'viewvcf' => function ($url, $model, $key) {                 
+                 $html ='';//. Html::a('下 载', ['vcf/download', 'id' => $model->id], ['class' => 'btn btn-info']);
+                    if ($model->getTaskStatus() == 'complete') {
+                        $status = '查看';
+                        $disable = '';
+                        $html .= Html::a($status, 
+                            ['vcf/view','id'=>$model->id],
+                            ['title' =>'审核', 'class'=>'btn btn-info'] );
+                    } else {
+                        $status = '处理中';
+                        $disable = 'disabled';
+                        $html .= "<a class='btn btn-info disable'>$status</a>";
+                    }
+                    
+                    return $html;
+
+              },
+            ],
        'options'       => [
                 'width' => 80,
             ],
