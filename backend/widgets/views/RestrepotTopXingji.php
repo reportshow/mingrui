@@ -7,6 +7,12 @@ use backend\components\Functions;
 $pingjiaUrl = Yii::$app->urlManager->createUrl(['pingjia/save-xingji']);
 $styleboxtop = Functions::ismobile() ? '0px' : '150px';
 
+$pingjiaObj = MingruiPingjia::find()->where(['report_id'=>$model_id])->one();
+$pingjiaIndex = -1;
+if($pingjiaObj){ 
+  $pingjiaIndex = $pingjiaObj->pingjia;
+}
+
 ?>
 <style type="text/css">
     .pingjia  p{margin-left:40px;}
@@ -43,8 +49,9 @@ $styleboxtop = Functions::ismobile() ? '0px' : '150px';
              foreach ($list as $key => $one) {
                $listStr .= "<i class='fa $one'></i> ";
              }
+             $checked = $pingjiaIndex ==$index ? 'checked' : '';
 
-             echo  "<p><input type=checkbox name='pingjia' value='$index'>
+             echo  "<p><input type=checkbox name='pingjia' value='$index' $checked>
                     <i class='tag'>$listStr</i> <i class='tag2'>$label</i> $desc 
                    </p> ";        
 
