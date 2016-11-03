@@ -22210,7 +22210,7 @@
 					selectable: true,
 					multiSelectable: true,
 					enableSelectAll: true,
-					deselectOnClickaway: true,
+					deselectOnClickaway: false,
 					showCheckboxes: true,
 					adjustForCheckboxes: true,
 					height: '500px',
