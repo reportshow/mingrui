@@ -189,12 +189,14 @@ return $date->format('Y-m-d');
 
         [
             'attribute'     => 'pingjia',
+            'format'=>'raw',
             // 'filter' => Html::activeDropDownList($searchModel, 'sex',['1'=>'男','0'=>'女'], ['prompt'=>'全部'] ),
             'filter'        => MingruiPingjia::getSimpleArray(),
             'value'         => function ($model) {
                 $obj = $model->pingjia;
-                if ($obj) {
-                    // return MingruiPingjia::$pingjiaText[$obj->pingjia];
+                if ($obj && $obj->pingjia) {
+                     $jo =  MingruiPingjia::$pingjiaText[$obj->pingjia];
+                    return $jo['label'];
                 }
             },
             'label'         => '星级评价',

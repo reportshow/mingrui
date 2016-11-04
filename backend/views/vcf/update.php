@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model backend\models\MingruiVcf */
 
-$this->title = 'Update Mingrui Vcf: ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Mingrui Vcfs', 'url' => ['index']];
+$this->title =   $model->title;
+$this->params['breadcrumbs'][] = ['label' => '外源数据分析', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id'           => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = '更新';
 ?>
 <div class="mingrui-vcf-update">
 

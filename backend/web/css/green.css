@@ -5,6 +5,9 @@
     background-color: #1BBC9B;
     border-color: #069C7E;
 }
+.btn-info:hover{
+  background-color: #00a080;
+}
 .box.box-primary,.box.box-info {
     border-top-color: #FECA7F;
 }
@@ -202,13 +205,16 @@ padding: 11px 10px;
 
 #homepage .col-lg-7  .nav-tabs-custom>.nav-tabs>li{line-height: 30px;font-size:1.3rem}
 #homepage .col-lg-7  .nav-tabs-custom>.nav-tabs>li a{line-height: 10px}
-#homepage .col-lg-7 .tab-content{border-radius: 10px;font-size:1.2rem;}
-#homepage .col-lg-7 .tab-content li{font-size:1.3rem;line-height:2rem;}
+#homepage .col-lg-7 .tab-content{border-radius: 10px;font-size:1.2rem;
+  overflow-y:auto;}
+#homepage .col-lg-7 .tab-content li{font-size:1.3rem;line-height:2rem;white-space: nowrap !important;
+overflow: hidden;text-overflow: ellipsis;word-break: keep-all;}
 #homepage .col-lg-5 .box-header{ }
 #homepage .col-lg-5 .box-solid{margin-bottom:0px;border-radius: 10px;box-shadow: 1px 1px 1px rgba(0,0,0,0.2); }
 #homepage .col-lg-5{  padding-right: 0px;
     box-sizing: border-box;padding-bottom:0px;    padding-left: 30px;
 }
+#homepage .col-lg-5 .box-body{overflow-y:auto;}
 
 #sliderbox .slidepic{border-radius: 10px}
 
@@ -236,14 +242,16 @@ padding: 11px 10px;
 .summarybox  .nav-stacked  li  a.uploadimg:hover{background:#FECA7F}
 /***********/
 
-#homepage .col-lg-7 .tab-content li{list-style: none}
-#homepage .col-lg-5  li{list-style: none}
+#homepage li{list-style: none;}
+#homepage .col-lg-7 .tab-content li a{color:#333;}
+#homepage .col-lg-5  li a{list-style: none;color:#333;}
  @media screen and   (min-width:1600px) {
    #homepage{
       zoom:1.4;
       padding-right: 40px;
    }
-   #homepage .col-lg-7 .tab-content li{font-size:1.1rem;line-height:2.2rem;}
+   #homepage .col-lg-7 .tab-content li a{font-size:1.1rem;line-height:2.2rem;}
+   #homepage .col-lg-5 .box-body li a{font-size:1.1rem;line-height:2.2rem;color:#333;}
    /*  #homepage .col-lg-10 {
     height: 480px;
     border-radius: 10px;

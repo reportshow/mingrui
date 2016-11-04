@@ -2,16 +2,18 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
-
+use backend\models\MingruiDoc;
 use backend\widgets\Comments;
 
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\MingruiDoc */
+$type = $_GET['type'];
+$name = MingruiDoc::$TYPES[$type ];
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => '案例分享', 'url' => ['index','type'=>$model->type]];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = ['label' => $name, 'url' => ['index','type'=>$model->type]];
+//$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="mingrui-doc-view">
  

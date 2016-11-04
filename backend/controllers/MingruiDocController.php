@@ -124,8 +124,11 @@ class MingruiDocController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
+             $model->uid = Yii::$app->user->id;
+             $model->doc = '';
             if ($model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                SaveImage::save($model, 'doc');
+                return $this->redirect(['view', 'id' => $model->id,'type'=>$model->type]);
             } else {
                 var_export($model->errors);
             }

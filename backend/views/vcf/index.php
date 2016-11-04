@@ -35,6 +35,7 @@ $columns = [
         }],
 
     ['attribute' =>'sick',
+     'label'=>'姓名',
     'options' => ['width' => '90']
     ], //患者姓名
 
@@ -43,11 +44,11 @@ $columns = [
         'options'    => ['width' => '60'],
     ],
     ['attribute' => 'age', 'options' => ['width' => '60']],
-    ['attribute' => 'tel', 'options' => ['width' => '120']],
+   //['attribute' => 'tel', 'options' => ['width' => '120']],
     ['attribute' => 'product', 'options' => ['width' => '100']],
-    ['attribute' => 'diagnose', 'options' => ['width' => '100']],
-    ['attribute' => 'gene', 'options' => ['width' => '90']],
-    
+   
+    ['attribute' => 'gene', 'label'=>'基因型','options' => ['width' => '90']],
+     ['attribute' => 'diagnose', 'label'=>'临床诊断', 'options' => ['width' => '100']],
 
     ['attribute' => 'pingjia',
         'label'      => '星级评价',
@@ -92,7 +93,7 @@ return "<button class='btn'>$status</button>";
 
     ['class' => 'yii\grid\ActionColumn',
        'header' =>'操作',
-       'template' => '{viewvcf} {update} {delete}',
+       'template' => '{viewvcf} {update} ',
        'buttons' => [
             'viewvcf' => function ($url, $model, $key) {                 
                  $html ='';//. Html::a('下 载', ['vcf/download', 'id' => $model->id], ['class' => 'btn btn-info']);

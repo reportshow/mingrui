@@ -9,8 +9,7 @@ use backend\models\MingruiDoc;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 $type = $_GET['type'];
 $name = MingruiDoc::$TYPES[$type ];
-
-$doctype                       = $_GET['type'] == 'article' ? '案例分享' : '文档资料';
+ 
 $this->title                   =  $name ; 
 $this->params['breadcrumbs'][] = $this->title;
 

@@ -10,7 +10,7 @@ use backend\widgets\NavTabs;
 use backend\models\RestReport;
 use backend\components\Functions;
 use backend\models\Sitepage;
-
+use yii\helpers\Html;
 
 AppAsset::register($this); 
 //$this->registerJsFile('@web/js/chart.min.js',['depends'=>['backend\assets\AppAsset']]);  
@@ -21,7 +21,8 @@ $tongji = Sitepage::doctorTongji();
 $news = Sitepage::docContent('news');
 $newsContent = '';
 foreach ($news as $key => $new) {
-  $newsContent .="<li><a href=''>".$new->title."</a></li>";
+  $link = Html::a($new->title, ['/mingrui-doc/view','type'=>'news', 'id' => $new->id],[]) ;
+  $newsContent .="<li> $link </li>";
 }
 //http://news.baidu.com/ns?word=%E5%9F%BA%E5%9B%A0&tn=newsfcu&from=news&cl=2&rn=10&ct=0
 //
@@ -30,13 +31,15 @@ foreach ($news as $key => $new) {
 $ziliao = Sitepage::docContent('doc');
 $ziliaoContent = '';
 foreach ($ziliao as $key => $liao) {
-  $ziliaoContent .="<li><a href=''>".$liao->title."</a></li>";
+  $link = Html::a($liao->title, ['/mingrui-doc/view','type'=>'doc', 'id' => $liao->id],[]) ;
+  $ziliaoContent .="<li> $link </li>";
 } 
 
 $guides = Sitepage::docContent('guide');
 $guidesContent = '';
 foreach ($guides as $key => $guide) {
-  $guidesContent .="<li><a href=''>".$guide->title."</a></li>";
+   $link = Html::a($guide->title, ['/mingrui-doc/view','type'=>'guide', 'id' => $guide->id],[]) ;
+  $guidesContent .="<li> $link </li>";
 } 
 
 ?>
