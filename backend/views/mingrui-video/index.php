@@ -19,6 +19,11 @@ $this->params['breadcrumbs'][] = $this->title;
   display: block
   }
 </style>
+<style type="text/css">
+  .content-wrapper{overflow: auto}
+  .disabled{background: #999;border:0px;}
+</style>
+
 <table>
 <?php foreach($videos as $video) { ?>
 <tr>
