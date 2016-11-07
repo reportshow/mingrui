@@ -28,7 +28,7 @@ class RestSampleSearch extends RestSample
             [['sample_id', 'name', 'type', 'ypkd_id', 'barcode', 'sex', 'birthday', 'age', 'tel1', 'tel2', 'email', 'address', 'symptom', 'date', 'report_type', 'guanlian', 'pdf', 'relation', 'related_sid', 'yangbenruku', 'heshuanruku', 'heshuanruku2', 'yangbenweizi', 'heshuanweizi', 'heshuanweizi2', 'note', 'family_id', 'shenhe_status', 'clinic_no', 'nationality', 'patient_no', 'clinic_symptom', 'report_template', 'created', 'updated', 'timestamp', 'dengji_note', 'express', 'express_no', 'shouyang_date',
                 'gene', 'pingjia', 'linchuang', //再增加几个
                 'product_name', //再增加几个
-                'report_id'
+                'report_id',
             ], 'safe'],
             [['has_project', 'has_symptom', 'xianzhengzhe', 'doctor_id', 'sales_id', 'xiedai', 'shouyanged'], 'integer'],
         ];
@@ -83,6 +83,7 @@ class RestSampleSearch extends RestSample
             'updated'       => $this->updated,
             'shouyang_date' => $this->shouyang_date,
             'shouyanged'    => $this->shouyanged,
+            'sex'           => $this->sex,
         ]);
 
         $query->andFilterWhere(['like', 'sample_id', $this->sample_id])
@@ -90,7 +91,7 @@ class RestSampleSearch extends RestSample
             ->andFilterWhere(['like', 'type', $this->type])
             ->andFilterWhere(['like', 'ypkd_id', $this->ypkd_id])
             ->andFilterWhere(['like', 'barcode', $this->barcode])
-            ->andFilterWhere(['like', 'sex', $this->sex])
+        //->andFilterWhere(['like', 'sex', $this->sex])
             ->andFilterWhere(['like', 'birthday', $this->birthday])
             ->andFilterWhere(['like', 'age', $this->age])
             ->andFilterWhere(['like', 'tel1', $this->tel1])
@@ -123,8 +124,8 @@ class RestSampleSearch extends RestSample
             ->andFilterWhere(['like', 'express_no', $this->express_no]);
 
         $query
-           // ->andFilterWhere(['like', 'rest_product.name', $this->product_name]) //<=====加入这句
-            ->andFilterWhere(['like', 'mingrui_pingjia.pingjia', $this->pingjia]) //<=====加入这句
+        // ->andFilterWhere(['like', 'rest_product.name', $this->product_name]) //<=====加入这句
+        ->andFilterWhere(['like', 'mingrui_pingjia.pingjia', $this->pingjia]) //<=====加入这句
             ->andFilterWhere(['like', 'mingrui_pingjia.linchuang', $this->linchuang]); //<=====加入这句
         if ($this->gene) {
             $like = '": ["%' . $this->gene . '%",';

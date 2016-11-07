@@ -227,8 +227,9 @@ class RestSample extends \yii\db\ActiveRecord
         return $this->hasOne(MingruiPingjia::className(), ['sample_id' => 'sample_id']);
     }
 
-    public function getPingjiaXX()
+    public function getPingjiaObj()
     {
+        // $report =RestReport::
         if ($this->restReports) {
             $reports = $this->restReports;
             $report  = $reports[0];
@@ -239,7 +240,8 @@ class RestSample extends \yii\db\ActiveRecord
     }
     public function getPingjiaTxt()
     {
-        $obj = $this->pingjia;
+        $obj = $this->getPingjia()->one(); 
+         
         if ($obj && $obj->pingjia) {
             $jo = MingruiPingjia::$pingjiaText[$obj->pingjia];
             return $jo['label'];

@@ -74,7 +74,7 @@ class MingruiPingjia extends \yii\db\ActiveRecord
     {
         return [
             [['report_id'], 'required'],
-            [['report_id', 'uid', 'pingjia'], 'integer'],
+            [['report_id','sample_id', 'uid', 'pingjia'], 'integer'],
             [['linchuang'], 'string'],
             [['createtime'], 'safe'],
         ];
@@ -88,6 +88,7 @@ class MingruiPingjia extends \yii\db\ActiveRecord
         return [
             'id'         => 'ID',
             'report_id'  => 'Report ID',
+            'sample_id' => 'sample_id',
             'uid'        => 'Uid',
             'pingjia'    => 'Pingjia',
             'linchuang'  => '临床',

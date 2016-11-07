@@ -11,7 +11,7 @@ use backend\components\Functions;
 /* @var $searchModel backend\models\RestSampleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title                   = '我的病人';
+$this->title                   = '报告管理';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style type="text/css">
@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
         //'barcode',
         [
             'attribute' => 'sex',
-            'filter'    => ['male' => '男', 'female' => '女'],
+            'filter'    => [''=>'全部','male' => '男', 'female' => '女'],
             'options'   => ['width' => 50],
             'value'     => function ($model) {
                 if( $model->sex == 'female' ) return '女' ;
@@ -75,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
         [
             'attribute' => 'age',
             'options'   => ['width' => 60],
-            'filter'    => DateInput::widget(['attribute' => 'birthday', 'model' => $searchModel]),
+            //'filter'    => DateInput::widget(['attribute' => 'birthday', 'model' => $searchModel]),
         ],
 
 /*        [

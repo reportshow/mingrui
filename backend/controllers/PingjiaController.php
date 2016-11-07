@@ -8,6 +8,7 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use backend\models\RestReport;
 
 /**
  * PingjiaController implements the CRUD actions for MingruiPingjia model.
@@ -92,6 +93,11 @@ class PingjiaController extends Controller
         if (!$model) {
             $model            = new MingruiPingjia();
             $model->report_id = $reportid;
+            $report = RestReport::findOne($reportid);
+            if(!$report ){
+                return "report id={$reportid} not exist";
+            }
+            $model->sample_id = $report->sample_id;
         }
         if ($pingjia) {
             $model->pingjia = $pingjia;
