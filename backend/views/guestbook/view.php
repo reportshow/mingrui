@@ -21,6 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
               <?=Comments::widget([
                   'action'=>'guestbook/send-comment',              
                   'id'       => $id,
+                  'title'=>'您的意见或关系的问题',
               ])?>
         </div> 
 </div>

@@ -11,13 +11,25 @@ use yii\data\ActiveDataProvider;
  */
 class RestSampleSearch extends RestSample
 {
+
+    public $pingjia;
+    public $gene;
+    public $linchuang;
+
+    public $product_name;
+    public $report_id;
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['sample_id', 'name', 'type', 'ypkd_id', 'barcode', 'sex', 'birthday', 'age', 'tel1', 'tel2', 'email', 'address', 'symptom', 'date', 'report_type', 'guanlian', 'pdf', 'relation', 'related_sid', 'yangbenruku', 'heshuanruku', 'heshuanruku2', 'yangbenweizi', 'heshuanweizi', 'heshuanweizi2', 'note', 'family_id', 'shenhe_status', 'clinic_no', 'nationality', 'patient_no', 'clinic_symptom', 'report_template', 'created', 'updated', 'timestamp', 'dengji_note', 'express', 'express_no', 'shouyang_date'], 'safe'],
+            [['sample_id', 'name', 'type', 'ypkd_id', 'barcode', 'sex', 'birthday', 'age', 'tel1', 'tel2', 'email', 'address', 'symptom', 'date', 'report_type', 'guanlian', 'pdf', 'relation', 'related_sid', 'yangbenruku', 'heshuanruku', 'heshuanruku2', 'yangbenweizi', 'heshuanweizi', 'heshuanweizi2', 'note', 'family_id', 'shenhe_status', 'clinic_no', 'nationality', 'patient_no', 'clinic_symptom', 'report_template', 'created', 'updated', 'timestamp', 'dengji_note', 'express', 'express_no', 'shouyang_date',
+                'gene', 'pingjia', 'linchuang', //再增加几个
+                'product_name', //再增加几个
+                'report_id'
+            ], 'safe'],
             [['has_project', 'has_symptom', 'xianzhengzhe', 'doctor_id', 'sales_id', 'xiedai', 'shouyanged'], 'integer'],
         ];
     }
@@ -38,13 +50,13 @@ class RestSampleSearch extends RestSample
      *
      * @return ActiveDataProvider
      */
-    public function search($params, $query='')
+    public function search($params, $query = '')
     {
         if (!$query) {
             $query = RestSample::find();
         }
 
-        // add conditions that should always apply here
+        $query = $query->joinWith(['pingjia']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -109,6 +121,15 @@ class RestSampleSearch extends RestSample
             ->andFilterWhere(['like', 'dengji_note', $this->dengji_note])
             ->andFilterWhere(['like', 'express', $this->express])
             ->andFilterWhere(['like', 'express_no', $this->express_no]);
+
+        $query
+           // ->andFilterWhere(['like', 'rest_product.name', $this->product_name]) //<=====加入这句
+            ->andFilterWhere(['like', 'mingrui_pingjia.pingjia', $this->pingjia]) //<=====加入这句
+            ->andFilterWhere(['like', 'mingrui_pingjia.linchuang', $this->linchuang]); //<=====加入这句
+        if ($this->gene) {
+            $like = '": ["%' . $this->gene . '%",';
+            $query->andFilterWhere(['like', 'snpsave', "%{$like}%", false]);
+        }
 
         return $dataProvider;
     }

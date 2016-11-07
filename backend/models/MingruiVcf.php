@@ -78,7 +78,7 @@ class MingruiVcf extends \yii\db\ActiveRecord
         return [
             'id'    => 'ID',
             'uid' => '医生id',
-            'sick' => '患者姓名',
+            'sick' => '姓名',
             'age' => '年龄',
             'sex' => '性别',
             'vcf'   => 'VCF文件',
@@ -86,7 +86,7 @@ class MingruiVcf extends \yii\db\ActiveRecord
             'tel' => '联系电话',
             'product' => '检测项目',
             'diagnose' => '临床诊断',
-            'gene' => '异常基因',
+            'gene' => '基因型',
             'createtime' => '上传时间',
             'task_id' => 'Task ID',
         ];

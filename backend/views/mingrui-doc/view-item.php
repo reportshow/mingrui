@@ -31,10 +31,14 @@ if ($actname == 'index') {
      $description = substr(strip_tags($model->description),0,500);
      $content .= Html::encode($description);
      $content .= '......&nbsp; &nbsp;<b>(查看全文)</b>';
+
+     $content = "<a  href='$url'  > $content </a>";
+     $contentTitle = "<a  href='$url'  > ".$model->title." </a>";
 } else {
     // $description =   HtmlPurifier::process($model->description);
 
     $content .= delScript($model->description);
+    $contentTitle =  $model->title ;
 }
  
 
@@ -72,9 +76,9 @@ if ($actname == 'index') {
                         ]);
                     }
 
-                   if($actname=='index')
+                   if($actname=='index' && $type=='article')
                    { 
-                    echo Html::a('详情/评论', ['mingrui-doc/view', 'id' => $model->id,'type'=>$type], [
+                    echo Html::a('评论', ['mingrui-doc/view', 'id' => $model->id,'type'=>$type], [
                         'class' => 'btn btn-info',                         
                         ]);
                     }  
@@ -93,16 +97,14 @@ if ($actname == 'index') {
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <a  href="<?=$url?>" style="font-family: 'Microsoft Yahei';font-size: 1.5rem;color: #333; line-height: 2rem;">
-                    <h3>
-                        <?=$model->title?>
-                    </h3>
+
+                    <h4>
+                        <?=$contentTitle?>
+                    </h4>
                     
                     <p>
                     <?= $content  ?>
-                    </p>
-                </a>
-
+                    </p> 
                
             </div>
             <!-- /.box-body -->

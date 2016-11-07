@@ -34,26 +34,38 @@ $columns = [
             return $model->creator->nickname;
         }],
 
-    ['attribute' =>'sick',
-     'label'=>'姓名',
+    ['attribute' =>'sick', 
     'options' => ['width' => '90']
     ], //患者姓名
 
-    ['attribute' => 'sex',
-        'filter'     => ['male' => '男', 'female' => '女'],
+     ['attribute' => 'sex',
+        'filter'     => [''=>'全部','male' => '男', 'female' => '女'],
         'options'    => ['width' => '60'],
+        'value'=>function($model){
+            if( $model->sex =='female') return '女';
+            if( $model->sex =='male') return '男';
+        }
+    ], 
+    ['attribute' => 'age', 
+    'options' => ['width' => '100']],
+    
+   //['attribute' => 'tel',    'options' => ['width' => '120']],
+    ['attribute' => 'product', 
+    'options' => ['width' => '100']
     ],
-    ['attribute' => 'age', 'options' => ['width' => '60']],
-   //['attribute' => 'tel', 'options' => ['width' => '120']],
-    ['attribute' => 'product', 'options' => ['width' => '100']],
    
-    ['attribute' => 'gene', 'label'=>'基因型','options' => ['width' => '90']],
-     ['attribute' => 'diagnose', 'label'=>'临床诊断', 'options' => ['width' => '100']],
-
+     ['attribute' =>'gene',
+    'options' => ['width' => '120']
+    ],    
+     ['attribute' =>'diagnose',
+    'options' => ['width' => '120']
+    ],    
+    
+   
     ['attribute' => 'pingjia',
         'label'      => '星级评价',
         'filter'     => MingruiPingjia::getSimpleArray(),
-        'options' => ['width' => '90'],
+        'options' => ['width' => '100'],
         'value'      => function ($model) {
            $pingjiaList = MingruiPingjia::getSimpleArray();
             $index= $model->pingjia  ;
@@ -75,8 +87,11 @@ return Html::a('下载VCF', ['vcf/download', 'id' => $model->id], ['class' => 'b
 'options'    => ['width' => '90px;'],
 'label'      => 'vcf状态',
 'value'      => function ($model) {
-$status = $model->getTaskStatus() == 'complete' ? '完成' : '处理中..';
-return "<button class='btn'>$status</button>";
+   if( $model->getTaskStatus() == 'complete'){      
+       return "<button class='btn'>完成</button>";
+   }else{
+       return "<button class='btn btn-info' disabled=disabled>处理中..</button>";
+   }
 }],*/
 
 /*    [
@@ -93,7 +108,7 @@ return "<button class='btn'>$status</button>";
 
     ['class' => 'yii\grid\ActionColumn',
        'header' =>'操作',
-       'template' => '{viewvcf} {update} ',
+       'template' => '{viewvcf}  ',
        'buttons' => [
             'viewvcf' => function ($url, $model, $key) {                 
                  $html ='';//. Html::a('下 载', ['vcf/download', 'id' => $model->id], ['class' => 'btn btn-info']);

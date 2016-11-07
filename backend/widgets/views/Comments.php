@@ -10,14 +10,14 @@ $clearUrl = Yii::$app->urlManager->createUrl(['comment/clear-comments','report_i
 
 ?><div class="box box-primary direct-chat direct-chat-primary comment-widget">
     <div class="box-header with-border">
-        <h3 class="box-title">
-            意见与点评
+        <h3 class="box-title" style="font-size: 1rem">
+            <?=$model->title?>
         </h3>
         <div class="box-tools pull-right">
             <span class="badge bg-light-blue hide" data-toggle="tooltip" title="3 New Messages">
                 
             </span>
-            <button class="btn btn-box-tool" data-widget="collapse" type="button">
+            <button class="btn btn-box-tool hide" data-widget="collapse" type="button">
                 <i class="fa fa-minus">
                 </i>
             </button>

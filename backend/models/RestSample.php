@@ -2,6 +2,7 @@
 
 namespace backend\models;
 
+use backend\models\MingruiPingjia;
 use Yii;
 
 /**
@@ -156,11 +157,11 @@ class RestSample extends \yii\db\ActiveRecord
         ];
     }
 
-     
-    public $name ='赵钱孙李';
-     
-    public function getRealname(){
-      return  $this->__get('name');
+    public $name = '赵钱孙李';
+
+    public function getRealname()
+    {
+        return $this->__get('name');
     }
     /**
      * @return \yii\db\ActiveQuery
@@ -193,7 +194,10 @@ class RestSample extends \yii\db\ActiveRecord
     {
         return $this->hasMany(RestReport::className(), ['sample_id' => 'sample_id']);
     }
-
+    public function getRestReport()
+    {
+        return $this->hasOne(RestReport::className(), ['sample_id' => 'sample_id']);
+    }
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -216,5 +220,62 @@ class RestSample extends \yii\db\ActiveRecord
     public function getSales()
     {
         return $this->hasOne(RestSales::className(), ['id' => 'sales_id']);
+    }
+
+    public function getPingjia()
+    {
+        return $this->hasOne(MingruiPingjia::className(), ['sample_id' => 'sample_id']);
+    }
+
+    public function getPingjiaXX()
+    {
+        if ($this->restReports) {
+            $reports = $this->restReports;
+            $report  = $reports[0];
+            return MingruiPingjia::find()->where(['report_id' => $report->id])->one();
+
+        }
+
+    }
+    public function getPingjiaTxt()
+    {
+        $obj = $this->pingjia;
+        if ($obj && $obj->pingjia) {
+            $jo = MingruiPingjia::$pingjiaText[$obj->pingjia];
+            return $jo['label'];
+        }
+    }
+    public function getMethod()
+    {
+        $reports = $this->restReports;
+        if (count($reports) < 1) {
+            return;
+        }
+
+        $model = $reports[0];
+
+        if (strpos($model->report_id, 'NG') !== false) {
+            return 'NGS';
+        } else if (strpos($model->report_id, 'YD') !== false) {
+            return 'PCR';
+        } else {
+            $template = $model->product->name;
+            $mm       = ['_MLPA', '_CNV', 'PolyQ'];
+            foreach ($mm as $m) {
+                if (strpos($template, $m) !== false) {
+                    return substr($m, 1);
+                }
+            }
+            return substr($template, 0, 5) . '...';
+        }
+
+    }
+
+    public function getProduct()
+    {
+        if ($this->restReport) {
+
+            return RestProduct::find()->where(['id' => $this->restReport->id])->one();
+        }
     }
 }

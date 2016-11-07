@@ -9,7 +9,7 @@ use backend\models\MingruiPingjia;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="mingrui-reportstore-form">
+<div class="mingrui-reportstore-form col-md-8">
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -20,6 +20,12 @@ use backend\models\MingruiPingjia;
     <?= $form->field($model, 'sick')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'product')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'age')->textInput() ?> 
+ 
+    <?= $form->field($model, 'sex')->dropDownList(    
+         ['male'=>'男','female'=>'女'], ['style' => 'width-:300px;']
+         );
+     ?>
 
     <?= $form->field($model, 'tel')->textInput(['maxlength' => true]) ?>
 

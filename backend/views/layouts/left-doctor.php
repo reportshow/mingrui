@@ -15,7 +15,7 @@ $menu[] = [
         [
             'label' => '报告管理',
             'icon'  => 'fa fa-calendar-plus-o',
-            'url'   => ['/rest-report/index'],
+            'url'   =>['/restsample/index-report','RestSampleSearch[name]'=>''],// ['/rest-report/index'],
 
         ],
 /*       [
@@ -27,7 +27,7 @@ $menu[] = [
         [
             'label' => '外源数据分析',
             'icon'  => 'fa fa-puzzle-piece',
-            'url'   => ['vcf/index'],
+            'url'   => ['/vcf/index'],
             'items' => [
 
             ],
@@ -35,7 +35,7 @@ $menu[] = [
         [
             'label' => '外源报告',
             'icon'  => 'fa fa-ioxhost',
-            'url'   => ['reportstore/index'],
+            'url'   => ['/reportstore/index'],
             'items' => [
 
             ],

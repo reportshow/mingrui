@@ -40,12 +40,17 @@ $this->params['breadcrumbs'][] = ['label' => $name, 'url' => ['index','type'=>$m
         ],
     ]) */
 
-echo  $this->render('view-item', [
+    echo  $this->render('view-item', [
         'model' => $model,
-    ]) 
+    ]);
     ?>
 
+    <?php
+    
+    if($_GET['type']=='article'){
 
+    
+       ?>
         <div class="col-md-8" style="padding-left: 0px;">
 
               <?=Comments::widget([
@@ -53,4 +58,7 @@ echo  $this->render('view-item', [
                     'id' => 'doc'.$model->id,
                 ])?>
         </div>
+        <?php
+    }//=====
+    ?>
 </div>

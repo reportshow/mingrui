@@ -11,6 +11,8 @@ class Comments extends Widget
     public $id         = 0;
     public $action     = 'rest-report/send-comment';
     public $formaction = '';
+
+    public $title = '意见与评论';
     public function run()
     {
         $this->formaction = [$this->action, 'id' => $this->id];

@@ -123,6 +123,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         ['class'        => 'yii\grid\ActionColumn',
             'header'        => '操作',
+            'template' => '{view} {update} ',
             'filterOptions' => ['data-toggle' => 'gridviewoprator'],
             'options'       => [
                 'width' => 80,

@@ -45,8 +45,8 @@ if ($model->pingjia == null) {
     <?=DetailView::widget([
     'model'      => $model,
     'attributes' => [
-        'id',
-        'uid',
+        //'id',
+       // 'uid',
         'sick',
         'product',
         'tel',
@@ -55,12 +55,14 @@ if ($model->pingjia == null) {
         [
             'attribute' => 'jingjia',
             'label'     => '评价',
+            'format'=>'raw',
             'value'     => $objText,
         ],
 
         //'attachements:ntext',
         [
             'attribute' => 'attachements',
+            'format'=>'raw',
             //'label' => '文件',
             'value'     => Attachments::widget(['model' => $model, 'field' => 'attachements']),
         ],

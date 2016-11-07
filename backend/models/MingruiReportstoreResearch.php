@@ -19,7 +19,8 @@ class MingruiReportstoreResearch extends MingruiReportstore
     {
         return [
             [['id', 'uid', 'pingjia', 'createtime'], 'integer'],
-            [['sick', 'product', 'tel', 'diagnose', 'gene', 'attachements'], 'safe'],
+            [['sick', 'product', 'sex','tel', 'diagnose', 'gene', 'attachements'], 'safe'],
+            [['age'],'number'],
         ];
     }
 
@@ -63,6 +64,8 @@ class MingruiReportstoreResearch extends MingruiReportstore
             'uid' => $this->uid, 
             'pingjia' => $this->pingjia, 
             'createtime' => $this->createtime, 
+            'age' => $this->age, 
+            'sex' => $this->sex, 
         ]);
 
         $query->andFilterWhere(['like', 'sick', $this->sick])
@@ -70,7 +73,10 @@ class MingruiReportstoreResearch extends MingruiReportstore
             ->andFilterWhere(['like', 'tel', $this->tel])
             ->andFilterWhere(['like', 'diagnose', $this->diagnose])
             ->andFilterWhere(['like', 'gene', $this->gene])
-            ->andFilterWhere(['like', 'attachements', $this->attachements]);
+            ->andFilterWhere(['like', 'attachements', $this->attachements])
+            ->andFilterWhere(['like', 'extra1', $this->extra1])
+           ->andFilterWhere(['like', 'extra2', $this->extra2])
+           ->andFilterWhere(['like', 'extra3', $this->extra3]);;
 
         return $dataProvider;
     }

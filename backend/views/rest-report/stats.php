@@ -59,7 +59,7 @@ if ($pingjia) {
         <!-- form start -->
             <div> </div>
 
-            <div class="input-group col-md-5" style="margin-bottom: 15px;">
+            <div class="input-group col-md-7" style="margin-bottom: 15px;">
                   <input type="text" id="linchuang" class="form-control" name="linchuang"
                   placeholder="请输入临床诊断/特异表型" value="<?=$linchuang ?>">
                   <span class='input-group-btn'>

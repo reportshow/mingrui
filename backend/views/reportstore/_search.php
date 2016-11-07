@@ -20,7 +20,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'uid') ?>
 
     <?= $form->field($model, 'sick') ?>
-
+    <?= $form->field($model, 'age') ?>
+    <?= $form->field($model, 'sex') ?>
     <?= $form->field($model, 'product') ?>
 
     <?= $form->field($model, 'tel') ?>
@@ -39,6 +40,10 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'createtime') 
     ?>
+   <?php // echo $form->field($model, 'extra1') ?>
+   <?php // echo $form->field($model, 'extra2') ?>
+   <?php // echo $form->field($model, 'extra3') ?>
+
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

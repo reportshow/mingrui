@@ -86,7 +86,9 @@ echo dmstr\widgets\Menu::widget([
 
 </aside>
 <script type="text/javascript">
-   if(location.href.indexOf('=rest-report') > 0){
+   if(location.href.indexOf('r=rest-report') > 0 
+     || location.href.indexOf('r=vcf') > 0
+     || location.href.indexOf('r=reportstore') > 0 ){
      $('.sidebar-menu ul').eq(0).addClass('menu-open').show();
    }
     

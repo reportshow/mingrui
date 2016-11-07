@@ -8,7 +8,7 @@ use kartik\file\FileInput;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="mingrui-vcf-form">
+<div class="mingrui-vcf-form col-md-6">
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data','class'=>'upload']]);?>
 
@@ -32,14 +32,14 @@ use kartik\file\FileInput;
 
     <?= $form->field($model, 'sick')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'age')->textInput() ?>
+    <?= $form->field($model, 'age')->textInput(['style' => 'width-:300px;']) ?>
  
      <?= $form->field($model, 'sex')->dropDownList(    
-         ['male'=>'男','female'=>'女'], ['style' => 'width:240px;']
+         ['male'=>'男','female'=>'女'], ['style' => 'width-:300px;']
          );
      ?>
 
-    <?= $form->field($model, 'tel')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'tel')->textInput(['maxlength' => true, 'style' => 'width-:300px;']) ?>
 
     <?= $form->field($model, 'product')->textInput(['maxlength' => true]) ?>
 

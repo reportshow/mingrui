@@ -67,6 +67,44 @@ class RestsampleController extends Controller
         ]);
     }
 
+
+/**
+     * Lists all RestSample models.
+     * @return mixed
+     */
+    public function actionIndexReport($old = '')
+    {
+        $searchModel = new RestSampleSearch();
+        $params      = Yii::$app->request->queryParams;
+
+        $query = RestSampleSearch::find();
+/*        if ($old == 'yes') {
+            $time = getdate();
+            $t    = ($time['year'] - 1) . '-' . $time['mon'] . '-1';
+             
+            $query = $query->where(['<', 'created', $t]);
+        }
+*/
+        if (Yii::$app->user->can('doctor')) {
+            $role_id = Yii::$app->user->Identity->role_tab_id;
+         /*   $doctor = RestClient::find()->where(['tel' => $mobile])->one();    
+            if(!$doctor){
+               return "医生资料未找到";
+            }*/
+            $query = $query->where(['doctor_id' => $role_id]);
+            //echo $query->createCommand()->getRawSql(); exit;
+        }
+
+        $query = $query->orderBy('sample_id DESC');
+
+        $dataProvider = $searchModel->search($params, $query);
+
+        return $this->render('index-report', [
+            'searchModel'  => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     /**
      * Displays a single RestSample model.
      * @param string $id
