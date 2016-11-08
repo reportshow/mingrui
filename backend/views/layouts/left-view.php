@@ -72,7 +72,7 @@ echo dmstr\widgets\Menu::widget([
     }
     @media screen and (max-width:800px) {
     .fixedlogo{    opacity: 0;}
-    .sidebar-open .fixedlogo{width:230px; display: block}
+    .sidebar-open .fixedlogo{width:230px; display: none}
     }
 
     </style>

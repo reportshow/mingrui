@@ -93,7 +93,8 @@
       wx.config(<?=$config ?>);
 
       wx.ready(function(){
-          wechatIsReady = true;
+          wechatIsReady = true; 
+          $('body').trigger("voiceWechatReady" );
       });
       wx.onVoiceRecordEnd({
           // 录音时间超过一分钟没有停止的时候会执行 complete 回调

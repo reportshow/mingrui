@@ -50,6 +50,7 @@ if ($model->pingjia == null) {
         'sick',
         'product',
         'tel',
+        'extra1',
         'diagnose:ntext',
         'gene',
         [

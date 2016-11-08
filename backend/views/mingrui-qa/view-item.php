@@ -6,10 +6,10 @@
                 
                      
                        <a href="#">
-                          问题:     <?=$model->question?> 
+                       <span style=' '>Q:</span>  <?=$model->question?> 
                        </a>
                         
-                        <span class="pull-right  ">
+                        <span class="pull-right  hide">
                             <?=date('Y-m-d',$model->createtime)?>
                         </span>
                    
@@ -19,7 +19,7 @@
             <!-- /.box-header -->
             <div class="box-body">
                  
-                <?=$model->answer?>
+              <span style=' '>A:</span> <?=$model->answer?>
             </div>
             <!-- /.box-body -->
         </div>

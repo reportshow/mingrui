@@ -87,8 +87,8 @@ $this->params['breadcrumbs'][] = $this->title;
             if(strlen($model->attachements)  < 5){
                 $reportStatus = 'disabled';
             }
-            $html = Html::a('查看报告',['reportstore/viewreport','id'=>$model->id],['class'=>'btn btn-info ' .$reportStatus]);
-            $html .= Html::a('详情',['reportstore/view','id'=>$model->id],['class'=>'btn btn-info']);
+            $html = Html::a('查报告',['reportstore/viewreport','id'=>$model->id],['class'=>'btn btn-info ' .$reportStatus]);
+            $html .= Html::a('查信息',['reportstore/view','id'=>$model->id],['class'=>'btn btn-info']);
             return $html;
          }]
     ],

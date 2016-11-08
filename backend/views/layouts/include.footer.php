@@ -49,7 +49,7 @@ use backend\components\Functions;
 <!-- AdminLTE App -->
 <!--script src="<?=$directoryAsset?>/js/app.min.js"></script-->
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<!-- <script src="<?=$directoryAsset?>/js/pages/dashboard.js"></script> -->
+ <script src="<?=$directoryAsset?>/js/pages/dashboard.js"></script> 
 <!-- AdminLTE for demo purposes -->
 <script src="<?=$directoryAsset?>/js/demo.js"></script>
 

@@ -88,7 +88,7 @@ foreach ($model->comments as $comment) {
             <div class="input-group">
                     <input class="form-control" id='MingruiComments-content'  name="MingruiComments[content]" 
                         placeholder="输入留言内容" type="text">
-                    <span class="input-group-btn voiceActionBtn">
+                    <span  class="input-group-btn voiceActionBtn hide">
                         <button type=button class="btn btn-info btn-flat"  >
                          <i class='fa fa-microphone'> </i> 语音
                         </button>
@@ -113,7 +113,7 @@ foreach ($model->comments as $comment) {
     
     $(function(){
         if(!isWeixin()){
-             $('.voiceActionBtn').hide();
+             //$('.voiceActionBtn').hide();
         }        
     });
 
@@ -121,6 +121,12 @@ foreach ($model->comments as $comment) {
         $('body').trigger("voice_init",{"multi":false});  //弹出语音 
      });
     
+    
+     $('body').bind("voiceWechatReady",function(e){
+
+        $('.voiceActionBtn').removeClass('hide');
+     });
+
     var nowdataType = 'text';
     $('body').bind("voiceUpdate",function(e,voices){
         nowdataType= 'voice';

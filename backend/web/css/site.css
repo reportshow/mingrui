@@ -157,3 +157,7 @@ thead td select{padding:5px !important;}
    .wrapper .content-wrapper{margin-left: 200px}
     footer.main-footer{margin-left: 200px}
 }
+
+
+table.detail-view{width: 80%}
+table.detail-view th{width:30%;}

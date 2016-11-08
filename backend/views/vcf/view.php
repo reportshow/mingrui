@@ -3,19 +3,23 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use backend\widgets\LoadingPage;
+use backend\models\MingruiPingjia;
 /* @var $this yii\web\View */
 /* @var $model backend\models\MingruiVcf */
 
 $this->title = $model->sick;
 $this->params['breadcrumbs'][] = ['label' => 'VCF外源数据', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-?>
-<div class="mingrui-vcf-view">
+
+if(!empty($_GET['detail']) && $_GET['detail']=='only'){
+
+    ?>
+
+
+
+<div class="mingrui-vcf-view ">
  
-  <?=LoadingPage::widget()?>
-
-
-
+ 
     <p> 
         <?php //= Html::a('修改', ['update', 'id'           => $model->id], ['class' => 'btn btn-primary']) 
         ?>
@@ -30,29 +34,53 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?php 
-    /*echo DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'sick',
-            'age',
-            'sex',
- 
-            'status',
-            'tel',
-            'product',
-            'diagnose:ntext',
-            'gene',
-            ['attribute'=>	    'createtime','value'=>date('Y-m-d H:i',$model->createtime)],
-            ['attribute'=>'vcf', 'format'=>'raw',
-             'value'=>    Html::a('下载VCF', ['vcf/download','id'=>$model->id], ['class' => 'btn btn-info'])],
-            ['attribute'=>'上传者', 'value'=>$model->creator->nickname],
-        ],
-    ]);*/
+  
+         $pingjiaList = MingruiPingjia::getSimpleArray();
+            $index= $model->pingjia  ;
+            
+           $pingjia =  $index=='' ?'': $pingjiaList[$index];
+           $sex = '';
+           if( $model->sex =='female') $sex= '女';
+           if( $model->sex =='male') $sex= '男';
 
+           $colums = [
+                    'id',
+                    'sick',
+                    'age',
+                    ['attribute'=>'sex','value'=>$sex], 
+                    'status',
+                    'tel',
+                    'product',
+                    'diagnose:ntext',
+                    'gene',
+                    ['attribute'=>'pingjia','label'=>'星级评价', 'value'=>$pingjia],
+                    ['attribute'=> 'createtime','value'=>date('Y-m-d H:i',$model->createtime)],
+                    ['attribute'=>'vcf', 'format'=>'raw',
+                     'value'=>    Html::a('下载VCF', ['vcf/download','id'=>$model->id], 
+                    ['class' => 'btn btn-info'])],
+                    
+                ];
+
+            if(Yii::$app->user->can('admin')){
+               $colums[] =  ['attribute'=>'上传者', 'value'=>$model->creator->nickname];
+            }
+
+             echo DetailView::widget([
+                'model' => $model,
+                'attributes' =>  $colums 
+            ]); 
+    
      ?>
 
 </div>
+<?php
+
+return;
+}//====================if
+
+?>
+<?=LoadingPage::widget()?>
+
 <div id="app"></div>
 <script>
     var tableData = <?php echo $data ?>;

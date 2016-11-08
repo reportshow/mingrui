@@ -29,7 +29,8 @@ use backend\models\MingruiPingjia;
 
     <?= $form->field($model, 'tel')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'diagnose')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'extra1')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'diagnose')->textInput( ) ?>
 
     <?= $form->field($model, 'gene')->textInput(['maxlength' => true]) ?>
  

@@ -51,6 +51,7 @@ class MingruiReportstore extends \yii\db\ActiveRecord
             [['age'], 'number'],
             [['sick', 'tel', 'gene'], 'string', 'max' => 64],
             [['product'], 'string', 'max' => 128],
+            [['extra1','extra2','extra3'],'safe']
         ];
     }
 
@@ -72,6 +73,9 @@ class MingruiReportstore extends \yii\db\ActiveRecord
             'pingjia' => '星级评价',
             'attachements' => '报告',
             'createtime' => '时间',
+            'extra1'=>'临床症状',
+            'extra2'=>'extra2',
+            'extra3'=>'extra3',
         ];
     }
 }
