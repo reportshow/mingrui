@@ -61,7 +61,7 @@ echo dmstr\widgets\Menu::widget([
 
 
     <style type="text/css"> 
-    .fixedlogo{position:absolute;bottom:50px;color:#333;left:0px;text-align: center;}
+    .fixedlogo{position:absolute;bottom:50px;color:#333;left:0px;text-align: center; display: none}
     .fixedlogo{transition-delay:0.3s}
     .sidebar-collapse .fixedlogo{ transition-delay: 0s;opacity: 0;}
     @media screen and (max-width:1370px) and (min-width:800px) {

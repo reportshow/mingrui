@@ -4,11 +4,11 @@ namespace backend\controllers;
 
 use backend\models\MingruiPingjia;
 use backend\models\MingruiPingjiaResearch;
+use backend\models\RestReport;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use backend\models\RestReport;
 
 /**
  * PingjiaController implements the CRUD actions for MingruiPingjia model.
@@ -83,9 +83,10 @@ class PingjiaController extends Controller
  */
     public function actionSaveXingji()
     {
-        $reportid  = Yii::$app->request->post('report_id');
-        $pingjia   = Yii::$app->request->post('pingjia');
-        $linchuang = Yii::$app->request->post('linchuang');
+        $reportid   = Yii::$app->request->post('report_id');
+        $pingjia    = Yii::$app->request->post('pingjia');
+        $pingjiaDiy = Yii::$app->request->post('pingjiaDiy');
+        $linchuang  = Yii::$app->request->post('linchuang');
         if (!$reportid || !($pingjia || $linchuang)) {
             return;
         }
@@ -93,14 +94,17 @@ class PingjiaController extends Controller
         if (!$model) {
             $model            = new MingruiPingjia();
             $model->report_id = $reportid;
-            $report = RestReport::findOne($reportid);
-            if(!$report ){
+            $report           = RestReport::findOne($reportid);
+            if (!$report) {
                 return "report id={$reportid} not exist";
             }
             $model->sample_id = $report->sample_id;
         }
         if ($pingjia) {
             $model->pingjia = $pingjia;
+            if ($pingjiaDiy) {
+                $model->pingjiaDiy = $pingjiaDiy;
+            }
         }
 
         if ($linchuang) {

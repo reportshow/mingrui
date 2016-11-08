@@ -114,7 +114,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
             'label'     => '检测项目',
             'attribute' => 'product_name',
-            'value'     => 'product.name',
+            'value'     => 'product.name' ,
             'filter'    => Html::activeTextInput($searchModel, 'product_name', [
                 'class' => 'form-control',
             ]),
@@ -139,6 +139,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ////////////////////////////////////////////////////////
         [
             'attribute'     => 'gene',
+            'value'         => 'geneTxt',
             'label'         => '基因型',
             'headerOptions' => ['width' => '60'],
         ],

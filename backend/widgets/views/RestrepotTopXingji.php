@@ -9,8 +9,12 @@ $styleboxtop = Functions::ismobile() ? '0px' : '150px';
 
 $pingjiaObj = MingruiPingjia::find()->where(['report_id'=>$model_id])->one();
 $pingjiaIndex = -1;
+$pingjiaDiyChecked =$pingjiaDiy= '';
 if($pingjiaObj){ 
   $pingjiaIndex = $pingjiaObj->pingjia;
+  $pingjiaDiy= $pingjiaObj->pingjiaDiy;
+
+  $pingjiaDiyChecked = $pingjiaObj->pingjia==6 ? 'checked' : '';
 }
 
 ?>
@@ -57,8 +61,10 @@ if($pingjiaObj){
 
           } 
        ?>
-             <p><input type=checkbox name='pingjia' value='6'><i class='tag fa fa-edit' style=""></i>
-                 <input type=text maxlength="16" placeholder="自定义" style='width:120px'>   
+             <p><input type=checkbox name='pingjia' value='6' <?=$pingjiaDiyChecked ?> >
+                 <i class='tag fa fa-edit' style=""></i>
+                 <input id='pingjiaDiy' type=text maxlength="16" placeholder="自定义" 
+                    style='width:120px' value='<?=$pingjiaDiy?>'>   
              </p>  
         </div>
       </div>
@@ -86,10 +92,11 @@ if($pingjiaObj){
     $('#pingjisendBtn').click(function(){
         var url = "<?=$pingjiaUrl ?>";
         var val = $('#xingjipingjiaBox input[name="pingjia"]:checked').val();
+        var pingjiaDiy = $('#pingjiaDiy').val();
         $.ajax({
              type: "POST",
              url:  url,
-             data: {report_id: '<?=$model_id?>', pingjia: val},
+             data: {report_id: '<?=$model_id?>', 'pingjia': val, 'pingjiaDiy':pingjiaDiy},
              dataType: "json",
              success: function(d){
                   if(d.code==1){

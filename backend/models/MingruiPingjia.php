@@ -26,7 +26,7 @@ class MingruiPingjia extends \yii\db\ActiveRecord
         3 => ['key' => 'fa-plus-circle|fa-thumbs-o-up', 'label' => '阳性+好案例', 'description' => '罕见病例；出乎意料'],
         4 => ['key' => 'fa-minus-circle', 'label' => '阴性', 'description' => '基因无发现'],
         5 => ['key' => 'fa-minus-circle|fa-thumbs-o-up', 'label' => '阴性+特殊案例', 'description' => '临床诊断明确，基因无突变'],
-        6 =>['key'=>' x', 'label'=>'自定义'],
+        6 => ['key' => ' x', 'label' => '自定义'],
     ];
     /**
      * @inheritdoc
@@ -50,22 +50,29 @@ class MingruiPingjia extends \yii\db\ActiveRecord
     {
         $text = [];
         foreach (self::$pingjiaText as $key => $value) {
-            $icon = "<i class='fa ".$value['key']."'></i>";
-            $text[$key] =  $icon . $value['label'] . ' ';
+            $icon       = "<i class='fa " . $value['key'] . "'></i>";
+            $text[$key] = $icon . $value['label'] . ' ';
         }
         return $text;
     }
     public static function getSimpleArray()
     {
-        $text = [''=>'全部'];
+        $text = ['' => '全部'];
         foreach (self::$pingjiaText as $key => $value) {
-            $text[$key] =  $value['label'] . ' ';
+            $text[$key] = $value['label'] . ' ';
         }
         return $text;
     }
-    public function getPingjaX()
+    public function getTxt()
     {
-        return self::$pingjiaText[$this->pingjia];
+        if ($this->pingjia == count(self::$pingjiaText)) {
+            return $this->pingjiaDiy;
+        }
+        if ($obj->pingjia) {
+            $jo = self::$pingjiaText[$obj->pingjia];
+            return $jo['label'];
+        }
+
     }
     /**
      * @inheritdoc
@@ -74,9 +81,9 @@ class MingruiPingjia extends \yii\db\ActiveRecord
     {
         return [
             [['report_id'], 'required'],
-            [['report_id','sample_id', 'uid', 'pingjia'], 'integer'],
+            [['report_id', 'sample_id', 'uid', 'pingjia'], 'integer'],
             [['linchuang'], 'string'],
-            [['createtime'], 'safe'],
+            [['createtime', 'pingjiaDiy'], 'safe'],
         ];
     }
 
@@ -88,7 +95,7 @@ class MingruiPingjia extends \yii\db\ActiveRecord
         return [
             'id'         => 'ID',
             'report_id'  => 'Report ID',
-            'sample_id' => 'sample_id',
+            'sample_id'  => 'sample_id',
             'uid'        => 'Uid',
             'pingjia'    => 'Pingjia',
             'linchuang'  => '临床',

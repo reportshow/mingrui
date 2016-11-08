@@ -1,7 +1,7 @@
 <?php
 
 namespace backend\models;
-
+use yii\helpers\Html;
 use backend\models\MingruiPingjia;
 use Yii;
 
@@ -240,11 +240,10 @@ class RestSample extends \yii\db\ActiveRecord
     }
     public function getPingjiaTxt()
     {
-        $obj = $this->getPingjia()->one(); 
-         
-        if ($obj && $obj->pingjia) {
-            $jo = MingruiPingjia::$pingjiaText[$obj->pingjia];
-            return $jo['label'];
+        $obj = $this->getPingjia()->one();
+
+        if ($obj) {
+            return html::encode($obj->txt);
         }
     }
     public function getMethod()
@@ -275,9 +274,22 @@ class RestSample extends \yii\db\ActiveRecord
 
     public function getProduct()
     {
-        if ($this->restReport) {
+        $report = $this->getRestReport()->one();
 
-            return RestProduct::find()->where(['id' => $this->restReport->id])->one();
+        if (!$report) {return;}
+
+        return RestProduct::find()->where(['id' => $report->product_id])->one();
+
+    }
+
+    public function getGeneTxt()
+    {
+        $report = $this->getRestReport()->one();
+        if (!$report) {
+            return;
         }
+
+        return $report->gene;
+
     }
 }

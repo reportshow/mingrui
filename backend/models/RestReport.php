@@ -223,9 +223,13 @@ class RestReport extends \yii\db\ActiveRecord
 
     public function getGene()
     {
-        if(!$this->pdfurl){
+        /*if(!$this->pdfurl){
+            return '..';
+        }*/
+        if(strlen($this->snpsave) < 5){
             return '..';
         }
+        
         $snp_array = json_decode($this->snpsave, true);
 
         $user_snp_genes = [];
