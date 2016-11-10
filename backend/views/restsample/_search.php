@@ -2,36 +2,65 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use backend\models\MingruiPingjia;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\RestSampleSearch */
 /* @var $form yii\widgets\ActiveForm */
+
+$model->name = '';
 ?>
 
 <div class="rest-sample-search">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['index'],
+        'action' => ['index-report', 'RestSampleSearch[name]'=>''],
         'method' => 'get',
     ]); ?>
 
     <?= $form->field($model, 'sample_id') ?>
 
+    <?=$form->field($model, 'report_id')->label('项目编号')?>
     <?= $form->field($model, 'name') ?>
 
-    <?= $form->field($model, 'type') ?>
+    <?php //= $form->field($model, 'type') ?>
 
-    <?= $form->field($model, 'ypkd_id') ?>
+    <?php //= $form->field($model, 'ypkd_id') ?>
 
-    <?= $form->field($model, 'barcode') ?>
+    <?php  //= $form->field($model, 'barcode') ?>
 
-    <?php // echo $form->field($model, 'sex') ?>
+
+     <?= $form->field($model, 'sex')->dropDownList(    
+         [''=>'未知','male'=>'男','female'=>'女'], ['style' => 'width-:300px;']
+         );
+     ?>
 
     <?php // echo $form->field($model, 'birthday') ?>
 
-    <?php // echo $form->field($model, 'age') ?>
+    <?= $form->field($model, 'product_name')->label('检测项目') ?>
+    <?= $form->field($model, 'age')->textInput(['style' => 'width-:300px;']) ?>
 
-    <?php // echo $form->field($model, 'tel1') ?>
+    <?=  $form->field($model, 'gene')->label('基因型') ?>
+    
+    <?= $form->field($model, 'pingjia')->dropDownList( MingruiPingjia::getSimpleArray())->label('星级评价');
+     ?>
+
+
+     <?php
+    //  echo  $form->field($model, 'pingjia')->radioList(MingruiPingjia::getTextArray(),['class'=>'label-group',
+    //  'item'=>function($index, $label, $name, $checked, $value) {
+    //     $checked=$checked?"checked":"";
+    //     $return = '<div class="md-radio">';
+    //     $return .= '<input type="radio" id="' . $name . $value . '" name="' . $name . '" value="' . $value . '" class="md-radiobtn"  '.$checked.'>';
+    //     $return .= '<label for="' . $name . $value . '">
+    //                 <span></span>
+    //                 <span class="check"></span>
+    //                 <span class="box"></span>' . ucwords($label) . '</label>';
+    //     $return .= '</div>';
+    //     return $return;
+    // }])->label('评价'); 
+
+    ?>
 
     <?php // echo $form->field($model, 'tel2') ?>
 
@@ -110,8 +139,8 @@ use yii\widgets\ActiveForm;
     <?php // echo $form->field($model, 'shouyanged') ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton(' 搜索 ', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton('  重置 ', ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

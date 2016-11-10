@@ -52,7 +52,7 @@ class WechatDoctorController extends Controller
 
     public function actionTalk()
     {
-        //exit($_GET["echostr"] ) ;
+        // exit($_GET["echostr"] ) ;
         //
         //    file_put_contents('filename', data)
         $this->wechatInit();
@@ -84,7 +84,7 @@ class WechatDoctorController extends Controller
     }
     public function actionSearch()
     {
-        self::show('rest-report/search');
+        self::show('restsample/search');
     }
     public function actionSicklist()
     {

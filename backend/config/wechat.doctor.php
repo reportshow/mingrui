@@ -13,17 +13,17 @@ $wechat['menu'] = [
             [
                 "type" => "view",
                 "name" => "查看报告",
-                "url"  => "http://ding.scicompound.com/mingrui/report/backend/web/?r=wechat-doctor/report",
+                "url"  => "http://www.mono-mr.com/backend/web/?r=wechat-doctor/report",
             ],
             [
                 "type" => "view",
                 "name" => "搜索报告",
-                "url"  => "http://ding.scicompound.com/mingrui/report/backend/web/?r=wechat-doctor/search",
+                "url"  => "http://www.mono-mr.com/backend/web/?r=wechat-doctor/search",
             ],
             [
                 "type" => "view",
                 "name" => "患者资料",
-                "url"  => "http://ding.scicompound.com/mingrui/report/backend/web/?r=wechat-doctor/sicklist",
+                "url"  => "http://www.mono-mr.com/backend/web/?r=wechat-doctor/sicklist",
             ],
 
         ],
@@ -36,7 +36,7 @@ $wechat['menu'] = [
                 "type" => "view",
                 "name" => "确认送检",
                 "key"  => "SAMPLE-ORDER",
-                'url'=>'http://ding.scicompound.com/mingrui/report/backend/web/?r=wechat-doctor/doorder',
+                'url'=>'http://www.mono-mr.com/backend/web/?r=wechat-doctor/doorder',
             ], 
         ],
     ],
@@ -45,7 +45,7 @@ $wechat['menu'] = [
         "type" => "click",
         "name" => "常见问题",
         "key"  => "WORK-FLOW",
-        'url'=>'http://ding.scicompound.com/mingrui/report/backend/web/?r=/mingrui-qa',
+        'url'=>'http://www.mono-mr.com/backend/web/?r=/mingrui-qa',
     ],
 
 ];

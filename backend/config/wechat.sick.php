@@ -13,17 +13,17 @@ $wechat['menu'] = [
             [
                 "type" => "view",
                 "name" => "查看报告",
-                "url"  => "http://ding.scicompound.com/mingrui/report/backend/web/?r=wechat/my-report",
+                "url"  => "http://www.mono-mr.com/backend/web/?r=wechat/my-report",
             ],
             [
                 "type" => "view",
                 "name" => "上传图片",
-                "url"  => "http://ding.scicompound.com/mingrui/report/backend/web/?r=wechat/my-upload",
+                "url"  => "http://www.mono-mr.com/backend/web/?r=wechat/my-upload",
             ],
             [
                 "type" => "view",
                 "name" => "我的图片",
-                "url"  => "http://ding.scicompound.com/mingrui/report/backend/web/?r=wechat/my-pic",
+                "url"  => "http://www.mono-mr.com/backend/web/?r=wechat/my-pic",
             ],
 
         ],
@@ -35,12 +35,12 @@ $wechat['menu'] = [
             [
                 "type" => "view",
                 "name" => "新建记事",
-                "url"  => "http://ding.scicompound.com/mingrui/report/backend/web/?r=wechat/notes-new",
+                "url"  => "http://www.mono-mr.com/backend/web/?r=wechat/notes-new",
             ],
             [
                 "type" => "view",
                 "name" => "查看记事",
-                "url"  => "http://ding.scicompound.com/mingrui/report/backend/web/?r=wechat/notes-index",
+                "url"  => "http://www.mono-mr.com/backend/web/?r=wechat/notes-index",
             ],
         ],
     ],

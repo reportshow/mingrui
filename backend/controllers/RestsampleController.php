@@ -170,6 +170,27 @@ class RestsampleController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionSearch($role)
+    {
+        $searchModel = new RestSampleSearch();
+        $params      = Yii::$app->request->queryParams; 
+
+        $query = RestSample::find();
+        $query = $query->where(['xianzhengzhe'=>1]); 
+
+        if (Yii::$app->user->can('doctor')) {
+            $role_id = Yii::$app->user->Identity->role_tab_id;          
+            $query = $query->andWhere(['doctor_id' => $role_id]);
+            //echo $query->createCommand()->getRawSql(); exit;
+        }
+
+
+        $dataProvider = $searchModel->search($params, $query);
+
+        return $this->render('search', [
+            'searchModel' => $searchModel,
+        ]);
+    }
     /**
      * Finds the RestSample model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

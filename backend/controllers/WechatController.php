@@ -44,7 +44,7 @@ class WechatController extends Controller
 
     public function actionTalk()
     {
-        //exit($_GET["echostr"] ) ;
+        // exit($_GET["echostr"] ) ;
 
         $this->wechatInit();
         /*if ($wechat->checkSignature()) {
