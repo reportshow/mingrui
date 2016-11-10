@@ -3,7 +3,7 @@
 use backend\widgets\DateInput;
 use yii\grid\GridView;
 use yii\helpers\Html;
-
+use Yii;
 use backend\models\MingruiPingjia;
 use backend\components\Functions;
 
@@ -28,7 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php //=Html::a('新建患者资料', ['create'], ['class' => 'btn btn-success'])
 ?>
     </p>
-    <?=GridView::widget([
+    <?php
+    $GridViewParam= [
     'dataProvider' => $dataProvider,
     'filterModel'  => $searchModel,
  /*   'rowOptions'   => function ($model) {
@@ -40,7 +41,6 @@ $this->params['breadcrumbs'][] = $this->title;
         [
             'class'   => 'yii\grid\SerialColumn',
             'options' => ['width' => 30]],
-
         
 
         [
@@ -253,9 +253,23 @@ $this->params['breadcrumbs'][] = $this->title;
             }
         ],//item
 
-    ],//colums
+    ]//colums
+];
 
-]);?>
+  
+if (Functions::ismobile()) {
+
+    $GridViewParam['rowOptions'] = function ($sample) {
+        $model = $sample->restReport;
+        if($model) {
+            $url = Yii::$app->urlManager->createUrl(['rest-report/view', 'id' => $model->id]);
+            return ['onclick' => "location.href='$url';", 'style' => 'cursor:pointer']; 
+        }
+       
+    };
+}
+echo GridView::widget($GridViewParam   );
+?>
 </div>
 <style type="text/css">
     .content-wrapper{overflow: auto}

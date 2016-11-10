@@ -36,9 +36,10 @@ $model->name = '';
      ?>
 
     <?php // echo $form->field($model, 'birthday') ?>
+    <?= $form->field($model, 'age')->textInput(['style' => 'width-:300px;']) ?>
 
     <?= $form->field($model, 'product_name')->label('检测项目') ?>
-    <?= $form->field($model, 'age')->textInput(['style' => 'width-:300px;']) ?>
+  
 
     <?=  $form->field($model, 'gene')->label('基因型') ?>
     

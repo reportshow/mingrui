@@ -28,7 +28,7 @@ if (strlen($model->doc)>8) {
 } 
  
 if ($actname == 'index') {
-     $description = substr(strip_tags($model->description),0,500);
+     $description = mb_substr(strip_tags($model->description),0,500);
      $content .= Html::encode($description);
      $content .= '......&nbsp; &nbsp;<b>(查看全文)</b>';
 

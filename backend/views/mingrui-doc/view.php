@@ -51,13 +51,15 @@ $this->params['breadcrumbs'][] = ['label' => $name, 'url' => ['index','type'=>$m
 
     
        ?>
-        <div class="col-md-8" style="padding-left: 0px;">
+       <div class='row' style="margin-left:0px">
+         <div class="col-md-8" style="padding-left: 0px;">
 
               <?=Comments::widget([
                     'action'=>'mingrui-doc/send-comment',
                     'id' => 'doc'.$model->id,
                 ])?>
-        </div>
+         </div>
+       </div>
         <?php
     }//=====
     ?>

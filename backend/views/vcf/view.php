@@ -55,9 +55,10 @@ if(!empty($_GET['detail']) && $_GET['detail']=='only'){
                     'gene',
                     ['attribute'=>'pingjia','label'=>'星级评价', 'value'=>$pingjia],
                     ['attribute'=> 'createtime','value'=>date('Y-m-d H:i',$model->createtime)],
-                    ['attribute'=>'vcf', 'format'=>'raw',
-                     'value'=>    Html::a('下载VCF', ['vcf/download','id'=>$model->id], 
-                    ['class' => 'btn btn-info'])],
+
+                 /*   ['attribute'=>'vcf', 'format'=>'raw',
+                     'value'=>    Html::a('下载VCF', ['vcf/download','id'=>$model->id],   ['class' => 'btn btn-info'])
+                    ],*/
                     
                 ];
 

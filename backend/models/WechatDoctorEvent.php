@@ -13,23 +13,43 @@ class WechatDoctorEvent extends WechatEvent
 
     public function work_flow()
     {
-        $article = [
+       /* $article = [
             ['title'      => '检测流程',
                 'description' => '检测的每个步骤须知',
-                'picurl'      => 'http://ding.scicompound.com/mingrui/report/backend/web/images/1.png',
-                'url'         => 'http://ding.scicompound.com/mingrui/report/backend/web/index.php?r=mingrui-qa'],
+                'picurl'      => 'http://www.mono-mr.com/backend/web/images/1.png',
+                'url'         => 'http://www.mono-mr.com/backend/web/index.php?r=mingrui-qa'],
             ['title'      => '检测流程',
                 'description' => '检测的每个步骤须知',
-                'picurl'      => 'http://ding.scicompound.com/mingrui/report/backend/web/images/2.png',
-                'url'         => 'http://ding.scicompound.com/mingrui/report/backend/web/index.php?r=mingrui-qa'],
+                'picurl'      => 'http://www.mono-mr.com/backend/web/images/2.png',
+                'url'         => 'http://www.mono-mr.com/backend/web/index.php?r=mingrui-qa'],
             ['title'      => '服务承诺',
                 'description' => '精准服务',
-                'picurl'      => 'http://ding.scicompound.com/mingrui/report/backend/web/images/3.png',
-                'url'         => 'http://ding.scicompound.com/mingrui/report/backend/web/index.php?r=mingrui-qa'],
+                'picurl'      => 'http://www.mono-mr.com/backend/web/images/3.png',
+                'url'         => 'http://www.mono-mr.com/backend/web/index.php?r=mingrui-qa'],
             ['title'      => '联系我们',
                 'description' => '联系方式，欢迎反馈',
-                'picurl'      => 'http://ding.scicompound.com/mingrui/report/backend/web/images/user1-128x128.jpg',
-                'url'         => 'http://ding.scicompound.com/mingrui/report/backend/web/index.php?r=mingrui-qa'],
+                'picurl'      => 'http://www.mono-mr.com/backend/web/images/user1-128x128.jpg',
+                'url'         => 'http://www.mono-mr.com/backend/web/index.php?r=mingrui-qa'],
+        ];
+        */
+       
+       $article = [
+            ['title'      => '进入首页',
+                'description' => '检测的每个步骤须知',
+                'picurl'      => 'http://www.mono-mr.com/backend/web/images/qa-1.jpg',
+                'url'         => 'http://www.mono-mr.com/backend/web/index.php'],
+            ['title'      => '报告管理',
+                'description' => '检测的每个步骤须知',
+                'picurl'      => 'http://www.mono-mr.com/backend/web/images/qa-2.jpg',
+                'url'         => 'http://www.mono-mr.com/backend/web/index.php?r=restsample%2Findex-report&RestSampleSearch%5Bname%5D='],
+            ['title'      => '我的病人',
+                'description' => '精准服务',
+                'picurl'      => 'http://www.mono-mr.com/backend/web/images/qa-3.jpg',
+                'url'         => 'http://www.mono-mr.com/backend/web/index.php?r=restsample%2Findex&RestSampleSearch%5Bname%5D='],
+            ['title'      => '联系方式',
+                'description' => '联系方式，欢迎反馈',
+                'picurl'      => 'http://www.mono-mr.com/backend/web/images/qa-4.jpg',
+                'url'         => 'http://www.mono-mr.com/backend/web/index.php?r=mingrui-qa%2Fviewcontact&id=1'],
         ];
         return $this->reply->article($article);
     }

@@ -2,7 +2,7 @@
 <?php
 
 if (!empty($files) && is_array($files)) {
-
+echo "<div style='display:block'>";
     foreach ($files as $k => $val) {
         if ($val->type == 'image') {
             $url = $val->url;
@@ -17,7 +17,7 @@ if (!empty($files) && is_array($files)) {
         }
 
     } //foreach ($model->images
-
+echo "</div>";
 } //=====if(!empty($file))
 
 
@@ -31,7 +31,8 @@ if (empty($init)) {
 
 <style type="text/css">
   .file{margin:15px;vertical-align: middle; padding:  10px; display: inline-block;  text-align: center;
-    box-shadow: 1px 1px 1px 1px rgba(206, 206, 206, 0.77);}
+    box-shadow: 1px 1px 1px 1px rgba(206, 206, 206, 0.77);
+    max-width: 160px}
   .file img{height: 100px; width: 100px;  margin-bottom:15px;}
   .file{ border-top-left-radius:4px;border-top-right-radius:4px;}
   .file:hover{  cursor:pointer;}
