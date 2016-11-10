@@ -80,6 +80,10 @@ class RestReportController extends Controller
      */
     public function actionIndex()
     {
+        $this->redirect(['/restsample/index-report','RestSampleSearch[name]'=>'']);
+        return;
+
+
         $searchModel = new RestReportSearch();
         $params      = Yii::$app->request->queryParams;
         //$params['RestReportSearch']['rest_report.status'] = 'finished';

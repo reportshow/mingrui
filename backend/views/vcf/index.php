@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $columns = [
     ['class'  => 'yii\grid\SerialColumn',
-        'options' => ['width' => '40px;'],
+        'options' => ['width' => '40'],
 
     ],
     /*['attribute' => 'id', 'options' => ['width' => '60px;']],*/
@@ -119,7 +119,7 @@ return Html::a('下载VCF', ['vcf/download', 'id' => $model->id], ['class' => 'b
                             ['title' =>'查看数据', 'class'=>'btn btn-info'] );
                     } else {
                         $status = '处理中'; 
-                        $dataBtn  = "<a class='btn btn-info disable'>$status</a>";
+                        $dataBtn  = "<a class='btn btn-info disabled'>$status</a>";
                     }
                     
                     $viewBtn  = Html::a('查信息', 

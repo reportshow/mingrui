@@ -92,7 +92,7 @@ if($pingjiaObj){
     $('#pingjisendBtn').click(function(){
         var url = "<?=$pingjiaUrl ?>";
         var val = $('#xingjipingjiaBox input[name="pingjia"]:checked').val();
-        var pingjiaDiy = $('#pingjiaDiy').val();
+        var pingjiaDiy = $('#pingjiaDiy').val()+" ";
         $.ajax({
              type: "POST",
              url:  url,

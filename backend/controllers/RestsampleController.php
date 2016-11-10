@@ -40,12 +40,12 @@ class RestsampleController extends Controller
         $params      = Yii::$app->request->queryParams;
 
         $query = RestSampleSearch::find();
-        if ($old == 'yes') {
+/*        if ($old == 'yes') {
             $time = getdate();
             $t    = ($time['year'] - 1) . '-' . $time['mon'] . '-1';
              
             $query = $query->where(['<', 'created', $t]);
-        }
+        }*/
 
         if (Yii::$app->user->can('doctor')) {
             $mobile = Yii::$app->user->Identity->username;
@@ -53,7 +53,8 @@ class RestsampleController extends Controller
             if(!$doctor){
                return "医生资料未找到";
             }
-            $query = $query->where(['doctor_id' => $doctor->id]);
+            $query = $query->where(['xianzhengzhe'=>1]);
+            $query = $query->andWhere(['doctor_id' => $doctor->id]);
             //echo $query->createCommand()->getRawSql(); exit;
         }
 

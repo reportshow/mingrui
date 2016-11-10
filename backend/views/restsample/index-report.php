@@ -129,7 +129,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'filter'    => Html::activeTextInput($searchModel, 'method', [
                 'class'    => 'form-control',
                 'readonly' => 'readonly',
-                'style'    => 'background:#fff',
+                'style'    => 'background:#ddd',
             ]),
 
             'options'   => ['width' => '46', 'readonly' => 'readonly'],
@@ -147,7 +147,14 @@ $this->params['breadcrumbs'][] = $this->title;
         [
             'attribute' => 'linchuang',
             'label'     => '临床表型',
-            'value'     => 'pingjia.linchuang',
+            'value'     => function($model){
+                $pingjia = $model->getPingjia()->one();
+                if($pingjia){
+                   return $pingjia->linchuang; 
+               }
+               //return "xxx";
+                
+            },//'pingjia.linchuang',
             'options'   => ['width' => '80'],
         ],
 

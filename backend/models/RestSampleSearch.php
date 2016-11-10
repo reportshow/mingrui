@@ -57,6 +57,8 @@ class RestSampleSearch extends RestSample
         }
 
         $query = $query->joinWith(['pingjia']);
+        $query = $query->joinWith(['restReport']);
+        $query = $query->joinWith(['restReport.product']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -78,7 +80,7 @@ class RestSampleSearch extends RestSample
             'xianzhengzhe'  => $this->xianzhengzhe,
             'doctor_id'     => $this->doctor_id,
             'sales_id'      => $this->sales_id,
-            'created'       => $this->created,
+            'Date(rest_sample.created)'       => $this->created,
             'xiedai'        => $this->xiedai,
             'updated'       => $this->updated,
             'shouyang_date' => $this->shouyang_date,
@@ -87,7 +89,7 @@ class RestSampleSearch extends RestSample
         ]);
 
         $query->andFilterWhere(['like', 'sample_id', $this->sample_id])
-            ->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'rest_sample.name', $this->name])
             ->andFilterWhere(['like', 'type', $this->type])
             ->andFilterWhere(['like', 'ypkd_id', $this->ypkd_id])
             ->andFilterWhere(['like', 'barcode', $this->barcode])
@@ -124,13 +126,16 @@ class RestSampleSearch extends RestSample
             ->andFilterWhere(['like', 'express_no', $this->express_no]);
 
         $query
-        // ->andFilterWhere(['like', 'rest_product.name', $this->product_name]) //<=====加入这句
+        ->andFilterWhere(['like', 'rest_report.report_id', $this->report_id]) //<=====加入这句
+        ->andFilterWhere(['like', 'rest_product.name', $this->product_name]) //<=====加入这句
         ->andFilterWhere(['like', 'mingrui_pingjia.pingjia', $this->pingjia]) //<=====加入这句
             ->andFilterWhere(['like', 'mingrui_pingjia.linchuang', $this->linchuang]); //<=====加入这句
         if ($this->gene) {
             $like = '": ["%' . $this->gene . '%",';
             $query->andFilterWhere(['like', 'snpsave', "%{$like}%", false]);
         }
+
+        //echo $query->createCommand()->getRawSql(); exit;
 
         return $dataProvider;
     }

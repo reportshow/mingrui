@@ -137,7 +137,7 @@ class VcfController extends Controller
 
             $this->sendNotice();
 
-            return $this->actionIndex();
+           return $this->redirect(['index', 'id' => $model->id]);
         } else {
             return $this->render('create', [
                 'model' => $model,

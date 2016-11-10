@@ -121,14 +121,26 @@ $this->params['breadcrumbs'][] = $this->title;
         // 'shouyang_date',
         // 'shouyanged',
 
-        ['class'        => 'yii\grid\ActionColumn',
-            'header'        => '操作',
-            'template' => '{view} {update} ',
-            'filterOptions' => ['data-toggle' => 'gridviewoprator'],
-            'options'       => [
-                'width' => 80,
-            ],
-        ],
+        // ['class'        => 'yii\grid\ActionColumn',
+        //     'header'        => '操作',
+        //     'template' => '{view}  ',
+        //     'filterOptions' => ['data-toggle' => 'gridviewoprator'],
+        //     'options'       => [
+        //         'width' => 80,
+        //     ],
+        // ],
+        [
+            'options' => ['width' => '120'],
+            'label'   => '操作',
+            'filter'=> Html::submitButton('搜 &nbsp; 索', ['class' => 'btn btn-info']) 
+            .Html::resetButton('恢 &nbsp;  复', ['class' => 'btn btn-default rest']) ,            
+            'format'  => 'raw',
+            'value'   => function ($sample) {
+                 
+
+                return Html::a('查看',['restsample/view','id'=>$sample->sample_id], ['class'=>'btn btn-info']);
+            }
+        ],//item
     ],
 ]);?>
 </div>

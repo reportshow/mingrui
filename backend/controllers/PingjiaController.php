@@ -15,6 +15,8 @@ use yii\web\NotFoundHttpException;
  */
 class PingjiaController extends Controller
 {
+    public $enableCsrfValidation = false;
+
     /**
      * @inheritdoc
      */
@@ -87,8 +89,8 @@ class PingjiaController extends Controller
         $pingjia    = Yii::$app->request->post('pingjia');
         $pingjiaDiy = Yii::$app->request->post('pingjiaDiy');
         $linchuang  = Yii::$app->request->post('linchuang');
-        if (!$reportid || !($pingjia || $linchuang)) {
-            return;
+        if (!$reportid ) {
+            return 'no report id';
         }
         $model = MingruiPingjia::find()->where(['report_id' => $reportid])->one();
         if (!$model) {
@@ -100,12 +102,13 @@ class PingjiaController extends Controller
             }
             $model->sample_id = $report->sample_id;
         }
-        if ($pingjia) {
+         
+        
+        if ($pingjiaDiy) {
             $model->pingjia = $pingjia;
-            if ($pingjiaDiy) {
-                $model->pingjiaDiy = $pingjiaDiy;
-            }
+            $model->pingjiaDiy = $pingjiaDiy;
         }
+      
 
         if ($linchuang) {
             $val              = $linchuang == 'null' ? '' : $linchuang;

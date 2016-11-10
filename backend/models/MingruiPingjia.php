@@ -68,8 +68,8 @@ class MingruiPingjia extends \yii\db\ActiveRecord
         if ($this->pingjia == count(self::$pingjiaText)) {
             return $this->pingjiaDiy;
         }
-        if ($obj->pingjia) {
-            $jo = self::$pingjiaText[$obj->pingjia];
+        if ($this->pingjia) {
+            $jo = self::$pingjiaText[$this->pingjia];
             return $jo['label'];
         }
 

@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model backend\models\RestSample */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => '病人列表', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '病人列表', 'url' => ['index','RestSampleSearch[name]'=>'']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="rest-sample-view">

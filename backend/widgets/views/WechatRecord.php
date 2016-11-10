@@ -1,5 +1,11 @@
 
 <script type="text/javascript" src='http://res.wx.qq.com/open/js/jweixin-1.1.0.js'></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<?php
+  $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/dist');
+?>
+ <script src="<?=$directoryAsset?>/js/pages/dashboard.js"></script> 
+
 <style type="text/css">
     .record_box{
         z-index: 999; position: fixed; top:50%;left: 50%;

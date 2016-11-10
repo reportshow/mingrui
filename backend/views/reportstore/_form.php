@@ -11,7 +11,7 @@ use backend\models\MingruiPingjia;
 
 <div class="mingrui-reportstore-form col-md-8">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data','class'=>'upload']]); ?>
 
     <?php
     //$form->field($model, 'uid')->Input(['maxlength' => true,'value'=>1])
@@ -52,6 +52,7 @@ use backend\models\MingruiPingjia;
                 'options'       => ['multiple' => true, 'accept' => '*/*'],
                 'pluginOptions' => [
                     'showUpload' => false,
+                    'showPreview' => false,
                 ],
             ])->label('选择文件');        
 

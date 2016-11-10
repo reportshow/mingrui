@@ -21,16 +21,16 @@ if(!empty($_GET['detail']) && $_GET['detail']=='only'){
  
  
     <p> 
-        <?php //= Html::a('修改', ['update', 'id'           => $model->id], ['class' => 'btn btn-primary']) 
+        <?php echo Html::a('修改', ['update', 'id'           => $model->id], ['class' => 'btn btn-primary']) 
         ?>
         <?php
-        /* echo Html::a('删除', ['delete', 'id'           => $model->id], [
+          echo Html::a('删除', ['delete', 'id'           => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
             ],
-        ])*/ ?>
+        ])  ?>
     </p>
 
     <?php 

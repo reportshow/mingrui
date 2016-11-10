@@ -111,7 +111,7 @@ class ReportstoreController extends Controller
             $model->uid          = Yii::$app->user->id;
             $model->attachements = '[]';
             if (!$model->save()) {
-                var_export($model->errors);
+                var_export($model->errors);exit;
             }
             SaveImage::save($model, 'attachements');
 

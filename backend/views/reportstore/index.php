@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
     'options' => ['width' => '120']
     ],    
      ['attribute' =>'diagnose',
-    'options' => ['width' => '180']
+    'options' => ['width' => '120']
     ],    
      
      ['attribute' => 'pingjia',
@@ -82,6 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],*/
         ['label'=>'操作',
         'format'=>'raw',
+         'options' => ['width' => '80'],
          'value'=>function($model){
             $reportStatus = '';
             if(strlen($model->attachements)  < 5){
