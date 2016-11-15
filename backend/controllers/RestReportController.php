@@ -621,7 +621,7 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
                     $matches
               );
 
-         echo $matches[1];
+        // echo $matches[1];
          
          return trim($matches[1]);
     }
