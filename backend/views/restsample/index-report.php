@@ -3,7 +3,7 @@
 use backend\widgets\DateInput;
 use yii\grid\GridView;
 use yii\helpers\Html;
-use Yii;
+//use Yii;
 use backend\models\MingruiPingjia;
 use backend\components\Functions;
 
@@ -15,9 +15,9 @@ $this->title                   = '报告管理';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style type="text/css">
-     .content tr td:nth-child(3){
+/*     .content tr td:nth-child(3){
      -webkit-filter: blur(6px);-filter: blur(6px);
-       }  
+       } */ 
 </style>
 <div class="rest-sample-index">
 

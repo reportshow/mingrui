@@ -59,7 +59,7 @@ if ($model->pdfurl) {
 	$('iframe').load(function() { 
 	    $('.progress').remove();
 	    reHeight();
-	    $("iframe").contents().find("#page-container .y12").eq(1).html("<div class='blur' style='padding:8px;text-align: center;'>这是一个医院名</div>");
+	    //$("iframe").contents().find("#page-container .y12").eq(1).html("<div class='blur' style='padding:8px;text-align: center;'>这是一个医院名</div>");
 	}); 
 	var per =0;
 	setInterval(function(){

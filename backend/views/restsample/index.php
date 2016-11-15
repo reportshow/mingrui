@@ -12,9 +12,9 @@ $this->title                   = '我的病人';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <style type="text/css">
-     .content tr td:nth-child(2){
+    /* .content tr td:nth-child(2){
        -webkit-filter: blur(6px);-filter: blur(6px);
-    }
+    }*/
 </style>
 <div class="rest-sample-index">
 

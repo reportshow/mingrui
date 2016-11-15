@@ -48,9 +48,9 @@ class Pdf2html extends Widget
                     '<head><meta content="width=device-width, initial-scale=0.3, minimum-scale=0.1, maximum-scale=2, user-scalable=yes" name="viewport"/>',
                     $contents);
             }
-            $contents = str_replace($findme, $replace, $contents);
+            //$contents = str_replace($findme, $replace, $contents);
             if (strpos($contents, '送检单位')) {
-                $contents = $this->replaceHospital($contents, $report->sample->doctor->hospital->name);
+              //  $contents = $this->replaceHospital($contents, $report->sample->doctor->hospital->name);
             }
             echo $contents;
         }
@@ -59,7 +59,10 @@ class Pdf2html extends Widget
                #sidebar.opened{display:none}
                #sidebar.opened+#page-container{left:0px}
             }
-            .blur{-webkit-filter: blur(6px);-filter: blur(6px);}</style>";
+           /* .blur{-webkit-filter: blur(6px);
+                -filter: blur(6px);
+            }*/
+            </style>";
 
         fclose($handle);
     }

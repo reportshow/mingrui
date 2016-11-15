@@ -10,7 +10,7 @@ use backend\widgets\ReadPdf;
 $id = $_GET['id'];
 global $sick;
 $report = RestReport::findOne($id);
-$sick   = $report->sample->name;
+$sick   = $model->sample->name;
 
 $this->title                   = '报告:' . $model->sample->name;
 $this->params['breadcrumbs'][] = ['label' => '报告管理', 'url' => ['index']];

@@ -253,10 +253,20 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
      * @return mixed
      */
     public function actionShowReport($id)
-    {
-        return $this->render('showreport2', [
-            'model' => $this->findModel($id),
-        ]);
+    {  
+        if(0 && empty($_GET['test']))
+        {
+            return $this->render('showreport2', [
+                'model' => $this->findModel($id),
+           ]);
+        }else{
+            return $this->render('showreport', [
+                'model' => $this->findModel($id),
+            ]);
+        }
+        
+       
+
     }
 
     public function actionPdf2html($id){
