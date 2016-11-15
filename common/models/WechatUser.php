@@ -105,7 +105,7 @@ class WechatUser extends Model
 
             echo Nodata::widget([
                 'title'   => '该号码' . $mobile . '未被记录!',
-                'message' => '请联系客服/销售，将你的手机号录入系统中.']);
+                'message' => '请联系客服/销售，将你的手机号录入系统中。客服电话：010-53396195']);
             return;
 
             return false;

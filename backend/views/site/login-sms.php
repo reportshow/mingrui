@@ -100,21 +100,21 @@ echo $form->field($model, 'password', $fieldOptions2)
          $('#verifyimg').attr('src','<?=$verifyUrl?>&x='+Math.random());
     });
 
-    var myclock;var count;
+    var myclock;var Clockcount;
     function startClock(){
-        count = 60;
+        Clockcount = 60;
         myclock = setInterval(function(){
-            count --;
-            $('#getsms').find('span').html(count+'秒');
+            Clockcount --;
+            $('#getsms').find('span').html(Clockcount+'秒');
 
-            if(count==0){
+            if(Clockcount==0){
                 stopClock();
             }
             
        },1000);
     }
     function stopClock(){
-           count=0;
+           Clockcount=0;
            clearInterval(myclock);
            $('#getsms').removeClass('disabled');
            $('#getsms').find('span').html( '获取');
@@ -137,7 +137,7 @@ echo $form->field($model, 'password', $fieldOptions2)
                 if(d.code==1001){
                     alert('图形验证码错误');
                     stopClock();
-                    $('#getsms').click();
+                    $('#getverifyimg').click();
                     return;
                 }
                 if(d.code==1){
@@ -165,7 +165,7 @@ echo $form->field($model, 'password', $fieldOptions2)
                 if(d.code==1001){
                     alert('图形验证码错误');
                     stopClock();
-                    $('#getsms').click();
+                    $('#getverifyimg').click();
                     return;
                 }
                 if(d.code==1002){

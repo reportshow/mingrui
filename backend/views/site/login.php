@@ -63,7 +63,7 @@ $fieldOptions2 = [
                   <a data-toggle="tab" href="#tab_2-3"><i class="fa fa-qrcode"></i>医生</a>
                 </li>
 
-                <li  ck-data='sms' class=''>
+                <li  ck-data='sms' class='hidex'>
                   <a data-toggle="tab" href="#tab_2-4"><i class="fa fa-envelope-o"></i> 短信登录</a>
                 </li>
                 <li class="accountentery pull-left header"> 登录</li>

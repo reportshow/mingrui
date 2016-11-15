@@ -125,7 +125,14 @@ class WechatDoctorController extends Controller
         }
 
         echo Nodata::widget(['title' => '登录成功!', 'message' => '您已经成功登录到明睿系统']);
-
+        echo "<style>
+         body {background-color:#20252B !important; 
+            background-image: url(images/pic3-2.jpg) !important;
+            background-size: cover !important;
+            background-position: 100% !important;}
+        .alert-info{margin-top: 30%;
+            background-color: rgba(0, 192, 239, 0.5) !important;}
+            </style>";
     }
 
     /**

@@ -23,9 +23,13 @@ class UtilsController extends Controller
 
             return json_encode(['code' => 1001]);
         }
-
+        if(!empty($_SESSION['check_sms_time']) && $_SESSION['check_sms_time'] > time()-60){
+            return json_encode(['code' => 1002]);
+        }
+ 
         $_SESSION['check_sms']      = rand(1000, 9999);
         $_SESSION['check_sms_time'] = time();
+
         SMS::sendSMS($mobile, [$_SESSION['check_sms'], '20分钟']);
         return json_encode(['code' => 1]);
 
