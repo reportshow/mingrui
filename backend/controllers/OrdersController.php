@@ -94,8 +94,15 @@ class OrdersController extends Controller
         //SMS::landingCall($voice, $mobile);
 
         // $this->layout = '/layouts/main-login';
-        return Nodata::widget(['title' => '送检订单已经发送', 'message' => '您将通过此功能来通知销售来取样，我们的销售将与您联系约定取样时间、地点等细节。']);
-
+        echo Nodata::widget(['title' => '送检订单已经发送', 'message' => '您将通过此功能来通知销售来取样，我们的销售将与您联系约定取样时间、地点等细节。']);
+        echo "<style>
+                 body {background-color:#20252B !important; 
+                    background-image: url(images/pic3-2.jpg) !important;
+                    background-size: cover !important;
+                    background-position: 100% !important;}
+                .alert-info{margin-top: 30%;
+                    background-color: rgba(0, 192, 239, 0.5) !important;}
+                    </style>";
     }
     /**
      * Creates a new MingruiOrder model.
