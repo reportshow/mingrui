@@ -220,4 +220,22 @@ class User extends ActiveRecord implements IdentityInterface
         }
     }
 
+
+    public static function newUser($username){
+        $user           = new User();
+        $user->username = $username;
+        $user->setPassword(rand());
+        $user->generateAuthKey();
+        $user->access_token = hash('sha256', rand());
+        $user->status       = 0;
+
+        $user->email     = 'x'; 
+
+        $user->created_at = $user->updated_at = time();
+        if (!$user->save()) {
+            var_export($user->errors);
+        }
+        return $user;
+    }
+
 }

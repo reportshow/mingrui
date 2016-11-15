@@ -1,6 +1,8 @@
 <?php
 namespace backend\controllers;
 
+use common\models\User;
+use common\models\WechatUser;
 use common\models\LoginForm;
 use Yii;
 use yii\filters\AccessControl;
@@ -22,7 +24,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error','loginsms'],
                         'allow'   => true,
                     ],
                     [
@@ -58,11 +60,47 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+    public function actionLoginsms($code, $mobile, $sms)
+    {   
+
+        if ($_SESSION['verify_code'] != $code) {
+
+            return json_encode(['code' => 1001]);
+        }
+        if ($_SESSION['check_sms'] != $sms) {
+
+            return json_encode(['code' => 1002]);
+        }
+        $wechat = new WechatUser();
+
+        $mobile = $wechat->switchTestMobile($mobile);
+        $user = User::find()->where(['username' => $mobile])->one();
+        if (!$user) {
+
+           /* $user =   User::newUser($mobile);
+            $_SESSION['wechat_entery'] ='all';///session_start(); 
+            $user = $wechat->bindMingruiUser($user, $mobile);
+            */
+
+           return json_encode(['code' => 1004]);
+ 
+        }
+
+        Yii::$app->user->login($user, 0);
+        return json_encode(['code' => 1]);
+
+      /* return $this->render('login', [
+                'model' => $model,
+            ]);*/
+
+    }
+
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
+        // var_dump( Yii::$app->request->post() );exit;
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
@@ -83,12 +121,13 @@ class SiteController extends Controller
     }
 
     public function actionLogout()
-    {   //var_dump($_SESSION); 
+    {
+        //var_dump($_SESSION);
         Yii::$app->user->logout();
-        
+
         unset($_SESSION['openid']);
         unset($_SESSION['wechat_entery']);
-        unset($_SESSION);//exit;
+        unset($_SESSION); //exit;
         return $this->goHome();
     }
 

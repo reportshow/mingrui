@@ -73,13 +73,13 @@ $fieldOptions2 = [
             <div class="col-xs-4"></div>
             <div class="col-xs-4" style="margin-top:10px;">
                 <?=Html::submitButton(' 确 认 ',
-    [
-        'class' => 'btn btn-info btn-block btn-flat',
-        'style' => 'margin:0px auto;',
-        'name'  => 'login-button',
-    ]
-);
-?>
+                        [
+                            'class' => 'btn btn-info btn-block btn-flat',
+                            'style' => 'margin:0px auto;',
+                            'name'  => 'login-button',
+                        ]
+                    );
+                ?>
             </div>
             <!-- /.col -->
         </div>

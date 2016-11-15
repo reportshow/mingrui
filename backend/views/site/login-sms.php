@@ -11,7 +11,7 @@ $fieldOptions1 = [
 $fieldOptions2 = [
     'options'       => ['class' => 'input-group input-group-sm','style'=>'margin-bottom: 15px;'],
     'inputTemplate' => "{input} <span class='input-group-btn'>
-                      <button id=getsms type='button' class='btn btn-info btn-flat disabled'
+                      <button id=getsms type='button' class='btn btn-info btn-flat '
                       style='border-top-left-radius: 0;border-bottom-left-radius: 0;'>
                       <i id='getsmsIcon' class='fa  fa-envelope-o'></i> <span>获取</span></button>
                     </span>",
@@ -19,14 +19,15 @@ $fieldOptions2 = [
 
 $verifyUrl = Yii::$app->urlManager->createUrl(['utils/verifyimg', 'rnd' => rand()]);
 $verifycheckUrl = Yii::$app->urlManager->createUrl(['utils/verifycheck'  ]);
- 
+$sendSmsUrl = Yii::$app->urlManager->createUrl(['utils/sendsms'  ]);
+$loginUrl = Yii::$app->urlManager->createUrl(['site/loginsms'  ]);
 
 
 $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); 
 
-        echo $form->field($model, 'username', $fieldOptions1)
+echo $form->field($model, 'username', $fieldOptions1)
                     ->label(false)
-                    ->textInput(['placeholder' => $model->getAttributeLabel('手机号'),'type'=>'tel']);
+                    ->textInput(['placeholder' => $model->getAttributeLabel('手机号'),'type'=>'tel','id'=>'mobile']);
 
 ?>
 
@@ -47,7 +48,8 @@ $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => fal
 
 echo $form->field($model, 'password', $fieldOptions2)
             ->label(false)
-            ->passwordInput(['placeholder' => $model->getAttributeLabel('获取短信')]);
+            ->textInput(['placeholder' => '短信验证码','id'=>'sms',//$model->getAttributeLabel('获取短信')
+              ]);
 
 ?>
 
@@ -57,7 +59,7 @@ echo $form->field($model, 'password', $fieldOptions2)
     </div>
     <!-- /.col -->
     <div class="col-xs-4">
-        <?=Html::submitButton(' 登 录 ', ['class' => 'btn btn-info btn-block btn-flat', 'name' => 'login-button'])?>
+        <button  id='dosmslogin' type=button class = 'btn btn-info btn-block btn-flat' > 登 录 </button>       
     </div>
     <!-- /.col -->
 </div>
@@ -67,7 +69,7 @@ echo $form->field($model, 'password', $fieldOptions2)
     .disabled{background: buttonface; border-color: #ddd; color:#666;}
 </style>
 <script type="text/javascript">
-    $('#loginform-verify').change(function(){
+    /*$('#loginform-verify').change(function(){
         //检查实时输入的验证码
         var url = '<?=$verifycheckUrl?>';
         var code = $(this).val();
@@ -88,8 +90,8 @@ echo $form->field($model, 'password', $fieldOptions2)
                 }
                 
            },
-       });
-    });
+       });//ajax
+    });*/
 
     //更新验证码
     $('#getverifyimg').click(function(){
@@ -98,20 +100,85 @@ echo $form->field($model, 'password', $fieldOptions2)
          $('#verifyimg').attr('src','<?=$verifyUrl?>&x='+Math.random());
     });
 
-    $('#getsms').click(function(){
-        if($(this).hasClass('disabled')) return;
-       
-       $(this).addClass('disabled');
-       var count = 60;
-       var myclock = setInterval(function(){
+    var myclock;var count;
+    function startClock(){
+        count = 60;
+        myclock = setInterval(function(){
             count --;
-            if(count==0){
-                clearInterval(myclock);
-                 $('#getsms').removeClass('getsms');
-                 $('#getsms').find('span').html( '获取');
-            }
             $('#getsms').find('span').html(count+'秒');
-       },1000)      
+
+            if(count==0){
+                stopClock();
+            }
+            
+       },1000);
+    }
+    function stopClock(){
+           count=0;
+           clearInterval(myclock);
+           $('#getsms').removeClass('disabled');
+           $('#getsms').find('span').html( '获取');
+           //$('#getsms').find('span').html('');
+    }
+
+    $('#getsms').click(function(){
+        if($(this).hasClass('disabled')) return;       
+        $(this).addClass('disabled');
+
+       
+
+       var url  = '<?=$sendSmsUrl?>';
+       $.ajax({url:url,
+            method:'get',
+            data:{code: $('#loginform-verify').val(), 'mobile':$('#mobile').val()},
+            dataType:'json',
+           success:function(d){
+                console.log(d);
+                if(d.code==1001){
+                    alert('图形验证码错误');
+                    stopClock();
+                    $('#getsms').click();
+                    return;
+                }
+                if(d.code==1){
+                  startClock();
+                }
+                
+           },
+       });//ajax
          
+      
     });
+
+     $('#dosmslogin').click(function(){
+      var url  = '<?=$loginUrl?>';
+       $.ajax({url:url,
+            method:'get',
+            data:{
+              'code': $('#loginform-verify').val(), 
+              'mobile':$('#mobile').val(),
+              'sms':$('#sms').val()
+            },
+            dataType:'json',
+           success:function(d){
+                console.log(d);
+                if(d.code==1001){
+                    alert('图形验证码错误');
+                    stopClock();
+                    $('#getsms').click();
+                    return;
+                }
+                if(d.code==1002){
+                  alert('短信验证码错误'); return;
+                }
+                if(d.code==1004){
+                  alert('请先用微信扫一扫初始化帐号，以后才可用短信方式登录'); return;
+                }
+                 if(d.code==1){
+                   location.href='';
+                }
+           },
+       });//ajax
+     });//click
+
 </script>

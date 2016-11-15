@@ -1,6 +1,7 @@
 <?php
 namespace backend\controllers;
 
+use common\components\SMS;
 use yii\web\Controller;
 
 /**
@@ -15,12 +16,26 @@ class UtilsController extends Controller
     {
         session_start();
     }
+    
+    public function actionSendsms($code,$mobile)
+    {
+        if ($_SESSION['verify_code'] != $code) {
+
+            return json_encode(['code' => 1001]);
+        }
+
+        $_SESSION['check_sms']      = rand(1000, 9999);
+        $_SESSION['check_sms_time'] = time();
+        SMS::sendSMS($mobile, [$_SESSION['check_sms'], '20分钟']);
+        return json_encode(['code' => 1]);
+
+    }
 
     public function actionVerifycheck($code)
     {
-        if($_SESSION['verify_code']==$code){
+        if ($_SESSION['verify_code'] == $code) {
 
-            return json_encode( ['code'=>1]);
+            return json_encode(['code' => 1]);
         }
     }
     public function actionVerifyimg()
@@ -34,16 +49,14 @@ class UtilsController extends Controller
         $fontsize  = 20; //字体大小
         $charset   = 'abcdefghkmnprstuvwxyzABCDEFGHKMNPRSTUVWXYZ23456789';
 
-        $font      = 'Fonts/segoesc.ttf';
-        $font      = './FreeSans.ttf';
+        $font = 'Fonts/segoesc.ttf';
+        $font = './FreeSans.ttf';
         //putenv('GDFONTPATH=' . realpath('.'));
         // Name the font to be used (note the lack of the .ttf extension)
         //$font = 'fontello';
 
-
-
-        $im        = imagecreatetruecolor($imgwidth, $imgheight);
-        $while     = imageColorAllocate($im, 255, 255, 255);
+        $im    = imagecreatetruecolor($imgwidth, $imgheight);
+        $while = imageColorAllocate($im, 255, 255, 255);
         imagefill($im, 0, 0, $while); //填充图像
         //取得字符串
         $authstr = '';
@@ -54,7 +67,6 @@ class UtilsController extends Controller
 
         $_SESSION['verify_code'] = strtolower($authstr); //全部转为小写，主要是为了不区分大小写
 
- 
 //随机画点,已经改为划星星了
         for ($i = 0; $i < $imgwidth; $i++) {
             $randcolor = imageColorallocate($im, mt_rand(200, 255), mt_rand(200, 255), mt_rand(200, 255));

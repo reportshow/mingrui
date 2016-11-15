@@ -81,7 +81,7 @@ class WechatUser extends Model
 
         if ($erp_user) {
 
-            if ($_SESSION['wechat_entery'] != $role_text) {
+            if ($_SESSION['wechat_entery'] != 'all' && $_SESSION['wechat_entery'] != $role_text) {
                 $realRole  = $role_text;
                 $rolePlace = $_SESSION['wechat_entery'];
                 echo Nodata::widget([
