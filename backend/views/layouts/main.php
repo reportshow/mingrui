@@ -1,15 +1,23 @@
 <?php
 use yii\helpers\Html;
+use backend\components\Functions;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 
 
+   
+
 if (Yii::$app->controller->action->id === 'login') { 
 /**
  * Do not use this code in your template. Remove it. 
  * Instead, use the code  $this->layout = '//main-login'; in your controller.
- */
+ */ 
+
+    if( Functions::ismobile()) {   
+       return  Yii::$app->controller->redirect(['/wechat-doctor/homepage' ]);         
+    }
+
     echo $this->render(
         'main-login',
         ['content' => $content]
@@ -17,7 +25,7 @@ if (Yii::$app->controller->action->id === 'login') {
     return;
 }  
 
- if(!Yii::$app->user->Identity){
+ if(!Yii::$app->user->Identity){ 
    return Yii::$app->controller->goHome();  
  }
 

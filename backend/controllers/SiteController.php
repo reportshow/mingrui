@@ -8,6 +8,7 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
+use backend\components\Functions;
 
 /**
  * Site controller
@@ -56,8 +57,11 @@ class SiteController extends Controller
     }
 
     public function actionIndex()
-    {
+    { 
         return $this->render('index');
+    }
+    public function actionTest(){
+       return $this->redirect(['/restsample/index-report' ]);
     }
 
     public function actionLoginsms($code, $mobile, $sms)

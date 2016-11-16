@@ -42,6 +42,9 @@ $this->params['breadcrumbs'][] = $this->title;
         //'age',
         //'birthplace',
         ['attribute' => 'hospitalname', 'label' => '医院', 'value' => function ($model) {
+            if(!$model->hospital){
+                return "未知医院";
+            }
             return $model->hospital->name;
         }],
         'department',

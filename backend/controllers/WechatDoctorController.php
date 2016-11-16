@@ -97,6 +97,12 @@ class WechatDoctorController extends Controller
 
     }
 
+    public function actionHomepage()
+    {
+        self::show('');
+
+    }
+
     public function actionMenuinit()
     {
         $wechat = WechatUser::getWechat(true);
