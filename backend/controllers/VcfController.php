@@ -43,9 +43,9 @@ class VcfController extends Controller
         $params      = Yii::$app->request->queryParams;
         $query       = MingruiVcf::find();
         if (!Yii::$app->user->can('admin')) {
-           // var_dump($params ); exit;
-            $params['MingruiVcfSearch']['uid'] = Yii::$app->user->id;
-            //$query = $query->where(['uid' => Yii::$app->user->id]);
+            //var_dump($params ); exit;
+            //$params['MingruiVcfSearch']['uid'] = Yii::$app->user->id;
+            $query = $query->where(['mingrui_vcf.uid' => Yii::$app->user->id]);
         }
 
         $dataProvider = $searchModel->search($params, $query);
