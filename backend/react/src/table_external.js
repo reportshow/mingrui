@@ -282,10 +282,10 @@ export default class TableExampleComplex extends React.Component {
 
     filter_qrjyz = (data, value) => {
 	var data_qrjyz = parseFloat(data[10]);
-	if(data[6] === null) {
+	if(data[10] === null) {
 	    data_qrjyz = 0;
 	}
-	if(data[6] === '-') {
+	if(data[10] === '-') {
 	    data_qrjyz = 0;
 	}
 	var qrjyz_value = parseFloat(this.state.qrjyz_value);

@@ -21999,10 +21999,10 @@
 
 			_this.filter_qrjyz = function (data, value) {
 				var data_qrjyz = parseFloat(data[10]);
-				if (data[6] === null) {
+				if (data[10] === null) {
 					data_qrjyz = 0;
 				}
-				if (data[6] === '-') {
+				if (data[10] === '-') {
 					data_qrjyz = 0;
 				}
 				var qrjyz_value = parseFloat(_this.state.qrjyz_value);
