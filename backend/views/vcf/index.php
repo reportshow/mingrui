@@ -131,7 +131,7 @@ return Html::a('下载VCF', ['vcf/download', 'id' => $model->id], ['class' => 'b
               },
             ],
        'options'       => [
-                'width' => 80,
+                'width' => 140,
             ],
       /*'filter'=>Html::submitButton('搜索', ['class' => 'btn btn-primary']) 
             .Html::resetButton('恢复', ['class' => 'btn btn-default rest']) ,
@@ -153,6 +153,6 @@ echo GridView::widget([
 </div>
 
 <style type="text/css">
-    .content-wrapper{overflow: auto}
+    .content{overflow: auto}
     .disabled{background: #999;border:0px;}
 </style>

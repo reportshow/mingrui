@@ -50,7 +50,7 @@ class MingruiVcf extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['uid', 'sick', 'product', 'diagnose', 'sex'], 'required'],
+            [['uid', 'sick', 'product', 'diagnose', 'sex','vcf'], 'required'],
             [['uid', 'createtime', 'task_id'], 'integer'],
             [['sex', 'diagnose'], 'string'],
             [['age'], 'number'],

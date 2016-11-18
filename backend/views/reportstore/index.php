@@ -82,7 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],*/
         ['label'=>'操作',
         'format'=>'raw',
-         'options' => ['width' => '80'],
+         'options' => ['width' => '120'],
          'value'=>function($model){
             $reportStatus = '';
             if(strlen($model->attachements)  < 5){
@@ -97,6 +97,6 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <style type="text/css">
-    .content-wrapper{overflow: auto}
+    .content{overflow: auto}
     .disabled{background: #999;border:0px;}
 </style>
