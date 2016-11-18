@@ -3,7 +3,9 @@
 namespace backend\models;
 
 use backend\models\RestSample;
+use common\models\SqlModelsProvider;
 use yii\base\Model;
+//use yii\data\SqlDataProvider;
 use yii\data\ActiveDataProvider;
 
 /**
@@ -17,7 +19,6 @@ class RestSampleSearch extends RestSample
     public $linchuang;
 
     public $product_name;
-    public $report_id;
 
     /**
      * @inheritdoc
@@ -57,8 +58,8 @@ class RestSampleSearch extends RestSample
         }
 
         $query = $query->joinWith(['pingjia']);
-        $query = $query->joinWith(['restReport']);
-        $query = $query->joinWith(['restReport.product']);
+        $query = $query->joinWith('restReports');
+        $query = $query->joinWith(['restReports.product']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -74,18 +75,18 @@ class RestSampleSearch extends RestSample
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'date'          => $this->date,
-            'has_project'   => $this->has_project,
-            'has_symptom'   => $this->has_symptom,
-            'xianzhengzhe'  => $this->xianzhengzhe,
-            'doctor_id'     => $this->doctor_id,
-            'sales_id'      => $this->sales_id,
-            'Date(rest_sample.created)'       => $this->created,
-            'xiedai'        => $this->xiedai,
-            'updated'       => $this->updated,
-            'shouyang_date' => $this->shouyang_date,
-            'shouyanged'    => $this->shouyanged,
-            'sex'           => $this->sex,
+            'date'                      => $this->date,
+            'has_project'               => $this->has_project,
+            'has_symptom'               => $this->has_symptom,
+            'xianzhengzhe'              => $this->xianzhengzhe,
+            'doctor_id'                 => $this->doctor_id,
+            'sales_id'                  => $this->sales_id,
+            'Date(rest_sample.created)' => $this->created,
+            'xiedai'                    => $this->xiedai,
+            'updated'                   => $this->updated,
+            'shouyang_date'             => $this->shouyang_date,
+            'shouyanged'                => $this->shouyanged,
+            'sex'                       => $this->sex,
         ]);
 
         $query->andFilterWhere(['like', 'sample_id', $this->sample_id])
@@ -126,17 +127,27 @@ class RestSampleSearch extends RestSample
             ->andFilterWhere(['like', 'express_no', $this->express_no]);
 
         $query
-        ->andFilterWhere(['like', 'rest_report.report_id', $this->report_id]) //<=====加入这句
-        ->andFilterWhere(['like', 'rest_product.name', $this->product_name]) //<=====加入这句
-        ->andFilterWhere(['like', 'mingrui_pingjia.pingjia', $this->pingjia]) //<=====加入这句
+            ->andFilterWhere(['like', 'rest_report.report_id', $this->report_id]) //<=====加入这句
+            ->andFilterWhere(['like', 'rest_product.name', $this->product_name]) //<=====加入这句
+            ->andFilterWhere(['like', 'mingrui_pingjia.pingjia', $this->pingjia]) //<=====加入这句
             ->andFilterWhere(['like', 'mingrui_pingjia.linchuang', $this->linchuang]); //<=====加入这句
         if ($this->gene) {
             $like = '": ["%' . $this->gene . '%",';
             $query->andFilterWhere(['like', 'snpsave', "%{$like}%", false]);
         }
 
+        //
         //echo $query->createCommand()->getRawSql(); exit;
+        $query->select('rest_report.report_id, rest_sample.*');        
+        $query->indexBy('report_id');
+        return $dataProvider;
 
+
+        $dataProvider = new SqlModelsProvider([
+            'query' => $query,
+            'class' => get_class($this),
+        ]);
         return $dataProvider;
     }
+
 }

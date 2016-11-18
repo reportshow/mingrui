@@ -44,7 +44,7 @@ $fieldOptions2 = [
       .tab-pane .qrcode{height: 200px;}
     </style>
  
-<div class="login-logo" style="margin-top:7%;color:#fff;font-family: 'Microsoft Yahei';cursor: default">
+<div class="login-logo" style="margin-top:5%;color:#fff;font-family: 'Microsoft Yahei';cursor: default">
    <img src='logo.png' height=50> <span style="font-size:0.8em">明睿单病云管家 </span>
 </div>
 
@@ -127,8 +127,13 @@ $fieldOptions2 = [
         </div>
         <!-- nav-tabs-custom -->
 
-        <div style="text-align: center;color:#fff;margin-top: 50px;">北京金准基因科技有限责任公司</div>
+        <div style="text-align: center;color:#fff;margin-top: 40px;">北京金准基因科技有限责任公司</div>
+        <div style="text-align: center;color:#fff;margin-top: 10px;">客服: 010-86464098</div>
         <div style="text-align: center;color:#fff;margin-top: 10px;">金准医学检验所</div>
+        
+        
+        
+
     </div>
     <!-- /.login-box-body -->
 </div><!-- /.login-box -->

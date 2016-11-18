@@ -1,9 +1,10 @@
 <?php
 
 namespace backend\models;
-use yii\helpers\Html;
+
 use backend\models\MingruiPingjia;
 use Yii;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "rest_sample".
@@ -66,6 +67,7 @@ use Yii;
  */
 class RestSample extends \yii\db\ActiveRecord
 {
+    public $report_id;
     /**
      * @inheritdoc
      */
@@ -82,7 +84,8 @@ class RestSample extends \yii\db\ActiveRecord
         return [
             [['sample_id', 'name', 'type', 'sex', 'has_project', 'has_symptom', 'xianzhengzhe', 'shenhe_status', 'created', 'xiedai', 'updated', 'timestamp', 'shouyanged'], 'required'],
             [['symptom', 'note', 'clinic_symptom', 'timestamp', 'dengji_note'], 'string'],
-            [['date', 'created', 'updated', 'shouyang_date'], 'safe'],
+            [['date', 'created', 'updated', 'shouyang_date',
+                'report_id'], 'safe'],
             [['has_project', 'has_symptom', 'xianzhengzhe', 'doctor_id', 'sales_id', 'xiedai', 'shouyanged'], 'integer'],
             [['sample_id', 'sex', 'related_sid', 'yangbenruku', 'heshuanruku', 'heshuanruku2', 'family_id', 'shenhe_status'], 'string', 'max' => 20],
             [['name', 'type', 'ypkd_id', 'barcode', 'birthday', 'age', 'tel1', 'tel2', 'report_type', 'guanlian', 'relation', 'report_template', 'express', 'express_no'], 'string', 'max' => 100],
@@ -196,7 +199,7 @@ class RestSample extends \yii\db\ActiveRecord
     }
     public function getRestReport()
     {
-        return $this->hasOne(RestReport::className(), ['sample_id' => 'sample_id']);
+        return RestReport::find()->where(['report_id' => $this->report_id])->one();
     }
     /**
      * @return \yii\db\ActiveQuery
@@ -230,12 +233,10 @@ class RestSample extends \yii\db\ActiveRecord
     public function getPingjiaObj()
     {
         // $report =RestReport::
-        if ($this->restReports) {
-            $reports = $this->restReports;
-            $report  = $reports[0];
-            return MingruiPingjia::find()->where(['report_id' => $report->id])->one();
 
-        }
+        $report = $this->restReport;
+        if (!$report) {return;}
+        return MingruiPingjia::find()->where(['report_id' => $report->id])->one();
 
     }
     public function getPingjiaTxt()
@@ -248,12 +249,8 @@ class RestSample extends \yii\db\ActiveRecord
     }
     public function getMethod()
     {
-        $reports = $this->restReports;
-        if (count($reports) < 1) {
-            return;
-        }
-
-        $model = $reports[0];
+        $model = $this->restReport;
+        if (!$model) {return;}
 
         if (strpos($model->report_id, 'NG') !== false) {
             return 'NGS';
@@ -274,7 +271,7 @@ class RestSample extends \yii\db\ActiveRecord
 
     public function getProduct()
     {
-        $report = $this->getRestReport()->one();
+        $report = $this->restReport;
 
         if (!$report) {return;}
 
@@ -284,7 +281,7 @@ class RestSample extends \yii\db\ActiveRecord
 
     public function getGeneTxt()
     {
-        $report = $this->getRestReport()->one();
+        $report = $this->restReport;
         if (!$report) {
             return;
         }

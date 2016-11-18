@@ -48,13 +48,16 @@ class RestsampleController extends Controller
         }*/
 
         if (Yii::$app->user->can('doctor')) {
-            $mobile = Yii::$app->user->Identity->username;
+             /*$mobile = Yii::$app->user->Identity->username;
             $doctor = RestClient::find()->where(['tel' => $mobile])->one();    
             if(!$doctor){
                return "医生资料未找到";
             }
+            $doctorid = $doctor->id;
+            */
+            $doctorid =  Yii::$app->user->Identity->role_tab_id;
             $query = $query->where(['xianzhengzhe'=>1]);
-            $query = $query->andWhere(['doctor_id' => $doctor->id]);
+            $query = $query->andWhere(['doctor_id' => $doctorid]);
             //echo $query->createCommand()->getRawSql(); exit;
         }
 
@@ -89,11 +92,7 @@ class RestsampleController extends Controller
         }
 */
         if (Yii::$app->user->can('doctor')) {
-            $role_id = Yii::$app->user->Identity->role_tab_id;
-         /*   $doctor = RestClient::find()->where(['tel' => $mobile])->one();    
-            if(!$doctor){
-               return "医生资料未找到";
-            }*/
+            $role_id = 242;//Yii::$app->user->Identity->role_tab_id;     
             $query = $query->andWhere(['doctor_id' => $role_id]);
             //echo $query->createCommand()->getRawSql(); exit;
         }
