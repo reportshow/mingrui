@@ -3,7 +3,6 @@
 namespace backend\controllers;
 
 use backend\models\RestSample;
-use backend\models\RestClient;
 use backend\models\RestSampleSearch;
 use Yii;
 use yii\filters\VerbFilter;
@@ -41,23 +40,23 @@ class RestsampleController extends Controller
 
         $query = RestSampleSearch::find();
 /*        if ($old == 'yes') {
-            $time = getdate();
-            $t    = ($time['year'] - 1) . '-' . $time['mon'] . '-1';
-             
-            $query = $query->where(['<', 'created', $t]);
-        }*/
+$time = getdate();
+$t    = ($time['year'] - 1) . '-' . $time['mon'] . '-1';
+
+$query = $query->where(['<', 'created', $t]);
+}*/
 
         if (Yii::$app->user->can('doctor')) {
-             /*$mobile = Yii::$app->user->Identity->username;
-            $doctor = RestClient::find()->where(['tel' => $mobile])->one();    
+            /*$mobile = Yii::$app->user->Identity->username;
+            $doctor = RestClient::find()->where(['tel' => $mobile])->one();
             if(!$doctor){
-               return "医生资料未找到";
+            return "医生资料未找到";
             }
             $doctorid = $doctor->id;
-            */
-            $doctorid =  Yii::$app->user->Identity->role_tab_id;
-            $query = $query->where(['xianzhengzhe'=>1]);
-            $query = $query->andWhere(['doctor_id' => $doctorid]);
+             */
+            $doctorid = Yii::$app->user->Identity->role_tab_id;
+            $query    = $query->where(['xianzhengzhe' => 1]);
+            $query    = $query->andWhere(['doctor_id' => $doctorid]);
             //echo $query->createCommand()->getRawSql(); exit;
         }
 
@@ -71,29 +70,28 @@ class RestsampleController extends Controller
         ]);
     }
 
-
 /**
-     * Lists all RestSample models.
-     * @return mixed
-     */
+ * Lists all RestSample models.
+ * @return mixed
+ */
     public function actionIndexReport($old = '')
     {
         $searchModel = new RestSampleSearch();
         $params      = Yii::$app->request->queryParams;
 
         $query = RestSampleSearch::find();
-        $query = $query->where(['xianzhengzhe'=>1]);
+        $query = $query->where(['xianzhengzhe' => 1]);
 
 /*        if ($old == 'yes') {
-            $time = getdate();
-            $t    = ($time['year'] - 1) . '-' . $time['mon'] . '-1';
-             
-            $query = $query->where(['<', 'created', $t]);
-        }
-*/
+$time = getdate();
+$t    = ($time['year'] - 1) . '-' . $time['mon'] . '-1';
+
+$query = $query->where(['<', 'created', $t]);
+}
+ */
         if (Yii::$app->user->can('doctor')) {
-            $role_id = 242;//Yii::$app->user->Identity->role_tab_id;     
-            $query = $query->andWhere(['doctor_id' => $role_id]);
+            $role_id = Yii::$app->user->Identity->role_tab_id;
+            $query   = $query->andWhere(['doctor_id' => $role_id]);
             //echo $query->createCommand()->getRawSql(); exit;
         }
 
@@ -172,17 +170,16 @@ class RestsampleController extends Controller
     public function actionSearch($role)
     {
         $searchModel = new RestSampleSearch();
-        $params      = Yii::$app->request->queryParams; 
+        $params      = Yii::$app->request->queryParams;
 
         $query = RestSample::find();
-        $query = $query->where(['xianzhengzhe'=>1]); 
+        $query = $query->where(['xianzhengzhe' => 1]);
 
         if (Yii::$app->user->can('doctor')) {
-            $role_id = Yii::$app->user->Identity->role_tab_id;          
-            $query = $query->andWhere(['doctor_id' => $role_id]);
+            $role_id = Yii::$app->user->Identity->role_tab_id;
+            $query   = $query->andWhere(['doctor_id' => $role_id]);
             //echo $query->createCommand()->getRawSql(); exit;
         }
-
 
         $dataProvider = $searchModel->search($params, $query);
 
