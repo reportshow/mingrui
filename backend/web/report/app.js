@@ -22229,8 +22229,8 @@
 			value: function getFreeState() {
 				return {
 					queryResult: tableData,
-					fixedHeader: true,
-					fixedFooter: true,
+					fixedHeader: false,
+					fixedFooter: false,
 					stripedRows: true,
 					showRowHover: true,
 					selectable: true,
