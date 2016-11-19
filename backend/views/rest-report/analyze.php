@@ -33,7 +33,15 @@ AppAsset::register($this);
 }//ismobile
 ?>
 <?=LoadingPage::widget()?>
-  
+<?php
+  if($empty){
+?>
+<div class="alert alert-info alert-dismissible">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <h4><i class="icon fa fa-info"></i> 提示!</h4>
+  目前还没有可供分析的数据
+</div>
+<?php } else {?>
 <div id="app"></div>
 <script>
     var tableData = <?php echo $data ?>;
@@ -52,3 +60,4 @@ $exportLink.addEventListener('click', function(e) {
     }
 }, false);
 </script>
+<?php } ?>
