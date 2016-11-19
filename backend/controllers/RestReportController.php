@@ -356,6 +356,15 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
             $datas = [];
         }
 
+        if(count($datas) > 0 && count($datas[0]) == 19)
+        {
+             foreach ($datas as $key => $data) {
+                  $datas[$key][] = 0;
+                  $datas[$key][] = [];
+                  $datas[$key][] = [["",$data[16][2],""]];
+             }
+        }
+        
         foreach ($datas as $key => $data) {
             $str = $datas[$key][2];
             $ret = preg_match('/.*-([0-9]+).*/', $data[1], $matches);
