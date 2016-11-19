@@ -137,9 +137,10 @@ class RestSampleSearch extends RestSample
         }
 
         //
-        //echo $query->createCommand()->getRawSql(); exit;
+        //
         $query->select('rest_report.report_id, rest_sample.*');        
-        $query->indexBy('report_id');
+        $query->indexBy('indexby');
+        //echo $query->createCommand()->getRawSql(); exit;
         return $dataProvider;
 
 

@@ -166,12 +166,12 @@ $GridViewParam = [
         [
             'attribute' => 'method',
             'label'     => '方法',
-            'filter'    => Html::activeTextInput($searchModel, 'method', [
+        /*    'filter'    => Html::activeTextInput($searchModel, 'method', [
                 'class'    => 'form-control',
                 'readonly' => 'readonly',
                 'style'    => 'background:#ddd',
             ]),
-
+*/
             'options'   => ['width' => '46', 'readonly' => 'readonly'],
 
         ],
