@@ -264,6 +264,7 @@ class RestSample extends \yii\db\ActiveRecord
                     return substr($m, 1);
                 }
             }
+            return "";//$template;
             return substr($template, 0, 5) . '...';
         }
 

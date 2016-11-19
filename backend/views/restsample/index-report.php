@@ -76,7 +76,7 @@ $GridViewParam = [
     'columns'      => [
         [
             'class'   => 'yii\grid\SerialColumn',
-            'options' => ['width' => 30]],
+            'options' => ['width' => 40]],
 
         [
             'attribute' => 'created',
@@ -115,7 +115,7 @@ $GridViewParam = [
         ],
         [
             'attribute' => 'age',
-            'options'   => ['width' => 60],
+            'options'   => ['width' => 80],
             //'filter'    => DateInput::widget(['attribute' => 'birthday', 'model' => $searchModel]),
         ],
 
@@ -150,7 +150,7 @@ $GridViewParam = [
             'filter'    => Html::activeTextInput($searchModel, 'report_id', [
                 'class' => 'form-control',
             ]),
-            'options'   => ['width' => '100;'],
+            'options'   => ['width' => '100'],
         ],
 
         [
@@ -172,7 +172,7 @@ $GridViewParam = [
                 'style'    => 'background:#ddd',
             ]),
 */
-            'options'   => ['width' => '46', 'readonly' => 'readonly'],
+            'options'   => ['width' => '50', 'readonly' => 'readonly'],
 
         ],
 
@@ -181,7 +181,7 @@ $GridViewParam = [
             'attribute'     => 'gene',
             'value'         => 'geneTxt',
             'label'         => '基因型',
-            'headerOptions' => ['width' => '60'],
+            'options' => ['width' => '60'],
         ],
 
         [
@@ -195,7 +195,8 @@ $GridViewParam = [
                 //return "xxx";
 
             }, //'pingjia.linchuang',
-            'options'   => ['width' => '80'],
+            'options'   => ['width' => '90','class'=>'xxf'],
+            //'rowOptions'=>['class'=>'xxx'],
         ],
 
         [
@@ -205,7 +206,7 @@ $GridViewParam = [
             'filter'        => MingruiPingjia::getSimpleArray(),
             'value'         => 'pingjiaTxt',
             'label'         => '星级评价',
-            'headerOptions' => ['width' => '80'],
+            'options' => ['width' => '90'],
         ],
 /////////////////////////////////////////////////
 
@@ -258,7 +259,7 @@ $GridViewParam = [
 ],*/
 
         [
-            'options' => ['width' => '120'],
+            'options' => ['width' => '130'],
             'label'   => '操作',
             'filter'  => Html::submitButton('搜 &nbsp; 索', ['class' => 'btn btn-info'])
             . Html::resetButton('恢 &nbsp;  复', ['class' => 'btn btn-default rest']),
@@ -313,6 +314,91 @@ echo GridView::widget($GridViewParam);
 ?>
 </div>
 <style type="text/css">
-    .content-wrapper{overflow: auto}
+    .content-wrapper{overflow: auto;min-height: auto !important;}
+    .content{min-width: 1200px}
     .disabled{background: #999;border:0px;}
 </style>
+<script type="text/javascript">
+    var showScoller = <?=Functions::ismobile() ? 0 : 1 ?>;
+    $(function(){
+        $(window).resize();
+    });
+    $(window).resize(function() {   
+        if(showScoller) {
+            var h = $('body').height();
+           // alert(h); 
+            $('.content-wrapper').height(h-50);
+            $('footer').hide();
+        }
+        
+
+    });
+</script>
+
+<script type="text/javascript">
+$(function(){
+    $('tbody tr td').mouseenter(showTips);
+    $('tbody tr td').mouseleave(closeTips);
+});    
+</script>
+
+
+<script type="text/javascript">
+    function closeTips(){
+        $('#tooltips').hide();
+    }
+    function showTips(){
+       var txt =$(this).text(); if(txt.length < 5){return}
+
+      var pos = $(this).offset();
+       $('#tooltips').css('top',pos.top+50);
+       $('#tooltips').css('left',pos.left); 
+       $('#tooltips .content').html($(this).text());
+       $('#tooltips').fadeIn();
+    }
+
+    
+
+    
+</script>
+<style type="text/css">
+   #tooltips {  position: fixed;  z-index: 11111;
+    max-width:200px;
+  height:auto;
+  min-height: 25px;
+  background:#D7E7FC;
+  border:1px solid #A5C4EC;
+  border-radius:4px;
+   }
+ #tooltips .content{
+    height: auto !important;
+    min-height: 25px !important;
+    word-break: break-all;
+    display: inline;
+ }
+  #tooltips .arrow{
+  position:absolute;
+  width: 0px;
+  height:0px;
+  line-height: 0px;
+  border-width: 0px 10px 10px;
+  border-style: solid dashed dashed dashed;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+#tooltips .arrow-border{
+  color: #A5C4EC;
+  top: -10px;
+  left: 20px
+}
+#tooltips .arrow-bg{
+  color: #D7E7FC;
+  top: -9px;
+ left: 20px
+}
+</style>
+<div id="tooltips">
+    <div class='content'></div>
+      <div class="arrow arrow-border"></div>
+      <div class="arrow arrow-bg"></div>
+    </div>
