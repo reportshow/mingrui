@@ -16,7 +16,7 @@ var options = {
     view: "FitV",
     'locale':'zh-CN'
   },
-  forcePDFJS: false,
+  forcePDFJS: true,
   PDFJS_URL: "../../common/components/pdfjs/web/showpdf.php",
    fallbackLink: "<p>This is a <a href='[url]'>fallback link</a></p>"
 };
@@ -49,6 +49,8 @@ el.innerHTML = (myPDF) ? "PDFObject was successful!" : "Uh-oh, the embed didn't 
       $(".pdfobject-container").height(h+50);
       $("iframe").height(h+50);
       clearInterval(resizeTimer);
+      
+      closePrograss();
        
    }
 

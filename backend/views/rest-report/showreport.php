@@ -4,6 +4,7 @@ use backend\models\RestReport;
 use backend\widgets\PdfShow;
 use backend\widgets\RestrepotTop2;
 use backend\widgets\ReadPdf;
+use backend\widgets\LoadingPage;
 
 /* @var $this yii\web\View */
 /* @var $model backend\models\RestReport */
@@ -26,6 +27,7 @@ AppAsset::register($this);
 
 <?=RestrepotTop2::widget(['model_id' => $model->id]);?>
 
+ <?=LoadingPage::widget(['finish'=>'yes'])?>
 
 
 <?php
@@ -40,4 +42,4 @@ if ($model->pdfurl) {
 
 echo PdfShow::widget(['pdfurl' => $pdfurl]);
 ?>
- 
+  

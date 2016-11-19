@@ -289,4 +289,11 @@ class RestSample extends \yii\db\ActiveRecord
         return $report->gene;
 
     }
+    public static $indexbycount;
+    public function getIndexby(){
+        if($this->report_id){
+            return $this->report_id;
+        }
+        return "xx".self::$indexbycount++;
+    }
 }
