@@ -39,7 +39,7 @@ AppAsset::register($this);
 <div class="alert alert-info alert-dismissible">
   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
   <h4><i class="icon fa fa-info"></i> 提示!</h4>
-  目前还没有可供分析的数据
+       目前明睿尚未开放MLPA/PCR/PolyQ/CNV方法检测的原始数据分析,敬请期待
 </div>
 <?php } else {?>
 <div id="app"></div>
