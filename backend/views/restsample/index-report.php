@@ -363,7 +363,8 @@ $(function(){
 </script>
 <style type="text/css">
    #tooltips {  position: fixed;  z-index: 11111;
-    max-width:200px;
+    display: none;
+    max-width:250px;
   height:auto;
   min-height: 25px;
   background:#D7E7FC;
