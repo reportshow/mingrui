@@ -129,8 +129,8 @@ if ($pingjia) {
             <th>序号</th>
             <th>起始位置</th>
             <th>终止位置</th>
-            <th>是否异常</th>
-            <th>报道次数</th>
+            <th>是否在已报告位点中</th>
+            <th>已报告突变位点数</th>
           </tr>
         </thead>
         <tbody>
