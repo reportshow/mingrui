@@ -22281,7 +22281,7 @@
 									{ className: 'item active' },
 									_react2.default.createElement(
 										'div',
-										{ className: 'carousel-caption', style: { top: '0px', bottom: 'auto', paddingTop: '0px', paddingBottom: '0px' } },
+										{ className: 'carousel-caption', style: { top: '0px', bottom: 'auto', paddingTop: '0px', paddingBottom: '0px', color: '#00a65a' } },
 										_react2.default.createElement(
 											'span',
 											{ onMouseEnter: function onMouseEnter() {
@@ -22498,7 +22498,7 @@
 									{ className: 'item' },
 									_react2.default.createElement(
 										'div',
-										{ className: 'carousel-caption', style: { top: '0px', bottom: 'auto', paddingTop: '0px', paddingBottom: '0px' } },
+										{ className: 'carousel-caption', style: { top: '0px', bottom: 'auto', paddingTop: '0px', paddingBottom: '0px', color: '#00a65a' } },
 										'\u81EA\u9009\u8FC7\u6EE4'
 									),
 									_react2.default.createElement(
