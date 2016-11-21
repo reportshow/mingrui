@@ -230,7 +230,9 @@ export default class TableExampleComplex extends React.Component {
 
     filter_tbbl = (data, value) => {
 	var minmax = [];
+	console.log(data[26]);
  	var data_tbbl = parseFloat(data[26].match(/.*\((.*)\).*/)[1]);
+	
 	for(var i in this.state.tbbl_values) {
 	    var ret = this.state.tbbl_values[i].match(/(.*)-(.*)/);
 	    minmax.push([parseFloat(ret[1]), parseFloat(ret[2])]);
@@ -433,7 +435,7 @@ export default class TableExampleComplex extends React.Component {
     <div id="carousel-filter" className="carousel slide" data-ride="carousel" data-interval="false">
       <div className="carousel-inner">
         <div className="item active">
-	  <div className="carousel-caption" style={{top:'0px', bottom: 'auto', paddingTop:'0px', paddingBottom:'0px'}}>
+		<div className="carousel-caption" style={{top:'0px', bottom: 'auto', paddingTop:'0px', paddingBottom:'0px', color:'#00a65a'}}>
 	    <span onMouseEnter={()=>{$('#tip').show();}}
 	      onMouseLeave={()=>{$('#tip').hide();}}
 	      onTouchStart={()=>{$('#tip').show();}}>精准推荐</span>
@@ -549,7 +551,7 @@ export default class TableExampleComplex extends React.Component {
         </div>
 
         <div className="item">
-	  <div className="carousel-caption" style={{top:'0px', bottom: 'auto', paddingTop:'0px', paddingBottom:'0px'}}>
+		<div className="carousel-caption" style={{top:'0px', bottom: 'auto', paddingTop:'0px', paddingBottom:'0px', color:'#00a65a'}}>
 	    自选过滤
 	  </div>
 	  <div style={{width:'80%', marginLeft:'auto', marginRight:'auto', paddingTop:'20px', overflow:'hidden'}}>
