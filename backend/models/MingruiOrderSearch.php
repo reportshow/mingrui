@@ -63,7 +63,7 @@ class MingruiOrderSearch extends MingruiOrder
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id, 
+            'mingrui_order.id' => $this->id, 
             'doctor' => $this->doctor, 
             'Date(createtime)' => $this->createtime, 
         ]);
@@ -72,8 +72,8 @@ class MingruiOrderSearch extends MingruiOrder
             ->andFilterWhere(['like', 'assigned', $this->assigned])
             ->andFilterWhere(['like', 'notes', $this->notes])
 
-            ->andFilterWhere(['like', 'doctor.name', $this->docotr_name])
-            ->andFilterWhere(['like', 'doctor.tel', $this->doctor_tel])
+            ->andFilterWhere(['like', 'rest_client.name', $this->docotr_name])
+            ->andFilterWhere(['like', 'rest_client.tel', $this->doctor_tel])
             ->andFilterWhere(['like', 'doctor.hospital', $this->doctor_area])
             ;
 
