@@ -102,7 +102,7 @@ export default class TableExampleComplex extends React.Component {
 
     getDefaultState() {
 	return ({
-	    queryResult: tableData,
+	    queryResult: [],
 	    fixedHeader: false,
 	    fixedFooter: false,
 	    stripedRows: true,
@@ -116,10 +116,7 @@ export default class TableExampleComplex extends React.Component {
 	    height: '500px',
 	    gene_value: "",
 	    tblx_values: [
-		"frameshift",
-		"splicing",
-		"stopgain",
-		"stoploss"],
+		""],
 	    tbbl_values: [
 		"0.9-1",
 		"0.2-0.9",],
@@ -140,12 +137,13 @@ export default class TableExampleComplex extends React.Component {
 	    inhouse_value:"1%",
 	    jingzhun: true,
 	    selected: [],
+	    count: 0,
 	});
     }
 
     getFreeState() {
 	return ({
-	    queryResult: tableData,
+	    queryResult: [],
 	    fixedHeader: false,
 	    fixedFooter: false,
 	    stripedRows: true,
@@ -172,6 +170,7 @@ export default class TableExampleComplex extends React.Component {
 	    inhouse_value:"100%",
 	    jingzhun: false,
 	    selected: [],
+	    count: 0,
 	});
     }
     
@@ -330,7 +329,10 @@ export default class TableExampleComplex extends React.Component {
     ];
     
     filter = () => {
+	var count = 0;
+
 	var queryResult = [];
+
 	tableData.forEach(function(record){
 	    var result = true;
 	    for(var i in this.filters) {
@@ -340,10 +342,13 @@ export default class TableExampleComplex extends React.Component {
 		}
 	    }
 	    if(result) {
-		queryResult.push(record);
+		if(count <250) {
+		    queryResult.push(record);
+		}
+		count++;
 	    }
 	}, this);
-	this.setState({queryResult: queryResult}, ReactTooltip.rebuild);
+	this.setState({queryResult: queryResult, count: count}, ReactTooltip.rebuild);
     }
     
     handle_gene_Change = (event) => {
@@ -457,8 +462,8 @@ export default class TableExampleComplex extends React.Component {
 	      
 	    <div>
 	      <SingleSelectHGDM fullWidth={true} value={this.state.dm_values} floatingLabelText="HGMD" onChange={this.handle_dm_Change}>
-		<ListItem primaryText={"已报导"} value="1" />
-		<ListItem primaryText={"未报导"} value="2" />
+		<ListItem primaryText={"已报道"} value="1" />
+		<ListItem primaryText={"未报道"} value="2" />
 		<ListItem primaryText={"不筛选"} value="3" />
 	      </SingleSelectHGDM>
 	      <div id='tipdm' className="callout callout-info" style={{display:'none'}}>
@@ -556,8 +561,8 @@ export default class TableExampleComplex extends React.Component {
 
 	    <div>
 	      <SingleSelectHGDM fullWidth={true} value={this.state.dm_values} floatingLabelText="HGMD" onChange={this.handle_dm_Change}>
-		<ListItem primaryText={"已报导"} value="1" />
-		<ListItem primaryText={"未报导"} value="2" />
+		<ListItem primaryText={"已报道"} value="1" />
+		<ListItem primaryText={"未报道"} value="2" />
 		<ListItem primaryText={"不筛选"} value="3" />
 	      </SingleSelectHGDM>
 	      <div id='tipdm' className="callout callout-info" style={{display:'none'}}>
@@ -719,7 +724,7 @@ export default class TableExampleComplex extends React.Component {
 	   enableSelectAll={this.state.enableSelectAll}
 	   >
 	  <TableRow>
-		<TableHeaderColumn colSpan="4" style={{verticalAlign: 'bottom', fontWeight:'bold', fontSize:'120%', overflow:'hidden'}} data-tip={"当前选择：" +this.state.queryResult.length +'/'+tableData.length+"(筛选/全部)"}>当前选择：{this.state.queryResult.length} /{tableData.length}(筛选/全部)
+		<TableHeaderColumn colSpan="4" style={{verticalAlign: 'bottom', fontWeight:'bold', fontSize:'120%', overflow:'hidden'}} data-tip={"当前选择：" +this.state.count +'/'+tableData.length+"(筛选/全部)"}>当前选择：{this.state.count} /{tableData.length}(筛选/全部)
 	    </TableHeaderColumn>
 	    <TableHeaderColumn  colSpan="3" style={{verticalAlign: 'bottom', textAlign:'right'}}>
 	      <a id='export' data-type="xls" href="javascript:;" style={{color: 'blue', overflow:'hidden'}}>下载过滤结果</a>

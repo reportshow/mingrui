@@ -22034,7 +22034,10 @@
 			_this.filters = [_this.filter_gene, _this.filter_tblx, _this.filter_ycfs, _this.filter_tbbl, _this.filter_cxsd, _this.filter_dm, _this.filter_qrjyz, _this.filter_inhouse];
 
 			_this.filter = function () {
+				var count = 0;
+
 				var queryResult = [];
+
 				tableData.forEach(function (record) {
 					var result = true;
 					for (var i in this.filters) {
@@ -22044,10 +22047,13 @@
 						}
 					}
 					if (result) {
-						queryResult.push(record);
+						if (count < 250) {
+							queryResult.push(record);
+						}
+						count++;
 					}
 				}, _this);
-				_this.setState({ queryResult: queryResult }, _reactTooltip2.default.rebuild);
+				_this.setState({ queryResult: queryResult, count: count }, _reactTooltip2.default.rebuild);
 			};
 
 			_this.handle_gene_Change = function (event) {
@@ -22202,7 +22208,7 @@
 			key: 'getDefaultState',
 			value: function getDefaultState() {
 				return {
-					queryResult: tableData,
+					queryResult: [],
 					fixedHeader: false,
 					fixedFooter: false,
 					stripedRows: true,
@@ -22215,7 +22221,7 @@
 					adjustForCheckboxes: true,
 					height: '500px',
 					gene_value: "",
-					tblx_values: ["frameshift", "splicing", "stopgain", "stoploss"],
+					tblx_values: [""],
 					tbbl_values: ["0.9-1", "0.2-0.9"],
 					ycfs_values: ["AR", "AD", "XR", "XD", "X-LINKED", "不明"],
 					cxsd_values: ["10-20", "20+"],
@@ -22223,14 +22229,15 @@
 					qrjyz_value: "2%",
 					inhouse_value: "1%",
 					jingzhun: true,
-					selected: []
+					selected: [],
+					count: 0
 				};
 			}
 		}, {
 			key: 'getFreeState',
 			value: function getFreeState() {
 				return {
-					queryResult: tableData,
+					queryResult: [],
 					fixedHeader: false,
 					fixedFooter: false,
 					stripedRows: true,
@@ -22251,7 +22258,8 @@
 					qrjyz_value: "100%",
 					inhouse_value: "100%",
 					jingzhun: false,
-					selected: []
+					selected: [],
+					count: 0
 				};
 			}
 		}, {
@@ -22340,8 +22348,8 @@
 											_react2.default.createElement(
 												_singleselecttab_hgdm2.default,
 												{ fullWidth: true, value: this.state.dm_values, floatingLabelText: 'HGMD', onChange: this.handle_dm_Change },
-												_react2.default.createElement(_List2.default, { primaryText: "已报导", value: '1' }),
-												_react2.default.createElement(_List2.default, { primaryText: "未报导", value: '2' }),
+												_react2.default.createElement(_List2.default, { primaryText: "已报道", value: '1' }),
+												_react2.default.createElement(_List2.default, { primaryText: "未报道", value: '2' }),
 												_react2.default.createElement(_List2.default, { primaryText: "不筛选", value: '3' })
 											),
 											_react2.default.createElement(
@@ -22511,8 +22519,8 @@
 											_react2.default.createElement(
 												_singleselecttab_hgdm2.default,
 												{ fullWidth: true, value: this.state.dm_values, floatingLabelText: 'HGMD', onChange: this.handle_dm_Change },
-												_react2.default.createElement(_List2.default, { primaryText: "已报导", value: '1' }),
-												_react2.default.createElement(_List2.default, { primaryText: "未报导", value: '2' }),
+												_react2.default.createElement(_List2.default, { primaryText: "已报道", value: '1' }),
+												_react2.default.createElement(_List2.default, { primaryText: "未报道", value: '2' }),
 												_react2.default.createElement(_List2.default, { primaryText: "不筛选", value: '3' })
 											)
 										),
@@ -22760,9 +22768,9 @@
 										null,
 										_react2.default.createElement(
 											_Table.TableHeaderColumn,
-											{ colSpan: '4', style: { verticalAlign: 'bottom', fontWeight: 'bold', fontSize: '120%', overflow: 'hidden' }, 'data-tip': "当前选择：" + this.state.queryResult.length + '/' + tableData.length + "(筛选/全部)" },
+											{ colSpan: '4', style: { verticalAlign: 'bottom', fontWeight: 'bold', fontSize: '120%', overflow: 'hidden' }, 'data-tip': "当前选择：" + this.state.count + '/' + tableData.length + "(筛选/全部)" },
 											'\u5F53\u524D\u9009\u62E9\uFF1A',
-											this.state.queryResult.length,
+											this.state.count,
 											' /',
 											tableData.length,
 											'(\u7B5B\u9009/\u5168\u90E8)'
