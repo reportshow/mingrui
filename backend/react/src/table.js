@@ -229,7 +229,6 @@ export default class TableExampleComplex extends React.Component {
 
     filter_tbbl = (data, value) => {
 	var minmax = [];
-	console.log(data[26]);
  	var data_tbbl = parseFloat(data[26].match(/.*\((.*)\).*/)[1]);
 	
 	for(var i in this.state.tbbl_values) {
