@@ -51,7 +51,7 @@ class QrcodeSession extends \yii\db\ActiveRecord
         };
         $urlp['qr_session'] = $this->session;
         $url                = Yii::$app->urlManager->createAbsoluteUrl($urlp);
-        return 'http://bshare.optimix.asia/barCode?site=weixin&url=' . urlencode($url);
+        return 'http://112.126.88.56:4000/qrcode?site=mingrui&url=' . urlencode($url);
         /*http://pan.baidu.com/share/qrcode?w=150&h=150&url=http://lanyes.org
     http://b.bshare.cn/barCode?site=weixin&url=http://lanyes.org
     http://s.jiathis.com/qrcode.php?url=http://lanyes.org
