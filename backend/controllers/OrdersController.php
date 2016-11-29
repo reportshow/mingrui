@@ -5,6 +5,7 @@ namespace backend\controllers;
 use backend\models\MingruiOrder;
 use backend\models\MingruiOrderSearch;
 use backend\models\RestClient;
+use backend\models\RestDanwei;
 use backend\widgets\Nodata;
 use common\components\SMS;
 use Yii;
@@ -84,6 +85,11 @@ class OrdersController extends Controller
         if ($doctor) {
             $doctorMobile = $doctor->tel;
             $nickname     = $doctor->name;
+            $hospital = RestDanwei::findOne($doctor->hospital_id);             
+            if($hospital){ 
+            	$nickname .=  '('.$hospital->name .')';
+            } 
+
             foreach ($mobileList as $key => $mobile) {
                 SMS::songjian($mobile, [$nickname, $doctorMobile]);
             }

@@ -20,16 +20,20 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?=Html::a('上传外源报告', ['create'], ['class' => 'btn btn-success'])?>
     </p>
-    <?=GridView::widget([
-    'dataProvider' => $dataProvider,
-    'filterModel'  => $searchModel,
-    'columns'      => [
+    <?php
+
+$columns = [
         ['class' => 'yii\grid\SerialColumn', 'options' => ['width' => '40']],
 
        // 'id',
         //'uid',
-      
-        ['attribute' =>'sick',
+      ['attribute' => 'creator_name', 'label' => '上传者', 'options' => ['width' => '100px;'],
+        'value'      => function ($model) {
+            return $model->creator->nickname;
+        }],
+
+
+     ['attribute' =>'sick',
     'options' => ['width' => '100']
     ], 
  
@@ -92,8 +96,21 @@ $this->params['breadcrumbs'][] = $this->title;
             $html .= Html::a('查信息',['reportstore/view','id'=>$model->id],['class'=>'btn btn-info']);
             return $html;
          }]
-    ],
-]);?>
+    ];
+
+ 
+ if (!Yii::$app->user->can('admin')) {
+    array_splice($columns, 1, 1);
+}
+
+ echo GridView::widget([
+    'dataProvider' => $dataProvider,
+    'filterModel'  => $searchModel,
+    'columns'      => $columns 
+]);
+
+
+?>
 </div>
 
 <style type="text/css">

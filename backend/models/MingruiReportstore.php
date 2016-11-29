@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use common\models\User;
 use yii\behaviors\TimestampBehavior;
 /**
  * This is the model class for table "mingrui_reportstore".
@@ -78,4 +79,10 @@ class MingruiReportstore extends \yii\db\ActiveRecord
             'extra3'=>'extra3',
         ];
     }
+
+    public function getCreator()
+    {
+        return $this->hasOne(User::className(), ['id' => 'uid']);
+    }    
+
 }
