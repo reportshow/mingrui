@@ -7,7 +7,7 @@ use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
-
+use backend\models\MingruiLogin;
 /**
  * User model
  *
@@ -236,6 +236,17 @@ class User extends ActiveRecord implements IdentityInterface
             var_export($user->errors);
         }
         return $user;
+    }
+
+
+    public function lastlogin( ){  
+    	$lastlogin = MingruiLogin::find()->where(['uid'=>$this->Id])->one();
+    	if(!$lastlogin){ 
+			$lastlogin = new MingruiLogin(); 
+			$lastlogin->uid = $this->Id;
+		} 
+		$lastlogin->logintime = time();
+		$lastlogin->save(); 
     }
 
 }

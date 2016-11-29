@@ -23,9 +23,9 @@ $this->params['breadcrumbs'][] = $this->title;
 <style type="text/css">
     .content-wrapper{overflow: auto}
     .disabled{background: #999;border:0px;}
-    tr td:nth-child(2){
-       -webkit-filter: blur(6px);-filter: blur(6px);
-    }
+   /*  tr td:nth-child(2){
+      -webkit-filter: blur(6px);-filter: blur(6px);
+   } */
 </style>
 
     <?php $GridViewParam = [

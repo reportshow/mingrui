@@ -10,6 +10,7 @@ use backend\widgets\NavTabs;
 use backend\models\RestReport;
 use backend\components\Functions;
 use backend\models\Sitepage;
+use backend\models\MingruiLogin;
 use yii\helpers\Html;
 
 AppAsset::register($this); 
@@ -42,6 +43,9 @@ foreach ($guides as $key => $guide) {
   $guidesContent .="<li> $link </li>";
 } 
 
+$lastloginTime = MingruiLogin::lastlogin();
+ 
+
 ?>
 
     <!-- Main content -->
@@ -57,8 +61,8 @@ foreach ($guides as $key => $guide) {
         <div class="col-lg-2">        
             <div  class='col-lg-12 col-xs-4'>
             <?php   
-              $time = "<div style='font-size:2rem'>". date('H:i:s',time()-1000) ."</div>";
-              $date = "<div style='font-size:1.5rem'>".date('Y-m-d',time()) ."</div>";
+              $time = "<div style='font-size:2rem'>". date('H:i:s', $lastloginTime) ."</div>";
+              $date = "<div style='font-size:1.5rem'>".date('Y-m-d', $lastloginTime) ."</div>";
               echo NumberBox::widget( [
                'tag'=>'上次登录时间', 'number'=>" $date  $time ", 
                'bgcolor'=>'aqua','icon'=>'fa fa-user-md',
