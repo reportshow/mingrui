@@ -64,6 +64,14 @@ class VcfController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+
+        if(!empty($_GET['detail']) && $_GET['detail']=='only') {
+             return $this->render('view', [
+                                       'model' => $model,
+                                       'data'  => [],
+                                       ]);
+        }
+        
         $datas = '';
         if (!empty($model->task_id)) {
             $vcf_url = Yii::$app->params['vcfservice'] . '/api/task/result/' . $model->task_id;
