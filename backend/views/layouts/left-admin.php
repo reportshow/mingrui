@@ -168,6 +168,11 @@ if (yii::$app->user->can('admin')) {
         'icon'  => 'fa fa-users',
         'url'   => '#',
         'items' => [
+             [
+                'label' => '用户',
+                'icon'  => 'fa fa-gears',
+                'url'   => ['/admin/user'],
+            ],
             [
                 'label' => '医生',
                 'icon'  => 'fa fa-user-md',
@@ -195,13 +200,15 @@ if (yii::$app->user->can('admin')) {
             ],
         ],
     ];
+
+ /******
     $menu[] = [
         'label' => '权限管理',
         'icon'  => 'fa fa-gears',
         'url'   => '#',
         'items' => [
             [
-                'label' => '员工',
+                'label' => '用户',
                 'icon'  => 'fa fa-gears',
                 'url'   => ['/admin/user'],
             ],
@@ -233,7 +240,8 @@ if (yii::$app->user->can('admin')) {
 
         ],
     ];
-
+****/
+/****
     $menu[] = [
         'label' => '功能',
         'icon'  => 'fa fa-gears',
@@ -261,7 +269,7 @@ if (yii::$app->user->can('admin')) {
             ],
         ],
     ];
-
+******/
 } //if admin
 
 
