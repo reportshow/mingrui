@@ -217,7 +217,7 @@ class VcfController extends Controller
         $BODY .= 'Content-Disposition: form-data; name="' . $key . '"; filename="' . $file_name . '"' . $eol;
         $BODY .= 'Content-Type: application/octet-stream' . $eol;
         $BODY .= 'Content-Transfer-Encoding: base64' . $eol . $eol;
-        $BODY .= chunk_split(base64_encode(file_get_contents($file))) . $eol;
+        $BODY .= chunk_split(base64_encode(gzcompress(file_get_contents($file)))) . $eol;
         $BODY .= '--' . $BOUNDARY . '--' . $eol . $eol;
 
         $ch = curl_init();
