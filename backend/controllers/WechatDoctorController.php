@@ -26,12 +26,11 @@ class WechatDoctorController extends Controller
     }*/
 
     public function init()
-    {
-        session_start();
+    { 
         $_GET['role'] = 'doctor';
         WechatUser::switchWechat();
     }
-    public function actionTest()
+    public function action2Test()
     {
         echo Yii::$app->urlManager->createAbsoluteUrl(['xx/yyy', 'role' => $_GET['role']]);
     }
@@ -47,7 +46,6 @@ class WechatDoctorController extends Controller
         if ($this->xml) {
             $this->reply = new WechatMessage($this->xml);
         }
-
     }
 
     public function actionTalk()

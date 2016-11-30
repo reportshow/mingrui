@@ -20,9 +20,9 @@ class WechatOauthController extends Controller
     public $wechat;
 
     public function init()
-    {
-        session_start();
+    { 
         if (!empty($_GET['role']) && $_GET['role'] == 'doctor') {
+
             WechatUser::switchWechat();
         }
 
@@ -58,7 +58,9 @@ class WechatOauthController extends Controller
         } else if ($_SESSION['check_sms'] != Yii::$app->request->post('smscode')) {
             echo "<h1>短信验证码错误</h1>";
             //return;
-        }*/
+        }*/ 
+
+        //var_dump($_SESSION);echo "<--xxxx";
 
         $model = new WechatUser();
 
@@ -122,15 +124,19 @@ class WechatOauthController extends Controller
 
     public function askMobile()
     {
-        $model = new WechatUser();
+        $model = new WechatUser();  
 
-        $bindMobileUrl = WechatUser::createUrl(['/wechat-oauth/bind-mobile']);
+        $bindMobileUrl = WechatUser::createUrl(['/wechat-oauth/bind-mobile']); 
         $content       = $this->render('/wechat/bind-mobile', ['model' => $model, 'bindMobileUrl' => $bindMobileUrl]);
-
-        return $this->render(
+         
+         //var_dump($_SESSION);
+         //echo "<a href=$bindMobileUrl>$bindMobileUrl</a><br>";
+         //echo "<a href=http://www.mono-mr.com/backend/web/php.php>xxx</a>";
+       return $this->render(
             '/layouts/main-login',
             ['content' => $content]
         );
+    
 
     }
 

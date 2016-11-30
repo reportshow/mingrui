@@ -9,6 +9,7 @@ use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use backend\components\Functions;
+use backend\widgets\Nodata;
 
 /**
  * Site controller
@@ -126,13 +127,30 @@ class SiteController extends Controller
 
     public function actionLogout()
     {
-        //var_dump($_SESSION);
-        Yii::$app->user->logout();
-
+        $_SESSION['wechat_entery']=$_SESSION['openid']='';
         unset($_SESSION['openid']);
         unset($_SESSION['wechat_entery']);
         unset($_SESSION); //exit;
-        return $this->goHome();
+
+       // Yii::$app->user->logout();
+
+      
+        //session_unset();
+        if(!Functions::ismobile()){
+        	Yii::$app->user->logout();
+ 			return $this->goHome();
+        } 
+        
+        echo Nodata::widget(['title' => '退出!', 'message' => '您已退出系统']);
+        echo "<style>
+         body {background-color:#20252B !important; 
+            background-image: url(images/pic3-2.jpg) !important;
+            background-size: cover !important;
+            background-position: 100% !important;}
+        .alert-info{margin-top: 30%;
+            background-color: rgba(0, 192, 239, 0.5) !important;}
+            </style>";
+
     }
 
     public function actionWeblogin()

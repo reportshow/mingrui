@@ -24,12 +24,11 @@ class WechatController extends Controller
     /*public function beforeAction(){
 
     }*/
-
+ 
     public function init()
-    {
-        session_start();
+    { 
+        $_GET['role'] = 'guest'; 
     }
-
     public function wechatInit()
     {
         //parent::init();
@@ -70,7 +69,7 @@ class WechatController extends Controller
     }
     public function show($url)
     {
-        WechatUser::show([$url ], 'guest');
+        WechatUser::show([$url , 'role' => 'guest'], 'guest'); 
     }
 
     public function actionMyReport()
@@ -136,6 +135,20 @@ class WechatController extends Controller
     }
 
     public function actionTest(){
+    	Yii::$app->session->open();
+
+    	$session = Yii::$app->session;
+
+			// 检查session是否开启 
+			if ($session->isActive) { 
+				echo 'yes';
+			}
+			var_dump($_SESSION);
+ 
+			$session->set('wechat_entery', rand());
+
+            $_SESSION['wechat_entery']= rand();
+ 
         
     }
     public function actionWebloginCheck($qr_session)
