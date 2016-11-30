@@ -34,6 +34,12 @@ class WechatUser extends Model
         if ($user) {
             //$mobile = $this->mobile ;
             $mobile = $this->switchTestMobile($this->mobile);
+            if(!$mobile){  
+            	echo Nodata::widget(['title' => '错误!', 
+                'message' => ' 电话号码不正确'
+                ]);
+            	return false;
+            }
             $user   = $this->bindMingruiUser($user, $mobile);
             if ($user) {
                 $user->username = $mobile;
@@ -80,6 +86,7 @@ class WechatUser extends Model
         }
 
         if ($erp_user) {
+        	//var_dump($_SESSION);
 
             if ($_SESSION['wechat_entery'] != 'all' && $_SESSION['wechat_entery'] != $role_text) {
                 $realRole  = $role_text;
@@ -186,6 +193,7 @@ class WechatUser extends Model
     {
         $_SESSION['wechat_entery'] = $entery;
         $_SESSION['entery_url']    = self::createUrl($url);
+        //var_dump($_SESSION); exit( "====");
         $user                      = self::oauth();
 
         if ($user) {
