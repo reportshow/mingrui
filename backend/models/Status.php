@@ -36,17 +36,18 @@ class Status  extends Model
 
      }
      public function getUserDaily(){
-     	$todayStart = self::todayStart();
-     	$daily =[];
+    	$todayStart = self::todayStart();
+     	//$debugtime = '';
      	for($i=30;$i>=0;$i--){
-     		$start = $todayStart-($i)*3600*24+1; //日出
-     		$end = $todayStart-($i-1)*3600*24; //第二天
-     		$day = date('d',$start);
-     		//if($day=='01') $day = date('m',$start).'月';
+     		$start = $todayStart-($i)*3600*24;
+     		$end = $todayStart-($i-1)*3600*24;
+     		$day = date('d',$start+1);
+
      		$query = User::find()
      				->where(['>','created_at',$start])
-     				->andWhere(['<','created_at',$end]);     				
-     	   $daily[$day] = $query->count();
+     				->andWhere(['<','created_at',$end]);
+     	   $daily['label'][] = ($day);
+     	   $daily['daily'][] = $query->count();
      	   //echo $query->createCommand()->getRawSql(); exit;
      	}
      	return  $daily;
@@ -60,16 +61,16 @@ class Status  extends Model
      		$day = date('d',$start+1);
 
      		$total['label'][]= $day;
-     		$total['total'][$day] = User::find()
+     		$total['total'][] = User::find()
      				->where(['<','created_at',$end])
      				->count();
 
-     		$total['doctor'][$day]  = User::find()
+     		$total['doctor'][]  = User::find()
      				->where(['<','created_at',$end])
      				->andWhere(['role_text'=>'doctor'])
      				->count();
 
-     		$total['guest'][$day]  = User::find()
+     		$total['guest'][]  = User::find()
      				->where(['<','created_at',$end])
      				->andWhere(['role_text'=>'guest'])
      				->count();

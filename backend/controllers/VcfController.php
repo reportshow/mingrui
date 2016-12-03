@@ -6,6 +6,7 @@ use backend\models\Genetypes;
 use backend\models\MingruiVcf;
 use backend\models\MingruiVcfSearch;
 use backend\models\SaveImage;
+use backend\models\MingruiScore;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -157,6 +158,8 @@ class VcfController extends Controller
     {
         $mobile = Yii::$app->params['master_vcf_mobile'];
         $voice  = Yii::$app->params['master_vcf_voice'];
+
+        MingruiScore::add( 'vcf.create');
 
         //  SMS::landingCall($voice, $mobile);
     }

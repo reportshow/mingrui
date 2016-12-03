@@ -1,4 +1,6 @@
 <?php
+define('CURL_SSLVERSION_TLSv1',1);
+
 $params = array_merge(
     require (__DIR__ . '/../../common/config/params.php'),
     require (__DIR__ . '/../../common/config/params-local.php'),

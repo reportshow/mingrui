@@ -10,6 +10,7 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use backend\models\MingruiScore;
 
 /**
  * RestReportController implements the CRUD actions for RestReport model.
@@ -105,6 +106,7 @@ class GuestbookController extends Controller
         $model->uid = Yii::$app->user->id;
 
         if ($model->save()) {
+        	MingruiScore::add('guestbook.create');
             return $this->redirect(['view', 'id' => $id]);
         } else {
             var_dump($model->errors);

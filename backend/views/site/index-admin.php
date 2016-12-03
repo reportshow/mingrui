@@ -80,8 +80,8 @@ echo "-->";
  <script type="text/javascript">
  <?php
 $daily  =$userCount['daily'];
-$keys = json_encode(array_keys($daily));
-$values = json_encode(array_values($daily));
+$keys = json_encode( ($daily['label']));
+$values = json_encode( ($daily['daily']));
  ?>
 var dom = document.getElementById("user-chart");
 var myChart = echarts.init(dom);

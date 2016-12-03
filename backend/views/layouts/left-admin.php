@@ -141,10 +141,15 @@ $menu[] = ['label' => '互动平台',
     'icon'             => 'fa fa-comments-o',
     'url'              => '#',
     'items'            => [
+         [
+            'label' => '积分',
+            'icon'  => 'fa fa-pie-chart',
+            'url'   => ['/score/index'],
+        ],
         [
             'label' => '常见QA',
             'icon'  => 'fa fa-pie-chart',
-            'url'   => ['/mingrui-qa'],
+            'url'   => ['/mingrui-qa/index'],
         ],
         [
             'label' => '在线留言',
@@ -176,7 +181,7 @@ if (yii::$app->user->can('admin')) {
             [
                 'label' => '医生',
                 'icon'  => 'fa fa-user-md',
-                'url'   => ['/rest-client'],
+                'url'   => ['/rest-client/index'],
                 'items' => [
 
                 ],
@@ -185,7 +190,7 @@ if (yii::$app->user->can('admin')) {
             [
                 'label' => '患者',
                 'icon'  => 'fa fa-user',
-                'url'   =>  ['/restsample'],
+                'url'   =>  ['/restsample/index'],
                 'items' => [
 
                 ],
@@ -193,7 +198,7 @@ if (yii::$app->user->can('admin')) {
             [
                 'label' => '医院',
                 'icon'  => 'fa fa-hospital-o',
-                'url'   =>   ['/rest-danwei'],
+                'url'   =>   ['/rest-danwei/index'],
                 'items' => [
 
                 ],

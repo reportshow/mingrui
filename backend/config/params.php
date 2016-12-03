@@ -7,6 +7,12 @@ return [
     'wechat_sick'       => require 'wechat.sick.php',
     'wechat_doctor'     => require 'wechat.doctor.php',
 
+    'score'=>[
+    	'vcf.create'     =>10,
+    	'report.save' =>5,
+    	'guestbook.create'=>10,
+    	'attachment.add'=>10
+    ],
     //管理员的手机
     'master_vcf_mobile' => ['13611262703', '15001087980', '13910136035', '15910956004'],
     'master_vcf_voice'  => 'Untitled1.wav',

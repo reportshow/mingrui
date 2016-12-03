@@ -5,6 +5,8 @@ namespace backend\controllers;
 use backend\models\MingruiReportstore;
 use backend\models\MingruiReportstoreResearch;
 use backend\models\SaveImage;
+use backend\models\MingruiScore;
+
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -114,6 +116,8 @@ class ReportstoreController extends Controller
                 var_export($model->errors);exit;
             }
             SaveImage::save($model, 'attachements');
+            
+            MingruiScore::add('report.save');
 
             return $this->redirect(['index', 'id' => $model->id]);
         } else {

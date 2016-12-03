@@ -7,6 +7,7 @@ use backend\models\MingruiAttachmentSearch;
 use backend\models\RestReport;
 use backend\models\SaveImage;
 use backend\widgets\Nodata;
+use backend\models\MingruiScore;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -97,6 +98,8 @@ class MingruiAttachmentController extends Controller
                 var_export($model->errors);exit;
             }
             SaveImage::save($model, 'image');
+
+            MingruiScore::add('attachment.add');
 
             return $this->redirect(['index', 'reportid' => $model->report_id]);
         } else {
