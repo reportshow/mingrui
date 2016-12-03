@@ -102,6 +102,7 @@ class RestClient extends \yii\db\ActiveRecord
         return $this->hasMany(RestSample::className(), ['doctor_id' => 'id']);
     }
 
+
     public function commentCount(){
         $gb_id = 'gb'.$this->id;
        return MingruiComments::find()->where(['report_id'=>$gb_id])->count();
@@ -109,4 +110,36 @@ class RestClient extends \yii\db\ActiveRecord
     public function comments(){
 
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getScore()
+    {
+        return $this->hasOne(MingruiScore::className(), ['cid' => 'id']);
+    }
+    public function getSampleCount(){ 
+    	return RestSample::find()->where(['doctor_id'=> $this->id])
+    	->andWhere(['>','rest_sample.created',  Yii::$app->params['score']['sample.startat']])
+
+         ->joinWith(['restReports'])
+         /*->andWhere(['or',
+         	    ['like','report_id','NG'], 
+         	    //['like','report_id','CNV']
+         	    ])*/
+    	->count();
+    }
+
+    public function getScoreCount(){ 
+
+
+         	$sampleScore = $normalScore=0;
+         	$v =  (Yii::$app->params['score']['sample.times'])+0;
+         	$sampleScore= $this->sampleCount * $v;  
+
+         	$score = $this->score;
+         	if($score){ $normalScore = $score->score; }
+
+         	return  $normalScore +$sampleScore;
+     }
 }

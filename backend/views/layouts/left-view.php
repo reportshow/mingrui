@@ -2,10 +2,12 @@
 use backend\components\Functions;
  
 $roletxt = '';
+$scoreCount = '';
 if (Yii::$app->user->can('admin')) {
   $roletxt = '管理员';
 }else  if(Yii::$app->user->can('doctor')) {
   $roletxt = '医生';
+  $scoreCount = '积分:'.$user->doctor->scoreCount;
 }else if(Yii::$app->user->can('guest')) {
   $roletxt = '受检者';
 }
@@ -33,7 +35,7 @@ if (Yii::$app->user->can('admin')) {
             <div class="pull-left info">
             <p><?=$user->nickname;?><span class=roletxt>(<?=$roletxt ?>)</span></p>
 
-                <a href="#" title='查看积分'><i class="fa fa-circle text-success"></i>积分: 0</a>
+                <a href="#" title='查看积分'><i class="fa fa-circle text-success"></i> <?=$scoreCount?></a>
             </div>
         </div>
 

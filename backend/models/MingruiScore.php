@@ -27,7 +27,7 @@ class MingruiScore extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['uid', 'score'], 'integer'],
+            [['cid', 'score'], 'integer'],
         ];
     }
 
@@ -42,18 +42,20 @@ class MingruiScore extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'uid' => 'Uid',
+            'cid' => 'Cid',
             'score' => '积分',
         ];
     }
 
     public  static function add($type){ 
     	$count = Yii::$app->params['score'][$type];
-    	
-    	$model =MingruiScore::find()->where(['uid'=>Yii::$app->user->Id])->one();
+    	//$uid = Yii::$app->user->Id;
+    	$cid = Yii::$app->user->Identify->role_tab_id;
+
+    	$model =MingruiScore::find()->where(['cid'=>$cid])->one();
     	if(!$model){ 
     		$model = new MingruiScore();
-    		$model->uid = Yii::$app->user->Id; 
+    		$model->uid = $cid; 
     	}
     	$model->score +=$count;
     	$model->save();

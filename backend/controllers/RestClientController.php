@@ -121,4 +121,24 @@ class RestClientController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+
+    /**
+     * Lists all RestClient models.
+     * @return mixed
+     */
+    public function actionScoreList()
+    {
+        $searchModel = new RestClientSearch();
+        /*$query = RestClient::find();
+        $query->where([]);*/
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('/rest-client/scorelist', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+
 }

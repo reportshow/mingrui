@@ -44,9 +44,10 @@ class RestClientSearch extends RestClient
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params,$query=null)
     {
-        $query = RestClient::find();
+        if(!$query) $query = RestClient::find();
+
         $query = $query->joinWith(['hospital']);
         // add conditions that should always apply here
 

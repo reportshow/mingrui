@@ -11,7 +11,9 @@ return [
     	'vcf.create'     =>10,
     	'report.save' =>5,
     	'guestbook.create'=>10,
-    	'attachment.add'=>10
+    	'attachment.add'=>10,
+    	'sample.times'=>400,
+    	'sample.startat'=>'2016-11-12',
     ],
     //管理员的手机
     'master_vcf_mobile' => ['13611262703', '15001087980', '13910136035', '15910956004'],

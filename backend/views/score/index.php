@@ -49,7 +49,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             
              ['attribute'=>'score',
-            'options'=>['width'=>'100px'] 
+            'options'=>['width'=>'100px'],
+            'filter'=>'',
             ],
 
 
@@ -59,4 +60,5 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <style type="text/css">
 	.table{width: auto;}
+	.filters{display: none}
 </style>

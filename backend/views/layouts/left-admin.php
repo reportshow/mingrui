@@ -144,7 +144,7 @@ $menu[] = ['label' => '互动平台',
          [
             'label' => '积分',
             'icon'  => 'fa fa-pie-chart',
-            'url'   => ['/score/index'],
+            'url'   => ['/rest-client/score-list'],
         ],
         [
             'label' => '常见QA',
