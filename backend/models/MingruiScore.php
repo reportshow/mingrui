@@ -50,12 +50,15 @@ class MingruiScore extends \yii\db\ActiveRecord
     public  static function add($type){ 
     	$count = Yii::$app->params['score'][$type];
     	//$uid = Yii::$app->user->Id;
-    	$cid = Yii::$app->user->Identify->role_tab_id;
-
+    	$cid = Yii::$app->user->Identity->role_tab_id;
+    	if(!$cid){
+    		return;
+    	}
+    	
     	$model =MingruiScore::find()->where(['cid'=>$cid])->one();
     	if(!$model){ 
     		$model = new MingruiScore();
-    		$model->uid = $cid; 
+    		$model->cid = $cid; 
     	}
     	$model->score +=$count;
     	$model->save();

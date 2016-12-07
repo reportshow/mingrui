@@ -163,6 +163,10 @@ class VcfController extends Controller
 
         //  SMS::landingCall($voice, $mobile);
     }
+
+    public function actionTest(){ 
+      MingruiScore::add( 'vcf.create');
+    }
     /**
      * Updates an existing MingruiVcf model.
      * If update is successful, the browser will be redirected to the 'view' page.
