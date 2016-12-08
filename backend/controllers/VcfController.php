@@ -100,6 +100,8 @@ class VcfController extends Controller
         }
         $data = json_encode($datas);
 
+        $this->view->params['showsave'] = true;
+        
         return $this->render('view', [
             'model' => $model,
             'data'  => $data,

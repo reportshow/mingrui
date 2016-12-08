@@ -39,19 +39,25 @@ $orderUrl = Yii::$app->urlManager->createUrl(['/orders/']);
         </a>
         <div class="navbar-custom-menu">
 
-            <ul class="nav navbar-nav">
-                <?php 
-                if(Yii::$app->user->can('admin')){ 
-                ?>
-                 <li class="dropdown messages-menu">
-                    <a href="<?=$orderUrl  ?>"    title="订单">
-                        <i class="fa fa-dollar"></i>&nbsp; 
-                        <span id='ordercount' class="label label-danger"><?=$orderCount ?></span>
-                    </a> 
-                </li>
-                  <?php 
-              }
-                  ?>
+          <ul class="nav navbar-nav">
+	    <?php if(isset($this->params['showsave'])){ ?>
+	    <li>
+	      <a href="#" data-toggle="control-sidebar"><i class="fa fa-save"></i></a>
+	    </li>
+	    <?php } ?>
+	    
+            <?php 
+               if(Yii::$app->user->can('admin')){ 
+            ?>
+            <li class="dropdown messages-menu">
+              <a href="<?=$orderUrl  ?>"    title="订单">
+                <i class="fa fa-dollar"></i>&nbsp; 
+                <span id='ordercount' class="label label-danger"><?=$orderCount ?></span>
+              </a> 
+            </li>
+            <?php 
+               }
+               ?>
                <li class="dropdown messages-menu reportdropbox">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"  title="报告留言">
                         <i class="fa fa-files-o"></i>
