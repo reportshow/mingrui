@@ -85,12 +85,55 @@ return;
 <div id="app"></div>
 
 <!-- The Right Sidebar -->
-<aside class="control-sidebar control-sidebar-dark">
-  <!-- Content of the sidebar goes here -->
+<aside class="control-sidebar control-sidebar-light">
+  <!-- general form elements -->
+  <div class="box box-primary">
+    <div class="box-header with-border">
+      <h3 class="box-title">保存当前过滤条件</h3>
+    </div>
+    <!-- /.box-header -->
+    <!-- form start -->
+    <form role="form">
+      <div class="box-body">
+        <div class="form-group">
+          <label for="exampleInputEmail1">条件备注</label>
+	  <textarea class="form-control" rows="3" id="note" placeholder="写点什么吧"></textarea>
+        </div>
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer">
+        <button type="submit" class="btn btn-primary">保存</button>
+      </div>
+    </form>
+  </div>
+  <!-- /.box -->
+  
+  <div class="box box-solid">
+    <div class="box-header with-border">
+      <i class="fa fa-text-width"></i>
+      <h3 class="box-title">Description</h3>
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+      <dl>
+	<dt>Description lists&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"><i class="fa fa-upload"></i></a>&nbsp;&nbsp;<a href="#"><i class="fa fa-trash-o"></i></a></dt>
+	<dd>A description list is perfect for defining terms.</dd>
+	<dt>Description lists</dt>
+	<dd>A description list is perfect for defining terms.</dd>
+      </dl>
+    </div>
+    <!-- /.box-body -->
+  </div>
+  <!-- /.box -->
 </aside>
 <!-- The sidebar's background -->
 <!-- This div must placed right after the sidebar for it to work-->
 <div class="control-sidebar-bg"></div>
+<script>
+  var bootstrapTooltip = $.fn.tooltip.noConflict();
+  $.fn.bstooltip = bootstrapTooltip;
+  $('a').bstooltip();
+</script>
 
 <script>
     var tableData = <?php echo $data ?>;
