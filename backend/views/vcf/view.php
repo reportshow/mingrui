@@ -99,6 +99,10 @@ return;
   {date:"2016-12-3", description:"12345689", filter:"akjdfkjfjfj"},
   ];
 </script>
+<script src='report/EventEmitter-4.0.3.min.js'></script>
+<script>
+    var eh = new EventEmitter();
+</script>
 <script src="report/filter.js"></script>
 
 <script>

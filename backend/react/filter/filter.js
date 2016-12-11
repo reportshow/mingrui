@@ -9,7 +9,7 @@ export default class Filter extends React.Component {
     }
 
     componentDidMount() {
-
+	eh.addListener('filterchange', this.handleFilterChange);
     }
 
     getDefaultState() {
@@ -18,6 +18,10 @@ export default class Filter extends React.Component {
 	});
     }
 
+    handleFilterChange = (filter) => {
+	console.log(filter);
+    }
+    
     handleSave = (e) => {
 	e.preventDefault();
 	var fitlers = this.state.filters;

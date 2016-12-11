@@ -348,7 +348,7 @@ export default class TableExampleComplex extends React.Component {
 		count++;
 	    }
 	}, this);
-	this.setState({queryResult: queryResult, count: count}, ReactTooltip.rebuild);
+	this.setState({queryResult: queryResult, count: count}, () => {eh.emitEvent('filterchange', ["Hello"]);ReactTooltip.rebuild;});
     }
     
     handle_gene_Change = (event) => {
