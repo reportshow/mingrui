@@ -35,8 +35,14 @@ class FilterController extends Controller
          $filters = MingruiFilters::find()
               ->where(['user_id' => $user_id,
                        'report_id' => $report_id])
+              ->asArray()
               ->all();
-         return json_encode($filters);
+         $array = [];
+         foreach($filters as $filter) {
+              $array[] = array_values($filter);
+         }
+
+         return json_encode($array);
     }
 
     public function actionFilteradd($str_filter)

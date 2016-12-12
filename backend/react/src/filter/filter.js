@@ -9,7 +9,12 @@ export default class Filter extends React.Component {
     }
 
     componentDidMount() {
-	//TODO: load saved filters from server
+	//load saved filters from server
+	$.get('/backend/web/index.php?r=filter/list&report_id=' + report_id + '&user_id=' + user_id,
+	      (result) =>{
+		  var filters = JSON.parse(result);
+		  this.setState({filters: filters}, ReactTooltip.rebuild);
+	      });
 	eh.addListener('filterchange', this.handleFilterChange);
     }
 
@@ -32,7 +37,7 @@ export default class Filter extends React.Component {
 	var month = date.getMonth() + 1;
 	var year = date.getFullYear();
 	var title = year + '-' + month + '-' + day;
-	var filter_json = JSON.stringify(this.state.presentfilters);
+	var filter_json = this.state.presentfilters;
 	var filter = [-1,
 		      newfilter.note.value,
 		      title,
@@ -56,12 +61,18 @@ export default class Filter extends React.Component {
 	    }
 	}
 	this.setState({filters:filters}, ReactTooltip.rebuild);
-	//TODO: remove the filters from server
+	//remove the filters from server
+	if(filter[0] != -1) {
+	    $.get('/backend/web/index.php?r=filter/filterdelete&id=' + filter[0]);
+	}
+	
 	return false;
     }
 
     handleLoad(filter) {
-	eh.emitEvent('filterload', [filter.filter]);
+	console.log(filter);
+	eh.emitEvent('filterload', [filter[6]]);
+
 	return false;
     }
     

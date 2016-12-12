@@ -358,7 +358,7 @@ export default class TableExampleComplex extends React.Component {
 	    ycfs_values: this.state.ycfs_values,
 	    cxsd_values: this.state.cxsd_values,
 	    dm_values: this.state.dm_values,
-	    qrjyz_value: this.state.qrjyz_values,
+	    qrjyz_value: this.state.qrjyz_value,
 	    inhouse_value: this.state.inhouse_value,
 	};
 	this.setState({queryResult: queryResult, count: count}, () => {eh.emitEvent('filterchange', [JSON.stringify(filters)]);ReactTooltip.rebuild;});
