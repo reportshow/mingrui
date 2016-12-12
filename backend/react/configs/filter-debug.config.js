@@ -1,5 +1,5 @@
 module.exports = {
-    entry: './filter/filter_div.js',
+    entry: './src/filter/filter_div.js',
     output: {
 	path: './bin',
 	filename: 'filter.js',

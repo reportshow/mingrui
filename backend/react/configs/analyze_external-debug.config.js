@@ -1,5 +1,5 @@
 module.exports = {
-    entry: './src/app_external.js',
+    entry: './src/analyze/app_external.js',
     output: {
 	path: './bin',
 	filename: 'app_external.js',
