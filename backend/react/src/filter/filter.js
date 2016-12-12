@@ -9,36 +9,59 @@ export default class Filter extends React.Component {
     }
 
     componentDidMount() {
+	//TODO: load saved filters from server
 	eh.addListener('filterchange', this.handleFilterChange);
     }
 
     getDefaultState() {
 	return ({
-	    filters: filters,
+	    filters: [],
 	});
     }
 
     handleFilterChange = (filter) => {
-	console.log(filter);
+	this.setState({presentfilters: filter}, ReactTooltip.rebuild);
     }
     
     handleSave = (e) => {
 	e.preventDefault();
-	var fitlers = this.state.filters;
+	var filters = this.state.filters;
+	
 	var date = new Date();
 	var day = date.getDate();
 	var month = date.getMonth() + 1;
 	var year = date.getFullYear();
-	var str_date = year + '-' + month + '-' + day;
-	filters.unshift({date:str_date, description:newfilter.note.value, filter:"akjdfkfjjf"});
-	this.setState({filters:filters});
+	var title = year + '-' + month + '-' + day;
+	var filter_json = JSON.stringify(this.state.presentfilters);
+	var filter = [-1,
+		      newfilter.note.value,
+		      title,
+		      report_type,
+		      user_id,
+		      report_id,
+		      filter_json
+		     ];
+	filters.unshift(filter);
+	this.setState({filters:filters}, ReactTooltip.rebuild);	
+	//save the new filters to server
+	var str_filter = JSON.stringify(filter);
+	$.get('/backend/web/index.php?r=filter/filteradd&str_filter=' + str_filter);
     };
 
-    handleDelete = (e) => {
+    handleDelete(filter) {
+	var filters = this.state.filters;
+	for(var i = filters.length; i--;) {
+	    if(filters[i] === filter) {
+		filters.splice(i, 1);
+	    }
+	}
+	this.setState({filters:filters}, ReactTooltip.rebuild);
+	//TODO: remove the filters from server
 	return false;
     }
 
-    handleLoad = (e) => {
+    handleLoad(filter) {
+	eh.emitEvent('filterload', [filter.filter]);
 	return false;
     }
     
@@ -56,10 +79,10 @@ export default class Filter extends React.Component {
 	<textarea className="form-control" rows="3" id="note" name="note" placeholder="写点什么吧"></textarea>
       </div>
     </div>
-    <div className="box-footer">
-      <button type="submit" className="btn btn-primary">保存</button>
-    </div>
+    <button type="submit" className="btn btn-primary">保存</button>
   </form>
+  <div className="box-footer">
+  </div>
   <div className="box box-solid">
     <div className="box-header with-border">
       <i className="fa fa-text-width"></i>
@@ -68,7 +91,7 @@ export default class Filter extends React.Component {
     <div className="box-body">
       <dl>
 	  {this.state.filters.map( (filter, index) => (
-	  <dt key={index} data-tip={filter.description}>{filter.date}&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" onClick={this.handleLoad(filter)}><i className="fa fa-upload"></i></a>&nbsp;&nbsp;<a href="#" onClick={this.handleDelete(filter)}><i className="fa fa-trash-o"></i></a></dt>
+		  <dt key={index} data-tip={filter[1]}>{filter[2]}&nbsp;&nbsp;&nbsp;&nbsp;<a onClick={()=>this.handleLoad(filter)}><i className="fa fa-upload"></i></a>&nbsp;&nbsp;<a onClick={()=>this.handleDelete(filter)}><i className="fa fa-trash-o"></i></a></dt>
 	  ))}
       </dl>
     </div>

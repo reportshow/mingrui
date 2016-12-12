@@ -94,10 +94,9 @@ return;
 <!-- This div must placed right after the sidebar for it to work-->
 <div class="control-sidebar-bg"></div>
 <script>
-  var filters = [
-  {date:"2016-12-2", description:"123456", filter:"akjdfkjfjfj"},
-  {date:"2016-12-3", description:"12345689", filter:"akjdfkjfjfj"},
-  ];
+  var user_id = <?php echo Yii::$app->user->id ?>;
+  var report_id = <?php echo $this->params['report_id'] ?>;
+  var report_type = 1;
 </script>
 <script src='report/EventEmitter-4.0.3.min.js'></script>
 <script>

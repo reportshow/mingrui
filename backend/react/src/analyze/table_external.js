@@ -98,6 +98,8 @@ export default class TableExampleComplex extends React.Component {
 		this.setState(this.getDefaultState(), this.filter);
 	    }
 	});
+
+	eh.addListener('filterload', this.handleFilterLoad);
     }
 
     getDefaultState() {
@@ -348,7 +350,18 @@ export default class TableExampleComplex extends React.Component {
 		count++;
 	    }
 	}, this);
-	this.setState({queryResult: queryResult, count: count}, () => {eh.emitEvent('filterchange', ["Hello"]);ReactTooltip.rebuild;});
+
+	var filters = {
+	    gene_value: this.state.gene_value,
+	    tblx_values: this.state.tblx_values,
+	    tbbl_values: this.state.tbbl_values,
+	    ycfs_values: this.state.ycfs_values,
+	    cxsd_values: this.state.cxsd_values,
+	    dm_values: this.state.dm_values,
+	    qrjyz_value: this.state.qrjyz_values,
+	    inhouse_value: this.state.inhouse_value,
+	};
+	this.setState({queryResult: queryResult, count: count}, () => {eh.emitEvent('filterchange', [JSON.stringify(filters)]);ReactTooltip.rebuild;});
     }
     
     handle_gene_Change = (event) => {
@@ -425,6 +438,11 @@ export default class TableExampleComplex extends React.Component {
 	}
 	this.setState({selected:temp}, this.filter);
     };
+
+    handleFilterLoad = (filter) => {
+	var filter = JSON.parse(filter);
+	this.setState(filter, this.filter);
+    }
 
     render() {
 	return (

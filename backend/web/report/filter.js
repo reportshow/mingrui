@@ -1067,14 +1067,6 @@
 	  var source = null;
 
 	  if (config != null) {
-	    if (process.env.NODE_ENV !== 'production') {
-	      process.env.NODE_ENV !== 'production' ? warning(
-	      /* eslint-disable no-proto */
-	      config.__proto__ == null || config.__proto__ === Object.prototype,
-	      /* eslint-enable no-proto */
-	      'React.createElement(...): Expected props argument to be a plain object. ' + 'Properties defined in its prototype chain will be ignored.') : void 0;
-	    }
-
 	    if (hasValidRef(config)) {
 	      ref = config.ref;
 	    }
@@ -1175,14 +1167,6 @@
 	  var owner = element._owner;
 
 	  if (config != null) {
-	    if (process.env.NODE_ENV !== 'production') {
-	      process.env.NODE_ENV !== 'production' ? warning(
-	      /* eslint-disable no-proto */
-	      config.__proto__ == null || config.__proto__ === Object.prototype,
-	      /* eslint-enable no-proto */
-	      'React.cloneElement(...): Expected props argument to be a plain object. ' + 'Properties defined in its prototype chain will be ignored.') : void 0;
-	    }
-
 	    if (hasValidRef(config)) {
 	      // Silently steal the ref from the parent.
 	      ref = config.ref;
@@ -4216,7 +4200,7 @@
 
 	'use strict';
 
-	module.exports = '15.3.1';
+	module.exports = '15.3.2';
 
 /***/ },
 /* 33 */
@@ -5198,8 +5182,10 @@
 	function getFallbackBeforeInputChars(topLevelType, nativeEvent) {
 	  // If we are currently composing (IME) and using a fallback to do so,
 	  // try to extract the composed characters from the fallback object.
+	  // If composition event is available, we extract a string only at
+	  // compositionevent, otherwise extract it at fallback events.
 	  if (currentComposition) {
-	    if (topLevelType === topLevelTypes.topCompositionEnd || isFallbackCompositionEnd(topLevelType, nativeEvent)) {
+	    if (topLevelType === topLevelTypes.topCompositionEnd || !canUseCompositionEvent && isFallbackCompositionEnd(topLevelType, nativeEvent)) {
 	      var chars = currentComposition.getData();
 	      FallbackCompositionState.release(currentComposition);
 	      currentComposition = null;
@@ -6808,7 +6794,8 @@
 
 	    if (event.preventDefault) {
 	      event.preventDefault();
-	    } else {
+	    } else if (typeof event.returnValue !== 'unknown') {
+	      // eslint-disable-line valid-typeof
 	      event.returnValue = false;
 	    }
 	    this.isDefaultPrevented = emptyFunction.thatReturnsTrue;
@@ -7065,7 +7052,7 @@
 	var doesChangeEventBubble = false;
 	if (ExecutionEnvironment.canUseDOM) {
 	  // See `handleChange` comment below
-	  doesChangeEventBubble = isEventSupported('change') && (!('documentMode' in document) || document.documentMode > 8);
+	  doesChangeEventBubble = isEventSupported('change') && (!document.documentMode || document.documentMode > 8);
 	}
 
 	function manualDispatchChangeEvent(nativeEvent) {
@@ -7131,7 +7118,7 @@
 	  // deleting text, so we ignore its input events.
 	  // IE10+ fire input events to often, such when a placeholder
 	  // changes or when an input with a placeholder is focused.
-	  isInputEventSupported = isEventSupported('input') && (!('documentMode' in document) || document.documentMode > 11);
+	  isInputEventSupported = isEventSupported('input') && (!document.documentMode || document.documentMode > 11);
 	}
 
 	/**
@@ -8360,12 +8347,6 @@
 	    endLifeCycleTimer(debugID, timerType);
 	    emitEvent('onEndLifeCycleTimer', debugID, timerType);
 	  },
-	  onError: function (debugID) {
-	    if (currentTimerDebugID != null) {
-	      endLifeCycleTimer(currentTimerDebugID, currentTimerType);
-	    }
-	    emitEvent('onError', debugID);
-	  },
 	  onBeginProcessingChildContext: function () {
 	    emitEvent('onBeginProcessingChildContext');
 	  },
@@ -9439,6 +9420,8 @@
 	    allowFullScreen: HAS_BOOLEAN_VALUE,
 	    allowTransparency: 0,
 	    alt: 0,
+	    // specifies target context for links with `preload` type
+	    as: 0,
 	    async: HAS_BOOLEAN_VALUE,
 	    autoComplete: 0,
 	    // autoFocus is polyfilled/normalized by AutoFocusUtils
@@ -9519,6 +9502,7 @@
 	    optimum: 0,
 	    pattern: 0,
 	    placeholder: 0,
+	    playsInline: HAS_BOOLEAN_VALUE,
 	    poster: 0,
 	    preload: 0,
 	    profile: 0,
@@ -10041,9 +10025,9 @@
 	  if (node.namespaceURI === DOMNamespaces.svg && !('innerHTML' in node)) {
 	    reusableSVGContainer = reusableSVGContainer || document.createElement('div');
 	    reusableSVGContainer.innerHTML = '<svg>' + html + '</svg>';
-	    var newNodes = reusableSVGContainer.firstChild.childNodes;
-	    for (var i = 0; i < newNodes.length; i++) {
-	      node.appendChild(newNodes[i]);
+	    var svgNode = reusableSVGContainer.firstChild;
+	    while (svgNode.firstChild) {
+	      node.appendChild(svgNode.firstChild);
 	    }
 	  } else {
 	    node.innerHTML = html;
@@ -10971,9 +10955,9 @@
 	  ReactDOMOption.postMountWrapper(inst);
 	}
 
-	var setContentChildForInstrumentation = emptyFunction;
+	var setAndValidateContentChildDev = emptyFunction;
 	if (process.env.NODE_ENV !== 'production') {
-	  setContentChildForInstrumentation = function (content) {
+	  setAndValidateContentChildDev = function (content) {
 	    var hasExistingContent = this._contentDebugID != null;
 	    var debugID = this._debugID;
 	    // This ID represents the inlined child that has no backing instance:
@@ -10987,6 +10971,7 @@
 	      return;
 	    }
 
+	    validateDOMNesting(null, String(content), this, this._ancestorInfo);
 	    this._contentDebugID = contentDebugID;
 	    if (hasExistingContent) {
 	      ReactInstrumentation.debugTool.onBeforeUpdateComponent(contentDebugID, content);
@@ -11161,7 +11146,7 @@
 	  this._flags = 0;
 	  if (process.env.NODE_ENV !== 'production') {
 	    this._ancestorInfo = null;
-	    setContentChildForInstrumentation.call(this, null);
+	    setAndValidateContentChildDev.call(this, null);
 	  }
 	}
 
@@ -11261,7 +11246,7 @@
 	      if (parentInfo) {
 	        // parentInfo should always be present except for the top-level
 	        // component when server rendering
-	        validateDOMNesting(this._tag, this, parentInfo);
+	        validateDOMNesting(this._tag, null, this, parentInfo);
 	      }
 	      this._ancestorInfo = validateDOMNesting.updatedAncestorInfo(parentInfo, this._tag, this);
 	    }
@@ -11430,7 +11415,7 @@
 	        // TODO: Validate that text is allowed as a child of this node
 	        ret = escapeTextContentForBrowser(contentToUse);
 	        if (process.env.NODE_ENV !== 'production') {
-	          setContentChildForInstrumentation.call(this, contentToUse);
+	          setAndValidateContentChildDev.call(this, contentToUse);
 	        }
 	      } else if (childrenToUse != null) {
 	        var mountImages = this.mountChildren(childrenToUse, transaction, context);
@@ -11467,7 +11452,7 @@
 	      if (contentToUse != null) {
 	        // TODO: Validate that text is allowed as a child of this node
 	        if (process.env.NODE_ENV !== 'production') {
-	          setContentChildForInstrumentation.call(this, contentToUse);
+	          setAndValidateContentChildDev.call(this, contentToUse);
 	        }
 	        DOMLazyTree.queueText(lazyTree, contentToUse);
 	      } else if (childrenToUse != null) {
@@ -11699,7 +11684,7 @@
 	      if (lastContent !== nextContent) {
 	        this.updateTextContent('' + nextContent);
 	        if (process.env.NODE_ENV !== 'production') {
-	          setContentChildForInstrumentation.call(this, nextContent);
+	          setAndValidateContentChildDev.call(this, nextContent);
 	        }
 	      }
 	    } else if (nextHtml != null) {
@@ -11711,7 +11696,7 @@
 	      }
 	    } else if (nextChildren != null) {
 	      if (process.env.NODE_ENV !== 'production') {
-	        setContentChildForInstrumentation.call(this, null);
+	        setAndValidateContentChildDev.call(this, null);
 	      }
 
 	      this.updateChildren(nextChildren, transaction, context);
@@ -11766,7 +11751,7 @@
 	    this._wrapperState = null;
 
 	    if (process.env.NODE_ENV !== 'production') {
-	      setContentChildForInstrumentation.call(this, null);
+	      setAndValidateContentChildDev.call(this, null);
 	    }
 	  },
 
@@ -13039,6 +13024,19 @@
 	  },
 
 	  /**
+	   * Protect against document.createEvent() returning null
+	   * Some popup blocker extensions appear to do this:
+	   * https://github.com/facebook/react/issues/6887
+	   */
+	  supportsEventPageXY: function () {
+	    if (!document.createEvent) {
+	      return false;
+	    }
+	    var ev = document.createEvent('MouseEvent');
+	    return ev != null && 'pageX' in ev;
+	  },
+
+	  /**
 	   * Listens to window scroll and resize events. We cache scroll values so that
 	   * application code can access them without triggering reflows.
 	   *
@@ -13051,7 +13049,7 @@
 	   */
 	  ensureScrollValueMonitoring: function () {
 	    if (hasEventPageXY === undefined) {
-	      hasEventPageXY = document.createEvent && 'pageX' in document.createEvent('MouseEvent');
+	      hasEventPageXY = ReactBrowserEventEmitter.supportsEventPageXY();
 	    }
 	    if (!hasEventPageXY && !isMonitoringScrollValue) {
 	      var refresh = ViewportMetrics.refreshScrollValues;
@@ -13337,7 +13335,7 @@
 
 	function isControlled(props) {
 	  var usesChecked = props.type === 'checkbox' || props.type === 'radio';
-	  return usesChecked ? props.checked !== undefined : props.value !== undefined;
+	  return usesChecked ? props.checked != null : props.value != null;
 	}
 
 	/**
@@ -15110,34 +15108,29 @@
 	  }
 	}
 
-	function invokeComponentDidMountWithTimer() {
-	  var publicInstance = this._instance;
-	  if (this._debugID !== 0) {
-	    ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'componentDidMount');
-	  }
-	  publicInstance.componentDidMount();
-	  if (this._debugID !== 0) {
-	    ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'componentDidMount');
-	  }
-	}
-
-	function invokeComponentDidUpdateWithTimer(prevProps, prevState, prevContext) {
-	  var publicInstance = this._instance;
-	  if (this._debugID !== 0) {
-	    ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'componentDidUpdate');
-	  }
-	  publicInstance.componentDidUpdate(prevProps, prevState, prevContext);
-	  if (this._debugID !== 0) {
-	    ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'componentDidUpdate');
-	  }
-	}
-
 	function shouldConstruct(Component) {
 	  return !!(Component.prototype && Component.prototype.isReactComponent);
 	}
 
 	function isPureComponent(Component) {
 	  return !!(Component.prototype && Component.prototype.isPureReactComponent);
+	}
+
+	// Separated into a function to contain deoptimizations caused by try/finally.
+	function measureLifeCyclePerf(fn, debugID, timerType) {
+	  if (debugID === 0) {
+	    // Top-level wrappers (see ReactMount) and empty components (see
+	    // ReactDOMEmptyComponent) are invisible to hooks and devtools.
+	    // Both are implementation details that should go away in the future.
+	    return fn();
+	  }
+
+	  ReactInstrumentation.debugTool.onBeginLifeCycleTimer(debugID, timerType);
+	  try {
+	    return fn();
+	  } finally {
+	    ReactInstrumentation.debugTool.onEndLifeCycleTimer(debugID, timerType);
+	  }
 	}
 
 	/**
@@ -15231,6 +15224,8 @@
 	   * @internal
 	   */
 	  mountComponent: function (transaction, hostParent, hostContainerInfo, context) {
+	    var _this = this;
+
 	    this._context = context;
 	    this._mountOrder = nextMountID++;
 	    this._hostParent = hostParent;
@@ -15320,7 +15315,11 @@
 
 	    if (inst.componentDidMount) {
 	      if (process.env.NODE_ENV !== 'production') {
-	        transaction.getReactMountReady().enqueue(invokeComponentDidMountWithTimer, this);
+	        transaction.getReactMountReady().enqueue(function () {
+	          measureLifeCyclePerf(function () {
+	            return inst.componentDidMount();
+	          }, _this._debugID, 'componentDidMount');
+	        });
 	      } else {
 	        transaction.getReactMountReady().enqueue(inst.componentDidMount, inst);
 	      }
@@ -15344,35 +15343,26 @@
 
 	  _constructComponentWithoutOwner: function (doConstruct, publicProps, publicContext, updateQueue) {
 	    var Component = this._currentElement.type;
-	    var instanceOrElement;
+
 	    if (doConstruct) {
 	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'ctor');
-	        }
-	      }
-	      instanceOrElement = new Component(publicProps, publicContext, updateQueue);
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'ctor');
-	        }
-	      }
-	    } else {
-	      // This can still be an instance in case of factory components
-	      // but we'll count this as time spent rendering as the more common case.
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'render');
-	        }
-	      }
-	      instanceOrElement = Component(publicProps, publicContext, updateQueue);
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'render');
-	        }
+	        return measureLifeCyclePerf(function () {
+	          return new Component(publicProps, publicContext, updateQueue);
+	        }, this._debugID, 'ctor');
+	      } else {
+	        return new Component(publicProps, publicContext, updateQueue);
 	      }
 	    }
-	    return instanceOrElement;
+
+	    // This can still be an instance in case of factory components
+	    // but we'll count this as time spent rendering as the more common case.
+	    if (process.env.NODE_ENV !== 'production') {
+	      return measureLifeCyclePerf(function () {
+	        return Component(publicProps, publicContext, updateQueue);
+	      }, this._debugID, 'render');
+	    } else {
+	      return Component(publicProps, publicContext, updateQueue);
+	    }
 	  },
 
 	  performInitialMountWithErrorHandling: function (renderedElement, hostParent, hostContainerInfo, transaction, context) {
@@ -15381,11 +15371,6 @@
 	    try {
 	      markup = this.performInitialMount(renderedElement, hostParent, hostContainerInfo, transaction, context);
 	    } catch (e) {
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onError();
-	        }
-	      }
 	      // Roll back to checkpoint, handle error (which may add items to the transaction), and take a new checkpoint
 	      transaction.rollback(checkpoint);
 	      this._instance.unstable_handleError(e);
@@ -15406,17 +15391,19 @@
 
 	  performInitialMount: function (renderedElement, hostParent, hostContainerInfo, transaction, context) {
 	    var inst = this._instance;
+
+	    var debugID = 0;
+	    if (process.env.NODE_ENV !== 'production') {
+	      debugID = this._debugID;
+	    }
+
 	    if (inst.componentWillMount) {
 	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'componentWillMount');
-	        }
-	      }
-	      inst.componentWillMount();
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'componentWillMount');
-	        }
+	        measureLifeCyclePerf(function () {
+	          return inst.componentWillMount();
+	        }, debugID, 'componentWillMount');
+	      } else {
+	        inst.componentWillMount();
 	      }
 	      // When mounting, calls to `setState` by `componentWillMount` will set
 	      // `this._pendingStateQueue` without triggering a re-render.
@@ -15436,15 +15423,12 @@
 	    );
 	    this._renderedComponent = child;
 
-	    var selfDebugID = 0;
-	    if (process.env.NODE_ENV !== 'production') {
-	      selfDebugID = this._debugID;
-	    }
-	    var markup = ReactReconciler.mountComponent(child, transaction, hostParent, hostContainerInfo, this._processChildContext(context), selfDebugID);
+	    var markup = ReactReconciler.mountComponent(child, transaction, hostParent, hostContainerInfo, this._processChildContext(context), debugID);
 
 	    if (process.env.NODE_ENV !== 'production') {
-	      if (this._debugID !== 0) {
-	        ReactInstrumentation.debugTool.onSetChildren(this._debugID, child._debugID !== 0 ? [child._debugID] : []);
+	      if (debugID !== 0) {
+	        var childDebugIDs = child._debugID !== 0 ? [child._debugID] : [];
+	        ReactInstrumentation.debugTool.onSetChildren(debugID, childDebugIDs);
 	      }
 	    }
 
@@ -15465,24 +15449,22 @@
 	    if (!this._renderedComponent) {
 	      return;
 	    }
+
 	    var inst = this._instance;
 
 	    if (inst.componentWillUnmount && !inst._calledComponentWillUnmount) {
 	      inst._calledComponentWillUnmount = true;
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'componentWillUnmount');
-	        }
-	      }
+
 	      if (safely) {
 	        var name = this.getName() + '.componentWillUnmount()';
 	        ReactErrorUtils.invokeGuardedCallback(name, inst.componentWillUnmount.bind(inst));
 	      } else {
-	        inst.componentWillUnmount();
-	      }
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'componentWillUnmount');
+	        if (process.env.NODE_ENV !== 'production') {
+	          measureLifeCyclePerf(function () {
+	            return inst.componentWillUnmount();
+	          }, this._debugID, 'componentWillUnmount');
+	        } else {
+	          inst.componentWillUnmount();
 	        }
 	      }
 	    }
@@ -15569,13 +15551,21 @@
 	  _processChildContext: function (currentContext) {
 	    var Component = this._currentElement.type;
 	    var inst = this._instance;
-	    if (process.env.NODE_ENV !== 'production') {
-	      ReactInstrumentation.debugTool.onBeginProcessingChildContext();
+	    var childContext;
+
+	    if (inst.getChildContext) {
+	      if (process.env.NODE_ENV !== 'production') {
+	        ReactInstrumentation.debugTool.onBeginProcessingChildContext();
+	        try {
+	          childContext = inst.getChildContext();
+	        } finally {
+	          ReactInstrumentation.debugTool.onEndProcessingChildContext();
+	        }
+	      } else {
+	        childContext = inst.getChildContext();
+	      }
 	    }
-	    var childContext = inst.getChildContext && inst.getChildContext();
-	    if (process.env.NODE_ENV !== 'production') {
-	      ReactInstrumentation.debugTool.onEndProcessingChildContext();
-	    }
+
 	    if (childContext) {
 	      !(typeof Component.childContextTypes === 'object') ? process.env.NODE_ENV !== 'production' ? invariant(false, '%s.getChildContext(): childContextTypes must be defined in order to use getChildContext().', this.getName() || 'ReactCompositeComponent') : _prodInvariant('107', this.getName() || 'ReactCompositeComponent') : void 0;
 	      if (process.env.NODE_ENV !== 'production') {
@@ -15670,15 +15660,11 @@
 	    // immediately reconciled instead of waiting for the next batch.
 	    if (willReceive && inst.componentWillReceiveProps) {
 	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'componentWillReceiveProps');
-	        }
-	      }
-	      inst.componentWillReceiveProps(nextProps, nextContext);
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'componentWillReceiveProps');
-	        }
+	        measureLifeCyclePerf(function () {
+	          return inst.componentWillReceiveProps(nextProps, nextContext);
+	        }, this._debugID, 'componentWillReceiveProps');
+	      } else {
+	        inst.componentWillReceiveProps(nextProps, nextContext);
 	      }
 	    }
 
@@ -15688,15 +15674,11 @@
 	    if (!this._pendingForceUpdate) {
 	      if (inst.shouldComponentUpdate) {
 	        if (process.env.NODE_ENV !== 'production') {
-	          if (this._debugID !== 0) {
-	            ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'shouldComponentUpdate');
-	          }
-	        }
-	        shouldUpdate = inst.shouldComponentUpdate(nextProps, nextState, nextContext);
-	        if (process.env.NODE_ENV !== 'production') {
-	          if (this._debugID !== 0) {
-	            ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'shouldComponentUpdate');
-	          }
+	          shouldUpdate = measureLifeCyclePerf(function () {
+	            return inst.shouldComponentUpdate(nextProps, nextState, nextContext);
+	          }, this._debugID, 'shouldComponentUpdate');
+	        } else {
+	          shouldUpdate = inst.shouldComponentUpdate(nextProps, nextState, nextContext);
 	        }
 	      } else {
 	        if (this._compositeType === CompositeTypes.PureClass) {
@@ -15762,6 +15744,8 @@
 	   * @private
 	   */
 	  _performComponentUpdate: function (nextElement, nextProps, nextState, nextContext, transaction, unmaskedContext) {
+	    var _this2 = this;
+
 	    var inst = this._instance;
 
 	    var hasComponentDidUpdate = Boolean(inst.componentDidUpdate);
@@ -15776,15 +15760,11 @@
 
 	    if (inst.componentWillUpdate) {
 	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'componentWillUpdate');
-	        }
-	      }
-	      inst.componentWillUpdate(nextProps, nextState, nextContext);
-	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'componentWillUpdate');
-	        }
+	        measureLifeCyclePerf(function () {
+	          return inst.componentWillUpdate(nextProps, nextState, nextContext);
+	        }, this._debugID, 'componentWillUpdate');
+	      } else {
+	        inst.componentWillUpdate(nextProps, nextState, nextContext);
 	      }
 	    }
 
@@ -15798,7 +15778,9 @@
 
 	    if (hasComponentDidUpdate) {
 	      if (process.env.NODE_ENV !== 'production') {
-	        transaction.getReactMountReady().enqueue(invokeComponentDidUpdateWithTimer.bind(this, prevProps, prevState, prevContext), this);
+	        transaction.getReactMountReady().enqueue(function () {
+	          measureLifeCyclePerf(inst.componentDidUpdate.bind(inst, prevProps, prevState, prevContext), _this2._debugID, 'componentDidUpdate');
+	        });
 	      } else {
 	        transaction.getReactMountReady().enqueue(inst.componentDidUpdate.bind(inst, prevProps, prevState, prevContext), inst);
 	      }
@@ -15815,6 +15797,12 @@
 	    var prevComponentInstance = this._renderedComponent;
 	    var prevRenderedElement = prevComponentInstance._currentElement;
 	    var nextRenderedElement = this._renderValidatedComponent();
+
+	    var debugID = 0;
+	    if (process.env.NODE_ENV !== 'production') {
+	      debugID = this._debugID;
+	    }
+
 	    if (shouldUpdateReactComponent(prevRenderedElement, nextRenderedElement)) {
 	      ReactReconciler.receiveComponent(prevComponentInstance, nextRenderedElement, transaction, this._processChildContext(context));
 	    } else {
@@ -15827,15 +15815,12 @@
 	      );
 	      this._renderedComponent = child;
 
-	      var selfDebugID = 0;
-	      if (process.env.NODE_ENV !== 'production') {
-	        selfDebugID = this._debugID;
-	      }
-	      var nextMarkup = ReactReconciler.mountComponent(child, transaction, this._hostParent, this._hostContainerInfo, this._processChildContext(context), selfDebugID);
+	      var nextMarkup = ReactReconciler.mountComponent(child, transaction, this._hostParent, this._hostContainerInfo, this._processChildContext(context), debugID);
 
 	      if (process.env.NODE_ENV !== 'production') {
-	        if (this._debugID !== 0) {
-	          ReactInstrumentation.debugTool.onSetChildren(this._debugID, child._debugID !== 0 ? [child._debugID] : []);
+	        if (debugID !== 0) {
+	          var childDebugIDs = child._debugID !== 0 ? [child._debugID] : [];
+	          ReactInstrumentation.debugTool.onSetChildren(debugID, childDebugIDs);
 	        }
 	      }
 
@@ -15857,17 +15842,14 @@
 	   */
 	  _renderValidatedComponentWithoutOwnerOrContext: function () {
 	    var inst = this._instance;
+	    var renderedComponent;
 
 	    if (process.env.NODE_ENV !== 'production') {
-	      if (this._debugID !== 0) {
-	        ReactInstrumentation.debugTool.onBeginLifeCycleTimer(this._debugID, 'render');
-	      }
-	    }
-	    var renderedComponent = inst.render();
-	    if (process.env.NODE_ENV !== 'production') {
-	      if (this._debugID !== 0) {
-	        ReactInstrumentation.debugTool.onEndLifeCycleTimer(this._debugID, 'render');
-	      }
+	      renderedComponent = measureLifeCyclePerf(function () {
+	        return inst.render();
+	      }, this._debugID, 'render');
+	    } else {
+	      renderedComponent = inst.render();
 	    }
 
 	    if (process.env.NODE_ENV !== 'production') {
@@ -15918,7 +15900,7 @@
 	    var publicComponentInstance = component.getPublicInstance();
 	    if (process.env.NODE_ENV !== 'production') {
 	      var componentName = component && component.getName ? component.getName() : 'a component';
-	      process.env.NODE_ENV !== 'production' ? warning(publicComponentInstance != null, 'Stateless function components cannot be given refs ' + '(See ref "%s" in %s created by %s). ' + 'Attempts to access this ref will fail.', ref, componentName, this.getName()) : void 0;
+	      process.env.NODE_ENV !== 'production' ? warning(publicComponentInstance != null || component._compositeType !== CompositeTypes.StatelessFunctional, 'Stateless function components cannot be given refs ' + '(See ref "%s" in %s created by %s). ' + 'Attempts to access this ref will fail.', ref, componentName, this.getName()) : void 0;
 	    }
 	    var refs = inst.refs === emptyObject ? inst.refs = {} : inst.refs;
 	    refs[ref] = publicComponentInstance;
@@ -16055,7 +16037,8 @@
 	  if (x === y) {
 	    // Steps 1-5, 7-10
 	    // Steps 6.b-6.e: +0 != -0
-	    return x !== 0 || 1 / x === 1 / y;
+	    // Added the nonzero y check to make Flow happy, but it is redundant
+	    return x !== 0 || y !== 0 || 1 / x === 1 / y;
 	  } else {
 	    // Step 6.a: NaN == NaN
 	    return x !== x && y !== y;
@@ -17109,10 +17092,15 @@
 
 	  var didWarn = {};
 
-	  validateDOMNesting = function (childTag, childInstance, ancestorInfo) {
+	  validateDOMNesting = function (childTag, childText, childInstance, ancestorInfo) {
 	    ancestorInfo = ancestorInfo || emptyAncestorInfo;
 	    var parentInfo = ancestorInfo.current;
 	    var parentTag = parentInfo && parentInfo.tag;
+
+	    if (childText != null) {
+	      process.env.NODE_ENV !== 'production' ? warning(childTag == null, 'validateDOMNesting: when childText is passed, childTag should be null') : void 0;
+	      childTag = '#text';
+	    }
 
 	    var invalidParent = isTagValidWithParent(childTag, parentTag) ? null : parentInfo;
 	    var invalidAncestor = invalidParent ? null : findInvalidAncestorForTag(childTag, ancestorInfo);
@@ -17161,7 +17149,15 @@
 	      didWarn[warnKey] = true;
 
 	      var tagDisplayName = childTag;
-	      if (childTag !== '#text') {
+	      var whitespaceInfo = '';
+	      if (childTag === '#text') {
+	        if (/\S/.test(childText)) {
+	          tagDisplayName = 'Text nodes';
+	        } else {
+	          tagDisplayName = 'Whitespace text nodes';
+	          whitespaceInfo = ' Make sure you don\'t have any extra whitespace between tags on ' + 'each line of your source code.';
+	        }
+	      } else {
 	        tagDisplayName = '<' + childTag + '>';
 	      }
 
@@ -17170,7 +17166,7 @@
 	        if (ancestorTag === 'table' && childTag === 'tr') {
 	          info += ' Add a <tbody> to your code to match the DOM tree generated by ' + 'the browser.';
 	        }
-	        process.env.NODE_ENV !== 'production' ? warning(false, 'validateDOMNesting(...): %s cannot appear as a child of <%s>. ' + 'See %s.%s', tagDisplayName, ancestorTag, ownerInfo, info) : void 0;
+	        process.env.NODE_ENV !== 'production' ? warning(false, 'validateDOMNesting(...): %s cannot appear as a child of <%s>.%s ' + 'See %s.%s', tagDisplayName, ancestorTag, whitespaceInfo, ownerInfo, info) : void 0;
 	      } else {
 	        process.env.NODE_ENV !== 'production' ? warning(false, 'validateDOMNesting(...): %s cannot appear as a descendant of ' + '<%s>. See %s.', tagDisplayName, ancestorTag, ownerInfo) : void 0;
 	      }
@@ -17477,7 +17473,7 @@
 	      if (parentInfo) {
 	        // parentInfo should always be present except for the top-level
 	        // component when server rendering
-	        validateDOMNesting('#text', this, parentInfo);
+	        validateDOMNesting(null, this._stringText, this, parentInfo);
 	      }
 	    }
 
@@ -19070,7 +19066,7 @@
 	      bubbled: keyOf({ onSelect: null }),
 	      captured: keyOf({ onSelectCapture: null })
 	    },
-	    dependencies: [topLevelTypes.topBlur, topLevelTypes.topContextMenu, topLevelTypes.topFocus, topLevelTypes.topKeyDown, topLevelTypes.topMouseDown, topLevelTypes.topMouseUp, topLevelTypes.topSelectionChange]
+	    dependencies: [topLevelTypes.topBlur, topLevelTypes.topContextMenu, topLevelTypes.topFocus, topLevelTypes.topKeyDown, topLevelTypes.topKeyUp, topLevelTypes.topMouseDown, topLevelTypes.topMouseUp, topLevelTypes.topSelectionChange]
 	  }
 	};
 
@@ -21811,7 +21807,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-	  value: true
+				value: true
 	});
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -21833,144 +21829,164 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 	var Filter = function (_React$Component) {
-	  _inherits(Filter, _React$Component);
+				_inherits(Filter, _React$Component);
 
-	  function Filter(props) {
-	    _classCallCheck(this, Filter);
+				function Filter(props) {
+							_classCallCheck(this, Filter);
 
-	    var _this = _possibleConstructorReturn(this, (Filter.__proto__ || Object.getPrototypeOf(Filter)).call(this, props));
+							var _this = _possibleConstructorReturn(this, (Filter.__proto__ || Object.getPrototypeOf(Filter)).call(this, props));
 
-	    _this.handleFilterChange = function (filter) {
-	      console.log(filter);
-	    };
+							_this.handleFilterChange = function (filter) {
+										_this.setState({ presentfilters: filter }, _reactTooltip2.default.rebuild);
+							};
 
-	    _this.handleSave = function (e) {
-	      e.preventDefault();
-	      var fitlers = _this.state.filters;
-	      var date = new Date();
-	      var day = date.getDate();
-	      var month = date.getMonth() + 1;
-	      var year = date.getFullYear();
-	      var str_date = year + '-' + month + '-' + day;
-	      filters.unshift({ date: str_date, description: newfilter.note.value, filter: "akjdfkfjjf" });
-	      _this.setState({ filters: filters });
-	    };
+							_this.handleSave = function (e) {
+										e.preventDefault();
+										var filters = _this.state.filters;
 
-	    _this.handleDelete = function (e) {
-	      return false;
-	    };
+										var date = new Date();
+										var day = date.getDate();
+										var month = date.getMonth() + 1;
+										var year = date.getFullYear();
+										var title = year + '-' + month + '-' + day;
+										var filter_json = JSON.stringify(_this.state.presentfilters);
+										var filter = [-1, newfilter.note.value, title, report_type, user_id, report_id, filter_json];
+										filters.unshift(filter);
+										_this.setState({ filters: filters }, _reactTooltip2.default.rebuild);
+										//save the new filters to server
+										var str_filter = JSON.stringify(filter);
+										$.get('/backend/web/index.php?r=filter/filteradd&str_filter=' + str_filter);
+							};
 
-	    _this.handleLoad = function (e) {
-	      return false;
-	    };
+							_this.state = _this.getDefaultState();
+							return _this;
+				}
 
-	    _this.state = _this.getDefaultState();
-	    return _this;
-	  }
+				_createClass(Filter, [{
+							key: 'componentDidMount',
+							value: function componentDidMount() {
+										//TODO: load saved filters from server
+										eh.addListener('filterchange', this.handleFilterChange);
+							}
+				}, {
+							key: 'getDefaultState',
+							value: function getDefaultState() {
+										return {
+													filters: []
+										};
+							}
+				}, {
+							key: 'handleDelete',
+							value: function handleDelete(filter) {
+										var filters = this.state.filters;
+										for (var i = filters.length; i--;) {
+													if (filters[i] === filter) {
+																filters.splice(i, 1);
+													}
+										}
+										this.setState({ filters: filters }, _reactTooltip2.default.rebuild);
+										//TODO: remove the filters from server
+										return false;
+							}
+				}, {
+							key: 'handleLoad',
+							value: function handleLoad(filter) {
+										eh.emitEvent('filterload', [filter.filter]);
+										return false;
+							}
+				}, {
+							key: 'render',
+							value: function render() {
+										var _this2 = this;
 
-	  _createClass(Filter, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      eh.addListener('filterchange', this.handleFilterChange);
-	    }
-	  }, {
-	    key: 'getDefaultState',
-	    value: function getDefaultState() {
-	      return {
-	        filters: filters
-	      };
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
+										console.log(this.state.filters);
+										return _react2.default.createElement(
+													'div',
+													null,
+													_react2.default.createElement(_reactTooltip2.default, { type: 'info', effect: 'float', multiline: true }),
+													_react2.default.createElement(
+																'div',
+																{ className: 'box-header with-border' },
+																_react2.default.createElement(
+																			'h3',
+																			{ className: 'box-title' },
+																			'\u4FDD\u5B58\u5F53\u524D\u8FC7\u6EE4\u6761\u4EF6'
+																)
+													),
+													_react2.default.createElement(
+																'form',
+																{ role: 'form', name: 'newfilter', onSubmit: this.handleSave },
+																_react2.default.createElement(
+																			'div',
+																			{ className: 'box-body' },
+																			_react2.default.createElement(
+																						'div',
+																						{ className: 'form-group' },
+																						_react2.default.createElement(
+																									'label',
+																									null,
+																									'\u6761\u4EF6\u5907\u6CE8'
+																						),
+																						_react2.default.createElement('textarea', { className: 'form-control', rows: '3', id: 'note', name: 'note', placeholder: '\u5199\u70B9\u4EC0\u4E48\u5427' })
+																			)
+																),
+																_react2.default.createElement(
+																			'button',
+																			{ type: 'submit', className: 'btn btn-primary' },
+																			'\u4FDD\u5B58'
+																)
+													),
+													_react2.default.createElement('div', { className: 'box-footer' }),
+													_react2.default.createElement(
+																'div',
+																{ className: 'box box-solid' },
+																_react2.default.createElement(
+																			'div',
+																			{ className: 'box-header with-border' },
+																			_react2.default.createElement('i', { className: 'fa fa-text-width' }),
+																			_react2.default.createElement(
+																						'h3',
+																						{ className: 'box-title' },
+																						'\u5DF2\u4FDD\u5B58\u7684\u8FC7\u6EE4\u6761\u4EF6'
+																			)
+																),
+																_react2.default.createElement(
+																			'div',
+																			{ className: 'box-body' },
+																			_react2.default.createElement(
+																						'dl',
+																						null,
+																						this.state.filters.map(function (filter, index) {
+																									return _react2.default.createElement(
+																												'dt',
+																												{ key: index, 'data-tip': filter[1] },
+																												filter[2],
+																												'\xA0\xA0\xA0\xA0',
+																												_react2.default.createElement(
+																															'a',
+																															{ onClick: function onClick() {
+																																					return _this2.handleLoad(filter);
+																																		} },
+																															_react2.default.createElement('i', { className: 'fa fa-upload' })
+																												),
+																												'\xA0\xA0',
+																												_react2.default.createElement(
+																															'a',
+																															{ onClick: function onClick() {
+																																					return _this2.handleDelete(filter);
+																																		} },
+																															_react2.default.createElement('i', { className: 'fa fa-trash-o' })
+																												)
+																									);
+																						})
+																			)
+																)
+													)
+										);
+							}
+				}]);
 
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(_reactTooltip2.default, { type: 'info', effect: 'float', multiline: true }),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'box-header with-border' },
-	          _react2.default.createElement(
-	            'h3',
-	            { className: 'box-title' },
-	            '保存当前过滤条件'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'form',
-	          { role: 'form', name: 'newfilter', onSubmit: this.handleSave },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'box-body' },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'form-group' },
-	              _react2.default.createElement(
-	                'label',
-	                null,
-	                '条件备注'
-	              ),
-	              _react2.default.createElement('textarea', { className: 'form-control', rows: '3', id: 'note', name: 'note', placeholder: '写点什么吧' })
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'box-footer' },
-	            _react2.default.createElement(
-	              'button',
-	              { type: 'submit', className: 'btn btn-primary' },
-	              '保存'
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'box box-solid' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'box-header with-border' },
-	            _react2.default.createElement('i', { className: 'fa fa-text-width' }),
-	            _react2.default.createElement(
-	              'h3',
-	              { className: 'box-title' },
-	              '已保存的过滤条件'
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'box-body' },
-	            _react2.default.createElement(
-	              'dl',
-	              null,
-	              this.state.filters.map(function (filter, index) {
-	                return _react2.default.createElement(
-	                  'dt',
-	                  { key: index, 'data-tip': filter.description },
-	                  filter.date,
-	                  '    ',
-	                  _react2.default.createElement(
-	                    'a',
-	                    { href: '#', onClick: _this2.handleLoad(filter) },
-	                    _react2.default.createElement('i', { className: 'fa fa-upload' })
-	                  ),
-	                  '  ',
-	                  _react2.default.createElement(
-	                    'a',
-	                    { href: '#', onClick: _this2.handleDelete(filter) },
-	                    _react2.default.createElement('i', { className: 'fa fa-trash-o' })
-	                  )
-	                );
-	              })
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-
-	  return Filter;
+				return Filter;
 	}(_react2.default.Component);
 
 	exports.default = Filter;
@@ -22052,7 +22068,7 @@
 	  function ReactTooltip(props) {
 	    _classCallCheck(this, ReactTooltip);
 
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ReactTooltip).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (ReactTooltip.__proto__ || Object.getPrototypeOf(ReactTooltip)).call(this, props));
 
 	    _this.state = {
 	      place: 'top', // Direction of tooltip
@@ -22070,10 +22086,12 @@
 	      eventOff: props.eventOff || null,
 	      currentEvent: null, // Current mouse event
 	      currentTarget: null, // Current target of mouse event
-	      ariaProps: (0, _aria.parseAria)(props) // aria- and role attributes
+	      ariaProps: (0, _aria.parseAria)(props), // aria- and role attributes
+	      isEmptyTip: false,
+	      disable: false
 	    };
 
-	    _this.bind(['showTooltip', 'updateTooltip', 'hideTooltip', 'globalRebuild', 'globalShow', 'onWindowResize']);
+	    _this.bind(['showTooltip', 'updateTooltip', 'hideTooltip', 'globalRebuild', 'globalShow', 'globalHide', 'onWindowResize']);
 
 	    _this.mount = true;
 	    _this.delayShowLoop = null;
@@ -22101,7 +22119,7 @@
 	    value: function componentDidMount() {
 	      this.setStyleHeader(); // Set the style to the <link>
 	      this.bindListener(); // Bind listener for tooltip
-	      this.bindWindowEvents(); // Bind global event for static method
+	      this.bindWindowEvents(this.props.resizeHide); // Bind global event for static method
 	    }
 	  }, {
 	    key: 'componentWillReceiveProps',
@@ -22176,25 +22194,23 @@
 	        }
 	        _this3.unbindBasicListener(target);
 
-	        // if (_this3.isCustomEvent(target)) {
-	        //   _this3.customBindListener(target);
-	        //   return;
-	        // }
+	        if (_this3.isCustomEvent(target)) {
+	          _this3.customBindListener(target);
+	          return;
+	        }
 
 	        target.addEventListener('mouseenter', _this3.showTooltip, isCaptureMode);
 	        if (_this3.state.effect === 'float') {
 	          target.addEventListener('mousemove', _this3.updateTooltip, isCaptureMode);
 	        }
-	          target.addEventListener('mouseleave', _this3.hideTooltip, isCaptureMode);
-		  target.addEventListener('touchend', _this3.showTooltip, isCaptureMode);
-		  target.addEventListener('touchstart', _this3.showTooltip, isCaptureMode);
+	        target.addEventListener('mouseleave', _this3.hideTooltip, isCaptureMode);
 	      });
 
-	      // // Global event to hide tooltip
-	      // if (globalEventOff) {
-	      //   window.removeEventListener(globalEventOff, this.hideTooltip);
-	      //   window.addEventListener(globalEventOff, this.hideTooltip, false);
-	      // }
+	      // Global event to hide tooltip
+	      if (globalEventOff) {
+	        window.removeEventListener(globalEventOff, this.hideTooltip);
+	        window.addEventListener(globalEventOff, this.hideTooltip, false);
+	      }
 	    }
 
 	    /**
@@ -22239,11 +22255,8 @@
 
 	  }, {
 	    key: 'showTooltip',
-	      value: function showTooltip(e, isGlobalCall) {
+	    value: function showTooltip(e, isGlobalCall) {
 	      var _this5 = this;
-
-	      var disabled = e.currentTarget.getAttribute('data-tip-disable') ? e.currentTarget.getAttribute('data-tip-disable') === 'true' : this.props.disable || false;
-	      if (disabled) return;
 
 	      if (isGlobalCall) {
 	        // Don't trigger other elements belongs to other ReactTooltip
@@ -22264,7 +22277,7 @@
 	      var isMultiline = e.currentTarget.getAttribute('data-multiline') || multiline || false;
 
 	      // Generate tootlip content
-	      var content = children;
+	      var content = void 0;
 	      if (getContent) {
 	        if (Array.isArray(getContent)) {
 	          content = getContent[0] && getContent[0]();
@@ -22272,11 +22285,23 @@
 	          content = getContent();
 	        }
 	      }
-	      var placeholder = (0, _getTipContent2.default)(originTooltip, content, isMultiline);
+	      var placeholder = (0, _getTipContent2.default)(originTooltip, children, content, isMultiline);
+	      var isEmptyTip = typeof placeholder === 'string' && placeholder === '' || placeholder === null;
+
 	      // If it is focus event or called by ReactTooltip.show, switch to `solid` effect
 	      var switchToSolid = e instanceof window.FocusEvent || isGlobalCall;
+
+	      // if it need to skip adding hide listener to scroll
+	      var scrollHide = true;
+	      if (e.currentTarget.getAttribute('data-scroll-hide')) {
+	        scrollHide = e.currentTarget.getAttribute('data-scroll-hide') === 'true';
+	      } else if (this.props.scrollHide != null) {
+	        scrollHide = this.props.scrollHide;
+	      }
+
 	      this.setState({
 	        placeholder: placeholder,
+	        isEmptyTip: isEmptyTip,
 	        place: e.currentTarget.getAttribute('data-place') || this.props.place || 'top',
 	        type: e.currentTarget.getAttribute('data-type') || this.props.type || 'dark',
 	        effect: switchToSolid && 'solid' || e.currentTarget.getAttribute('data-effect') || this.props.effect || 'float',
@@ -22286,9 +22311,9 @@
 	        delayHide: e.currentTarget.getAttribute('data-delay-hide') || this.props.delayHide || 0,
 	        border: e.currentTarget.getAttribute('data-border') ? e.currentTarget.getAttribute('data-border') === 'true' : this.props.border || false,
 	        extraClass: e.currentTarget.getAttribute('data-class') || this.props.class || '',
-	        countTransform: e.currentTarget.getAttribute('data-count-transform') ? e.currentTarget.getAttribute('data-count-transform') === 'true' : this.props.countTransform != null ? this.props.countTransform : true
+	        disable: e.currentTarget.getAttribute('data-tip-disable') ? e.currentTarget.getAttribute('data-tip-disable') === 'true' : this.props.disable || false
 	      }, function () {
-	        _this5.addScrollListener(e);
+	        if (scrollHide) _this5.addScrollListener(e);
 	        _this5.updateTooltip(e);
 
 	        if (getContent && Array.isArray(getContent)) {
@@ -22297,14 +22322,15 @@
 	              var _getContent = _this5.props.getContent;
 
 	              var _placeholder = (0, _getTipContent2.default)(originTooltip, _getContent[0](), isMultiline);
+	              var _isEmptyTip = typeof _placeholder === 'string' && _placeholder === '';
 	              _this5.setState({
-	                placeholder: _placeholder
+	                placeholder: _placeholder,
+	                isEmptyTip: _isEmptyTip
 	              });
 	            }
 	          }, getContent[1]);
 	        }
-	      }
-			   );
+	      });
 	    }
 
 	    /**
@@ -22319,14 +22345,16 @@
 	      var _state = this.state;
 	      var delayShow = _state.delayShow;
 	      var show = _state.show;
+	      var isEmptyTip = _state.isEmptyTip;
+	      var disable = _state.disable;
 	      var afterShow = this.props.afterShow;
 	      var placeholder = this.state.placeholder;
 
 	      var delayTime = show ? 0 : parseInt(delayShow, 10);
 	      var eventTarget = e.currentTarget;
 
+	      if (isEmptyTip || disable) return; // if the tooltip is empty, disable the tooltip
 	      var updateState = function updateState() {
-	        if (typeof placeholder === 'string') placeholder = placeholder.trim();
 	        if (Array.isArray(placeholder) && placeholder.length > 0 || placeholder) {
 	          (function () {
 	            var isInvisible = !_this6.state.show;
@@ -22356,15 +22384,25 @@
 
 	  }, {
 	    key: 'hideTooltip',
-	    value: function hideTooltip() {
+	    value: function hideTooltip(e, hasTarget) {
 	      var _this7 = this;
 
-	      var delayHide = this.state.delayHide;
+	      var _state2 = this.state;
+	      var delayHide = _state2.delayHide;
+	      var isEmptyTip = _state2.isEmptyTip;
+	      var disable = _state2.disable;
 	      var afterHide = this.props.afterHide;
 
-
 	      if (!this.mount) return;
-
+	      if (isEmptyTip || disable) return; // if the tooltip is empty, disable the tooltip
+	      if (hasTarget) {
+	        // Don't trigger other elements belongs to other ReactTooltip
+	        var targetArray = this.getTargetArray(this.props.id);
+	        var isMyElement = targetArray.some(function (ele) {
+	          return ele === e.currentTarget;
+	        });
+	        if (!isMyElement || !this.state.show) return;
+	      }
 	      var resetState = function resetState() {
 	        var isVisible = _this7.state.show;
 	        _this7.setState({
@@ -22407,17 +22445,15 @@
 	    value: function updatePosition() {
 	      var _this8 = this;
 
-	      var _state2 = this.state;
-	      var currentEvent = _state2.currentEvent;
-	      var currentTarget = _state2.currentTarget;
-	      var place = _state2.place;
-	      var effect = _state2.effect;
-	      var offset = _state2.offset;
-	      var countTransform = _state2.countTransform;
+	      var _state3 = this.state;
+	      var currentEvent = _state3.currentEvent;
+	      var currentTarget = _state3.currentTarget;
+	      var place = _state3.place;
+	      var effect = _state3.effect;
+	      var offset = _state3.offset;
 
 	      var node = _reactDom2.default.findDOMNode(this);
-
-	      var result = (0, _getPosition2.default)(currentEvent, currentTarget, node, place, effect, offset, countTransform);
+	      var result = (0, _getPosition2.default)(currentEvent, currentTarget, node, place, effect, offset);
 
 	      if (result.isNewState) {
 	        // Switch to reverse placement
@@ -22460,14 +22496,16 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _state3 = this.state;
-	      var placeholder = _state3.placeholder;
-	      var extraClass = _state3.extraClass;
-	      var html = _state3.html;
-	      var ariaProps = _state3.ariaProps;
+	      var _state4 = this.state;
+	      var placeholder = _state4.placeholder;
+	      var extraClass = _state4.extraClass;
+	      var html = _state4.html;
+	      var ariaProps = _state4.ariaProps;
+	      var disable = _state4.disable;
+	      var isEmptyTip = _state4.isEmptyTip;
 
-	      var tooltipClass = (0, _classnames2.default)('__react_component_tooltip', { 'show': this.state.show }, { 'border': this.state.border }, { 'place-top': this.state.place === 'top' }, { 'place-bottom': this.state.place === 'bottom' }, { 'place-left': this.state.place === 'left' }, { 'place-right': this.state.place === 'right' }, { 'type-dark': this.state.type === 'dark' }, { 'type-success': this.state.type === 'success' }, { 'type-warning': this.state.type === 'warning' }, { 'type-error': this.state.type === 'error' }, { 'type-info': this.state.type === 'info' }, { 'type-light': this.state.type === 'light' });
-		if (html) {
+	      var tooltipClass = (0, _classnames2.default)('__react_component_tooltip', { 'show': this.state.show && !disable && !isEmptyTip }, { 'border': this.state.border }, { 'place-top': this.state.place === 'top' }, { 'place-bottom': this.state.place === 'bottom' }, { 'place-left': this.state.place === 'left' }, { 'place-right': this.state.place === 'right' }, { 'type-dark': this.state.type === 'dark' }, { 'type-success': this.state.type === 'success' }, { 'type-warning': this.state.type === 'warning' }, { 'type-error': this.state.type === 'error' }, { 'type-info': this.state.type === 'info' }, { 'type-light': this.state.type === 'light' });
+	      if (html) {
 	        return _react2.default.createElement('div', _extends({ className: tooltipClass + ' ' + extraClass
 	        }, ariaProps, {
 	          'data-id': 'tooltip',
@@ -22504,17 +22542,19 @@
 	  isCapture: _react.PropTypes.bool,
 	  globalEventOff: _react.PropTypes.string,
 	  getContent: _react.PropTypes.any,
-	  countTransform: _react.PropTypes.bool,
 	  afterShow: _react.PropTypes.func,
 	  afterHide: _react.PropTypes.func,
-	  disable: _react.PropTypes.bool
+	  disable: _react.PropTypes.bool,
+	  scrollHide: _react.PropTypes.bool,
+	  resizeHide: _react.PropTypes.bool
+	}, _class2.defaultProps = {
+	  resizeHide: true
 	}, _temp)) || _class) || _class) || _class) || _class;
 
 	/* export default not fit for standalone, it will exports {default:...} */
 
 
 	module.exports = ReactTooltip;
-
 
 /***/ },
 /* 180 */
@@ -22585,8 +22625,8 @@
 	   * Hide all tooltip
 	   * @trigger ReactTooltip.hide()
 	   */
-	  target.hide = function () {
-	    dispatchGlobalEvent(_constant2.default.GLOBAL.HIDE);
+	  target.hide = function (target) {
+	    dispatchGlobalEvent(_constant2.default.GLOBAL.HIDE, { target: target });
 	  };
 
 	  /**
@@ -22618,6 +22658,13 @@
 	      // only `float` type cares e.clientX e.clientY
 	      var e = { currentTarget: event.detail.target };
 	      this.showTooltip(e, true);
+	    }
+	  };
+
+	  target.prototype.globalHide = function (event) {
+	    if (this.mount) {
+	      var hasTarget = event && event.detail && event.detail.target && true || false;
+	      this.hideTooltip({ currentTarget: hasTarget && event.detail.target }, hasTarget);
 	    }
 	  };
 	};
@@ -22674,10 +22721,10 @@
 	});
 
 	exports.default = function (target) {
-	  target.prototype.bindWindowEvents = function () {
+	  target.prototype.bindWindowEvents = function (resizeHide) {
 	    // ReactTooltip.hide
-	    window.removeEventListener(_constant2.default.GLOBAL.HIDE, this.hideTooltip);
-	    window.addEventListener(_constant2.default.GLOBAL.HIDE, this.hideTooltip, false);
+	    window.removeEventListener(_constant2.default.GLOBAL.HIDE, this.globalHide);
+	    window.addEventListener(_constant2.default.GLOBAL.HIDE, this.globalHide, false);
 
 	    // ReactTooltip.rebuild
 	    window.removeEventListener(_constant2.default.GLOBAL.REBUILD, this.globalRebuild);
@@ -22688,12 +22735,14 @@
 	    window.addEventListener(_constant2.default.GLOBAL.SHOW, this.globalShow, false);
 
 	    // Resize
-	    window.removeEventListener('resize', this.onWindowResize);
-	    window.addEventListener('resize', this.onWindowResize, false);
+	    if (resizeHide) {
+	      window.removeEventListener('resize', this.onWindowResize);
+	      window.addEventListener('resize', this.onWindowResize, false);
+	    }
 	  };
 
 	  target.prototype.unbindWindowEvents = function () {
-	    window.removeEventListener(_constant2.default.GLOBAL.HIDE, this.hideTooltip);
+	    window.removeEventListener(_constant2.default.GLOBAL.HIDE, this.globalHide);
 	    window.removeEventListener(_constant2.default.GLOBAL.REBUILD, this.globalRebuild);
 	    window.removeEventListener(_constant2.default.GLOBAL.SHOW, this.globalShow);
 	    window.removeEventListener('resize', this.onWindowResize);
@@ -22741,10 +22790,11 @@
 
 	    var dataEvent = ele.getAttribute('data-event') || event;
 	    var dataEventOff = ele.getAttribute('data-event-off') || eventOff;
-	      dataEvent.split(' ').forEach(function (event) {
-		  ele.removeEventListener(event, customListener);
+
+	    dataEvent.split(' ').forEach(function (event) {
+	      ele.removeEventListener(event, customListener);
 	      customListener = checkStatus.bind(_this, dataEventOff);
-		  ele.addEventListener(event, customListener, false);
+	      ele.addEventListener(event, customListener, false);
 	    });
 	    if (dataEventOff) {
 	      dataEventOff.split(' ').forEach(function (event) {
@@ -22806,7 +22856,6 @@
 
 	var customListener = void 0;
 
-
 /***/ },
 /* 185 */
 /***/ function(module, exports) {
@@ -22834,7 +22883,7 @@
 	  value: true
 	});
 
-	exports.default = function (e, target, node, place, effect, offset, countTransform) {
+	exports.default = function (e, target, node, place, effect, offset) {
 	  var tipWidth = node.clientWidth;
 	  var tipHeight = node.clientHeight;
 
@@ -22854,10 +22903,10 @@
 	  var windowWidth = window.innerWidth;
 	  var windowHeight = window.innerHeight;
 
-	  var _ref = countTransform && getParent(target, countTransform) || { parentTop: 0, parentLeft: 0 };
+	  var _getParent = getParent(node);
 
-	  var parentTop = _ref.parentTop;
-	  var parentLeft = _ref.parentLeft;
+	  var parentTop = _getParent.parentTop;
+	  var parentLeft = _getParent.parentLeft;
 
 	  // Get the edge offset of the tooltip
 
@@ -23152,11 +23201,14 @@
 	  value: true
 	});
 
-	exports.default = function (tip, children, multiline) {
+	exports.default = function (tip, children, getContent, multiline) {
 	  if (children) return children;
+	  if (getContent !== undefined && getContent !== null) return getContent; // getContent can be 0, '', etc.
+	  if (getContent === null) return null; // Tip not exist and childern is null or undefined
 
 	  var regexp = /<br\s*\/?>/;
 	  if (!multiline || multiline === 'false' || !regexp.test(tip)) {
+	    // No trim(), so that user can keep their input
 	    return tip;
 	  }
 
