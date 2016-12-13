@@ -10,7 +10,9 @@ export default class Filter extends React.Component {
 
     componentDidMount() {
 	//load saved filters from server
-	$.get('/backend/web/index.php?r=filter/list&report_id=' + report_id + '&user_id=' + user_id,
+	$.get('/backend/web/index.php?r=filter/list&report_id=' + report_id +
+	      '&user_id=' + user_id +
+	      '&report_type=' + report_type,
 	      (result) =>{
 		  var filters = JSON.parse(result);
 		  this.setState({filters: filters}, ReactTooltip.rebuild);
@@ -76,7 +78,6 @@ export default class Filter extends React.Component {
     }
 
     handleLoad(filter) {
-	console.log(filter);
 	eh.emitEvent('filterload', [filter[6]]);
 
 	return false;
@@ -102,7 +103,7 @@ export default class Filter extends React.Component {
   </div>
   <div className="box box-solid">
     <div className="box-header with-border">
-      <i className="fa fa-text-width"></i>
+      <i className="fa fa-filter"></i>
       <h3 className="box-title">已保存的过滤条件</h3>
     </div>
     <div className="box-body">

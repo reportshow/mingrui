@@ -30,11 +30,12 @@ class FilterController extends Controller
         ];
     }
 
-    public function actionList($user_id, $report_id)
+    public function actionList($user_id, $report_id, $report_type)
     {
          $filters = MingruiFilters::find()
               ->where(['user_id' => $user_id,
-                       'report_id' => $report_id])
+                       'report_id' => $report_id,
+                       'report_type' => $report_type])
               ->orderBy([
                              'id'=> SORT_DESC
                              ])
