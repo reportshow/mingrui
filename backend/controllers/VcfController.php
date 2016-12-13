@@ -100,6 +100,9 @@ class VcfController extends Controller
         }
         $data = json_encode($datas);
 
+        $this->view->params['showsave'] = true;
+        $this->view->params['report_id'] = $id;
+        
         return $this->render('view', [
             'model' => $model,
             'data'  => $data,
@@ -198,7 +201,7 @@ class VcfController extends Controller
 
         return $this->redirect(['index']);
     }
-
+    
     /**
      * Finds the MingruiVcf model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
