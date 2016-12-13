@@ -35,6 +35,9 @@ class FilterController extends Controller
          $filters = MingruiFilters::find()
               ->where(['user_id' => $user_id,
                        'report_id' => $report_id])
+              ->orderBy([
+                             'id'=> SORT_DESC
+                             ])
               ->asArray()
               ->all();
          $array = [];
@@ -57,8 +60,12 @@ class FilterController extends Controller
          $filter->report_id   = $filter_array[5];
          $filter->filter_json = $filter_array[6];
          $ret = $filter->save();
-
-         return true;
+         if($ret) {
+              return $filter->id;
+         }
+         else {
+              return -1;
+         }
     }
 
     public function actionFilterdelete($id)

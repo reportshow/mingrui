@@ -46,11 +46,17 @@ export default class Filter extends React.Component {
 		      report_id,
 		      filter_json
 		     ];
-	filters.unshift(filter);
-	this.setState({filters:filters}, ReactTooltip.rebuild);	
 	//save the new filters to server
 	var str_filter = JSON.stringify(filter);
-	$.get('/backend/web/index.php?r=filter/filteradd&str_filter=' + str_filter);
+	$.get('/backend/web/index.php?r=filter/filteradd&str_filter=' + str_filter,
+	      (result)=>{
+		  filter[0] = result;
+	      }
+	     );
+
+	filters.unshift(filter);
+	newfilter.note.value = '';
+	this.setState({filters:filters}, ReactTooltip.rebuild);	
     };
 
     handleDelete(filter) {
