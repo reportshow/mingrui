@@ -66,7 +66,7 @@ class RestClientSearch extends RestClient
   
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id, 
+            'rest_client.id' => $this->id, 
             'age' => $this->age, 
             'hospital_id' => $this->hospital_id, 
         ]);
