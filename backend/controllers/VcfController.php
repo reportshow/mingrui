@@ -11,6 +11,7 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use common\components\Statistics;
 
 /**
  * VcfController implements the CRUD actions for MingruiVcf model.
@@ -40,6 +41,7 @@ class VcfController extends Controller
      */
     public function actionIndex()
     {
+
         $searchModel = new MingruiVcfSearch();
         $params      = Yii::$app->request->queryParams;
         $query       = MingruiVcf::find();
@@ -64,6 +66,8 @@ class VcfController extends Controller
      */
     public function actionView($id)
     {
+       Statistics::countAdd('VCF查看');
+
         $model = $this->findModel($id);
 
         if(!empty($_GET['detail']) && $_GET['detail']=='only') {

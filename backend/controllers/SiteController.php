@@ -59,10 +59,12 @@ class SiteController extends Controller
 
     public function actionIndex()
     { 
+       //Yii::$app->statistics->init();
+
         return $this->render('index');
     }
     public function actionTest(){
-       return $this->redirect(['/restsample/index-report' ]);
+        exit('hhh');return $this->redirect(['/restsample/index-report' ]);
     }
 
     public function actionLoginsms($code, $mobile, $sms)

@@ -19,7 +19,7 @@ use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use backend\widgets\Pdf2html;
-
+use common\components\Statistics;
 /**
  * RestReportController implements the CRUD actions for RestReport model.
  */
@@ -57,7 +57,8 @@ class RestReportController extends Controller
     }
 
     public function actionSearch()
-    {
+    {	Statistics::countAdd('报告搜索');
+
         $searchModel = new RestReportSearch();
         $params      = Yii::$app->request->queryParams;
         //$params['RestReportSearch']['rest_report.status'] = 'finished';
@@ -80,6 +81,8 @@ class RestReportController extends Controller
      */
     public function actionIndex()
     {
+        
+    	Statistics::countAdd('报告管理');
         $this->redirect(['/restsample/index-report','RestSampleSearch[name]'=>'']);
         return;
 
@@ -125,7 +128,7 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
         ]);
     }
     public function actionMyreport()
-    {
+    { 
         $role = Yii::$app->user->Identity->role_text;
         if ($role == 'doctor') {
 
@@ -140,14 +143,18 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
             echo $query->createCommand()->getRawSql();
             return Nodata::widget(['message' => '没有与您相关的报告记录' . $mobile]);
             
-        }
+        } 
         $reports = $smp->restReports; //多个报告
+
         if (is_array($reports) && count($reports) > 0) {
             $rpt = $reports[0];
+            
             return $this->render('view-guest', [
                 'model'    => $rpt,
                 'comments' => $this->getComments($rpt->id),
             ]);
+        }else{ 
+        	return Nodata::widget(['message' => '您的报告还未生成，请稍后再来查看' ]);
         }
 
     }
@@ -164,6 +171,8 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
      */
     public function actionView($id)
     {
+        Statistics::countAdd('报告查看');
+
         $viewname = 'view';
 
         if (Yii::$app->user->can('admin')) {
