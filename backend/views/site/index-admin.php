@@ -159,3 +159,6 @@ if (option && typeof option === "object") {
 }
 
   </script>
+
+
+<?php  include('modulescount.php'); ?>

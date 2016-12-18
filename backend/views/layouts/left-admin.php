@@ -2,7 +2,7 @@
 <?php
 
 $menu = [
-    ['label' => '管理后台', 'options' => ['class' => 'header']],
+    ['label' => '管理后台', 'url'=>'#','options' => ['class' => 'header']],
     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
 ];
 
@@ -32,7 +32,7 @@ $menu[] = [
         [
             'label' => '外源数据分析',
             'icon'  => 'fa fa-puzzle-piece',
-            'url'   => ['vcf/index'],
+            'url'   => ['/vcf/index'],
             'items' => [
 
             ],
@@ -40,7 +40,7 @@ $menu[] = [
         [
             'label' => '外源报告',
             'icon'  => 'fa fa-ioxhost',
-            'url'   => ['reportstore/index'],
+            'url'   => ['/reportstore/index'],
             'items' => [
 
             ],
@@ -278,4 +278,5 @@ if (yii::$app->user->can('admin')) {
 } //if admin
 
 
+ 
 return $menu;

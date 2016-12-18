@@ -3,6 +3,13 @@
  use yii\helpers\Html;
 use backend\widgets\WeixinMenubar;
 use backend\components\Functions;
+
+
+use common\components\Statistics;
+Statistics::doCount();
+
+//var_dump($menu);
+
 ?>
 <style type="text/css">
  
