@@ -1,8 +1,8 @@
 module.exports = {
-    entry: './src/app_external.js',
+    entry: './src/filter/filter_div.js',
     output: {
 	path: './bin',
-	filename: 'app_external.js',
+	filename: 'filter.js',
     },
     module: {
 	loaders: [{

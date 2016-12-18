@@ -396,6 +396,9 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
         }
         $data = json_encode($datas);
 
+        $this->view->params['showsave'] = true;
+        $this->view->params['report_id'] = $id;
+
         return $this->render('analyze', [
             'model' => $model,
             'data'  => $data,

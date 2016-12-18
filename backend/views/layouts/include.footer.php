@@ -48,12 +48,6 @@ use backend\components\Functions;
 <script src="plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE App -->
 <!--script src="<?=$directoryAsset?>/js/app.min.js"></script-->
-
-
-
-<!-- AdminLTE for demo purposes -->
-<script src="<?=$directoryAsset?>/js/demo.js"></script>
-
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
   $.widget.bridge('uibutton', $.ui.button);

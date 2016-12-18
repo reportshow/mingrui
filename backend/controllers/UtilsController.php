@@ -14,7 +14,7 @@ class UtilsController extends Controller
 
     public function init()
     {
-        session_start();
+
     }
     
     public function actionSendsms($code,$mobile)

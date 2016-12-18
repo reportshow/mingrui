@@ -83,10 +83,30 @@ return;
 <?=LoadingPage::widget()?>
 
 <div id="app"></div>
+
+<!-- The Right Sidebar -->
+<aside class="control-sidebar control-sidebar-light">
+  <!-- general form elements -->
+  <div class="box box-primary" id="filter"></div>
+  <!-- /.box -->
+</aside>
+<!-- The sidebar's background -->
+<!-- This div must placed right after the sidebar for it to work-->
+<div class="control-sidebar-bg"></div>
+<script>
+  var user_id = <?php echo Yii::$app->user->id ?>;
+  var report_id = <?php echo $this->params['report_id'] ?>;
+  var report_type = 1;
+</script>
+<script src='report/EventEmitter-4.0.3.min.js'></script>
+<script>
+    var eh = new EventEmitter();
+</script>
+<script src="report/filter.js"></script>
+
 <script>
     var tableData = <?php echo $data ?>;
 </script>
-
 <link type="text/css" href="css/multiselect.css" rel="stylesheet" />
 <script src="report/app_external.js"></script>
 <script src="report/tableExport.js"></script>
