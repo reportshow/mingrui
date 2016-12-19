@@ -20,7 +20,7 @@ class Statistics extends Component
          $actionID     = Yii::$app->controller->action->id;
 
          self::countAdd( $controllerID);
-
+         self::countAdd( $controllerID.'/'.$actionID);
     }
     public static function countAdd($actId) { 
     	$data = self::getCache('statistics'); 
@@ -31,7 +31,7 @@ class Statistics extends Component
     	$data[$actId] = $data[$actId]+1;
         self::saveCache('statistics', $data);
     }
-    public function getCache($name){ 
+    public static function getCache($name){ 
     	$file =  self::cachefile($name);
     	if(!file_exists($file)){ 
     		return [];
@@ -39,13 +39,13 @@ class Statistics extends Component
     	include $file;
     	return $CACHE;
     }
-    public function saveCache($name, $obj){ 
+    public static function saveCache($name, $obj){ 
     	$file =  self::cachefile($name);
     	$data = "<?php  \n  \$CACHE=" . var_export($obj,1) . ";  ?>";
     	file_put_contents($file, $data);
 
     }
-    public function cachefile($name){ 
+    public static function cachefile($name){ 
     	return "".$name .'.php';
     }
 }
