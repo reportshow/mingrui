@@ -66,7 +66,7 @@ class VcfController extends Controller
      */
     public function actionView($id)
     {
-       Statistics::countAdd('VCF查看');
+       //Statistics::countAdd('VCF查看');
 
         $model = $this->findModel($id);
 

@@ -98,4 +98,26 @@ class UtilsController extends Controller
         imageDestroy($im);
         exit;
     }
+
+    public function actionSavefile(){ 
+    	//$_FILE['upload']
+    	$callback =$_GET["CKEditorFuncNum"]; 
+    	$fileName ='upload/editor/' . md5(time().rand()) .$_FILES['upload']['name'];
+
+
+    	if (move_uploaded_file($_FILES['upload']['tmp_name'], $fileName  )) {
+		     return  "<script type=\"text/javascript\">"
+                ." window.parent.CKEDITOR.tools.callFunction( $callback ,'{$fileName}','');"
+                ."  </script> ";
+		} else { 
+
+			return "upload failed!";
+		}
+
+
+
+
+    	
+
+    }
 }

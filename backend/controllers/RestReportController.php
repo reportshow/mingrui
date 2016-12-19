@@ -82,7 +82,7 @@ class RestReportController extends Controller
     public function actionIndex()
     {
         
-    	Statistics::countAdd('报告管理');
+    	//Statistics::countAdd('报告管理');
         $this->redirect(['/restsample/index-report','RestSampleSearch[name]'=>'']);
         return;
 
@@ -171,7 +171,7 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
      */
     public function actionView($id)
     {
-        Statistics::countAdd('报告查看');
+        //Statistics::countAdd('报告查看');
 
         $viewname = 'view';
 
