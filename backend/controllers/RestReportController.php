@@ -650,8 +650,9 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
               );
 
         // echo $matches[1];
-         
-         return trim($matches[1]);
+         if(count($matches) > 0){
+            return trim($matches[1]);
+         }
     }
     
     // public function
