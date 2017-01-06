@@ -36,7 +36,7 @@ if ($pingjia) {
   padding: 8px;
   }
 
-  tr:nth-child(even){background-color: #f2f2f2}
+/*tr:nth-child(even){background-color: #f2f2f2}*/
 
   input::-webkit-input-placeholder { /* WebKit browsers */
 　　color:#f99;
@@ -173,8 +173,15 @@ for(var gene in data) {
           areas[i] = area;
 
           //fill the tables
-          var row = "<tr><td>" + 'E' + (i+1) + "</td><td>" +
-               data[gene].areas[i] .start + "</td><td>"+ data[gene].areas[i].end +"</td>";
+          if(data[gene].areas[i].bad){
+               var row = '<tr bgcolor="#ddd"><td>' + 'E' + (i+1) + "</td><td>" +
+                    data[gene].areas[i] .start + "</td><td>"+ data[gene].areas[i].end +"</td>";
+          }
+          else {
+               var row = '<tr><td>' + 'E' + (i+1) + "</td><td>" +
+                    data[gene].areas[i] .start + "</td><td>"+ data[gene].areas[i].end +"</td>";
+          }
+               
           if(data[gene].areas[i].bad){
                row = row + "<td>是</td>";
           }
