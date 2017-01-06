@@ -671,6 +671,9 @@ export default class TableExampleComplex extends React.Component {
 	    <TableHeaderColumn colSpan="8" style={{verticalAlign: 'bottom', fontWeight:'bold', fontSize:'120%', overflow:'hidden'}}>
 	      我的选点(目前选中: {this.state.selected.length} 个)
 	    </TableHeaderColumn>
+	    <TableHeaderColumn  colSpan="4" style={{verticalAlign: 'bottom', textAlign:'right'}}>
+	      <a id='export' data-type="xls" href="javascript:;" style={{color: 'blue', overflow:'hidden'}}>下载过滤结果</a>
+	    </TableHeaderColumn>
 	  </TableRow>
 	  <TableRow>
 	    <TableHeaderColumn data-tip="基因(大小)" style={{overflow:'hidden'}}>基因(大小)</TableHeaderColumn>
@@ -720,9 +723,6 @@ export default class TableExampleComplex extends React.Component {
 	   >
 	  <TableRow>
 	    <TableHeaderColumn colSpan="4" style={{verticalAlign: 'bottom', fontWeight:'bold', fontSize:'120%', overflow:'hidden'}} data-tip={"当前选择：" +this.state.count +'/'+tableData.length+"(筛选/全部)"}>当前选择：{this.state.count} /{tableData.length}(筛选/全部)
-	    </TableHeaderColumn>
-	    <TableHeaderColumn  colSpan="4" style={{verticalAlign: 'bottom', textAlign:'right'}}>
-	      <a id='export' data-type="xls" href="javascript:;" style={{color: 'blue', overflow:'hidden'}}>下载过滤结果</a>
 	    </TableHeaderColumn>
 	  </TableRow>
 	  <TableRow>
