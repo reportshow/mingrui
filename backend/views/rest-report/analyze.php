@@ -66,6 +66,7 @@ AppAsset::register($this);
 
 <script>
     var tableData = <?php echo $data ?>;
+    var exportData = [];
 </script>
 
 <link type="text/css" href="css/multiselect.css" rel="stylesheet" />

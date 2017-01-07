@@ -334,6 +334,7 @@ export default class TableExampleComplex extends React.Component {
 	var count = 0;
 
 	var queryResult = [];
+	exportData = [];
 
 	tableData.forEach(function(record){
 	    var result = true;
@@ -348,6 +349,16 @@ export default class TableExampleComplex extends React.Component {
 		    queryResult.push(record);
 		}
 		count++;
+		var temp = [];
+		temp.push(record[0]);//基因
+		temp.push(record[21]);//突变信息
+		temp.push(record[6]);//突变类型
+		temp.push(record[19]);//疾病信息
+		temp.push(record[22]);//HET
+		temp.push(record[24]);//HGDM
+		temp.push(record[23]);//正常人群携带率		
+		exportData.push(temp);
+		
 	    }
 	}, this);
 

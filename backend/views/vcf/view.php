@@ -106,6 +106,7 @@ return;
 
 <script>
     var tableData = <?php echo $data ?>;
+    var exportData = [];
 </script>
 <link type="text/css" href="css/multiselect.css" rel="stylesheet" />
 <script src="report/app_external.js"></script>

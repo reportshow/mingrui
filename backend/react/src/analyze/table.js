@@ -23,6 +23,7 @@ const muiTheme = getMuiTheme({
     },
 });
 
+
 export default class TableExampleComplex extends React.Component {
     constructor(props) {
 	super(props);
@@ -333,7 +334,8 @@ export default class TableExampleComplex extends React.Component {
 	var count = 0;
 	
 	var queryResult = [];
-
+	exportData = [];
+	
 	tableData.forEach(function(record){
 	    var result = true;
 	    for(var i in this.filters) {
@@ -347,9 +349,18 @@ export default class TableExampleComplex extends React.Component {
 		    queryResult.push(record);
 		}
 		count++;
+		var temp = [];
+		temp.push(record[0] +'(' + record[19] + ')');//基因
+		temp.push(record[25]);//突变信息
+		temp.push(record[5]);//突变类型
+		temp.push(record[23]);//疾病信息
+		temp.push(record[26]);//HET
+		temp.push(record[22]);//HGDM
+		temp.push(record[29]);//正常人群携带率
+		exportData.push(temp);
 	    }
 	}, this);
-
+	
 	var filters = {
 	    gene_value: this.state.gene_value,
 	    tblx_values: this.state.tblx_values,
