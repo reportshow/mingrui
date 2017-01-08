@@ -86,6 +86,19 @@ export default class TableExampleComplex extends React.Component {
 	    tableData[key].push(key);
 	    tableData[key].push(false);
 	}
+	//load selection from db and update the state
+	$.get('/backend/web/index.php?r=vcf/selectionload&report_id=' + report_id +
+	      '&user_id=' + user_id +
+	      '&report_type=' + report_type,
+	      (result) =>{
+		  var temp_array = []
+		  var selections = JSON.parse(result);
+		  selections.forEach(function(selection){
+		      tableData[selection][26] = true;
+		      temp_array.push(tableData[selection]);
+		  });
+		  this.setState({selected:temp_array});
+	      });
 	    
 	this.filter();
 
@@ -417,12 +430,22 @@ export default class TableExampleComplex extends React.Component {
 
     handleRowSelect = (rows) => {
 	var temp = [];
+	var selection = [];
 	if(rows ==='all') {
 	    for(var key in this.state.queryResult)
 	    {
 		tableData[this.state.queryResult[key][25]][26] = true;
 		this.state.queryResult[key][26] = true;
+		selection.push(key);
 	    }
+	    //save the select to db
+	    var str_selection = JSON.stringify(selection);
+	    $.get('/backend/web/index.php?r=vcf/selectionadd&selection_json=' + str_selection
+		  + '&report_id=' + report_id
+		  + '&user_id=' + user_id
+		  + '&report_type=' + report_type
+		 );
+	    
 	    this.setState({selected:this.state.queryResult}, this.filter);
 	    return;
 	}
@@ -432,21 +455,87 @@ export default class TableExampleComplex extends React.Component {
 		tableData[this.state.queryResult[key][25]][26] = false;
 		this.state.queryResult[key][26] = false;
 	    }
+	    selection = [];
+	    //save the select to db
+	    var str_selection = JSON.stringify(selection);
+	    $.get('/backend/web/index.php?r=vcf/selectionadd&selection_json=' + str_selection
+		  + '&report_id=' + report_id
+		  + '&user_id=' + user_id
+		  + '&report_type=' + report_type
+		 );
+	    
 	    this.setState({selected:[]}, this.filter);
 	    return;
 	}
 
 	for(var i in tableData) {
 	    tableData[i][26] = false;
+	    selection = [];
 	}
 	for(var i in this.state.queryResult) {
 	    this.state.queryResult[i][26] = false;
 	}
 	for(var i in rows) {
 	    tableData[this.state.queryResult[rows[i]][25]][26] = true;
+	    selection.push(this.state.queryResult[rows[i]][25]);
 	    this.state.queryResult[rows[i]][26] = true;
 	    temp.push(this.state.queryResult[rows[i]]);
 	}
+	//save the select to db
+	var str_selection = JSON.stringify(selection);
+	
+	$.get('/backend/web/index.php?r=vcf/selectionadd&selection_json=' + str_selection
+		  + '&report_id=' + report_id
+		  + '&user_id=' + user_id
+		  + '&report_type=' + report_type
+		 );
+	
+	this.setState({selected:temp}, this.filter);
+    };
+
+    handleRowSelectionSelect = (rows) => {
+	var temp = [];
+	var selection = [];
+	if(rows ==='none') {
+	    for(var key in this.state.queryResult)
+	    {
+		tableData[this.state.queryResult[key][25]][26] = false;
+		this.state.queryResult[key][26] = false;
+	    }
+	    selection = [];
+	    //save the select to db
+	    var str_selection = JSON.stringify(selection);
+	    $.get('/backend/web/index.php?r=vcf/selectionadd&selection_json=' + str_selection
+		  + '&report_id=' + report_id
+		  + '&user_id=' + user_id
+		  + '&report_type=' + report_type
+		 );
+	
+	    this.setState({selected:[]}, this.filter);
+	    return;
+	}
+
+	for(var i in tableData) {
+	    tableData[i][26] = false;
+	    selection = [];
+	}
+	for(var i in this.state.queryResult) {
+	    this.state.queryResult[i][26] = false;
+	}
+	for(var i in rows) {
+	    tableData[this.state.queryResult[rows[i]][25]][26] = true;
+	    selection.push(this.state.queryResult[rows[i]][25]);
+	    this.state.queryResult[rows[i]][26] = true;
+	    temp.push(this.state.queryResult[rows[i]]);
+	}
+	//save the select to db
+	var str_selection = JSON.stringify(selection);
+	$.get('/backend/web/index.php?r=vcf/selectionadd&selection_json=' + str_selection
+		  + '&report_id=' + report_id
+		  + '&user_id=' + user_id
+		  + '&report_type=' + report_type
+		 );
+		
 	this.setState({selected:temp}, this.filter);
     };
 
@@ -690,22 +779,23 @@ export default class TableExampleComplex extends React.Component {
         </a>
       </div>
       <Table
-	 fixedHeader={true}
-	 fixedFooter={this.state.fixedFooter}
-	 selectable={false}
-	 multiSelectable={false}
-	 style={{backgroundColor:"lightblue"}}
-	 >	
+        fixedHeader={this.state.fixedHeader}
+        fixedFooter={this.state.fixedFooter}
+        selectable={this.state.selectable}
+        multiSelectable={this.state.multiSelectable}
+        onRowSelection={this.handleRowSelectionSelect}
+	style={{backgroundColor:"lightblue"}}
+	>	
 	<TableHeader
-	   displaySelectAll={false}
-	   adjustForCheckbox={false}
-	   enableSelectAll={false}
-	   >
+	  displaySelectAll={false}
+          adjustForCheckbox={this.state.adjustForCheckboxes}
+          enableSelectAll={this.state.enableSelectAll}
+	  >
 	  <TableRow>
-	    <TableHeaderColumn colSpan="8" style={{verticalAlign: 'bottom', fontWeight:'bold', fontSize:'120%', overflow:'hidden'}}>
+	    <TableHeaderColumn colSpan="4" style={{verticalAlign: 'bottom', fontWeight:'bold', fontSize:'120%', overflow:'hidden'}}>
 	      我的选点(目前选中: {this.state.selected.length} 个)
 	    </TableHeaderColumn>
-	    <TableHeaderColumn  colSpan="3" style={{verticalAlign: 'bottom', textAlign:'right'}}>
+	    <TableHeaderColumn  colSpan="4" style={{verticalAlign: 'bottom', textAlign:'right'}}>
 	      <a id='export' data-type="xls" href="javascript:;" style={{color: 'blue', overflow:'hidden'}}>下载过滤结果</a>
 	    </TableHeaderColumn>
 	  </TableRow>
@@ -721,13 +811,13 @@ export default class TableExampleComplex extends React.Component {
 	  </TableRow>
 	</TableHeader>
 	<TableBody
-	   displayRowCheckbox={false}
-	   deselectOnClickaway={false}
-	   showRowHover={this.state.showRowHover}
-	   stripedRows={this.state.stripedRows}
-	   >
+          displayRowCheckbox={this.state.showCheckboxes}
+	  deselectOnClickaway={this.state.deselectOnClickaway}
+	  showRowHover={this.state.showRowHover}
+	  stripedRows={this.state.stripedRows}
+	  >
 	  {this.state.selected.map( (row, index) => (
-	  <TableRow key={index}>
+	  <TableRow key={index} selected={row[26]}>
 	    <TableRowColumn data-tip={row[0]} style={{position:'relative'}}>{row[0]}</TableRowColumn>//基因
 	    <TableRowColumn data-tip={row[21]} style={{position:'relative'}} dangerouslySetInnerHTML={{__html: row[21]}} />//突变信息
 	    <TableRowColumn data-tip={row[6]} style={{position:'relative'}}>{row[6]}</TableRowColumn>//突变类型
@@ -756,7 +846,7 @@ export default class TableExampleComplex extends React.Component {
 	   enableSelectAll={this.state.enableSelectAll}
 	   >
 	  <TableRow>
-		<TableHeaderColumn colSpan="4" style={{verticalAlign: 'bottom', fontWeight:'bold', fontSize:'120%', overflow:'hidden'}} data-tip={"当前选择：" +this.state.count +'/'+tableData.length+"(筛选/全部)"}>当前选择：{this.state.count} /{tableData.length}(筛选/全部)
+		<TableHeaderColumn colSpan="8" style={{verticalAlign: 'bottom', fontWeight:'bold', fontSize:'120%', overflow:'hidden'}} data-tip={"当前选择：" +this.state.count +'/'+tableData.length+"(筛选/全部)"}>当前选择：{this.state.count} /{tableData.length}(筛选/全部)
 	    </TableHeaderColumn>
 	  </TableRow>
 	  <TableRow>

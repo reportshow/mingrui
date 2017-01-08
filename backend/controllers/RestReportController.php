@@ -11,6 +11,7 @@ use backend\models\RestReport;
 use backend\models\RestReportSearch;
 use backend\models\RestSample;
 use backend\models\VoiceRecord;
+use backend\models\MingruiSelections;
 use backend\widgets\Nodata;
 use common\models\User;
 use common\models\WechatUser;
@@ -473,6 +474,38 @@ $query = $query->andWhere(['rest_report.status' => 'finished']);
         ]);
     }
 
+    public function actionSelectionadd($selection_json, $report_id, $user_id, $report_type)
+    {
+         $selection = MingruiSelections::find()
+              ->where("report_id=$report_id AND user_id=$user_id AND report_type=$report_type")
+              ->one();
+         if($selection) {
+              $selection->selection_json = $selection_json;
+              $selection->save();
+         }
+         else {
+              $selection = new MingruiSelections;
+              $selection->selection_json = $selection_json;
+              $selection->report_id = $report_id;
+              $selection->user_id = $user_id;
+              $selection->report_type = $report_type;
+              $selection->save();
+         }              
+    }
+
+    public function actionSelectionload($report_id, $user_id, $report_type)
+    {
+         $selection = MingruiSelections::find()
+              ->where("report_id=$report_id AND user_id=$user_id AND report_type=$report_type")
+              ->one();
+         if($selection) {
+              return $selection->selection_json;
+         }
+         else {
+              return "[]";
+         }
+    }
+    
     /* //import gene areas data to DB */
     /* public function actionImportgeneareas() */
     /* { */

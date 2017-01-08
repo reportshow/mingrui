@@ -7,6 +7,7 @@ use backend\models\MingruiVcf;
 use backend\models\MingruiVcfSearch;
 use backend\models\SaveImage;
 use backend\models\MingruiScore;
+use backend\models\MingruiSelections;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -204,6 +205,39 @@ class VcfController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionSelectionadd($selection_json, $report_id, $user_id, $report_type)
+    {
+         file_put_contents("temp.txt", $selection_json);
+         $selection = MingruiSelections::find()
+              ->where("report_id=$report_id AND user_id=$user_id AND report_type=$report_type")
+              ->one();
+         if($selection) {
+              $selection->selection_json = $selection_json;
+              $selection->save();
+         }
+         else {
+              $selection = new MingruiSelections;
+              $selection->selection_json = $selection_json;
+              $selection->report_id = $report_id;
+              $selection->user_id = $user_id;
+              $selection->report_type = $report_type;
+              $selection->save();
+         }              
+    }
+
+    public function actionSelectionload($report_id, $user_id, $report_type)
+    {
+         $selection = MingruiSelections::find()
+              ->where("report_id=$report_id AND user_id=$user_id AND report_type=$report_type")
+              ->one();
+         if($selection) {
+              return $selection->selection_json;
+         }
+         else {
+              return "[]";
+         }
     }
     
     /**
