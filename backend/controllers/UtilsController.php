@@ -17,6 +17,9 @@ class UtilsController extends Controller
 
     }
     
+    public function actionMsg($msg){ 
+    	return $msg;
+    }
     public function actionSendsms($code,$mobile)
     {
         if ($_SESSION['verify_code'] != $code) {

@@ -46,7 +46,8 @@ class MingruiOrderSearch extends MingruiOrder
     public function search($params)
     {
         $query = MingruiOrder::find();
-        $quer = $query->joinWith(['mydoctor']);
+        $quer = $query->joinWith(['mydoctor'])
+         ->joinWith(['mydoctor.hospital']);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -74,7 +75,7 @@ class MingruiOrderSearch extends MingruiOrder
 
             ->andFilterWhere(['like', 'rest_client.name', $this->docotr_name])
             ->andFilterWhere(['like', 'rest_client.tel', $this->doctor_tel])
-            ->andFilterWhere(['like', 'doctor.hospital', $this->doctor_area])
+            ->andFilterWhere(['like', 'rest_danwei.name', $this->doctor_area])
             ;
 
 

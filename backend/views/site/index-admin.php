@@ -6,6 +6,7 @@ use backend\assets\AppAsset;
 use backend\widgets\ChartLine;
 use backend\widgets\ChartLine2;
 use backend\widgets\NumberBox;
+use backend\components\Functions;
 
 use backend\models\Status;
 
@@ -32,16 +33,16 @@ echo "-->";
       <div class="row">        
          
           <div class="col-lg-3 col-xs-6">
-            <?= NumberBox::widget( ['tag'=>'医生', 'number'=>$count['doctor'], 'bgcolor'=>'aqua','icon'=>'fa fa-user-md']);  ?>
+            <?= NumberBox::widget( ['tag'=>'医生', 'link'=>Functions::url(['rest-client/index']), 'number'=>$count['doctor'], 'bgcolor'=>'aqua','icon'=>'fa fa-user-md']);  ?>
           </div> 
           <div class="col-lg-3 col-xs-6">
-            <?= NumberBox::widget( ['tag'=>'患者', 'number'=>$count['sick'] ,'bgcolor'=>'green','icon'=>'person']);  ?>
+            <?= NumberBox::widget( ['tag'=>'患者', 'link'=>Functions::url(['restsample/index']), 'number'=>$count['sick'] ,'bgcolor'=>'green','icon'=>'person']);  ?>
           </div> 
           <div class="col-lg-3 col-xs-6">
-            <?= NumberBox::widget( ['tag'=>'已报告', 'number'=>$count['finish'], 'bgcolor'=>'yellow','icon'=>'stats-bars']);  ?>
+            <?= NumberBox::widget( ['tag'=>'已报告', 'link'=>Functions::url(['utils/msg','msg'=>'当前页面需要设计！']), 'number'=>$count['finish'], 'bgcolor'=>'yellow','icon'=>'stats-bars']);  ?>
           </div>
           <div class="col-lg-3 col-xs-6">
-            <?= NumberBox::widget( ['tag'=>'分析中', 'number'=>$count['unfinish'], 'bgcolor'=>'red','icon'=>'android-time']);  ?>
+            <?= NumberBox::widget( ['tag'=>'分析中', 'link'=>Functions::url(['utils/msg','msg'=>'当前页面需要设计！']), 'number'=>$count['unfinish'], 'bgcolor'=>'red','icon'=>'android-time']);  ?>
           </div>
         
       </div>

@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
      ?>
 
     <p>
-        <?=Html::a('新建订单', ['create'], ['class' => 'btn btn-success'])?>
+        <?=Html::a('新建订单', ['create'], ['class' => 'hide btn btn-success'])?>
     </p>
     <?=GridView::widget([
     'dataProvider' => $dataProvider,
