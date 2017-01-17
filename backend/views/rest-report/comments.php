@@ -1,5 +1,5 @@
 <?php
-
+use backend\assets\AppAsset;
 use backend\components\Functions;
 use backend\widgets\Comments;
 use backend\widgets\RestrepotTop2;
