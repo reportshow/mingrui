@@ -14,8 +14,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id
  
 $this->params['breadcrumbs'][] = '意见反馈';
 
- 
-
+AppAsset::register($this);
 ?>
 <div class="rest-report-view">
 
