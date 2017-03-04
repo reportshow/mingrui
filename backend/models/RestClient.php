@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use common\models\User;
 
 /**
  * This is the model class for table "rest_client".
@@ -99,7 +100,7 @@ class RestClient extends \yii\db\ActiveRecord
      */
     public function getRestSamples()
     {
-        return $this->hasMany(RestSample::className(), ['doctor_id' => 'id']);
+        return $this->hasMany(RestSample::className(), ['id' => 'doctor_id']);
     }
 
 
@@ -117,6 +118,16 @@ class RestClient extends \yii\db\ActiveRecord
     public function getScore()
     {
         return $this->hasOne(MingruiScore::className(), ['cid' => 'id']);
+    }
+
+    public function getUserinfo(){ 
+    	//return $this->hasOne(User::className(), ['id' => 'role_tab_id']);
+    	return User::find()->where(['role_tab_id'=>$this->id])->one();
+
+    }
+
+    public function getSaler(){ 
+    	//return $this->hasOne(User::className(), ['id' => 'role_tab_id']);
     }
     public function getSampleCount(){ 
     	return RestSample::find()->where(['doctor_id'=> $this->id])

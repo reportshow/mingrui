@@ -48,6 +48,8 @@ $this->params['breadcrumbs'][] = $this->title;
             return $model->hospital->name;
         }],
         'department',
+        ['attribute'=>'salesname',
+         'value' =>'hospital.sales.name', 'label'=>'销售姓名'],
         'email:email',
         'tel',
         // 'school',
@@ -64,10 +66,21 @@ $this->params['breadcrumbs'][] = $this->title;
         // 'hospital_id',
 
         // 'pianhao:ntext',
-
+        ['label'=>'激活',
+         'format'=>'raw',
+          'value'=>function($model){ 
+          		if($model->userinfo){ 
+					return "<i class='fa fa-check-square-o text-green'> </i>";
+          		}else{ 
+					return "<i class='fa fa-square-o'> </i>"; 
+          		}
+            	
+          },
+          'options'   => ['width' => '60px;'],
+        ],
         ['class' => 'yii\grid\ActionColumn'],
 
-        ['attribute' => ' ', 'format' => 'raw', 'label' => '留言',
+       /* ['attribute' => ' ', 'format' => 'raw', 'label' => '留言',
             'value'      => function ($model) {
                 $popCount = $model->commentCount();
                 $pop      = '';
@@ -76,7 +89,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
                 $label = '留言' . $pop;
                 return html::a($label, ['/guestbook/view', 'id' => 'gb' . $model->id]);
-            }],
+            }
+        ],  */
+
     ],
 ]);?>
 </div>

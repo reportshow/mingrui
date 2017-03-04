@@ -70,6 +70,9 @@ class MingruiComments extends \yii\db\ActiveRecord
         }
         
     }
+    public function getReport(){ 
+    	return   $this->hasOne(RestReport::className(), ['id' => 'report_id']);
+    }
     public function getUnread(){ 
     	return $this->find()
     	->where(['isread'=>0])->count();

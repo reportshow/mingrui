@@ -156,6 +156,11 @@ $menu[] = ['label' => '互动平台',
             'icon'  => 'fa fa-pie-chart',
             'url'   => ['/comments/'],
         ],
+                [
+            'label' => '报告留言',
+            'icon'  => 'fa fa-pie-chart',
+            'url'   => ['/comments/reports'],
+        ],
         [
             'label' => '联系方式',
             'icon'  => 'fa fa-pie-chart',

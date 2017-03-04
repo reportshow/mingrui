@@ -13,6 +13,7 @@ use backend\models\RestClient;
 class RestClientSearch extends RestClient
 {
     public $hospitalname;
+    public $salesname;
     /**
      * @inheritdoc
      */
@@ -21,7 +22,7 @@ class RestClientSearch extends RestClient
         return [
             [['id', 'age', 'hospital_id'], 'integer'],
             [[
-            'hospitalname',
+            'hospitalname', 'salesname',
             'name', 'sex', 'birthplace', 'email', 'tel', 'school', 'education', 
             'experience', 'employed', 'department', 'worktime', 'position', 
             'speciality', 'hobby', 'notes', 'zhuren', 'pianhao'], 'safe'],
@@ -48,7 +49,8 @@ class RestClientSearch extends RestClient
     {
         if(!$query) $query = RestClient::find();
 
-        $query = $query->joinWith(['hospital']);
+        $query = $query->joinWith(['hospital']) 
+         ->joinWith(['hospital.sales']);
         //$query = $query->joinWith('mingrui_comments');
         // add conditions that should always apply here
 
@@ -89,9 +91,11 @@ class RestClientSearch extends RestClient
             ->andFilterWhere(['like', 'notes', $this->notes])
             ->andFilterWhere(['like', 'zhuren', $this->zhuren])
             ->andFilterWhere(['like', 'pianhao', $this->pianhao]) 
-            ->andFilterWhere(['like', 'rest_danwei.name', $this->hospitalname]);
+            ->andFilterWhere(['like', 'rest_danwei.name', $this->hospitalname])
+            ->andFilterWhere(['like', 'rest_sales.name', $this->salesname])
+            ;
 
-        //echo $query->createCommand()->getRawSql(); exit;   
+       // echo $query->createCommand()->getRawSql(); exit;   
         return $dataProvider;
     }
 }
