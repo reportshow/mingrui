@@ -27,11 +27,12 @@ $this->params['breadcrumbs'][] = $this->title;
         ['class' => 'yii\grid\SerialColumn', 'options' => ['width' => '40']],
 
         ['attribute' => 'id', 'options' => ['width' => '60']],
-        ['attribute' => 'docotr_name', 'label' => '医生姓名', 'value' => 'mydoctor.name'],
-        ['attribute' => 'doctor_tel', 'label' => '联系方式', 'value' => 'mydoctor.tel'],
+        ['attribute' => 'docotr_name', 'label' => '医生姓名', 'value' => 'mydoctor.name', 'options' => ['width' => '100']],
+        ['attribute' => 'doctor_tel', 'label' => '联系方式', 'value' => 'mydoctor.tel','options' => ['width' => '160']],
         ['attribute'=>'doctor_area','label' => '医院','value' =>'mydoctor.hospital.name' ],
         ['attribute'=>'createtime',
-         'filter'    => DateInput::widget(['attribute' => 'createtime', 'model' => $searchModel])
+         'filter'    => DateInput::widget(['attribute' => 'createtime', 'model' => $searchModel]),
+         'options' => ['width' => '180']
          ],
         ['attribute' => 'status',
             'filter'     => MingruiOrder::$statutText,
@@ -39,10 +40,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'value'      => 'statustxt',
             'options' => ['width' => '100']
         ], 
-        'assigned',
+        ['attribute' =>'assigned',
+        'options' => ['width' => '100']
+        ],
         // 'notes:ntext',
 
-        ['class' => 'yii\grid\ActionColumn'],
+        ['class' => 'yii\grid\ActionColumn','options' => ['width' => '100']],
     ],
 ]);?>
 </div>

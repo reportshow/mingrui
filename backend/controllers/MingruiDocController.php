@@ -148,8 +148,10 @@ class MingruiDocController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+        $urlx = parse_url($_SERVER['HTTP_REFERER']);        
+        parse_str($urlx['query'], $query);
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index','type'=>$query['type']]);
     }
 
     /**

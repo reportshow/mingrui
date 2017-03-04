@@ -52,6 +52,11 @@ class MingruiOrderSearch extends MingruiOrder
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+             'sort' => [
+			        'defaultOrder' => [
+			            'createtime' => SORT_DESC,            
+			        ]
+			    ],
         ]);
 
         $this->load($params);
