@@ -1,5 +1,5 @@
 <?php
-
+use backend\assets\AppAsset;
 use backend\components\Functions;
 use backend\widgets\Comments;
 use backend\widgets\RestrepotTop2;
@@ -14,8 +14,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title, 'url' => ['view', 'id
  
 $this->params['breadcrumbs'][] = '意见反馈';
 
- 
-
+AppAsset::register($this);
 ?>
 <div class="rest-report-view">
 
