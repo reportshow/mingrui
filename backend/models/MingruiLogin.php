@@ -44,7 +44,11 @@ class MingruiLogin extends \yii\db\ActiveRecord
         ];
     }
     public static function lastlogin(){ 
-    	$lastlogin = MingruiLogin::find()->where(['uid'=>Yii::$app->user->Id])->one(); 
+    	$lastlogin = MingruiLogin::find()
+    	 ->where(['uid'=>Yii::$app->user->Id])
+    	 ->orderBy('id DESC')
+    	 ->limit(2)
+    	 ->all(); 
     	if(!$lastlogin){ return time();}
         return $lastlogin->logintime;
     }

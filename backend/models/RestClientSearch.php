@@ -49,6 +49,7 @@ class RestClientSearch extends RestClient
         if(!$query) $query = RestClient::find();
 
         $query = $query->joinWith(['hospital']);
+        //$query = $query->joinWith('mingrui_comments');
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([

@@ -8,7 +8,7 @@ use kartik\file\FileInput;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="mingrui-vcf-form col-md-6">
+<div class="mingrui-vcf-form col-md-6" style="float:none">
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data','class'=>'upload']]);?>
 
@@ -16,14 +16,16 @@ use kartik\file\FileInput;
 
 
      <?php
-		echo $form->field($model, 'vcf[]')->widget(FileInput::classname(), [
-		    'options'       => ['multiple' => true, 'accept' => '*/*'],
-		    'pluginOptions' => [
-		        //'showUpload' => true,
-                'showPreview' => false,
-                'allowedFileExtensions'=>['vcf']
-		    ],
-		])->label('选择vcf文件');
+       if(empty($hidevcf)){ 
+			echo $form->field($model, 'vcf[]')->widget(FileInput::classname(), [
+			    'options'       => ['multiple' => true, 'accept' => '*/*'],
+			    'pluginOptions' => [
+			        //'showUpload' => true,
+	                'showPreview' => false,
+	                'allowedFileExtensions'=>['vcf']
+			    ],
+			])->label('选择vcf文件');
+	   }
 	?>
 	
 	

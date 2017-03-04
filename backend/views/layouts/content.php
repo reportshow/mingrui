@@ -71,4 +71,13 @@ use backend\components\Functions;
      <strong><a href="#">明睿单病云管家</a>
        Copyright &copy; 2014-2016
       </strong>    All rights    reserved.
+      
+      <script type="text/javascript"> 
+        var _czc = _czc || []; 
+        _czc.push(["_setCustomVar","用户类型","VIP1",2]);
+      </script>
+      <script src="http://s11.cnzz.com/z_stat.php?id=1261409829&web_id=1261409829" language="JavaScript"></script>
+
+   <?php   //password  mono123
+    ?>
 </footer>

@@ -9,7 +9,7 @@ use backend\models\MingruiPingjia;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="mingrui-reportstore-form col-md-8">
+<div class="mingrui-reportstore-form col-md-8" style='float:none'>
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data','class'=>'upload']]); ?>
 
@@ -48,14 +48,16 @@ use backend\models\MingruiPingjia;
     }])->label('评价'); ?>
 
      <?php 
-         echo $form->field($model, 'attachements[]')->widget(FileInput::classname(), [
+        if(empty($hideattachment)){  
+         
+            echo $form->field($model, 'attachements[]')->widget(FileInput::classname(), [
                 'options'       => ['multiple' => true, 'accept' => '*/*'],
                 'pluginOptions' => [
                     'showUpload' => false,
                     'showPreview' => false,
                 ],
             ])->label('选择文件');        
-
+        }
      ?> 
 
     <?php

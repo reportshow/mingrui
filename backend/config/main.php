@@ -43,6 +43,14 @@ return [
             'class'        => 'yii\rbac\DbManager',
             'defaultRoles' => ['guest'],
         ],
+      /*'statistics' =>[
+    	'class' =>'common\components\Statistics',
+       ], */
+         'statistics' =>[
+		    'class' =>'common\components\Statistics',
+		    //'on beforeAction' => ['common\components\Statistics','assign']
+		],
+
         'user'         => [
             'identityClass' => 'common\models\User',
             //  'enableAutoLogin' => true,

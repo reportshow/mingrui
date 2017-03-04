@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use common\models\User;
+use backend\models\RestClient;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 
@@ -60,6 +61,20 @@ class MingruiComments extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'uid']);
     }
+
+    public function getDoctor()
+    {
+        $doctor_id = str_replace('gb','',$this->report_id) ;
+        if($doctor_id){ 
+			return RestClient::findOne($doctor_id);
+        }
+        
+    }
+    public function getUnread(){ 
+    	return $this->find()
+    	->where(['isread'=>0])->count();
+    }
+
 
     public function getTouser()
     {

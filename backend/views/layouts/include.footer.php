@@ -8,9 +8,10 @@ use backend\components\Functions;
 use common\components\Statistics;
 Statistics::doCount();
 
-//var_dump($menu);
-
+//var_dump($menu); 
 ?>
+
+
 <style type="text/css">
  
  @media(min-width:640px) {
@@ -78,14 +79,36 @@ Statistics::doCount();
 	    });
 
 	    if($('.pagination').length > 0){
-	    	var url = location.href+'&page=1';
+	    	 
+	    	var totalPage = $('.pagination li').length -2;
+	    	var url;
+	    	var $html;
+	    	url = location.href+'&page=1';
 	    	$html = '<li class="prev"><a href="'+url+'" data-page="0">|&lt;</a></li>';
 	    	$('.pagination').prepend($html);
 
-	    	var url = location.href+'&page='+totalPage;
+
+	    	url = location.href+'&page='+totalPage;
 	    	$html = '<li class="prev"><a href="'+url+'" data-page="0">&gt;|</a></li>';
 	    	$('.pagination').append($html);
 
+	    	$html = '<li  ><input  class="pagego" style="padding: 5px;width:50px" placeholder="页码" title="输入页码" ></li>';
+	    	$('.pagination').append($html);
+
+	    	$('.pagego').keydown(function(e){ 
+	    		var num = parseInt($(this).val() );
+		    	if(e.keyCode==13 && num > 0){
+				   url = location.href;
+				   url += '&page='+num;
+				   location.href  = url;
+				}
+		    });
 	    }
+
+		
+
    });
+    
 </script>
+
+

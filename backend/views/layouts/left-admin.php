@@ -154,7 +154,7 @@ $menu[] = ['label' => '互动平台',
         [
             'label' => '在线留言',
             'icon'  => 'fa fa-pie-chart',
-            'url'   => ['/rest-client/'],
+            'url'   => ['/comments/'],
         ],
         [
             'label' => '联系方式',
@@ -173,11 +173,12 @@ if (yii::$app->user->can('admin')) {
         'icon'  => 'fa fa-users',
         'url'   => '#',
         'items' => [
-             [
+           /*  [
                 'label' => '用户',
                 'icon'  => 'fa fa-gears',
                 'url'   => ['/admin/user'],
             ],
+           */ 
             [
                 'label' => '医生',
                 'icon'  => 'fa fa-user-md',

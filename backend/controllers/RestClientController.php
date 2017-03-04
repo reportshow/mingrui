@@ -33,6 +33,25 @@ class RestClientController extends Controller
      * Lists all RestClient models.
      * @return mixed
      */
+    public function actionGuestbook()
+    {
+        $searchModel = new RestClientSearch();
+        $query = RestClient::find();
+       // $query = $query->where(['mingrui_comments.report_id'=>'gb1']);
+
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams,$query);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+
+    /**
+     * Lists all RestClient models.
+     * @return mixed
+     */
     public function actionIndex()
     {
         $searchModel = new RestClientSearch();
