@@ -240,13 +240,13 @@ class User extends ActiveRecord implements IdentityInterface
 
 
     public function lastlogin( ){  
+    	//exit('xxxxxx');
     	$lastlogin = MingruiLogin::find()->where(['uid'=>$this->Id])->one();
     	if(!$lastlogin){ 
 			$lastlogin = new MingruiLogin(); 
 			$lastlogin->uid = $this->Id;
 		} 
-		$lastlogin->logintime = time();
-		$lastlogin->save(); 
+		$lastlogin->saveTime(); 
     }
 
 }
