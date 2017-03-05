@@ -17,6 +17,20 @@ $reportMessage = userMessage::reportMessage();
 $orderCount = MingruiOrder::find()->where(['status'=>'init'])->count();
 $orderUrl = Yii::$app->urlManager->createUrl(['/orders/']);
 ?>
+<script type="text/javascript">
+ 
+	<?php 
+      if (Yii::$app->user->can('admin') ){
+      	  echo "var userType = 'Admin'; ";
+      }else if(Yii::$app->user->can('doctor')) {
+	      echo "var userType = 'Doctor'; ";  
+	  }else{ 
+	  	  echo "var userType = 'Sick'; ";  
+	  }
+
+	?>
+</script>
+
 
 <header class="main-header">
 

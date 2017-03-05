@@ -10,9 +10,11 @@ $menu = require "../views/layouts/left-admin.php";
 global $labels; $labels = [];
  getLabel($menu );
  
-echo "<h2>模块统计</h2> 
+echo "<h2>模块统计</h2> ";
+echo "<a href='http://www.cnzz.com/stat/website.php?web_id=1261409829' class='btn btn-success'>用户行为分析</a>";
+echo "
 <section class='content col-lg-12 ' style='height:120px;background:#fff;'>
-<div style='max-width:900px'>";
+<div class='row' style='max-width:900px'>";
 foreach ($labels as $key => $item) {
 		$label = $item['label'];
 		$icon ='';

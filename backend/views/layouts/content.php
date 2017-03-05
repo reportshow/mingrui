@@ -42,12 +42,12 @@ use backend\components\Functions;
         <?php }?>
 
         <?php
-        if(!Functions::ismobile()){
-           if (Yii::$app->user->can('admin') || Yii::$app->user->can('doctor')) {
-            
-           }
-        }
-       echo Breadcrumbs::widget([
+	        if(!Functions::ismobile()){
+	           if (Yii::$app->user->can('admin') || Yii::$app->user->can('doctor')) {
+	            
+	           }
+	        }
+            echo Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]);
 
@@ -74,7 +74,7 @@ use backend\components\Functions;
       
       <script type="text/javascript"> 
         var _czc = _czc || []; 
-        _czc.push(["_setCustomVar","用户类型","VIP1",2]);
+        _czc.push(["_setCustomVar","用户类型", userType,2]);
       </script>
       <script src="http://s11.cnzz.com/z_stat.php?id=1261409829&web_id=1261409829" language="JavaScript"></script>
 
