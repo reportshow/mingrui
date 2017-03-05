@@ -1,7 +1,7 @@
 <?php  
   $CACHE=array (
-  'site' => 13,
-  'site/index' => 13,
+  'site' => 23,
+  'site/index' => 23,
   'mingrui-doc' => 34,
   'mingrui-doc/index' => 13,
   'mingrui-doc/create' => 19,

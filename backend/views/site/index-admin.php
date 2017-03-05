@@ -8,6 +8,7 @@ use backend\widgets\ChartLine2;
 use backend\widgets\NumberBox;
 use backend\components\Functions;
 
+use backend\models\MingruiLogin;
 use backend\models\Status;
 
 AppAsset::register($this); 
@@ -19,9 +20,10 @@ $Status = new Status();
 $count  = $Status->count;
 
 $userCount = $Status->userCount;
-echo "<!-- ";
-var_dump($userCount );
-echo "-->";
+//echo "<!-- ";
+//var_dump($userCount );
+//echo "-->";
+
 ?>
 <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
 
@@ -161,6 +163,9 @@ if (option && typeof option === "object") {
 
   </script>
 
+<?php
 
+echo '最后登录：'. date('Y-m-d H:i:s',MingruiLogin::lastlogin());
+?>
 <?php  include('modulescount.php'); ?>
 

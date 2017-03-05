@@ -28,7 +28,7 @@ class MingruiLogin extends \yii\db\ActiveRecord
     {
         return [
             [['uid'], 'required'],
-            [['uid', 'logintime'], 'integer'],
+            [['uid', 'logintime', 'thistime'], 'integer'],
         ];
     }
 
@@ -41,15 +41,26 @@ class MingruiLogin extends \yii\db\ActiveRecord
             'id' => 'ID',
             'uid' => 'Uid',
             'logintime' => 'Logintime',
+            'thistime'=>'',
         ];
     }
     public static function lastlogin(){ 
+
     	$lastlogin = MingruiLogin::find()
-    	 ->where(['uid'=>Yii::$app->user->Id])
-    	 ->orderBy('id DESC')
-    	 ->limit(2)
-    	 ->all(); 
+    	 ->where(['uid'=>Yii::$app->user->Id])    	  
+    	 ->one(); 
     	if(!$lastlogin){ return time();}
+    	//var_dump($lastlogin);  exit;
         return $lastlogin->logintime;
+    }
+
+    public function saveTime(){ 
+    	 if($this->thistime){ 
+			$this->logintime = $this->thistime;
+    	 };
+
+    	$this->thistime = time();;
+    	$this->save();
+    	
     }
 }
