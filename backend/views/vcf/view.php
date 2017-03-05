@@ -53,6 +53,7 @@ if(!empty($_GET['detail']) && $_GET['detail']=='only'){
                     'status',
                     'tel',
                     'product',
+                    'notes',
                     'diagnose:ntext',
                     'gene',
                     ['attribute'=>'pingjia','label'=>'星级评价', 'value'=>$pingjia],

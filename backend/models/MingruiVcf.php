@@ -52,7 +52,7 @@ class MingruiVcf extends \yii\db\ActiveRecord
         return [
             [['uid', 'sick', 'product', 'diagnose', 'sex','vcf'], 'required'],
             [['uid', 'createtime', 'task_id'], 'integer'],
-            [['sex', 'diagnose'], 'string'],
+            [['sex', 'diagnose','notes'], 'string'],
             [['age'], 'number'],
             [['sick'], 'string', 'max' => 16],
             [['vcf'], 'string', 'max' => 255],
@@ -86,6 +86,7 @@ class MingruiVcf extends \yii\db\ActiveRecord
             'tel' => '联系电话',
             'product' => '检测项目',
             'diagnose' => '临床诊断',
+            'notes' =>'临床症状',
             'gene' => '基因型',
             'createtime' => '上传时间',
             'task_id' => 'Task ID',

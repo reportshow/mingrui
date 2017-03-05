@@ -20,7 +20,9 @@ class Status  extends Model
         
         //echo $reportQ->count(); 
 
-        $count['unfinish'] = RestReport::find()->where(['<>', 'ptype', 'yidai'])->andWhere(['<>', 'status', 'finished'])->count();
+        $count['unfinish'] = RestReport::find()
+                    ->where(['<>', 'ptype', 'yidai'])
+                    ->andWhere(['<>', 'status', 'finished'])->count();
         $count['finish'] = RestReport::find()->where(['<>', 'ptype', 'yidai'])->andWhere([ 'status'=>'finished'])->count();
 
         $count['doctor'] = RestClient::find()->count();

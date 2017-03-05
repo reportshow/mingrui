@@ -44,8 +44,10 @@ use kartik\file\FileInput;
     <?= $form->field($model, 'tel')->textInput(['maxlength' => true, 'style' => 'width-:300px;']) ?>
 
     <?= $form->field($model, 'product')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'diagnose')->textarea(['rows' => 6]) ?>
+    
+    <?= $form->field($model, 'notes')->textarea(['rows' => 6])  ?>
+    <?= $form->field($model, 'diagnose')->textInput(['maxlength' => true])?>
+	
 
     <?= $form->field($model, 'gene')->textInput(['maxlength' => true]) ?>
  
