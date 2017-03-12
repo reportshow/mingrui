@@ -31,8 +31,8 @@ class GeneController extends Controller
     {
         $clsModel  =  Mainlist::find()->where(['classname'=> $class])->one();
         if(!$clsModel) { 
-        	return "查找不到对应的分类";
-        }
+        	return "<h1>查找不到对应的分类</h1>";
+        } 
 
         $classname = $clsModel->name;
 
@@ -40,6 +40,9 @@ class GeneController extends Controller
         	->where(['like','class', $class])
         	->groupBy('class')
         	->all();
+        if(!$infolist) { 
+        	return "<h1>查找不到对应的分类的子类</h1>";
+        }
 
         return $this->render('class',[
                 'infolist' => $infolist,

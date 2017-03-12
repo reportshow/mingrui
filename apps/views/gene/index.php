@@ -6,6 +6,7 @@ use yii\widgets\ActiveForm;
 
 include_once('header.php');
 
+$this->title = '金准产品结构信息';
 
 ?>
 <h1>金准产品结构信息</h1>
