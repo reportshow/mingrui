@@ -47,7 +47,7 @@ class Information extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['class', 'classid', 'sick', 'sick_en', 'gene', 'method', 'omim', 'background', 'wide', 'DM', 'mutation', 'grosins', 'grosdel', 'complex', 'prom', 'deletion', 'insertion', 'indel', 'splice', 'amplet', 'OTHERS', 'refseq'], 'string', 'max' => 255],
+            [['class', 'genecount', 'sick', 'sick_en', 'gene', 'method', 'omim', 'background', 'wide', 'DM', 'mutation', 'grosins', 'grosdel', 'complex', 'prom', 'deletion', 'insertion', 'indel', 'splice', 'amplet', 'OTHERS', 'refseq'], 'string', 'max' => 255],
         ];
     }
 
@@ -59,7 +59,7 @@ class Information extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'class' => '疾病大类',
-            'classid' => '大类id',
+            'genecount' => '基因数',
             'sick' => '疾病名称',
             'sick_en' => '疾病英文',
             'gene' => '基因',

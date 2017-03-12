@@ -11,6 +11,8 @@ use apps\assets\AppAsset;
 use common\widgets\Alert;
 
 AppAsset::register($this);
+dmstr\web\AdminLteAsset::register($this);
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -48,7 +50,7 @@ AppAsset::register($this);
     */
     ?>
 
-    <div class="container">
+    <div class="container" style="padding:30px;margin:0px">
         <?
         /* echo Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
