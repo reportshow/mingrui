@@ -19,7 +19,10 @@ dmstr\web\AdminLteAsset::register($this);
 <html lang="<?= Yii::$app->language ?>">
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0, minimum-scale=1.0">
+    <Meta http-equiv="Page-Enter" Content="revealTrans(duration=1, transition=23)"> 
+	<Meta http-equiv="Page-Exit" Content="revealTrans(duration=1, transition=23)"> 
+	
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>

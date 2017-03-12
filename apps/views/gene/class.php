@@ -4,6 +4,8 @@ use yii\helpers\ArrayHelper;
 
 use yii\widgets\ActiveForm;
 
+$this->title = $classname;
+
 include_once('header.php');
 ?>
 

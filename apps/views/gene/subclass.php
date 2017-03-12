@@ -6,12 +6,18 @@ use yii\widgets\ActiveForm;
 
 include_once('header.php');
 
+$this->title = $model->class;
+
 ?>
 <style>
-	td{padding:8px 5px; overflow: hidden;text-overflow:ellipsis;white-space:nowrap;  max-width: 200px}
+	td{padding:8px 5px; overflow: hidden;text-overflow:ellipsis;
+		/*white-space:nowrap;*/
+	  max-width: 200px}
 	tr{cursor:pointer;}
 </style>
 <h1><?=$model->class?> 子类</h1>
+
+<div class="row"><div class="col-md-4">
 <?php
 
  
@@ -43,6 +49,9 @@ $model = $infolist[0];
  ActiveForm::end();
  */
  ?>
+</div></div>
+
+
 
  <script>
  function showsub(id){  

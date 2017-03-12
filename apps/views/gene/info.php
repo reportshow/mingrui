@@ -4,6 +4,8 @@ use yii\helpers\ArrayHelper;
 
 use yii\widgets\ActiveForm;
 
+$this->title = $model->sick;
+
 include_once('header.php');
 
 ?> 
@@ -13,7 +15,7 @@ include_once('header.php');
       <!-- Widget: user widget style 1 -->
       <div class="box box-widget widget-user-2">
         <!-- Add the bg color to the header using any of the bg-* classes -->
-        <div class="widget-user-header bg-yellow">
+        <div class="widget-user-header bg-aqua-active">
            <b class='btn btn-success pull-right'><?=$model->gene?></b>
           <!-- /.widget-user-image -->
           <h3 class="widget-user-username-x"><?=$model->sick?></h3>
