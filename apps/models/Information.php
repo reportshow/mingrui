@@ -38,7 +38,7 @@ class Information extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'information';
+        return 'genelist_information';
     }
 
     /**
