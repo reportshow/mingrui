@@ -25,13 +25,14 @@ $this->title = $model->class;
 
  
  echo "<table class='table table-striped table-bordered'>";
- echo "<tr> <th class=ellipsis>疾病名 </th> <th>英文</th> <th>基因</th> </tr>";
+ echo "<tr> <th class=ellipsis>疾病名 </th> <th>英文</th> <th>基因</th> <th>DM</th> </tr>";
  foreach ($infolist as   $m) {
  	 $sick = $m->sick; 
  	 $sick_en = $m->sick_en;
  	 $gene = $m->gene;
  	 $id = $m->id;
- 	 echo "\n <tr onclick='showsub($id)'> <td class=ellipsis>$sick </td> <td>$sick_en</td> <td>$gene</td> </tr>";
+ 	 $dm = $m->DM; 
+ 	 echo "\n <tr onclick='showsub($id)'> <td class=ellipsis>$sick </td> <td>$sick_en</td> <td>$gene</td> <td>$dm</td> </tr>";
  }
  echo "</table>";
 

@@ -3,6 +3,7 @@
 namespace apps\models;
 
 use Yii;
+use apps\models\Chpo;
 
 /**
  * This is the model class for table "information".
@@ -49,6 +50,18 @@ class Information extends \yii\db\ActiveRecord
         return [
             [['class', 'genecount', 'sick', 'sick_en', 'gene', 'method', 'omim', 'background', 'wide', 'DM', 'mutation', 'grosins', 'grosdel', 'complex', 'prom', 'deletion', 'insertion', 'indel', 'splice', 'amplet', 'OTHERS', 'refseq'], 'string', 'max' => 255],
         ];
+    }
+
+    public function getOmiminfo(){ 
+
+    	return Chpo::find()->where (['diseaseID'=>'OMIM:'.$this->omim] )->one();
+    	 
+    }
+
+    public function getOtherinfo(){ 
+
+    	return Chpo::find()->where (['gene'=>$this->gene] )->all();
+    	 
     }
 
     /**
