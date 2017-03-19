@@ -1,9 +1,9 @@
 <?php  
   $CACHE=array (
-  'site' => 29,
-  'site/index' => 29,
-  'mingrui-doc' => 34,
-  'mingrui-doc/index' => 13,
+  'site' => 31,
+  'site/index' => 31,
+  'mingrui-doc' => 39,
+  'mingrui-doc/index' => 18,
   'mingrui-doc/create' => 19,
   'mingrui-doc/view' => 2,
   'rest-client' => 36,
@@ -42,4 +42,10 @@
   'reportstore/update' => 5,
   'comments/reports' => 33,
   'vcf/create' => 3,
+  'genelist' => 115,
+  'genelist/index' => 41,
+  'genelist/update' => 41,
+  'genelist/view' => 4,
+  'genelist/detailedit' => 17,
+  'genelist/detailview' => 12,
 );  ?>

@@ -95,7 +95,13 @@ $menu[] = [
     'icon'  => 'fa fa-file-video-o',
     'url'   => '#',
     'items' => [
-         
+        [
+            'label' => '基因分类',
+            'icon'  => 'fa  fa-leaf',
+            'url'   => ["/genelist"], 
+            'items' => [],
+        ],
+
         [
             'label' => '共享视频',
             'icon'  => 'fa  fa-video-camera',
