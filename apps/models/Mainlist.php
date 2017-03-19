@@ -22,7 +22,7 @@ class Mainlist extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'genelist_main';
+        return 'sheet1';
     }
 
     /**

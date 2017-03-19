@@ -12,7 +12,7 @@ $this->title = '金准产品结构信息';
 <h1>金准产品结构信息</h1>
 <?php
 //var_dump($model);
-$listData = ArrayHelper::map($modellist,'classname', 'name');
+$listData = ArrayHelper::map($modellist,'id', 'name');
 $model = $modellist[0];
 //var_dump($listData);
 
@@ -29,8 +29,8 @@ $model = $modellist[0];
 
  <script>
 $('#mainlist-name').change(function(){ 
-	var key = ($(this).val());
-	location.href= "?r=gene/class&class="+key;
+	var id = ($(this).val());
+	location.href= "?r=gene/class&classid="+id;
 
 });
  </script>

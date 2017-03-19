@@ -27,9 +27,11 @@ class GeneController extends Controller
             ]);
     }
 
-     public function actionClass($class)
+     public function actionClass($classid)
     {
-        $clsModel  =  Mainlist::find()->where(['classname'=> $class])->one();
+        //$mainlist = 
+        //$clsModel  =  Mainlist::find()->where(['classname'=> $class])->one();
+        $clsModel  =  Mainlist::findOne($classid);
         if(!$clsModel) { 
         	return "<h1>查找不到对应的分类</h1>";
         } 
@@ -37,7 +39,7 @@ class GeneController extends Controller
         $classname = $clsModel->name;
 
         $infolist = Information::find()
-        	->where(['like','class', $class])
+        	->where(['like','class', $clsModel->classname])
         	->groupBy('class')
         	->all();
         if(!$infolist) { 
