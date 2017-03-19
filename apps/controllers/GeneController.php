@@ -49,7 +49,10 @@ class GeneController extends Controller
           return $this->redirect(['detail','id'=>$classid]);
         }
 
-        $classname = $clsModel->name;
+        if(!$clsModel->classname){ 
+        	return "<h1>查找不到对应的分类的子类</h1>";
+        } 
+
 
         $infolist = Information::find()
         	->where(['like','class', $clsModel->classname])
@@ -57,11 +60,11 @@ class GeneController extends Controller
         	->all();
         if(!$infolist) { 
         	return "<h1>查找不到对应的分类的子类</h1>";
-        }
+        } 
 
         return $this->render('class',[
                 'infolist' => $infolist,
-                'classname' => $classname,
+                'classname' => $clsModel->name,
             ]);
     }
 
