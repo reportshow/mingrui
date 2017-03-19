@@ -22,7 +22,7 @@ class Mainlist extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'sheet1';
+        return 'genelist_main';
     }
 
     /**
@@ -34,6 +34,7 @@ class Mainlist extends \yii\db\ActiveRecord
             [['name', 'name_en', 'hassub', 'description'], 'string', 'max' => 255],
             [['number'], 'string', 'max' => 16],
             [['classname'], 'string', 'max' => 32],
+            [['detail'], 'string' ],
         ];
     }
 
@@ -49,7 +50,8 @@ class Mainlist extends \yii\db\ActiveRecord
             'number' => '货号',
             'hassub' => '是否有子类',
             'description' => '描述',
-            'classname' => '表格',
+            'classname' => '子类型key',
+            'detail' => '细节描述',
         ];
     }
 }

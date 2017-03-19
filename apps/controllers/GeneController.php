@@ -27,6 +27,15 @@ class GeneController extends Controller
             ]);
     }
 
+
+    public function actionDetail($id)
+    {
+        $model  =  Mainlist::findOne($id);
+        return $this->render('index-detail',[
+             'model' => $model,
+         ]);
+    }
+
      public function actionClass($classid)
     {
         //$mainlist = 
@@ -35,6 +44,10 @@ class GeneController extends Controller
         if(!$clsModel) { 
         	return "<h1>查找不到对应的分类</h1>";
         } 
+
+        if(!$clsModel->hassub){ 
+          return $this->redirect(['detail','id'=>$classid]);
+        }
 
         $classname = $clsModel->name;
 
