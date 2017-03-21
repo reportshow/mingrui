@@ -5,6 +5,7 @@ use Yii;
 use yii\web\Controller;
 use apps\models\Mainlist;
 use apps\models\Information;
+use apps\models\Chpo;
 
 /**
  * Site controller
@@ -102,5 +103,23 @@ class GeneController extends Controller
             ]);
 
     }
+
+    public function actionSearch($keywords){ 
+    	$models = Chpo::find()->where(['like','chpo',$keywords])->all();
+    	return $this->render('searchsick',[ 
+                'models' => $models,
+                'keywords'=>$keywords
+            ]);
+    }
+
+    public function actionSearchgene($keywords){ 
+    	$models = Chpo::find()->where(['like','gene',$keywords])->all();
+    	return $this->render('searchsick',[ 
+                'models' => $models,
+                'keywords'=>$keywords
+            ]);
+    }
+
+       
  
 }
