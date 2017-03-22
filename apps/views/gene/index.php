@@ -20,35 +20,57 @@ $model = $modellist[0];
 
  echo $form->field($model, 'name')->dropDownList(
  	     $listData,  ['prompt'=>'选择产品...' ,'onchange'=>'cc']
- 	  ); 
+ 	  )->label(false); 
  
 
  
  ActiveForm::end();
  ?>
-
+<br>按基因找货号
   <div class="input-group  ">
-    <input type="text" name='keyword_cn' placeholder='疾病关键字'  class="form-control">
+    <input type="text"   name='huohao' placeholder='按基因找货号'  class="form-control">
         <span class="input-group-btn">
-          <button type="button" class="btn btn-info btn-flat" id='search_cn'>搜索疾病</button>
+          <button type="button" class="btn btn-info btn-flat"  id='search_huohao'>按基因找货号</button>
+        </span>
+  </div>
+ 
+
+
+
+
+ <br><hr><br>症状搜基因
+  <div class="input-group  ">
+    <input type="text" name='keyword_cn' placeholder='症状关键字'  class="form-control">
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-info btn-flat" id='search_cn'>症状搜基因</button>
         </span>
   </div>
 
-<br>
+<br>基因搜症状
   <div class="input-group  ">
     <input type="text"   name='keyword_gene' placeholder='基因名'  class="form-control">
         <span class="input-group-btn">
-          <button type="button" class="btn btn-info btn-flat"  id='search_gene'>搜索基因</button>
+          <button type="button" class="btn btn-info btn-flat"  id='search_gene'>基因搜症状</button>
         </span>
   </div>
  
 
  <script>
+
+
+
+
 $('#mainlist-name').change(function(){ 
 	var id = ($(this).val());
 	location.href= "?r=gene/class&classid="+id;
 
 });
+
+$('#search_huohao').click(function(){ 
+	var keyword = $("input[name='huohao']").val();
+	location.href = '?r=gene/searchhuohao&keywords=' + keyword;
+});
+
 $('#search_cn').click(function(){ 
 	var keyword = $("input[name='keyword_cn']").val();
 	location.href = '?r=gene/search&keywords=' + keyword;

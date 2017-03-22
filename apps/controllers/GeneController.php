@@ -56,7 +56,7 @@ class GeneController extends Controller
 
 
         $infolist = Information::find()
-        	->where(['like','class', $clsModel->classname])
+        	->where([ 'key' =>$clsModel->classname])
         	->groupBy('class')
         	->all();
         if(!$infolist) { 
@@ -65,31 +65,51 @@ class GeneController extends Controller
 
         return $this->render('class',[
                 'infolist' => $infolist,
-                'classname' => $clsModel->name,
+                'mainclass' => $clsModel,
             ]);
     }
 
 
     public function actionSubclass($subclass)
-    {
-        $clsModel  =  Information::findOne($subclass);
-        if(!$clsModel) { 
+    {    //groupby --$subclass
+        $firstOne  =  Information::findOne($subclass);
+        if(!$firstOne) { 
         	return "查找不到对应的分类";
         }
 
-        $subclassname = $clsModel->class;
+        $key = $firstOne->key;
+        return $this->actionSubclass2($key,null);
+    }
+    
 
-        $infolist = Information::find()
-        	->where([ 'class'=> $subclassname])
-        	 ->all();
+    public function actionSubclass2($key,$keyword)
+    {   
+        return $this->showSubClass($key, $keyword);
+    }
+
+
+    function showSubClass($key, $name_keywords=null)
+    { 
+        $query = Information::find()
+        	->where([ 'key'=> $key]);
+
+        if($name_keywords){ 
+        	 $query = $query ->andWhere(['like','sick',$name_keywords]);
+        }
+        
+        $infolist= $query ->all();
 
        // echo $query->createCommand()->getRawSql(); exit;
-
+        if(count($infolist) <1) return 'no data!';
         return $this->render('subclass',[
                 'infolist' => $infolist,
-                'model' => $clsModel,
+                'model' => $infolist[0],
+                'keywords'=>$name_keywords
             ]);
     }
+
+
+
 
     public function actionSubinfo($subid)
     { 
@@ -104,6 +124,34 @@ class GeneController extends Controller
 
     }
 
+    
+    //gene-->货号
+    public function actionSearchhuohao($keywords){ 
+    	$keywords = str_replace('　', ' ', $keywords);
+    	$keys = array_filter(explode(' ',$keywords));
+    	foreach ($keys as $k => $value) {
+    		 $keys[$k]=strtoupper($value);
+    	}
+
+    	$models = Information::find()->where(['in','gene', $keys])
+    	         ->all();
+    	$list = array();
+    	foreach ($models as   $m) {
+    		 $main = $m->main;
+    		 $list[$main->number][] = $m->gene;
+    	}
+    	foreach ($list as $num => $genelist) {
+    		 $list[$num] = array_unique($genelist);
+    	}
+
+
+    	return $this->render('search-huohao',[ 
+                'list' => $list,
+                'keywords'=>$keywords
+            ]);
+    }
+
+    //搜症状-->gene
     public function actionSearch($keywords){ 
     	$models = Chpo::find()->where(['like','chpo',$keywords])->all();
     	return $this->render('searchsick',[ 
@@ -111,7 +159,7 @@ class GeneController extends Controller
                 'keywords'=>$keywords
             ]);
     }
-
+    //gene-->症状
     public function actionSearchgene($keywords){ 
     	$models = Chpo::find()->where(['like','gene',$keywords])->all();
     	return $this->render('searchsick',[ 

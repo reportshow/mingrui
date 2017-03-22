@@ -4,6 +4,7 @@ namespace apps\models;
 
 use Yii;
 use apps\models\Chpo;
+use apps\models\Mainlist;
 
 /**
  * This is the model class for table "information".
@@ -48,7 +49,8 @@ class Information extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['class', 'genecount', 'sick', 'sick_en', 'gene', 'method', 'omim', 'background', 'wide', 'DM', 'mutation', 'grosins', 'grosdel', 'complex', 'prom', 'deletion', 'insertion', 'indel', 'splice', 'amplet', 'OTHERS', 'refseq'], 'string', 'max' => 255],
+            [['key','class', 'genecount', 'sick', 
+            'sick_en', 'gene', 'method', 'omim', 'background', 'wide', 'DM', 'mutation', 'grosins', 'grosdel', 'complex', 'prom', 'deletion', 'insertion', 'indel', 'splice', 'amplet', 'OTHERS', 'refseq'], 'string', 'max' => 255],
         ];
     }
 
@@ -63,6 +65,11 @@ class Information extends \yii\db\ActiveRecord
     	return Chpo::find()->where (['gene'=>$this->gene] )->all();
     	 
     }
+    public function getMain(){ 
+    	//list($classname,$p2) = explode('-',$this->key);
+    	return Mainlist::find()->where(['classname'=>$this->key])->one();
+
+    }
 
     /**
      * @inheritdoc
@@ -71,6 +78,7 @@ class Information extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'key'=>'类',
             'class' => '疾病大类',
             'genecount' => '基因数',
             'sick' => '疾病名称',

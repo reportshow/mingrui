@@ -4,12 +4,12 @@ use yii\helpers\ArrayHelper;
 
 use yii\widgets\ActiveForm;
 
-$this->title = $classname;
+$this->title = $mainclass->name;
 
 include_once('header.php');
 ?>
 
-<h1><?=$classname?> 大类</h1>
+<h1><?=$this->title?> 大类</h1>
 <?php
 $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data','class'=>'upload']]);
 
@@ -21,7 +21,8 @@ $model = $infolist[0];
 
  
  echo $form->field($model, 'class')->dropDownList(
- 	     $listData,  ['prompt'=>'选择产品...' ,'onchange'=>'cc']
+ 	     $listData,  ['prompt'=>'选择产品...' /*,'onchange'=>'cc'*/
+ 	     ]
  	  ); 
  
 
@@ -29,10 +30,26 @@ $model = $infolist[0];
  ActiveForm::end();
  ?>
 
+ <br>搜相关中文名
+  <div class="input-group  ">
+    <input type="text"   name='keyword' placeholder='搜相关中文名'  class="form-control">
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-info btn-flat"  id='search'>搜相关中文名</button>
+        </span>
+  </div>
+ 
+
+案例：
+
  <script>
 $('#information-class').change(function(){ 
 	var key = ($(this).val());
 	location.href= "?r=gene/subclass&subclass="+key;
-
 });
+
+$('#search').click(function(){ 
+	var keyword = $("input[name='keyword']").val();
+	location.href= "?r=gene/subclass2&key=<?=$mainclass->classname?>&keyword="+keyword;
+});
+
  </script>

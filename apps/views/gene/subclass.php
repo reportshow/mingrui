@@ -13,9 +13,10 @@ $this->title = $model->class;
 	td{padding:8px 5px; overflow: hidden;text-overflow:ellipsis;
 		/*white-space:nowrap;*/
 	  max-width: 200px}
-	tr{cursor:pointer;}
-</style>
-<h1><?=$model->class?> 子类</h1>
+	tr{cursor:pointer;} 
+ .keybg{background:#606}
+ </style>
+ 
 
 <div class="row"><div class="col-md-4">
 <?php
@@ -27,7 +28,9 @@ $this->title = $model->class;
  echo "<table class='table table-striped table-bordered'>";
  echo "<tr> <th class=ellipsis>疾病名 </th> <th>英文</th> <th>基因</th> <th>DM</th> </tr>";
  foreach ($infolist as   $m) {
- 	 $sick = $m->sick; 
+ 	    $sick = str_replace($keywords, '<i class=keybg>' . $keywords.'</i>', $m->sick);
+
+
  	 $sick_en = $m->sick_en;
  	 $gene = $m->gene;
  	 $id = $m->id;
