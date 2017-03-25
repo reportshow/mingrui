@@ -5,9 +5,13 @@ namespace backend\controllers;
 use Yii;
 use apps\models\Mainlist;
 use apps\models\MainlistSearch;
+use apps\models\Information;
+
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+
+use yii\web\UploadedFile;
 
 /**
  * GenelistController implements the CRUD actions for Mainlist model.
@@ -28,6 +32,14 @@ class GenelistController extends Controller
             ],
         ];
     }
+    /*
+    public function beforeAction($action){ 
+    	if(!Yii::$app->user->can('admin')){  
+    		$url = '../../apps/web/index.php?r=gene/index'  ;
+    		return "<script> location.href = '$url';</script>";
+    		return;
+    	}
+    }*/
 
     /**
      * Lists all Mainlist models.
@@ -91,6 +103,75 @@ class GenelistController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+
+   /**
+     * Updates an existing Mainlist model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param string $id
+     * @return mixed
+     */
+    public function actionSubupload($id)
+    {
+        $model = $this->findModel($id);
+        $new = new Mainlist(); 
+
+        if ($new->load(Yii::$app->request->post()) ) {
+        	$model->classname = $new->classname;
+        	if(empty($model->classname) || !$model->classname){ 
+               return "key不能为空！！";
+        	}
+        	$model->save(); 
+        	 
+			//清除所有同类
+	    	Information::deleteAll(['key'=>$model->classname]);
+
+        	self::saveCSV($model);
+
+            return $this->redirect(['view', 'id' => $model->id]);
+        } else {
+            return $this->render('subupload', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    function saveCSV($model){ 
+     
+      set_time_limit(600);
+       
+       echo "<meta charset='UTF-8'> <div id='listbox' style='margin-left:50px; height:500px;width:600px;overflow:auto'>";
+       echo "<script>  function scrollbottom(){var objDiv = document.getElementById('listbox');objDiv.scrollTop = objDiv.scrollHeight;} 
+        setInterval(scrollbottom,200);</script>";
+
+		$imageupList = UploadedFile::getInstances($model, 'detail');
+		$id = $model->id;
+		$key = $model->classname;
+
+		$path = 'upload/genelist/'.$key .$id.'.csv';
+		$imageupList[0]->saveAs($path);
+      
+        $FIELDS = ['class','genecount','sick','sick_en','gene','method','omim','background','wide','DM','refseq'];
+        $row = 1;
+		$handle = fopen($path,"r");
+		$data = fgetcsv($handle, 1000, ","); //ir
+		while ($data = fgetcsv($handle, 1000, ",")) {
+		    $num = count($data); 
+		    $row++;
+		    $model = new Information();
+		    $model->key = $key;
+		    foreach ($FIELDS as $i => $field) {
+		    	 $model->$field = iconv('gbk//IGNORE','utf-8',   $data[$i]);
+		    } 
+		    $model->save();
+		    echo   $row .': ' . $model->gene  .' -- ' . $model->sick  . "<br>"; ob_flush();flush();
+
+		}
+		fclose($handle);
+		echo "</div> <h1>完成！！！</h1>";
+
+
     }
 
     /**

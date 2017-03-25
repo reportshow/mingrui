@@ -36,15 +36,27 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format'=>'raw',
                'label'=>'分类/描述',
                 'value'=>function($model){ 
+                	 
                 	if( $model->hassub ==1   ){ 
                 		$label = $model->classname;
                 		if(!$label) $label = '---';
                 		$url = '../../apps/web/index.php?r=gene/class&classid=' . $model->id;
-                		return Html::a($label, $url, ['class' => 'btn-xs btn-success']);
+                		$btnview = Html::a($label, $url, ['class' => 'btn-xs btn-success']);
+
+                		$btnedit = Html::a('编辑',['subupload','id'=>$model->id], 
+                         	 ['class'=>'btn-xs btn-warning  '   ]);
+
+                	}else{ 
+						$url = '../../apps/web/index.php?r=gene/class&classid=' . $model->id;
+                         
+                         $btnview = Html::a('图文', $url, ['class' => 'btn-xs btn-primary']);
+
+                         $btnedit = Html::a('编辑',['detailedit','id'=>$model->id], 
+                         	 ['class'=>'btn-xs btn-warning '  ]);
+
                 	}
                     
-                    $url = '../../apps/web/index.php?r=gene/class&classid=' . $model->id;
-                		return Html::a('图文', $url, ['class' => 'btn-xs btn-primary']);
+                    return $btnview  . $btnedit;
 
                 	//return Html::a('图文',['detailview', 'id' => $model->id],['class' => 'btn-xs btn-primary']);
 
