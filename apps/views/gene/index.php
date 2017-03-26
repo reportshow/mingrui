@@ -36,28 +36,53 @@ $model = $modellist[0];
  
 
 
+ 
+<br><br><br><br>
+
+ <DIV class="box box-primary  ">
+             <div class="box-header with-border">
+              <h3 class="box-title">症状←→基因</h3>
+
+               
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
 
 
- <br><hr><br>症状搜基因
-  <div class="input-group  ">
-    <input type="text" name='keyword_cn' placeholder='症状关键字'  class="form-control">
-        <span class="input-group-btn">
-          <button type="button" class="btn btn-info btn-flat" id='search_cn'>症状搜基因</button>
-        </span>
-  </div>
+        <div class="box-body">
+          
+          <div class="input-group  ">
+		    <input type="text" name='keyword_cn' placeholder='症状关键字'  class="form-control">
+		        <span class="input-group-btn">
+		          <button type="button" class="btn btn-info btn-flat" id='search_cn'>症状→基因</button>
+		        </span>
+		  </div>
 
-<br>基因搜症状
-  <div class="input-group  ">
-    <input type="text"   name='keyword_gene' placeholder='基因名'  class="form-control">
-        <span class="input-group-btn">
-          <button type="button" class="btn btn-info btn-flat"  id='search_gene'>基因搜症状</button>
-        </span>
-  </div>
+		  <br>基因搜症状
+		  <div class="input-group  ">
+		    <input type="text"   name='keyword_gene' placeholder='基因名'  class="form-control">
+		        <span class="input-group-btn">
+		          <button type="button" class="btn btn-info btn-flat"  id='search_gene'>基因→症状</button>
+		        </span>
+		  </div>
+
+
+
+
+
+
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+</DIV>
+ 
+
+ 
  
 
  <script>
-
-
+ 
 
 
 $('#mainlist-name').change(function(){ 

@@ -33,13 +33,17 @@ $this->title = $keywords .' 的相关基因';
              <ul class="nav nav-stacked"> <?php 
               if(count($list) < 1) echo "没有相关数据";
               else{
-                foreach ($list as $huohao => $genelist) { 
+                foreach ($list as $huohao => $geneobj) { 
 					//$chpo = str_replace($keywords, '<i class=keybg>' . $keywords.'</i>',$info->chpo);
+					$genelist = $geneobj['genes'];
+					$id = $geneobj['id'];
+                	$url = Yii::$app->urlManager->createUrl(['gene/class', 'classid' => $id ]) ;
+
                 	?>
               	 
               	   
 		            <li style="display:block;border:none">
-		             <a href="#">货号: &nbsp;<b class='text-green'><?=$huohao ?></b> <span class="pull-right">   </span></a>
+		             <a href="<?=$url ?>">货号: &nbsp;<b class='text-green'><?=$huohao ?></b> <span class="pull-right">   </span></a>
 		             </li> 
 		            <li style=" color:#666;"><a href="#">基因: &nbsp;<?=implode (', ', $genelist) ?>  </a></li>
 		        

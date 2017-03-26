@@ -31,7 +31,8 @@ class Mainlist extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'name_en', 'hassub', 'description'], 'string', 'max' => 255],
+            [
+            ['name', 'name_en', 'hassub', 'description'], 'string', 'max' => 255],
             [['number'], 'string', 'max' => 16],
             [['classname'], 'string', 'max' => 32],
             [['detail'], 'string' ],

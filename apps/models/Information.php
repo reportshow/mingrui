@@ -49,7 +49,8 @@ class Information extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['key','class', 'genecount', 'sick', 
+            [
+              ['key','class', 'genecount', 'sick', 
             'sick_en', 'gene', 'method', 'omim', 'background', 'wide', 'DM', 'mutation', 'grosins', 'grosdel', 'complex', 'prom', 'deletion', 'insertion', 'indel', 'splice', 'amplet', 'OTHERS', 'refseq'], 'string', 'max' => 255],
         ];
     }

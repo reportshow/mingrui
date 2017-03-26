@@ -69,6 +69,32 @@ class GeneController extends Controller
             ]);
     }
 
+    public function actionClassjson($key){ 
+    	$this->layout = false; 
+    	$keyword = Yii::$app->request->post('keyword');
+    	$query = Information::find()
+        	->where([ 'key'=> $key]);
+ 
+        $query = $query ->andWhere(['like','sick',$keyword]); 
+        $infolist= $query->limit(10) ->all();
+        
+        //var_dump($infolist);
+        $list = [];
+        foreach ($infolist as $key => $info) {
+        	 $list[] = ["label"=>$info->sick, 'value'=>$info->sick, 'id'=>$info->id];
+        }
+        return json_encode($list);
+    	return 
+		"[ 
+		  {
+		   \"id\" : \"10\", 
+		   \"value\" : \"55\",
+		   \"label\" : \"some label name\"
+		  }
+		]";
+
+    }
+
 
     public function actionSubclass($subclass)
     {    //groupby --$subclass
@@ -136,12 +162,14 @@ class GeneController extends Controller
     	$models = Information::find()->where(['in','gene', $keys])
     	         ->all();
     	$list = array();
+    	$listid = [];
     	foreach ($models as   $m) {
     		 $main = $m->main;
     		 $list[$main->number][] = $m->gene;
+    		 $listid[$main->number] = $main->id;
     	}
     	foreach ($list as $num => $genelist) {
-    		 $list[$num] = array_unique($genelist);
+    		 $list[$num] = ['genes'=>array_unique($genelist), 'id'=>$listid[$num]  ];
     	}
 
 
