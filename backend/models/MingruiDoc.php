@@ -19,7 +19,7 @@ use backend\models\RestClient;
 class MingruiDoc extends \yii\db\ActiveRecord
 {
     
-    public static $TYPES=['article'=>'案例', 'doc'=>'文档','news'=>'新闻','guide'=>'应用指南'];
+    public static $TYPES=['article'=>'案例', 'doc'=>'文档','news'=>'新闻','guide'=>'应用指南','genecase'=>'基因案例'];
     /**
      * @inheritdoc
      */

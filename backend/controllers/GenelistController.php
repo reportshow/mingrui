@@ -104,7 +104,14 @@ class GenelistController extends Controller
             ]);
         }
     }
+   
 
+   public function actionCase($classid){ 
+
+   return "<h1> 临时方案：  1.编辑【基因案例】，2.然后编辑本大类的'案例id'，";
+
+
+   }
 
    /**
      * Updates an existing Mainlist model.

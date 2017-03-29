@@ -24,10 +24,12 @@ use yii\widgets\ActiveForm;
     <?php //= $form->field($model, 'hassub')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'hassub')->radioList(['1'=>'基因子类','0'=>'图文描述']) ?>
 
-    <?= $form->field($model, 'classname')->textInput(['maxlength' => true ])  ?>
+    <?= $form->field($model, 'classname' )->textInput(['maxlength' => true ,'readonly' => 'true'])  ?>
     
     <?=Html::a('编辑详细图文描述',['detailedit','id'=>$model->id],['class'=>'btn btn-success btn-detail ' . ($model->hassub ? 'hide':'') ]) ?>
 
+    <?= $form->field($model, 'caselist' )->textInput(['maxlength' => true ])  ?>
+    
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? '新建' : '更新', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     	

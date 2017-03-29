@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('新建大类', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('案例总列表', ['mingrui-doc/index','type'=>'genecase'], ['class' => 'btn btn-warning']) ?>
 
     </p>
     <?= GridView::widget([
@@ -43,8 +44,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 		$url = '../../apps/web/index.php?r=gene/class&classid=' . $model->id;
                 		$btnview = Html::a($label, $url, ['class' => 'btn-xs btn-success']);
 
-                		$btnedit = Html::a('编辑',['subupload','id'=>$model->id], 
+                		$btnedit = Html::a('上传',['subupload','id'=>$model->id], 
                          	 ['class'=>'btn-xs btn-warning  '   ]);
+
+                		$btnedit .= Html::a('案例',['case','classid'=>$model->id], 
+                         	 ['class'=>'btn-xs btn-danger  '   ]);
 
                 	}else{ 
 						$url = '../../apps/web/index.php?r=gene/class&classid=' . $model->id;
@@ -61,10 +65,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 	//return Html::a('图文',['detailview', 'id' => $model->id],['class' => 'btn-xs btn-primary']);
 
                 },
-                'options'   => ['width' => '90'],
+                'options'   => ['width' => '140'],
              ] ,
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn', 'options'   => ['width' => '80'],],
         ],
     ]); ?>
 </div>
