@@ -1,16 +1,16 @@
-<?php 
+<?php
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 
 use yii\widgets\ActiveForm;
- 
+
 
 include_once('header.php');
 
-$this->title = $keywords .' 的相关基因';
+$this->title = $keywords .' 的相关货号';
 
 
-?> 
+?>
 
  <style type="text/css">
  .keybg{background:#ff9}
@@ -20,7 +20,7 @@ $this->title = $keywords .' 的相关基因';
 		<div class="col-md-4">
           <div class="box box-blue box-solid">
             <div class="box-header with-border">
-              <h3 class="box-title">疾病货号</h3></h3>
+              <h3 class="box-title">基因货号</h3></h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -30,28 +30,28 @@ $this->title = $keywords .' 的相关基因';
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-             <ul class="nav nav-stacked"> <?php 
+             <ul class="nav nav-stacked"> <?php
               if(count($list) < 1) echo "没有相关数据";
               else{
-                foreach ($list as $huohao => $geneobj) { 
+                foreach ($list as $huohao => $geneobj) {
 					//$chpo = str_replace($keywords, '<i class=keybg>' . $keywords.'</i>',$info->chpo);
 					$genelist = $geneobj['genes'];
 					$id = $geneobj['id'];
                 	$url = Yii::$app->urlManager->createUrl(['gene/class', 'classid' => $id ]) ;
 
                 	?>
-              	 
-              	   
+
+
 		            <li style="display:block;border:none">
 		             <a href="<?=$url ?>">货号: &nbsp;<b class='text-green'><?=$huohao ?></b> <span class="pull-right">   </span></a>
-		             </li> 
+		             </li>
 		            <li style=" color:#666;"><a href="#">基因: &nbsp;<?=implode (', ', $genelist) ?>  </a></li>
-		        
+
 
              <?php }
              }//if
-              ?> 
-              </ul> 
+              ?>
+              </ul>
 
             </div>
             <!-- /.box-body -->
@@ -61,10 +61,10 @@ $this->title = $keywords .' 的相关基因';
         <!-- /.col -->
 </div>
 
- 
+
 
  <script>
- function showsub(id){  
+ function showsub(id){
 	location.href= "?r=gene/subinfo&subid="+id;
 
 }

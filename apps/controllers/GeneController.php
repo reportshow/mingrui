@@ -1,19 +1,21 @@
 <?php
 namespace apps\controllers;
 
-use Yii; 
+use Yii;
 use yii\web\Controller;
 use apps\models\Mainlist;
 use apps\models\Information;
 use apps\models\Chpo;
+
+error_reporting(E_ALL^E_NOTICE);
 
 /**
  * Site controller
  */
 class GeneController extends Controller
 {
-   
- 
+
+   public $enableCsrfValidation = false;
 
     /**
      * Displays homepage.
@@ -39,29 +41,29 @@ class GeneController extends Controller
 
      public function actionClass($classid)
     {
-        //$mainlist = 
+        //$mainlist =
         //$clsModel  =  Mainlist::find()->where(['classname'=> $class])->one();
         $clsModel  =  Mainlist::findOne($classid);
-        if(!$clsModel) { 
+        if(!$clsModel) {
         	return "<h1>查找不到对应的分类</h1>";
-        } 
+        }
 
-        if(!$clsModel->hassub){ 
+        if(!$clsModel->hassub){
           return $this->redirect(['detail','id'=>$classid]);
         }
 
-        if(!$clsModel->classname){ 
+        if(!$clsModel->classname){
         	return "<h1>查找不到对应的分类的子类</h1>";
-        } 
+        }
 
 
         $infolist = Information::find()
         	->where([ 'key' =>$clsModel->classname])
         	->groupBy('class')
         	->all();
-        if(!$infolist) { 
+        if(!$infolist) {
         	return "<h1>查找不到对应的分类的子类</h1>";
-        } 
+        }
 
         return $this->render('class',[
                 'infolist' => $infolist,
@@ -69,29 +71,21 @@ class GeneController extends Controller
             ]);
     }
 
-    public function actionClassjson($key){ 
-    	$this->layout = false; 
+    public function actionClassjson($key){
+    	$this->layout = false;
     	$keyword = Yii::$app->request->post('keyword');
     	$query = Information::find()
         	->where([ 'key'=> $key]);
- 
-        $query = $query ->andWhere(['like','sick',$keyword]); 
-        $infolist= $query->limit(10) ->all();
-        
+
+        $query = $query ->andWhere(['like','sick',$keyword]);
+        $infolist= $query->all();
+
         //var_dump($infolist);
         $list = [];
         foreach ($infolist as $key => $info) {
         	 $list[] = ["label"=>$info->sick, 'value'=>$info->sick, 'id'=>$info->id];
         }
         return json_encode($list);
-    	return 
-		"[ 
-		  {
-		   \"id\" : \"10\", 
-		   \"value\" : \"55\",
-		   \"label\" : \"some label name\"
-		  }
-		]";
 
     }
 
@@ -99,30 +93,16 @@ class GeneController extends Controller
     public function actionSubclass($subclass)
     {    //groupby --$subclass
         $firstOne  =  Information::findOne($subclass);
-        if(!$firstOne) { 
+        if(!$firstOne) {
         	return "查找不到对应的分类";
         }
 
-        $key = $firstOne->key;
-        return $this->actionSubclass2($key,null);
-    }
-    
-
-    public function actionSubclass2($key,$keyword)
-    {   
-        return $this->showSubClass($key, $keyword);
-    }
+        $class = $firstOne->class;
 
 
-    function showSubClass($key, $name_keywords=null)
-    { 
         $query = Information::find()
-        	->where([ 'key'=> $key]);
+            ->where([ 'class'=> $class]);
 
-        if($name_keywords){ 
-        	 $query = $query ->andWhere(['like','sick',$name_keywords]);
-        }
-        
         $infolist= $query ->all();
 
        // echo $query->createCommand()->getRawSql(); exit;
@@ -130,29 +110,59 @@ class GeneController extends Controller
         return $this->render('subclass',[
                 'infolist' => $infolist,
                 'model' => $infolist[0],
-                'keywords'=>$name_keywords
+                'keywords'=>''
             ]);
+
+
+    }
+
+
+    public function actionSubclass2($key,$keyword)
+    {
+        if(!$keyword) return 'keyword is null';
+
+         $query = Information::find()
+            ->where([ 'key'=> $key]);
+
+         $query = $query ->andWhere(['like','sick',$keyword]);
+
+
+        $infolist= $query ->all();
+
+       // echo $query->createCommand()->getRawSql(); exit;
+        if(count($infolist) <1) return 'no data!';
+        return $this->render('subclass',[
+                'infolist' => $infolist,
+                'model' => $infolist[0],
+                'keywords'=>$keyword
+            ]);
+
+    }
+
+
+    function showSubClass($class, $name_keywords=null)
+    {
     }
 
 
 
 
     public function actionSubinfo($subid)
-    { 
+    {
     	$clsModel  =  Information::findOne($subid);
-    	 if(!$clsModel) { 
+    	 if(!$clsModel) {
         	return "查找不到对应的分类";
         }
 
-        return $this->render('info',[ 
+        return $this->render('info',[
                 'model' => $clsModel,
             ]);
 
     }
 
-    
+
     //gene-->货号
-    public function actionSearchhuohao($keywords){ 
+    public function actionSearchhuohao($keywords){
     	$keywords = str_replace('　', ' ', $keywords);
     	$keys = array_filter(explode(' ',$keywords));
     	foreach ($keys as $k => $value) {
@@ -165,6 +175,11 @@ class GeneController extends Controller
     	$listid = [];
     	foreach ($models as   $m) {
     		 $main = $m->main;
+             if(!$main) {continue;}
+             if(!is_array($list[$main->number]) ){
+                $list[$main->number] =[];
+             }
+
     		 $list[$main->number][] = $m->gene;
     		 $listid[$main->number] = $main->id;
     	}
@@ -173,29 +188,32 @@ class GeneController extends Controller
     	}
 
 
-    	return $this->render('search-huohao',[ 
+    	return $this->render('search-huohao',[
                 'list' => $list,
                 'keywords'=>$keywords
             ]);
     }
 
     //搜症状-->gene
-    public function actionSearch($keywords){ 
-    	$models = Chpo::find()->where(['like','chpo',$keywords])->all();
-    	return $this->render('searchsick',[ 
+    public function actionSearch($keywords){
+    	$models = Chpo::find()
+        ->where(['like','chpo',$keywords])
+        ->orderBy('rote DESC')
+        ->all();
+    	return $this->render('searchsick',[
                 'models' => $models,
                 'keywords'=>$keywords
             ]);
     }
     //gene-->症状
-    public function actionSearchgene($keywords){ 
+    public function actionSearchgene($keywords){
     	$models = Chpo::find()->where(['like','gene',$keywords])->all();
-    	return $this->render('searchsick',[ 
+    	return $this->render('searchsick',[
                 'models' => $models,
                 'keywords'=>$keywords
             ]);
     }
 
-       
- 
+
+
 }

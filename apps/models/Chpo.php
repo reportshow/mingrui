@@ -30,6 +30,7 @@ class Chpo extends \yii\db\ActiveRecord
         return [
             [['chpo'], 'string'],
             [['diseaseID', 'gene'], 'string', 'max' => 16],
+            [['rote'], 'float'],
         ];
     }
 
@@ -43,6 +44,7 @@ class Chpo extends \yii\db\ActiveRecord
             'chpo' => '描述',
             'diseaseID' => 'omim',
             'gene' => '基因',
+            'rote'=>'',
         ];
     }
 }

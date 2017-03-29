@@ -1,4 +1,4 @@
-<?php 
+<?php
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 
@@ -20,35 +20,34 @@ $listData = ArrayHelper::map($infolist,'id', 'class');
 $model = $infolist[0];
 //var_dump($listData);
 
- 
+
  echo $form->field($model, 'class')->dropDownList(
  	     $listData,  ['prompt'=>'选择产品...' /*,'onchange'=>'cc'*/
  	     ]
- 	  ); 
- 
+ 	  );
 
- 
+
+
  ActiveForm::end();
  ?>
 
- <br>搜相关中文名
+ <br>搜具体疾病名
   <div class="input-group  text-black">
-    <input type="text"   name='keyword' placeholder='搜相关中文名'  class="form-control">
+    <input type="text"   name='keyword' placeholder='搜具体疾病名'  class="form-control">
         <span class="input-group-btn">
-          <button type="button" class="btn btn-info btn-flat"  id='search'>搜相关中文名</button>
+          <button type="button" class="btn btn-info btn-flat"  id='search'>搜索</button>
         </span>
   </div>
- 
 
-案例：
+
 
  <script>
-$('#information-class').change(function(){ 
+$('#information-class').change(function(){
 	var key = ($(this).val());
 	location.href= "?r=gene/subclass&subclass="+key;
 });
 
-$('#search').click(function(){ 
+$('#search').click(function(){
 	var keyword = $("input[name='keyword']").val();
 	location.href= "<?=Yii::$app->urlManager->createUrl(['gene/subclass2', 'key' => $mainclass->classname]) ?>"
 	   + "&keyword="+keyword;
@@ -56,7 +55,7 @@ $('#search').click(function(){
 
 
 
-$(function(){  
+$(function(){
          $("input[name='keyword']").autosuggest({
             url: '<?=Yii::$app->urlManager->createUrl(['gene/classjson','key'=>$mainclass->classname])?>' ,
             method: 'POST',
@@ -69,7 +68,7 @@ $(function(){
                         json.push({ value: data.list[i].TagName,  label: data.list[i].GroupName + '=>' + data.list[i].TagName });
                     }
                     return  json;
-                } 
+                }
                 return json;
             },*/
              onSelect:function(elm) {
