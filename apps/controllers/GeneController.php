@@ -6,6 +6,7 @@ use yii\web\Controller;
 use apps\models\Mainlist;
 use apps\models\Information;
 use apps\models\Chpo;
+use backend\models\MingruiDoc;
 
 error_reporting(E_ALL^E_NOTICE);
 
@@ -64,10 +65,20 @@ class GeneController extends Controller
         if(!$infolist) {
         	return "<h1>查找不到对应的分类的子类</h1>";
         }
+        $ids = explode(',', $clsModel->caselist);
+        $caselist = MingruiDoc::find()->where(['in','id', $ids])->all();
 
         return $this->render('class',[
                 'infolist' => $infolist,
                 'mainclass' => $clsModel,
+                'caselist' =>$caselist,
+            ]);
+    }
+    
+    public function actionShowcase($caseid){ 
+    	$case  = MingruiDoc::findOne($caseid);
+    	return $this->render('case-item',[
+                'model' => $case, 
             ]);
     }
 
@@ -142,6 +153,7 @@ class GeneController extends Controller
 
     function showSubClass($class, $name_keywords=null)
     {
+    	
     }
 
 
@@ -150,6 +162,19 @@ class GeneController extends Controller
     public function actionSubinfo($subid)
     {
     	$clsModel  =  Information::findOne($subid);
+    	 if(!$clsModel) {
+        	return "查找不到对应的分类";
+        }
+
+        return $this->render('info',[
+                'model' => $clsModel,
+            ]);
+
+    }
+
+       public function actionSubinfoBygene($gene)
+    {
+    	$clsModel  =  Information::find()->where(['gene'=>$gene])->one();
     	 if(!$clsModel) {
         	return "查找不到对应的分类";
         }
@@ -172,7 +197,7 @@ class GeneController extends Controller
     	$models = Information::find()->where(['in','gene', $keys])
     	         ->all();
     	$list = array();
-    	$listid = [];
+    	$listinfo = [];
     	foreach ($models as   $m) {
     		 $main = $m->main;
              if(!$main) {continue;}
@@ -181,10 +206,13 @@ class GeneController extends Controller
              }
 
     		 $list[$main->number][] = $m->gene;
-    		 $listid[$main->number] = $main->id;
+    		 $listinfo[$main->number] = $main;
     	}
     	foreach ($list as $num => $genelist) {
-    		 $list[$num] = ['genes'=>array_unique($genelist), 'id'=>$listid[$num]  ];
+    		 $list[$num] = [
+    		       'genes'=>array_unique($genelist), 
+    		       'info'=>$listinfo[$num]  
+    		 ];
     	}
 
 

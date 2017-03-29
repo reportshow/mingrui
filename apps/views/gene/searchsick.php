@@ -31,21 +31,24 @@ $this->title = $keywords .' 的相关基因';
             <!-- /.box-header -->
             <div class="box-body">
              <ul class="nav nav-stacked"> <?php
-              if(count($models) < 1) echo "没有相关数据";
-              else{
+              if(count($models) < 1) {
+              	echo "没有相关数据";
+              }else{
                 foreach ($models as $key => $info) {
 					$chpo = str_replace($keywords, '<i class=keybg>' . $keywords.'</i>',$info->chpo);
-                	?>
-
-
+					$url = Yii::$app->urlManager->createUrl(['gene/subinfo-bygene', 'gene' => $info->gene ]) ;
+                	?>  
 		            <li style="display:block;border:none">
-		               <a href="#"> <?=$info->gene ?> <span class="pull-right"> <?=$info->diseaseID ?> </span></a>
-		             </li>
-		            <li style="padding:0px 5px 15px 15px;color:#666;"> <b>HPO表型:</b> &nbsp;<?=$chpo ?>
-               / <?=$info->rote ?> </li>
+		               <a href="<?=$url?>"> <?=$info->gene ?> <span class="pull-right"> <?=$info->diseaseID ?> </span></a>
+		            </li>
+		            <li style="padding:0px 5px 15px 15px;color:#666;"> 
+		               <a href="<?=$url?>"> <?=$info->gene ?><b>HPO表型:</b> &nbsp;<?=$chpo ?></a>
+		            </li>
 
 
-             <?php }
+             <?php 
+
+                }//for
              }//if
               ?>
               </ul>

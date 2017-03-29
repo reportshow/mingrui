@@ -36,14 +36,16 @@ $this->title = $keywords .' 的相关货号';
                 foreach ($list as $huohao => $geneobj) {
 					//$chpo = str_replace($keywords, '<i class=keybg>' . $keywords.'</i>',$info->chpo);
 					$genelist = $geneobj['genes'];
-					$id = $geneobj['id'];
-                	$url = Yii::$app->urlManager->createUrl(['gene/class', 'classid' => $id ]) ;
-
+					$info = $geneobj['info'];
+                	$url = Yii::$app->urlManager->createUrl(['gene/class', 'classid' => $info->id ]) ;
+                	$name = str_replace('_','',$info->name);
+                	$name = str_replace('明睿','',$name);
+                	$name = str_replace('focus','',$name);
                 	?>
 
 
 		            <li style="display:block;border:none">
-		             <a href="<?=$url ?>">货号: &nbsp;<b class='text-green'><?=$huohao ?></b> <span class="pull-right">   </span></a>
+		             <a href="<?=$url ?>">货号: &nbsp;<b class='text-green'><?=$huohao ?> </b>(<?=$name ?>) <span class="pull-right">   </span></a>
 		             </li>
 		            <li style=" color:#666;"><a href="#">基因: &nbsp;<?=implode (', ', $genelist) ?>  </a></li>
 
