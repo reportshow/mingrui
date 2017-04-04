@@ -9,6 +9,7 @@ use apps\models\Chpo;
 use backend\models\MingruiDoc;
 
 error_reporting(E_ALL^E_NOTICE);
+    
 
 /**
  * Site controller
@@ -208,20 +209,40 @@ class GeneController extends Controller
     		 $list[$main->number][] = $m->gene;
     		 $listinfo[$main->number] = $main;
     	}
+    	$listX=[];
     	foreach ($list as $num => $genelist) {
-    		 $list[$num] = [
+    		 $listX[] = [
+    		 	   'huohao'=>$num,
     		       'genes'=>array_unique($genelist), 
     		       'info'=>$listinfo[$num]  
     		 ];
     	}
 
+        $listX = self::my_sort($listX);
+        
+        //var_dump($listX);exit;
 
     	return $this->render('search-huohao',[
-                'list' => $list,
+                'list' => $listX,
                 'keywords'=>$keywords
             ]);
-    }
+    } 
 
+	public static function   my_sort($list){ 
+		for($i=0; $i<count($list)-1; $i++){ 
+			$c = count($list[$i]['genes']);
+			$c1 = count($list[$i+1]['genes']);
+            if($c1 > $c){ 
+            	$tmp = $list[$i];
+            	$list[$i] = $list[$i+1];
+            	$list[$i+1] = $tmp;
+            }
+			 
+		}
+	   return $list;
+	}
+
+    
     //搜症状-->gene
     public function actionSearch($keywords){
     	$models = Chpo::find()
@@ -245,3 +266,4 @@ class GeneController extends Controller
 
 
 }
+

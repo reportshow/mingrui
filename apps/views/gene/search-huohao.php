@@ -33,8 +33,9 @@ $this->title = $keywords .' 的相关货号';
              <ul class="nav nav-stacked"> <?php
               if(count($list) < 1) echo "没有相关数据";
               else{
-                foreach ($list as $huohao => $geneobj) {
+                foreach ($list as $i => $geneobj) {
 					//$chpo = str_replace($keywords, '<i class=keybg>' . $keywords.'</i>',$info->chpo);
+					$huohao = $geneobj['huohao'];
 					$genelist = $geneobj['genes'];
 					$info = $geneobj['info'];
                 	$url = Yii::$app->urlManager->createUrl(['gene/class', 'classid' => $info->id ]) ;

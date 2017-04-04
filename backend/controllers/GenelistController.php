@@ -169,7 +169,8 @@ class GenelistController extends Controller
 		    $model = new Information();
 		    $model->key = $key;
 		    foreach ($FIELDS as $i => $field) {
-		    	 $model->$field = iconv('gbk//IGNORE','utf-8',   $data[$i]);
+		    	 $val = trim(iconv('gbk//IGNORE','utf-8',   $data[$i]));
+		    	 $model->$field =  $val;
 		    } 
 		    $model->save();
 		    echo   $row .': ' . $model->gene  .' -- ' . $model->sick  . "<br>"; ob_flush();flush();

@@ -32,7 +32,12 @@ if (strlen($model->doc)>8) {
     $contentTitle =  $model->title ;
  
 
-?><div class="row">
+?>
+<style type="text/css">
+	.casecontent img{width: auto !important;height: auto !important;  }
+
+</style>
+<div class="row">
     <div class="col-md-12">
         <!-- Box Comment -->
         <div class="box box-widget">
@@ -73,10 +78,8 @@ if (strlen($model->doc)>8) {
                 <!-- /.box-tools -->
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
-
-                   
-                    
+            <div class="box-body casecontent">
+  
                     <p>
                     <?= $content  ?>
                     </p> 
