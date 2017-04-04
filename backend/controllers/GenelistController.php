@@ -7,6 +7,10 @@ use apps\models\Mainlist;
 use apps\models\MainlistSearch;
 use apps\models\Information;
 
+use backend\models\MingruiDoc;
+use backend\models\MingruiDocSearch;
+
+
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -105,13 +109,66 @@ class GenelistController extends Controller
         }
     }
    
+    public static $genecase ='genecase';
+    public function actionCasedelete($classid, $caseid){ 
+    	$main = $this->findModel($classid);
+    	$caselist = explode(',', $main->caselist);
+    	$caselist= array_flip($caselist);
+    	unset($caselist[$caseid]);
+    	$caselist= array_flip($caselist);
+    	$main->caselist = join(',', $caselist);
+        $main->save();
+   
+        MingruiDoc::findOne($caseid)->delete();
+        return $this->redirect(['case', 'classid' => $classid]); 
 
-   public function actionCase($classid){ 
 
-   return "<h1> 临时方案：  1.编辑【基因案例】，2.然后编辑本大类的'案例id'，";
+    }
+    public function actionCreatecase($classid){ 
+        $main = $this->findModel($classid);
+        $doc = new MingruiDoc();
+        $doc->uid = Yii::$app->user->id;
+        $doc->type='genecase';
+        $doc->title = '标题';
+        $doc->description ='基因案例内容';
+        $doc->save(); 
+
+        $caselist = explode(',', $main->caselist);
+        $caselist[] = $doc->id;
+
+        $main->caselist = join(',', $caselist);
+        $main->save();
+       
+
+        return $this->redirect(['mingrui-doc/update', 'id' => $doc->id, 'type'=>self::$genecase]); 
 
 
-   }
+    }
+    public function actionCase($classid){  
+   	    $_GET['type'] =$type= 'genecase';
+
+        $main = $this->findModel($classid);
+
+        $searchModel = new MingruiDocSearch();
+        $params      = Yii::$app->request->queryParams;
+
+        $query = MingruiDoc::find();
+
+        $query = $query->where(['in' , 'id',  explode(',',$main->caselist) ]);
+
+        $query = $query
+            ->orderBy('id DESC');
+         
+
+        $dataProvider = $searchModel->search($params, $query);
+
+        return $this->render('case-index', [
+            'searchModel'  => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+
+
+    }
 
    /**
      * Updates an existing Mainlist model.

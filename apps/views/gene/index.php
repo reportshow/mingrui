@@ -9,6 +9,13 @@ include_once('header.php');
 $this->title = '金准基因单病产品总表';
 
 ?>
+<script type="text/javascript" src='js/jquery.autosuggest.min.js'></script>
+
+
+
+
+
+
 <h3>金准基因单病产品总表</h3>
 <?php
 //var_dump($model);
@@ -52,7 +59,7 @@ $model = $modellist[0];
         <div class="box-body">
 
           <div class="input-group  ">
-		    <input type="text" name='keyword_cn' placeholder='症状关键字'  class="form-control">
+		    <input type="text" id='symptom' name='keyword_cn' placeholder='症状关键字'  class="form-control">
 		        <span class="input-group-btn">
 		          <button type="button" class="btn btn-info btn-flat" id='search_cn'>症状→基因</button>
 		        </span>
@@ -104,4 +111,27 @@ $('#search_gene').click(function(){
 	var keyword = $("input[name='keyword_gene']").val();
 	location.href = '?r=gene/searchgene&keywords=' + keyword;
 });
+
+
+$(function(){
+     $("#symptom").autosuggest({
+        url: "<?=Yii::$app->urlManager->createUrl(['symptom/search'])?>" ,
+        method: 'POST',
+        queryParamName: 'keyword',
+        //split: ' ',user input split
+        /*dataCallback:function(data) {
+            
+        },*/
+         onSelect:function(elm) { 
+         	$('#search_cn').click();
+        }
+    });
+
+
+
+});
  </script>
+
+<style>
+.as-wrapper{position:inherit; color:#333;}.as-wrapper .as-menu{position:absolute;z-index:1000;width:100%;display:none}.as-wrapper .as-selected{background-color:#f5f5f5}.as-align-left{text-align:left}.as-align-right{text-align:right}.as-align-center{text-align:center}
+</style>
