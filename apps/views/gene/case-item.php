@@ -29,7 +29,7 @@ if (strlen($model->doc)>8) {
  
  
     $content .= delScript($model->description);
-    $contentTitle =  $model->title ;
+    $contentTitle = $this->title = $model->title ;
  
 
 ?>

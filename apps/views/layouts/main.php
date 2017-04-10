@@ -20,7 +20,7 @@ dmstr\web\AdminLteAsset::register($this);
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0, minimum-scale=1.0">
-
+    <div id='wx_pic' style='margin:0 auto;display:none;'><img src='images/icon.PNG' /></div>
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
@@ -49,6 +49,10 @@ dmstr\web\AdminLteAsset::register($this);
     ]);
     NavBar::end();
     */
+
+    if(Yii::$app->controller->action->id !='index'){
+        echo "<a class='btn btn-info' href='http://www.mono-mr.com/apps/web/index.php?r=gene'>主页</a>";
+    }
     ?>
 
     <div class="container" style="padding:30px;margin:0px">

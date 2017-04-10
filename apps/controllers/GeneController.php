@@ -195,7 +195,7 @@ class GeneController extends Controller
     		 $keys[$k]=strtoupper($value);
     	}
 
-    	$models = Information::find()->where(['in','gene', $keys])
+    	$models = Information::find()->where(['or like','gene', $keys])
     	         ->all();
     	$list = array();
     	$listinfo = [];
@@ -218,8 +218,8 @@ class GeneController extends Controller
     		 ];
     	}
 
-        $listX = self::my_sort($listX);
-        
+        //$listX = self::my_sort($listX);
+         usort($listX,[$this, 'abcd']);
         //var_dump($listX);exit;
 
     	return $this->render('search-huohao',[
@@ -227,7 +227,14 @@ class GeneController extends Controller
                 'keywords'=>$keywords
             ]);
     } 
-
+    public static function abcd($a, $b){ 
+            $c = count($a['genes']);
+			$c1 = count($b['genes']);
+            if($c1 > $c){ 
+            	 return true;
+            }
+            return false;
+    }
 	public static function   my_sort($list){ 
 		for($i=0; $i<count($list)-1; $i++){ 
 			$c = count($list[$i]['genes']);

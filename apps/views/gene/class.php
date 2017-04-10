@@ -14,12 +14,20 @@ include_once('header.php');
 <?php
 $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data','class'=>'upload']]);
 
+$listData = [];
+
+//var_dump($infolist); exit;
+foreach ($infolist as $key => $obj) {
+	 $listData[$obj->id] = $obj->class . '-(' . $obj->genecount .')';
+}
 
 //var_dump($model);
-$listData = ArrayHelper::map($infolist,'id', 'class');
-$model = $infolist[0];
-//var_dump($listData);
+//$listData = ArrayHelper::map($infolist,'id', 'class');
 
+$model = $infolist[0];
+
+//var_dump($listData);
+//exit;
 
  echo $form->field($model, 'class')->dropDownList(
  	     $listData,  ['prompt'=>'选择产品...' /*,'onchange'=>'cc'*/
