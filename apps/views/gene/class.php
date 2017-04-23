@@ -10,7 +10,7 @@ include_once('header.php');
 ?>
 <script type="text/javascript" src='js/jquery.autosuggest.min.js'></script>
 
-<h1><?=$this->title?> 大类</h1>
+<h3><?=$this->title?> 大类</h3>
 <?php
 $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data','class'=>'upload']]);
 
@@ -41,12 +41,19 @@ $model = $infolist[0];
 
  <br>搜具体疾病名
   <div class="input-group  text-black">
-    <input type="text"   name='keyword' placeholder='搜具体疾病名'  class="form-control">
+    <input type="text"   name='keyword' placeholder='搜具体疾病名(多个用空格隔开)'  class="form-control">
         <span class="input-group-btn">
           <button type="button" class="btn btn-info btn-flat"  id='search'>搜索</button>
         </span>
   </div>
 
+ <br>搜基因
+  <div class="input-group  text-black">
+    <input type="text"   name='gene' placeholder='搜基因(多个用空格隔开)'  class="form-control">
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-info btn-flat"  id='searchgene'>搜索</button>
+        </span>
+  </div>
 
 
  <script>
@@ -60,7 +67,11 @@ $('#search').click(function(){
 	location.href= "<?=Yii::$app->urlManager->createUrl(['gene/subclass2', 'key' => $mainclass->classname]) ?>"
 	   + "&keyword="+keyword;
 });
-
+$('#searchgene').click(function(){
+    var gene = $("input[name='gene']").val();
+    location.href= "<?=Yii::$app->urlManager->createUrl(['gene/subclass3', 'key' => $mainclass->classname]) ?>"
+       + "&gene="+gene;
+});
 
 
 $(function(){

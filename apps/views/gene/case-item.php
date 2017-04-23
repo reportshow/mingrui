@@ -4,15 +4,15 @@ use backend\widgets\Attachments;
 
 echo Attachments::begin( );
 
-$type= $_GET['type'];  
+$type= $_GET['type'];
 
 if (!function_exists('delScript')) {
     function delScript($string)
-    { 
+    {
         $pregfind    = array("/<script.*>.*<\/script>/siU", '/on(mousewheel|mouseover|click|load|onload|submit|focus|blur)="[^"]*"/i');
         $pregreplace = array('', '');
         $string      = preg_replace($pregfind, $pregreplace, $string);
- 
+
         return $string;
     }
 }
@@ -25,16 +25,16 @@ $content = '';
 if (strlen($model->doc)>8) {
   $content =  Attachments::widget(['model' => $model, 'field' => 'doc']);
 
-} 
- 
- 
+}
+
+
     $content .= delScript($model->description);
     $contentTitle = $this->title = $model->title ;
- 
+
 
 ?>
 <style type="text/css">
-	.casecontent img{width: auto !important;height: auto !important;  }
+	.casecontent img{width: auto !important;height: auto !important;    max-width: 100% !important;  }
 
 </style>
 <div class="row">
@@ -43,7 +43,7 @@ if (strlen($model->doc)>8) {
         <div class="box box-widget">
             <div class="box-header with-border">
                 <div class="user-block">
-                         
+
                         <span class="pull-right">
                             <?=date('Y-m-d', $model->createtime)?>
                         </span>
@@ -56,14 +56,14 @@ if (strlen($model->doc)>8) {
                 <div class="box-tools ">
                     <?php
 
-                   
+
 
                    if($actname=='index' && $type=='article')
-                   { 
+                   {
                     echo Html::a('评论', ['mingrui-doc/view', 'id' => $model->id,'type'=>$type], [
-                        'class' => 'btn btn-info',                         
+                        'class' => 'btn btn-info',
                         ]);
-                    }  
+                    }
                  ?>
 
                     <button class="btn btn-box-tool hide" data-widget="collapse" type="button">
@@ -79,11 +79,11 @@ if (strlen($model->doc)>8) {
             </div>
             <!-- /.box-header -->
             <div class="box-body casecontent">
-  
+
                     <p>
                     <?= $content  ?>
-                    </p> 
-               
+                    </p>
+
             </div>
             <!-- /.box-body -->
         </div>

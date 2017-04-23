@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('新建大类', ['create'], ['class' => 'btn btn-success']) ?>
         <?= Html::a('案例总列表', ['mingrui-doc/index','type'=>'genecase'], ['class' => 'btn btn-warning']) ?>
+         <?= Html::a('订单列表', ['genelist-order/index','type'=>'genecase'], ['class' => 'btn btn-info']) ?>
 
     </p>
     <?= GridView::widget([
@@ -69,6 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
              ] ,
 
             ['class' => 'yii\grid\ActionColumn', 'options'   => ['width' => '80'],],
+            
         ],
     ]); ?>
 </div>

@@ -7,8 +7,42 @@ use yii\widgets\ActiveForm;
 
 include_once('header.php');
 
-$this->title = $keywords .' 的相关基因';
+if(!is_array($keywords)) $keywords = [$keywords];
+$tag = $type!='gene' ? '基因的相关表型' :'表型的相关基因';
 
+$this->title = strtoupper( join(' ',$keywords))  .' ' .$tag;
+
+
+if(is_array($models)){
+
+	$orderedList = [];
+
+	foreach ($models as $index => $info) {
+
+			$chpo = 'CHPO表型:  &nbsp;'. $info->chpo ;
+			$count = 0;
+
+	 	    if(is_array($keywords)){
+	 	    	foreach ($keywords as $key ) {
+		 	    	if(strpos('=='.$chpo,$key) > 0){
+						$chpo = str_replace($key , '<i class=keybg>' . $key .'</i>', $chpo);
+						$count++;
+		 	    	}
+	 	       }
+	 	        if($count == count($keywords) ){
+	               $chpo = "<b class='fa  fa-graduation-cap text-red' style='font-size:18pt'> </b>  " . $chpo ;
+	 	        }
+	 	   }
+		 $info->chpo = $chpo;
+
+		$models[$index] = $info;
+
+		$orderedList[$index] = $count;
+
+	}
+
+	arsort($orderedList);
+}
 
 ?>
 
@@ -34,19 +68,21 @@ $this->title = $keywords .' 的相关基因';
               if(count($models) < 1) {
               	echo "没有相关数据";
               }else{
-                foreach ($models as $key => $info) {
-					$chpo = str_replace($keywords, '<i class=keybg>' . $keywords.'</i>',$info->chpo);
+                foreach ($orderedList as $key => $count) {
+                    $info = $models[$key];
+
+
 					$url = Yii::$app->urlManager->createUrl(['gene/subinfo-bygene', 'gene' => $info->gene ]) ;
-                	?>  
+                	?>
 		            <li style="display:block;border:none">
 		               <a href="<?=$url?>"> <?=$info->gene ?> <span class="pull-right"> <?=$info->diseaseID ?> </span></a>
 		            </li>
-		            <li style="padding:0px 5px 15px 15px;color:#666;"> 
-		               <a href="<?=$url?>"> <?=$info->gene ?><b>HPO表型:</b> &nbsp;<?=$chpo ?></a>
+		            <li style="padding:0px 5px 15px 15px;color:#666;">
+		               <a href="<?=$url?>">  <?= $info->chpo ?></a>
 		            </li>
 
 
-             <?php 
+             <?php
 
                 }//for
              }//if

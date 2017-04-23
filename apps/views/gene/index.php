@@ -46,9 +46,10 @@ $model = $modellist[0];
 
 <br><br><br><br>
 
+(表型词条来自CHPO)
  <DIV class="box box-primary  ">
              <div class="box-header with-border">
-              <h3 class="box-title">症状←→基因</h3>
+              <h3 class="box-title">表型←→基因</h3>
 
 
               <!-- /.box-tools -->
@@ -59,17 +60,17 @@ $model = $modellist[0];
         <div class="box-body">
 
           <div class="input-group  ">
-		    <input type="text" id='symptom' name='keyword_cn' placeholder='症状关键字'  class="form-control">
+		    <input type="text" id='symptom' name='keyword_cn' placeholder='表型关键字(多个用空格分开)'  class="form-control">
 		        <span class="input-group-btn">
-		          <button type="button" class="btn btn-info btn-flat" id='search_cn'>症状→基因</button>
+		          <button type="button" class="btn btn-info btn-flat" id='search_cn'>表型→基因</button>
 		        </span>
 		  </div>
 
-		  <br>基因搜症状
+		  <br>基因搜表型
 		  <div class="input-group  ">
 		    <input type="text"   name='keyword_gene' placeholder='基因名'  class="form-control">
 		        <span class="input-group-btn">
-		          <button type="button" class="btn btn-info btn-flat"  id='search_gene'>基因→症状</button>
+		          <button type="button" class="btn btn-info btn-flat"  id='search_gene'>基因→表型</button>
 		        </span>
 		  </div>
 
@@ -114,16 +115,28 @@ $('#search_gene').click(function(){
 
 
 $(function(){
+	 var oldtext = '';
+	 $("#symptom").change(function(){ 
+	 	oldtext = $(this).val();
+	 });
      $("#symptom").autosuggest({
         url: "<?=Yii::$app->urlManager->createUrl(['symptom/search'])?>" ,
         method: 'POST',
         queryParamName: 'keyword',
         //split: ' ',user input split
         /*dataCallback:function(data) {
-            
+
         },*/
-         onSelect:function(elm) { 
-         	$('#search_cn').click();
+         onSelect:function(elm) {
+         	var t = oldtext;
+         	var p = oldtext.lastIndexOf(' ')
+         	if(p > 0){ 
+         		t = t.substr(0, p);
+         	}else{ 
+         		t ='';
+         	 }
+         	$('#symptom').val(t+" " + elm.text());
+         	return false;
         }
     });
 

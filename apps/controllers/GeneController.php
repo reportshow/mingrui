@@ -9,7 +9,7 @@ use apps\models\Chpo;
 use backend\models\MingruiDoc;
 
 error_reporting(E_ALL^E_NOTICE);
-    
+
 
 /**
  * Site controller
@@ -75,11 +75,11 @@ class GeneController extends Controller
                 'caselist' =>$caselist,
             ]);
     }
-    
-    public function actionShowcase($caseid){ 
+
+    public function actionShowcase($caseid){
     	$case  = MingruiDoc::findOne($caseid);
     	return $this->render('case-item',[
-                'model' => $case, 
+                'model' => $case,
             ]);
     }
 
@@ -128,7 +128,7 @@ class GeneController extends Controller
 
     }
 
-
+    //class 下搜疾病
     public function actionSubclass2($key,$keyword)
     {
         if(!$keyword) return 'keyword is null';
@@ -136,7 +136,9 @@ class GeneController extends Controller
          $query = Information::find()
             ->where([ 'key'=> $key]);
 
-         $query = $query ->andWhere(['like','sick',$keyword]);
+         $keywords = $this->keywordclear($keyword);
+
+         $query = $query ->andWhere(['or like','sick',$keywords]);
 
 
         $infolist= $query ->all();
@@ -146,15 +148,42 @@ class GeneController extends Controller
         return $this->render('subclass',[
                 'infolist' => $infolist,
                 'model' => $infolist[0],
-                'keywords'=>$keyword
+                'keywords'=>$keywords
+            ]);
+
+    }
+
+    //class 下搜gene
+    public function actionSubclass3($key,$gene)
+    {
+        if(!$gene) return 'gene is null';
+
+         $query = Information::find()
+            ->where([ 'key'=> $key]);
+
+         $genelist = $this->keywordclear($gene);
+
+         $query = $query ->andWhere(['in','gene', $genelist]);
+
+
+        $infolist= $query ->all();
+
+       // echo $query->createCommand()->getRawSql(); exit;
+        if(count($infolist) <1) return 'no data!';
+        return $this->render('subclass',[
+                'infolist' => $infolist,
+                'model' => $infolist[0],
+                'keywords'=>$genelist
             ]);
 
     }
 
 
+
+
     function showSubClass($class, $name_keywords=null)
     {
-    	
+
     }
 
 
@@ -186,7 +215,16 @@ class GeneController extends Controller
 
     }
 
+    public function keywordclear($keywords){
+        $keywords = str_replace('　', ' ', $keywords);
+        $keys = array_filter(explode(' ',$keywords));
 
+        foreach ($keys as $k => $value) {
+             $keys[$k]=strtoupper($value);
+        }
+        return $keys;
+
+    }
     //gene-->货号
     public function actionSearchhuohao($keywords){
     	$keywords = str_replace('　', ' ', $keywords);
@@ -195,7 +233,7 @@ class GeneController extends Controller
     		 $keys[$k]=strtoupper($value);
     	}
 
-    	$models = Information::find()->where(['or like','gene', $keys])
+    	$models = Information::find()->where(['in','gene', $keys])
     	         ->all();
     	$list = array();
     	$listinfo = [];
@@ -213,8 +251,8 @@ class GeneController extends Controller
     	foreach ($list as $num => $genelist) {
     		 $listX[] = [
     		 	   'huohao'=>$num,
-    		       'genes'=>array_unique($genelist), 
-    		       'info'=>$listinfo[$num]  
+    		       'genes'=>array_unique($genelist),
+    		       'info'=>$listinfo[$num]
     		 ];
     	}
 
@@ -226,39 +264,44 @@ class GeneController extends Controller
                 'list' => $listX,
                 'keywords'=>$keywords
             ]);
-    } 
-    public static function abcd($a, $b){ 
+    }
+    public static function abcd($a, $b){
             $c = count($a['genes']);
 			$c1 = count($b['genes']);
-            if($c1 > $c){ 
+            if($c1 > $c){
             	 return true;
             }
             return false;
     }
-	public static function   my_sort($list){ 
-		for($i=0; $i<count($list)-1; $i++){ 
+	public static function   my_sort($list){
+		for($i=0; $i<count($list)-1; $i++){
 			$c = count($list[$i]['genes']);
 			$c1 = count($list[$i+1]['genes']);
-            if($c1 > $c){ 
+            if($c1 > $c){
             	$tmp = $list[$i];
             	$list[$i] = $list[$i+1];
             	$list[$i+1] = $tmp;
             }
-			 
+
 		}
 	   return $list;
 	}
 
-    
+
     //搜症状-->gene
     public function actionSearch($keywords){
+
+    	$keywordlist = $this->keywordclear($keywords);
+
+
     	$models = Chpo::find()
-        ->where(['like','chpo',$keywords])
+        ->where(['or like','chpo', $keywordlist ])
         ->orderBy('rote DESC')
         ->all();
     	return $this->render('searchsick',[
                 'models' => $models,
-                'keywords'=>$keywords
+                'type'=>'gene',
+                'keywords'=>$keywordlist
             ]);
     }
     //gene-->症状
@@ -266,6 +309,7 @@ class GeneController extends Controller
     	$models = Chpo::find()->where(['like','gene',$keywords])->all();
     	return $this->render('searchsick',[
                 'models' => $models,
+                'type'=>'zhengzhuang',
                 'keywords'=>$keywords
             ]);
     }

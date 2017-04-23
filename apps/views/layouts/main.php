@@ -20,12 +20,26 @@ dmstr\web\AdminLteAsset::register($this);
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0, minimum-scale=1.0">
-    <div id='wx_pic' style='margin:0 auto;display:none;'><img src='images/icon.PNG' /></div>
+    <div id='wx_pic' style='margin:0 auto;display:none;'><img src='images/icon3.png' /></div>
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
 <body>
+  <style>
+     body {background-color:#20252B !important;
+        background-image: url(images/pic3-2.jpg) !important;
+        background-size: cover !important;
+        background-position: 100% !important;
+        color:#fff;}
+    .table-striped > tbody > tr:nth-of-type(odd){
+		background-color: rgba(195, 209, 240, 0.22);
+     }
+
+    .alert-info{margin-top: 30%;
+        background-color: rgba(0, 192, 239, 0.5) !important;}
+ </style>
+ 
 <?php $this->beginBody() ?>
 
 <div class="wrap">
@@ -51,7 +65,13 @@ dmstr\web\AdminLteAsset::register($this);
     */
 
     if(Yii::$app->controller->action->id !='index'){
-        echo "<a class='btn btn-info' href='http://www.mono-mr.com/apps/web/index.php?r=gene'>主页</a>";
+        echo "<div style='padding-left:30px;height: 10px;'>"
+        . Html::a('主页', ['gene/index'], ['class' => 'btn btn-info'])
+
+       . Html::a('下单', ['genelist-order/create'], ['class' => 'btn btn-success'])
+        ."</div>";
+        
+        
     }
     ?>
 

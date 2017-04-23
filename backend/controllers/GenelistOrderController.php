@@ -1,21 +1,20 @@
 <?php
 
-namespace apps\controllers;
+namespace backend\controllers;
 
 use Yii;
-use apps\models\GenelistSymptom;
-use apps\models\GenelistSymptomSearch;
+use apps\models\GenelistOrder;
+use apps\models\GenelistOrderSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * SymptomController implements the CRUD actions for GenelistSymptom model.
+ * GenelistOrderController implements the CRUD actions for GenelistOrder model.
  */
-class SymptomController extends Controller
+class GenelistOrderController extends Controller
 {
-    public $enableCsrfValidation = false;
-     /**
+    /**
      * @inheritdoc
      */
     public function behaviors()
@@ -31,12 +30,12 @@ class SymptomController extends Controller
     }
 
     /**
-     * Lists all GenelistSymptom models.
+     * Lists all GenelistOrder models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new GenelistSymptomSearch();
+        $searchModel = new GenelistOrderSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,24 +44,8 @@ class SymptomController extends Controller
         ]);
     }
 
-    public function actionSearch() { 
-    	 $keyword = Yii::$app->request->post('keyword');
-    	 $keyword = str_replace('　', ' ', $keyword);
-    	 $list = explode(' ', $keyword );
-    	 $keyword  = end($list);
-    	$query = GenelistSymptom::find()->where(['like', 'symptom',$keyword])->all();
-    	$list = [];
-        foreach ($query as   $info) {
-        	 $list[] = ["label"=>$info->symptom, 'value'=>$info->symptom, 'id'=>$info->id];
-        }
-
-        $this->layout = false;
-        return json_encode($list);
-
-    }
-
     /**
-     * Displays a single GenelistSymptom model.
+     * Displays a single GenelistOrder model.
      * @param string $id
      * @return mixed
      */
@@ -74,25 +57,30 @@ class SymptomController extends Controller
     }
 
     /**
-     * Creates a new GenelistSymptom model.
+     * Creates a new GenelistOrder model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new GenelistSymptom();
+        $model = new GenelistOrder();
+  
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id'           => $model->id]);
-        } else {
-            return $this->render('create', [
+        if ($model->load(Yii::$app->request->post()) ) {
+        	$model->createtime= time();
+        	$model->state ='create';
+        	if( $model->save()){
+        	  return $this->redirect(['view', 'id'           => $model->id]);
+        	}
+           
+        }    
+        return $this->render('create', [
                 'model' => $model,
-            ]);
-        }
+        ]);
     }
 
     /**
-     * Updates an existing GenelistSymptom model.
+     * Updates an existing GenelistOrder model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param string $id
      * @return mixed
@@ -111,7 +99,7 @@ class SymptomController extends Controller
     }
 
     /**
-     * Deletes an existing GenelistSymptom model.
+     * Deletes an existing GenelistOrder model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param string $id
      * @return mixed
@@ -123,16 +111,24 @@ class SymptomController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionDone($id)
+    {
+        $model = $this->findModel($id) ;
+        $model->state = 'done';
+        $model->save();
+        return $this->redirect(['index']);
+    }
+
     /**
-     * Finds the GenelistSymptom model based on its primary key value.
+     * Finds the GenelistOrder model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param string $id
-     * @return GenelistSymptom the loaded model
+     * @return GenelistOrder the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = GenelistSymptom::findOne($id)) !== null) {
+        if (($model = GenelistOrder::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

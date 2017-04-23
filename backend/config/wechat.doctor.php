@@ -37,17 +37,25 @@ $wechat['menu'] = [
                 "name" => "确认送检",
                 "key"  => "SAMPLE-ORDER",
                 'url'=>'http://www.mono-mr.com/backend/web/?r=wechat-doctor/doorder',
-            ], 
+            ],
         ],
     ],
-
-    [
-        "type" => "click",
-        "name" => "常见问题",
-        "key"  => "WORK-FLOW",
-        'url'=>'http://www.mono-mr.com/backend/web/?r=/mingrui-qa',
-    ],
-
+   [
+        "name"       => "基因查询",
+        "sub_button" => [
+            [
+                "type" => "view",
+                "name" => "基因查询",
+                'url'=>'http://www.mono-mr.com/apps/web/index.php?r=gene',
+            ],
+            [
+                "type" => "click",
+                "name" => "常见问题",
+                "key"  => "WORK-FLOW",
+                'url'=>'http://www.mono-mr.com/backend/web/?r=/mingrui-qa',
+            ],
+        ]
+    ]
 ];
 
 return $wechat;

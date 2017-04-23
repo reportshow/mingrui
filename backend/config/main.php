@@ -1,5 +1,7 @@
 <?php
-define('CURL_SSLVERSION_TLSv1',1);
+if(!defined('CURL_SSLVERSION_TLSv1')) {
+     define('CURL_SSLVERSION_TLSv1',1);
+}
 
 $params = array_merge(
     require (__DIR__ . '/../../common/config/params.php'),
@@ -43,14 +45,6 @@ return [
             'class'        => 'yii\rbac\DbManager',
             'defaultRoles' => ['guest'],
         ],
-      /*'statistics' =>[
-    	'class' =>'common\components\Statistics',
-       ], */
-         'statistics' =>[
-		    'class' =>'common\components\Statistics',
-		    //'on beforeAction' => ['common\components\Statistics','assign']
-		],
-
         'user'         => [
             'identityClass' => 'common\models\User',
             //  'enableAutoLogin' => true,
@@ -81,19 +75,17 @@ return [
                 ],
             ],
         ],
-        /*
-        'errorHandler' => [
-            'errorAction' => 'site/index',
-        ],
-        */
-        /*
-    'urlManager' => [
-    'enablePrettyUrl' => true,
-    'showScriptName' => false,
-    'rules' => [
-    ],
-    ],
-     */
+        
+        /* 'errorHandler' => [ */
+        /*     'errorAction' => 'site/index', */
+        /* ], */
+        
+    /* 'urlManager' => [ */
+    /* 'enablePrettyUrl' => true, */
+    /* 'showScriptName' => false, */
+    /* 'rules' => [ */
+    /* ], */
+    /* ], */
     ],
     'params'              => $params,
 ];

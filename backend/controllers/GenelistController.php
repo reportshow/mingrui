@@ -37,8 +37,8 @@ class GenelistController extends Controller
         ];
     }
     /*
-    public function beforeAction($action){ 
-    	if(!Yii::$app->user->can('admin')){  
+    public function beforeAction($action){
+    	if(!Yii::$app->user->can('admin')){
     		$url = '../../apps/web/index.php?r=gene/index'  ;
     		return "<script> location.href = '$url';</script>";
     		return;
@@ -108,9 +108,9 @@ class GenelistController extends Controller
             ]);
         }
     }
-   
+
     public static $genecase ='genecase';
-    public function actionCasedelete($classid, $caseid){ 
+    public function actionCasedelete($classid, $caseid){
     	$main = $this->findModel($classid);
     	$caselist = explode(',', $main->caselist);
     	$caselist= array_flip($caselist);
@@ -118,33 +118,33 @@ class GenelistController extends Controller
     	$caselist= array_flip($caselist);
     	$main->caselist = join(',', $caselist);
         $main->save();
-   
+
         MingruiDoc::findOne($caseid)->delete();
-        return $this->redirect(['case', 'classid' => $classid]); 
+        return $this->redirect(['case', 'classid' => $classid]);
 
 
     }
-    public function actionCreatecase($classid){ 
+    public function actionCreatecase($classid){
         $main = $this->findModel($classid);
         $doc = new MingruiDoc();
         $doc->uid = Yii::$app->user->id;
         $doc->type='genecase';
         $doc->title = '标题';
         $doc->description ='基因案例内容';
-        $doc->save(); 
+        $doc->save();
 
         $caselist = explode(',', $main->caselist);
         $caselist[] = $doc->id;
 
         $main->caselist = join(',', $caselist);
         $main->save();
-       
 
-        return $this->redirect(['mingrui-doc/update', 'id' => $doc->id, 'type'=>self::$genecase]); 
+
+        return $this->redirect(['mingrui-doc/update', 'id' => $doc->id, 'type'=>self::$genecase]);
 
 
     }
-    public function actionCase($classid){  
+    public function actionCase($classid){
    	    $_GET['type'] =$type= 'genecase';
 
         $main = $this->findModel($classid);
@@ -158,7 +158,7 @@ class GenelistController extends Controller
 
         $query = $query
             ->orderBy('id DESC');
-         
+
 
         $dataProvider = $searchModel->search($params, $query);
 
@@ -179,15 +179,15 @@ class GenelistController extends Controller
     public function actionSubupload($id)
     {
         $model = $this->findModel($id);
-        $new = new Mainlist(); 
+        $new = new Mainlist();
 
         if ($new->load(Yii::$app->request->post()) ) {
         	$model->classname = $new->classname;
-        	if(empty($model->classname) || !$model->classname){ 
+        	if(empty($model->classname) || !$model->classname){
                return "key不能为空！！";
         	}
-        	$model->save(); 
-        	 
+        	$model->save();
+
 			//清除所有同类
 	    	Information::deleteAll(['key'=>$model->classname]);
 
@@ -201,12 +201,13 @@ class GenelistController extends Controller
         }
     }
 
-    function saveCSV($model){ 
-     
+    function saveCSV($model){
+
       set_time_limit(600);
-       
+      error_reporting(E_ALL & ~E_NOTICE);
+
        echo "<meta charset='UTF-8'> <div id='listbox' style='margin-left:50px; height:500px;width:600px;overflow:auto'>";
-       echo "<script>  function scrollbottom(){var objDiv = document.getElementById('listbox');objDiv.scrollTop = objDiv.scrollHeight;} 
+       echo "<script>  function scrollbottom(){ return; var objDiv = document.getElementById('listbox');objDiv.scrollTop = objDiv.scrollHeight;}
         setInterval(scrollbottom,200);</script>";
 
 		$imageupList = UploadedFile::getInstances($model, 'detail');
@@ -215,20 +216,20 @@ class GenelistController extends Controller
 
 		$path = 'upload/genelist/'.$key .$id.'.csv';
 		$imageupList[0]->saveAs($path);
-      
+
         $FIELDS = ['class','genecount','sick','sick_en','gene','method','omim','background','wide','DM','refseq'];
         $row = 1;
 		$handle = fopen($path,"r");
 		$data = fgetcsv($handle, 1000, ","); //ir
 		while ($data = fgetcsv($handle, 1000, ",")) {
-		    $num = count($data); 
+		    $num = count($data);
 		    $row++;
 		    $model = new Information();
 		    $model->key = $key;
 		    foreach ($FIELDS as $i => $field) {
 		    	 $val = trim(iconv('gbk//IGNORE','utf-8',   $data[$i]));
 		    	 $model->$field =  $val;
-		    } 
+		    }
 		    $model->save();
 		    echo   $row .': ' . $model->gene  .' -- ' . $model->sick  . "<br>"; ob_flush();flush();
 
@@ -268,21 +269,21 @@ class GenelistController extends Controller
         }
     }
 
-    public function actionDetailview($id){ 
+    public function actionDetailview($id){
     	 $model = $this->findModel($id);
 
     	 return $this->render('detailedit', [ 'model' => $model, 'onlyshow'=>true]);
     }
-    public function actionDetailedit($id){ 
+    public function actionDetailedit($id){
     	 $model = $this->findModel($id);
-    	
+
     	if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['detailview', 'id' => $model->id]);
         } else {
             return $this->render('detailedit', [
                 'model' => $model,
             ]);
-        } 
+        }
 
     }
 }
