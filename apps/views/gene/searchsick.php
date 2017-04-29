@@ -13,37 +13,48 @@ $tag = $type!='gene' ? '基因的相关表型' :'表型的相关基因';
 $this->title = strtoupper( join(' ',$keywords))  .' ' .$tag;
 
 
-if(is_array($models)){
 
-	$orderedList = [];
 
-	foreach ($models as $index => $info) {
+    if(!is_array($models)  ){
 
-			$chpo = 'CHPO表型:  &nbsp;'. $info->chpo ;
-			$count = 0;
+       echo " <div class='row'>没有相关数据</div>";
+       return;
+    }
 
-	 	    if(is_array($keywords)){
-	 	    	foreach ($keywords as $key ) {
-		 	    	if(strpos('=='.$chpo,$key) > 0){
-						$chpo = str_replace($key , '<i class=keybg>' . $key .'</i>', $chpo);
-						$count++;
-		 	    	}
-	 	       }
-	 	        if($count == count($keywords) ){
-	               $chpo = "<b class='fa  fa-graduation-cap text-red' style='font-size:18pt'> </b>  " . $chpo ;
-	 	        }
-	 	   }
-		 $info->chpo = $chpo;
+    $orderedList = [];
 
-		$models[$index] = $info;
+    foreach ($models as $index => $info) {
 
-		$orderedList[$index] = $count;
+	    $info->chpo = HighLight( 'CHPO表型:  &nbsp;'.$info->chpo, $keywords);
 
-	}
+	    $models[$index] = $info;
 
-	arsort($orderedList);
+	    $orderedList[$index] = $count;
+
+   }
+
+   if(count($keywords) > 1){
+     arsort($orderedList);
+   }
+
+
+
+
+function HighLight($chpo, $keywords){
+    $count = 0;
+        foreach ($keywords as $key ) {
+            if(strpos('=='.$chpo,$key) > 0){
+                $chpo = str_replace($key , '<i class=keybg>' . $key .'</i>', $chpo);
+                $count++;
+            }
+       }
+        if($count == count($keywords) && $count >1){
+           $chpo = "<b class='fa  fa-graduation-cap text-red' style='font-size:18pt'> </b>  " . $chpo ;
+        }
+
+    return $chpo;
+
 }
-
 ?>
 
  <style type="text/css">

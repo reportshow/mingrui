@@ -34,6 +34,7 @@ class Mainlist extends \yii\db\ActiveRecord
             [
             ['name', 'name_en', 'hassub', 'description'], 'string', 'max' => 255],
             [['number'], 'string', 'max' => 16],
+            [['orderby'],'string'],
             [['classname'], 'string', 'max' => 32],
             [['detail','caselist'], 'string' ],
         ];
@@ -54,6 +55,7 @@ class Mainlist extends \yii\db\ActiveRecord
             'classname' => '子类型key',
             'detail' => '细节描述',
             'caselist'=>'案例id列表(用,号分开)',
+            'orderby' => '排序',
         ];
     }
 }

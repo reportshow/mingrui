@@ -42,6 +42,7 @@ class MainlistSearch extends Mainlist
     public function search($params)
     {
         $query = Mainlist::find();
+        $query = $query->orderBy('orderby');
 
         // add conditions that should always apply here
 

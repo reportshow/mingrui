@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use common\components\SMS;
 /**
  * GenelistOrderController implements the CRUD actions for GenelistOrder model.
  */
@@ -57,6 +58,10 @@ class GenelistOrderController extends Controller
         	$model->createtime= time();
         	$model->state ='create';
         	if( $model->save()){
+
+        	  $data = [$model->name .'/'. $model->city , $model->tel];
+        	  //SMS::songjian(13910136035, $data);
+        	  SMS::songjian(18810546254, $data);
         	  return $this->redirect(['view', 'id'           => $model->id]);
         	}
            

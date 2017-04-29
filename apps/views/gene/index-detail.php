@@ -1,4 +1,4 @@
-<?php 
+<?php
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 
@@ -10,14 +10,18 @@ $this->title = $model->name;
 
 ?>
 <h1> <?=$this->title ?> </h1>
+<style  >
+.container img{width: auto !important;height: auto !important;    max-width: 100% !important;  }
+</style>
+
 <?php
- 
- if(strlen($model->detail) > 3){ 
+
+ if(strlen($model->detail) > 3){
     echo $model->detail;
- }else{ 
+ }else{
  	 echo $model->description;
  }
- 
+
 
 
 /*/
@@ -25,11 +29,10 @@ $this->title = $model->name;
 
  echo $form->field($model, 'name')->dropDownList(
  	     $listData,  ['prompt'=>'选择产品...' ,'onchange'=>'cc']
- 	  ); 
-  
+ 	  );
+
  ActiveForm::end();
 
  */
  ?>
- 
- 
+</p>

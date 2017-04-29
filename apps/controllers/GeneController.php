@@ -26,7 +26,7 @@ class GeneController extends Controller
      */
     public function actionIndex()
     {
-        $modellist = Mainlist::find()->all();
+        $modellist = Mainlist::find()->orderBy('orderby')->all();
         return $this->render('index',[
                 'modellist' => $modellist,
             ]);
