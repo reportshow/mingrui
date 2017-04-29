@@ -26,13 +26,20 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             //['class' => 'yii\grid\SerialColumn'],
 
-            [ 'attribute'=>'id',
+            ['attribute'=>'orderby','format'=>'raw',
+              'options'   => ['width' => '50'],'value'=>function($model){ 
+            	$html ="<input size=2 value='".$model->orderby."' maxlength=2>";
+            	return $html;
+            }],  
+       /*      [ 'attribute'=>'id',
               'options'   => ['width' => '60'],
-            ],
+            ],*/
             'name',
             'name_en',
             'number',
             'description:ntext',
+
+
             // 'hassub',
              [ 'attribute'=>'classname',
                 'format'=>'raw',
@@ -74,3 +81,23 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]); ?>
 </div>
+<script type="text/javascript">
+	
+	$('.mainlist-index tbody tr td:eq(0) input').blur(function(){ 
+		var id = $(this).parent().parent().attr('data-key');
+		var url ='<?= Yii::$app->urlManager->createUrl(['genelist/orderchange']) ?>' 
+		       + '&id='+id + '&orderby=' + $(this).val() ;
+		$.ajax({
+			url:url,
+			success:function(){ 
+				
+				alert('修改成功');
+
+		    },
+		    error:function(){ 
+		    	alert('修改失败');
+		    }
+
+	    });
+	});
+</script>

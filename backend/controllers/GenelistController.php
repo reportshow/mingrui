@@ -253,6 +253,12 @@ class GenelistController extends Controller
         return $this->redirect(['index']);
     }
 
+   public function actionOrderchange($id,$orderby){ 
+   	 	$model = $this->findModel($id);
+   	 	$model->orderby = $orderby;
+   	 	$model->save();
+   	 	return "OK";
+   }
     /**
      * Finds the Mainlist model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
