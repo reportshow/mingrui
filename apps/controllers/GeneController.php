@@ -7,6 +7,7 @@ use apps\models\Mainlist;
 use apps\models\Information;
 use apps\models\Chpo;
 use backend\models\MingruiDoc;
+use apps\models\GenelistCollection;
 
 error_reporting(E_ALL^E_NOTICE);
 
@@ -195,10 +196,35 @@ class GeneController extends Controller
     	 if(!$clsModel) {
         	return "查找不到对应的分类";
         }
+        $colModel = new GenelistCollection();
+        $colModel->omim = $clsModel->omim;
+        $colModel->creator_info = "医院: \n医生: \n联系方式:";
 
+        $hasColl = GenelistCollection::find()->where(['omim'=>$clsModel->omim])
+        ->andWhere(['used'=>1])->count();
+        
         return $this->render('info',[
                 'model' => $clsModel,
+                'colModel'=>$colModel,
+                'hasColl'=>$hasColl,
             ]);
+
+    }
+
+    public function actionAddCollection(){ 
+
+        $model = new GenelistCollection();
+
+        if ($model->load(Yii::$app->request->post()) ) {
+        	$model->createtime= time(); 
+        	if( $model->save()){ 
+        	  
+        	  return $this->render('content',[
+                'content' => "<h3>您的资料已提交!!<br>多谢！！</h3>",
+            ]);
+        	}
+           
+        }    
 
     }
 

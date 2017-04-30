@@ -20,7 +20,12 @@ include_once('header.php');
            <b class='btn btn-success pull-right'><?=$model->gene?></b>
           <!-- /.widget-user-image -->
           <h3 class="widget-user-username-x"><?=$model->sick?></h3>
-          <h5 class="widget-user-desc-x"><?=$model->sick_en?></h5>
+          <h5 class="widget-user-desc-x"><?=$model->sick_en?></h5>   
+
+          <b class='btn btn-info pull-right editzhenduan'>提交诊断</b>
+             <?= $hasColl ? "<b class='btn btn-info pull-right editzhenduan'>查看诊断</b>":'' ?>
+          
+           
         </div>
         <div class="box-footer no-padding">
           <ul class="nav nav-stacked">
@@ -43,7 +48,7 @@ include_once('header.php');
 		<div class="col-md-4">
           <div class="box box-blue box-solid">
             <div class="box-header with-border">
-              <h3 class="box-title"><?=$model->gene?>基因相关</h3></h3>
+              <h3 class="box-title"><?=$model->gene?>基因相关</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -74,11 +79,45 @@ include_once('header.php');
         <!-- /.col -->
 </div>
 
+
+
+<!-- ---------------------------------- - -->
+
+<style type="text/css">
+	.editBox{ position: fixed; top:10px;left:10px; height: 100%;width: 95%; z-index: 100;color:#333;display: none;}
+</style>
+ 
+	 
+          <div class=" editBox box box-blue box-solid">
+            <div class="box-header with-border">
+              <h3 class="box-title"><?=$model->gene?> 诊断/治疗</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-remove"></i>
+                </button>
+              </div>
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <ul class="nav nav-stacked">  
+              	 <?= $this->render('collection_form', [
+				        'model' => $colModel,
+				 ]) ?>
+              </ul> 
+
+            </div>
+            <!-- /.box-body -->
+         </div>
+          <!-- /.box -->
+   
+        <!-- /.col -->
+ 
  
 
  <script>
- function showsub(id){  
-	location.href= "?r=gene/subinfo&subid="+id;
+ $('.editzhenduan').click(function(){ 
 
-}
+ 	$('.editBox').show();
+ });
  </script>
