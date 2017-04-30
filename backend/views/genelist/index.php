@@ -15,9 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('新建大类', ['create'], ['class' => 'btn btn-success']) ?>
-        <?= Html::a('案例总列表', ['mingrui-doc/index','type'=>'genecase'], ['class' => 'btn btn-warning']) ?>
-         <?= Html::a('订单列表', ['genelist-order/index','type'=>'genecase'], ['class' => 'btn btn-info']) ?>
+         
+        <?= Html::a('<b class="fa fa-plus"> </b> 新建大类', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('<b class="fa fa-book"> </b> 案例总列表', ['mingrui-doc/index','type'=>'genecase'], ['class' => 'btn btn-warning']) ?>
+         <?= Html::a('<b class="fa fa-shopping-cart"> </b> 订单列表', ['genelist-order/index','type'=>'genecase'], ['class' => 'btn btn-info']) ?>
+         <?= Html::a('<b class="fa fa-twitter"> </b> 开放词条列表', ['genelist-collection/index'], ['class' => 'btn btn-danger']) ?> 
 
     </p>
     <?= GridView::widget([

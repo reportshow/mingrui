@@ -28,7 +28,7 @@ use yii\widgets\ActiveForm;
     
     <?=Html::a('编辑详细图文描述',['detailedit','id'=>$model->id],['class'=>'btn btn-success btn-detail ' . ($model->hassub ? 'hide':'') ]) ?>
 
-    <?= $form->field($model, 'caselist' )->textInput(['maxlength' => true ])  ?>
+    <?= $form->field($model, 'caselist' )->textInput(['maxlength' => true , 'class'=>'hide'])  ?>
     
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? '新建' : '更新', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

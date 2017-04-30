@@ -97,7 +97,7 @@ $menu[] = [
     'items' => [
         [
             'label' => '基因分类',
-            'icon'  => 'fa  fa-leaf',
+            'icon'  => 'fa  fa-leaf text-yellow',
             'url'   => ["/genelist"], 
             'items' => [],
         ],
